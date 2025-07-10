@@ -30,18 +30,31 @@ INTRO_FILE_PATTERNS = [
 
 # Patterns for finding introduction sections in LaTeX content
 INTRO_SECTION_PATTERNS = [
-    # Standard section commands
-    r'\\section\*?\{([Ii]ntroduction.*?)\}',
-    r'\\section\*?\{([Ii]ntro.*?)\}',
-    # Numbered sections
-    r'\\section\*?\{\s*1\.?\s*([Ii]ntroduction.*?)\}',
-    r'\\section\*?\{\s*I\.?\s*([Ii]ntroduction.*?)\}',
+    # Standard section commands - case-insensitive matching
+    r'\\section\*?\{([Ii][Nn][Tt][Rr][Oo][Dd][Uu][Cc][Tt][Ii][Oo][Nn].*?)\}',
+    r'\\section\*?\{(INTRODUCTION.*?)\}',
+    r'\\section\*?\{([Ii][Nn][Tt][Rr][Oo].*?)\}',
+    
+    # Numbered sections - various numbering styles
+    r'\\section\*?\{\s*1\.?\s*([Ii][Nn][Tt][Rr][Oo][Dd][Uu][Cc][Tt][Ii][Oo][Nn].*?)\}',
+    r'\\section\*?\{\s*I\.?\s*([Ii][Nn][Tt][Rr][Oo][Dd][Uu][Cc][Tt][Ii][Oo][Nn].*?)\}',
+    r'\\section\*?\{\s*1\s+([Ii][Nn][Tt][Rr][Oo][Dd][Uu][Cc][Tt][Ii][Oo][Nn].*?)\}',
+    r'\\section\*?\{\s*I\s+([Ii][Nn][Tt][Rr][Oo][Dd][Uu][Cc][Tt][Ii][Oo][Nn].*?)\}',
+    r'\\section\*?\{\s*1\.?\s*(INTRODUCTION.*?)\}',
+    r'\\section\*?\{\s*I\.?\s*(INTRODUCTION.*?)\}',
+    
     # Custom introduction commands
     r'\\introduction\{([^}]+)\}',
     r'\\Introduction\{([^}]+)\}',
-    # Chapter-level introductions
-    r'\\chapter\*?\{([Ii]ntroduction.*?)\}',
-    r'\\chapter\*?\{\s*1\.?\s*([Ii]ntroduction.*?)\}',
+    r'\\INTRODUCTION\{([^}]+)\}',
+    
+    # Chapter-level introductions - case-insensitive
+    r'\\chapter\*?\{([Ii][Nn][Tt][Rr][Oo][Dd][Uu][Cc][Tt][Ii][Oo][Nn].*?)\}',
+    r'\\chapter\*?\{(INTRODUCTION.*?)\}',
+    r'\\chapter\*?\{\s*1\.?\s*([Ii][Nn][Tt][Rr][Oo][Dd][Uu][Cc][Tt][Ii][Oo][Nn].*?)\}',
+    r'\\chapter\*?\{\s*I\.?\s*([Ii][Nn][Tt][Rr][Oo][Dd][Uu][Cc][Tt][Ii][Oo][Nn].*?)\}',
+    r'\\chapter\*?\{\s*1\.?\s*(INTRODUCTION.*?)\}',
+    r'\\chapter\*?\{\s*I\.?\s*(INTRODUCTION.*?)\}',
 ]
 
 def clean_latex_markup(text: str) -> str:
@@ -93,10 +106,14 @@ def extract_introduction(tex_content: str) -> Optional[tuple[str, str]]:
     Extract introduction from LaTeX content using multiple patterns.
     Returns (extracted_text, method_used) or None if no introduction found.
     """
+    # Pre-process: remove decorative comment blocks that might interfere with pattern matching
+    # This preserves the content structure while removing potential noise
+    clean_content = re.sub(r'(%+)[^\n]*\n', '\n', tex_content)
+    
     # Try each pattern to find the introduction section
     for pattern in INTRO_SECTION_PATTERNS:
         # First try to find content until next section
-        match = re.search(pattern + r'(.*?)\\section', tex_content, re.DOTALL)
+        match = re.search(pattern + r'(.*?)\\section', clean_content, re.DOTALL)
         if match:
             intro_text = match.group(2) if len(match.groups()) > 1 else match.group(1)
             intro_text = clean_latex_markup(intro_text)
@@ -104,7 +121,7 @@ def extract_introduction(tex_content: str) -> Optional[tuple[str, str]]:
                 return intro_text, "section_boundary"
         
         # Fallback: try to find content until end of document
-        match = re.search(pattern + r'(.*)', tex_content, re.DOTALL)
+        match = re.search(pattern + r'(.*)', clean_content, re.DOTALL)
         if match:
             content = match.group(2) if len(match.groups()) > 1 else match.group(1)
             # Remove common trailing sections
@@ -115,6 +132,15 @@ def extract_introduction(tex_content: str) -> Optional[tuple[str, str]]:
             if len(content) >= 100:
                 return content, "document_end"
     
+    # If still not found, try the original content (in case pre-processing removed too much)
+    for pattern in INTRO_SECTION_PATTERNS:
+        match = re.search(pattern + r'(.*?)\\section', tex_content, re.DOTALL)
+        if match:
+            intro_text = match.group(2) if len(match.groups()) > 1 else match.group(1)
+            intro_text = clean_latex_markup(intro_text)
+            if len(intro_text) >= 100:  # Basic length validation
+                return intro_text, "section_boundary_original"
+    
     # Fallback: Try to find first section after abstract
     abstract_match = re.search(r'\\begin\{abstract\}.*?\\end\{abstract\}(.*?)\\section', 
                              tex_content, re.DOTALL)
@@ -123,6 +149,17 @@ def extract_introduction(tex_content: str) -> Optional[tuple[str, str]]:
         first_section = clean_latex_markup(first_section)
         if len(first_section) >= 100:
             return first_section, "post_abstract"
+    
+    # Last resort: Look for specific patterns that might indicate an introduction without explicit labeling
+    # This is useful for papers that don't explicitly label the first section as "Introduction"
+    first_section_match = re.search(r'\\begin\{document\}.*?\\maketitle.*?(.*?)\\section', 
+                                  tex_content, re.DOTALL)
+    if first_section_match:
+        first_content = first_section_match.group(1)
+        first_content = clean_latex_markup(first_content)
+        # Only consider this an introduction if it's substantial and doesn't look like just metadata
+        if len(first_content) >= 200 and not re.search(r'^\s*\\', first_content):
+            return first_content, "implicit_intro"
     
     return None
 
@@ -150,7 +187,7 @@ def find_introduction_in_archive(tar_file, paper_id: str) -> Optional[tuple[str,
                         intro_result = extract_introduction(content)
                         if intro_result:
                             intro_text, _ = intro_result
-                            return intro_text, member.name, "dedicated_file"
+                            return intro_text, member.name, "dedicated_intro_file"
                 except Exception as e:
                     logger.debug(f"[{paper_id}] Error reading {member.name}: {e}")
                     continue
@@ -168,7 +205,7 @@ def find_introduction_in_archive(tar_file, paper_id: str) -> Optional[tuple[str,
                 intro_result = extract_introduction(content)
                 if intro_result:
                     intro_text, method = intro_result
-                    return intro_text, main_tex.name, f"main_file_{method}"
+                    return intro_text, main_tex.name, "main_tex_file"
         except Exception as e:
             logger.debug(f"[{paper_id}] Error reading main file {main_tex.name}: {e}")
     
@@ -181,7 +218,7 @@ def find_introduction_in_archive(tar_file, paper_id: str) -> Optional[tuple[str,
                 intro_result = extract_introduction(content)
                 if intro_result:
                     intro_text, method = intro_result
-                    return intro_text, member.name, f"aux_file_{method}"
+                    return intro_text, member.name, "scrape_entire_folder"
         except Exception as e:
             logger.debug(f"[{paper_id}] Error reading {member.name}: {e}")
             continue
