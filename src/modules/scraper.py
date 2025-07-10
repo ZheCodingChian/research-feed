@@ -294,7 +294,9 @@ class ArxivScraper:
                             authors=[],
                             categories=[],
                             abstract="",
-                            published_date=datetime.now()
+                            published_date=datetime.now(),
+                            arxiv_url=None,
+                            pdf_url=None
                         )
                         failed_paper.update_status("scraping_failed")
                         failed_paper.add_error(f"Metadata extraction failed: {str(e)}")
@@ -311,7 +313,9 @@ class ArxivScraper:
                         authors=[],
                         categories=[],
                         abstract="",
-                        published_date=datetime.now()
+                        published_date=datetime.now(),
+                        arxiv_url=None,
+                        pdf_url=None
                     )
                     failed_paper.update_status("scraping_failed")
                     failed_paper.add_error("Paper not found in XML response")
@@ -377,6 +381,30 @@ class ArxivScraper:
             else:
                 published_date = datetime.now()
             
+            # Extract URLs from link elements
+            arxiv_url = None
+            pdf_url = None
+            
+            for link in entry.findall('{http://www.w3.org/2005/Atom}link'):
+                rel = link.get('rel')
+                href = link.get('href')
+                type_attr = link.get('type')
+                
+                if rel == 'alternate' and type_attr == 'text/html':
+                    arxiv_url = href
+                elif rel == 'related' and type_attr == 'application/pdf':
+                    pdf_url = href
+            
+            # Log missing URLs for debugging
+            missing_urls = []
+            if arxiv_url is None:
+                missing_urls.append('arxiv_url')
+            if pdf_url is None:
+                missing_urls.append('pdf_url')
+            
+            if missing_urls:
+                logger.warning(f"Paper {arxiv_id} missing URLs: {', '.join(missing_urls)}")
+            
             # Create paper object
             paper = Paper(
                 id=arxiv_id,
@@ -384,7 +412,9 @@ class ArxivScraper:
                 authors=authors,
                 categories=categories,
                 abstract=abstract,
-                published_date=published_date
+                published_date=published_date,
+                arxiv_url=arxiv_url,
+                pdf_url=pdf_url
             )
             paper.update_status("successfully_scraped")
             
@@ -398,7 +428,7 @@ class ArxivScraper:
         """
         Clean up categories to keep only properly formatted arXiv categories.
         
-        Keeps categories matching pattern: [a-z]{2,}\.[A-Z]{2}
+        Keeps categories matching pattern: [a-z]{2,}\\.[A-Z]{2}
         Examples: cs.AI, stat.ML, math.OC, physics.HE
         Discards: ACM classifications, MSC codes, etc.
         

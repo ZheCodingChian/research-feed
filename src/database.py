@@ -34,6 +34,8 @@ class PaperDatabase:
                     categories TEXT,  -- JSON array
                     abstract TEXT,
                     published_date TEXT,  -- ISO format
+                    arxiv_url TEXT,  -- Main arXiv abstract page URL
+                    pdf_url TEXT,    -- Direct PDF download URL
                     status TEXT,
                     errors TEXT,  -- JSON array
                     created_at TEXT,  -- ISO format
@@ -47,8 +49,8 @@ class PaperDatabase:
             conn.execute("""
                 INSERT OR REPLACE INTO papers (
                     id, title, authors, categories, abstract, published_date,
-                    status, errors, created_at, updated_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    arxiv_url, pdf_url, status, errors, created_at, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
                 paper.id,
                 paper.title,
@@ -56,6 +58,8 @@ class PaperDatabase:
                 json.dumps(paper.categories),
                 paper.abstract,
                 paper.published_date.isoformat(),
+                paper.arxiv_url,
+                paper.pdf_url,
                 paper.status,
                 json.dumps(paper.errors),
                 paper.created_at.isoformat(),
@@ -79,6 +83,8 @@ class PaperDatabase:
                 categories=json.loads(row['categories']),
                 abstract=row['abstract'],
                 published_date=datetime.fromisoformat(row['published_date']),
+                arxiv_url=row['arxiv_url'],
+                pdf_url=row['pdf_url'],
                 status=row['status'],
                 errors=json.loads(row['errors']),
                 created_at=datetime.fromisoformat(row['created_at']),
@@ -94,8 +100,8 @@ class PaperDatabase:
                 conn.execute("""
                     INSERT OR REPLACE INTO papers (
                         id, title, authors, categories, abstract, published_date,
-                        status, errors, created_at, updated_at
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        arxiv_url, pdf_url, status, errors, created_at, updated_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, (
                     paper.id,
                     paper.title,
@@ -103,6 +109,8 @@ class PaperDatabase:
                     json.dumps(paper.categories),
                     paper.abstract,
                     paper.published_date.isoformat(),
+                    paper.arxiv_url,
+                    paper.pdf_url,
                     paper.status,
                     json.dumps(paper.errors),
                     paper.created_at.isoformat(),
@@ -133,6 +141,8 @@ class PaperDatabase:
                     categories=json.loads(row['categories']),
                     abstract=row['abstract'],
                     published_date=datetime.fromisoformat(row['published_date']),
+                    arxiv_url=row['arxiv_url'],
+                    pdf_url=row['pdf_url'],
                     status=row['status'],
                     errors=json.loads(row['errors']),
                     created_at=datetime.fromisoformat(row['created_at']),

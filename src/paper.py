@@ -20,6 +20,10 @@ class Paper:
     abstract: str
     published_date: datetime
     
+    # URL fields for paper access
+    arxiv_url: Optional[str] = None  # Main arXiv abstract page URL
+    pdf_url: Optional[str] = None    # Direct PDF download URL
+    
     # Processing status and error tracking
     status: str = "initial"  # Track processing state
     errors: List[str] = field(default_factory=list)  # Store any error messages
