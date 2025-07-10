@@ -281,7 +281,7 @@ class ArxivTestScraper:
                             arxiv_url=None,
                             pdf_url=None
                         )
-                        failed_paper.update_status("scraping_failed")
+                        failed_paper.update_scraper_status("scraping_failed")
                         failed_paper.add_error(f"Metadata extraction failed: {str(e)}")
                         runtime_dict[paper_id] = failed_paper
                         self.session_stats['scraping_failed'] += 1
@@ -300,7 +300,7 @@ class ArxivTestScraper:
                         arxiv_url=None,
                         pdf_url=None
                     )
-                    failed_paper.update_status("scraping_failed")
+                    failed_paper.update_scraper_status("scraping_failed")
                     failed_paper.add_error("Paper not found in arXiv API response")
                     runtime_dict[paper_id] = failed_paper
                     self.session_stats['scraping_failed'] += 1
@@ -399,7 +399,7 @@ class ArxivTestScraper:
                 arxiv_url=arxiv_url,
                 pdf_url=pdf_url
             )
-            paper.update_status("successfully_scraped")
+            paper.update_scraper_status("successfully_scraped")
             
             return paper
             

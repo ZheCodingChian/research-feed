@@ -23,10 +23,17 @@ class Paper:
     # URL fields for paper access
     arxiv_url: Optional[str] = None  # Main arXiv abstract page URL
     pdf_url: Optional[str] = None    # Direct PDF download URL
+    latex_url: Optional[str] = None  # LaTeX source files URL
     
     # Processing status and error tracking
-    status: str = "initial"  # Track processing state
+    scraper_status: str = "initial"  # Track scraping state
+    intro_status: str = "not_extracted"  # Track introduction extraction state
     errors: List[str] = field(default_factory=list)  # Store any error messages
+    
+    # Introduction extraction fields
+    introduction_text: Optional[str] = None  # Extracted introduction content
+    intro_extraction_method: Optional[str] = None  # How introduction was extracted
+    tex_file_name: Optional[str] = None  # Source file name
     
 
     
@@ -39,15 +46,28 @@ class Paper:
         self.errors.append(error_message)
         self.updated_at = datetime.now()
     
-    def update_status(self, new_status: str) -> None:
-        """Update the paper's processing status."""
-        self.status = new_status
+    def update_scraper_status(self, new_status: str) -> None:
+        """Update the paper's scraping status."""
+        self.scraper_status = new_status
+        self.updated_at = datetime.now()
+    
+    def update_intro_status(self, new_status: str) -> None:
+        """Update the paper's introduction extraction status."""
+        self.intro_status = new_status
         self.updated_at = datetime.now()
     
     def is_successfully_scraped(self) -> bool:
         """Check if the paper has been successfully scraped."""
-        return self.status == "successfully_scraped"
+        return self.scraper_status == "successfully_scraped"
     
     def has_scraping_failed(self) -> bool:
         """Check if scraping has failed for this paper."""
-        return self.status == "scraping_failed" 
+        return self.scraper_status == "scraping_failed"
+    
+    def is_intro_successful(self) -> bool:
+        """Check if introduction extraction was successful."""
+        return self.intro_status == "intro_successful"
+    
+    def can_skip_intro_extraction(self) -> bool:
+        """Check if paper can skip introduction extraction."""
+        return self.intro_status in ["intro_successful", "no_latex_source", "no_intro_found"] 

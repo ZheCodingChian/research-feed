@@ -4,7 +4,6 @@ import logging
 from datetime import datetime
 from typing import Dict, Optional
 from pathlib import Path
-
 from paper import Paper
 
 logger = logging.getLogger('DATABASE')
@@ -36,7 +35,12 @@ class PaperDatabase:
                     published_date TEXT,  -- ISO format
                     arxiv_url TEXT,  -- Main arXiv abstract page URL
                     pdf_url TEXT,    -- Direct PDF download URL
-                    status TEXT,
+                    latex_url TEXT,   -- LaTeX source files URL
+                    scraper_status TEXT,
+                    intro_status TEXT DEFAULT 'not_extracted',
+                    introduction_text TEXT,
+                    intro_extraction_method TEXT,
+                    tex_file_name TEXT,
                     errors TEXT,  -- JSON array
                     created_at TEXT,  -- ISO format
                     updated_at TEXT   -- ISO format
@@ -49,8 +53,9 @@ class PaperDatabase:
             conn.execute("""
                 INSERT OR REPLACE INTO papers (
                     id, title, authors, categories, abstract, published_date,
-                    arxiv_url, pdf_url, status, errors, created_at, updated_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    arxiv_url, pdf_url, latex_url, scraper_status, intro_status, introduction_text,
+                    intro_extraction_method, tex_file_name, errors, created_at, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
                 paper.id,
                 paper.title,
@@ -60,7 +65,12 @@ class PaperDatabase:
                 paper.published_date.isoformat(),
                 paper.arxiv_url,
                 paper.pdf_url,
-                paper.status,
+                paper.latex_url,
+                paper.scraper_status,
+                paper.intro_status,
+                paper.introduction_text,
+                paper.intro_extraction_method,
+                paper.tex_file_name,
                 json.dumps(paper.errors),
                 paper.created_at.isoformat(),
                 paper.updated_at.isoformat()
@@ -85,7 +95,12 @@ class PaperDatabase:
                 published_date=datetime.fromisoformat(row['published_date']),
                 arxiv_url=row['arxiv_url'],
                 pdf_url=row['pdf_url'],
-                status=row['status'],
+                latex_url=row['latex_url'],
+                scraper_status=row['scraper_status'],
+                intro_status=row['intro_status'],
+                introduction_text=row['introduction_text'],
+                intro_extraction_method=row['intro_extraction_method'],
+                tex_file_name=row['tex_file_name'],
                 errors=json.loads(row['errors']),
                 created_at=datetime.fromisoformat(row['created_at']),
                 updated_at=datetime.fromisoformat(row['updated_at'])
@@ -100,8 +115,9 @@ class PaperDatabase:
                 conn.execute("""
                     INSERT OR REPLACE INTO papers (
                         id, title, authors, categories, abstract, published_date,
-                        arxiv_url, pdf_url, status, errors, created_at, updated_at
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        arxiv_url, pdf_url, latex_url, scraper_status, intro_status, introduction_text,
+                        intro_extraction_method, tex_file_name, errors, created_at, updated_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, (
                     paper.id,
                     paper.title,
@@ -111,7 +127,12 @@ class PaperDatabase:
                     paper.published_date.isoformat(),
                     paper.arxiv_url,
                     paper.pdf_url,
-                    paper.status,
+                    paper.latex_url,
+                    paper.scraper_status,
+                    paper.intro_status,
+                    paper.introduction_text,
+                    paper.intro_extraction_method,
+                    paper.tex_file_name,
                     json.dumps(paper.errors),
                     paper.created_at.isoformat(),
                     paper.updated_at.isoformat()
@@ -143,7 +164,12 @@ class PaperDatabase:
                     published_date=datetime.fromisoformat(row['published_date']),
                     arxiv_url=row['arxiv_url'],
                     pdf_url=row['pdf_url'],
-                    status=row['status'],
+                    latex_url=row['latex_url'],
+                    scraper_status=row['scraper_status'],
+                    intro_status=row['intro_status'],
+                    introduction_text=row['introduction_text'],
+                    intro_extraction_method=row['intro_extraction_method'],
+                    tex_file_name=row['tex_file_name'],
                     errors=json.loads(row['errors']),
                     created_at=datetime.fromisoformat(row['created_at']),
                     updated_at=datetime.fromisoformat(row['updated_at'])

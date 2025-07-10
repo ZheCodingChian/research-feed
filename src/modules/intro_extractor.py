@@ -1,0 +1,385 @@
+"""
+Introduction Extraction Module
+
+This module handles the extraction of paper introductions from LaTeX source files.
+It implements a hierarchical approach to find and extract introductions.
+"""
+
+import logging
+import re
+import tempfile
+import time
+import random
+import requests
+import tarfile
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
+from typing import Dict, Optional
+from paper import Paper
+
+logger = logging.getLogger('INTRO_EXTRACTOR')
+
+# Patterns for finding dedicated introduction files
+INTRO_FILE_PATTERNS = [
+    r'.*introduction\.tex$',
+    r'.*intro\.tex$',
+    r'.*[0-9]+-?intro\.tex$',
+    r'.*[0-9]+-?introduction\.tex$',
+    r'sections?/intro(duction)?\.tex$',
+]
+
+# Patterns for finding introduction sections in LaTeX content
+INTRO_SECTION_PATTERNS = [
+    # Standard section commands
+    r'\\section\*?\{([Ii]ntroduction.*?)\}',
+    r'\\section\*?\{([Ii]ntro.*?)\}',
+    # Numbered sections
+    r'\\section\*?\{\s*1\.?\s*([Ii]ntroduction.*?)\}',
+    r'\\section\*?\{\s*I\.?\s*([Ii]ntroduction.*?)\}',
+    # Custom introduction commands
+    r'\\introduction\{([^}]+)\}',
+    r'\\Introduction\{([^}]+)\}',
+    # Chapter-level introductions
+    r'\\chapter\*?\{([Ii]ntroduction.*?)\}',
+    r'\\chapter\*?\{\s*1\.?\s*([Ii]ntroduction.*?)\}',
+]
+
+def clean_latex_markup(text: str) -> str:
+    """Clean LaTeX markup from extracted text while preserving meaningful content."""
+    if not text:
+        return text
+        
+    # Step 1: Protect escaped percent signs
+    text = re.sub(r'\\%', '<!ESCAPED_PERCENT!>', text)
+    
+    # Step 2: Remove LaTeX comments
+    text = re.sub(r'%.*?\n', '\n', text)
+    
+    # Step 3: Restore escaped percent signs
+    text = re.sub(r'<!ESCAPED_PERCENT!>', '%', text)
+    
+    # Step 4: Remove citations and references
+    text = re.sub(r'\\cite\{[^}]*\}', '', text)
+    text = re.sub(r'\\ref\{[^}]*\}', '', text)
+    text = re.sub(r'\\label\{[^}]*\}', '', text)
+    
+    # Step 5: Preserve content of formatting commands
+    text = re.sub(r'\\textbf\{([^}]*)\}', r'\1', text)
+    text = re.sub(r'\\textit\{([^}]*)\}', r'\1', text)
+    text = re.sub(r'\\emph\{([^}]*)\}', r'\1', text)
+    text = re.sub(r'\\text\{([^}]*)\}', r'\1', text)
+    
+    # Step 6: Handle line breaks and spacing
+    text = re.sub(r'\\newline\b', '\n', text)
+    text = re.sub(r'\\\\', '\n', text)
+    text = re.sub(r'\\noindent\b', '', text)
+    text = re.sub(r'\\indent\b', '', text)
+    
+    # Step 7: Remove section commands but keep content
+    text = re.sub(r'\\(sub)*section\*?\{([^}]*)\}', r'\2', text)
+    
+    # Step 8: Clean up whitespace
+    text = re.sub(r'\n\s*\n', '\n\n', text)
+    text = re.sub(r'[ \t]+', ' ', text)
+    text = re.sub(r' \n', '\n', text)
+    
+    # Step 9: Remove any remaining LaTeX commands
+    text = re.sub(r'\\[a-zA-Z]+', ' ', text)
+    
+    return text.strip()
+
+def extract_introduction(tex_content: str) -> Optional[tuple[str, str]]:
+    """
+    Extract introduction from LaTeX content using multiple patterns.
+    Returns (extracted_text, method_used) or None if no introduction found.
+    """
+    # Try each pattern to find the introduction section
+    for pattern in INTRO_SECTION_PATTERNS:
+        # First try to find content until next section
+        match = re.search(pattern + r'(.*?)\\section', tex_content, re.DOTALL)
+        if match:
+            intro_text = match.group(2) if len(match.groups()) > 1 else match.group(1)
+            intro_text = clean_latex_markup(intro_text)
+            if len(intro_text) >= 100:  # Basic length validation
+                return intro_text, "section_boundary"
+        
+        # Fallback: try to find content until end of document
+        match = re.search(pattern + r'(.*)', tex_content, re.DOTALL)
+        if match:
+            content = match.group(2) if len(match.groups()) > 1 else match.group(1)
+            # Remove common trailing sections
+            content = re.sub(r'\\bibliography\{.*?\}.*', '', content, flags=re.DOTALL)
+            content = re.sub(r'\\appendix.*', '', content, flags=re.DOTALL)
+            content = re.sub(r'\\end\{document\}.*', '', content, flags=re.DOTALL)
+            content = clean_latex_markup(content)
+            if len(content) >= 100:
+                return content, "document_end"
+    
+    # Fallback: Try to find first section after abstract
+    abstract_match = re.search(r'\\begin\{abstract\}.*?\\end\{abstract\}(.*?)\\section', 
+                             tex_content, re.DOTALL)
+    if abstract_match:
+        first_section = abstract_match.group(1)
+        first_section = clean_latex_markup(first_section)
+        if len(first_section) >= 100:
+            return first_section, "post_abstract"
+    
+    return None
+
+def find_introduction_in_archive(tar_file, paper_id: str) -> Optional[tuple[str, str, str]]:
+    """
+    Find introduction using a hierarchical approach:
+    1. Look for dedicated introduction files
+    2. Check the main (largest) tex file
+    3. Search all tex files for introduction sections
+    
+    Returns (content, filename, method) or None if not found.
+    """
+    # Step 1: Look for dedicated introduction files
+    for member in tar_file.getmembers():
+        if not member.isfile() or not member.name.endswith('.tex'):
+            continue
+            
+        filename_lower = member.name.lower()
+        for pattern in INTRO_FILE_PATTERNS:
+            if re.match(pattern, filename_lower):
+                try:
+                    f = tar_file.extractfile(member)
+                    if f:
+                        content = f.read().decode('utf-8', errors='ignore')
+                        intro_result = extract_introduction(content)
+                        if intro_result:
+                            intro_text, _ = intro_result
+                            return intro_text, member.name, "dedicated_file"
+                except Exception as e:
+                    logger.debug(f"[{paper_id}] Error reading {member.name}: {e}")
+                    continue
+    
+    # Step 2: Try the main (largest) tex file
+    tex_files = [(m, m.size) for m in tar_file.getmembers() 
+                 if m.isfile() and m.name.endswith('.tex')]
+    if tex_files:
+        tex_files.sort(key=lambda x: x[1], reverse=True)
+        main_tex = tex_files[0][0]
+        try:
+            f = tar_file.extractfile(main_tex)
+            if f:
+                content = f.read().decode('utf-8', errors='ignore')
+                intro_result = extract_introduction(content)
+                if intro_result:
+                    intro_text, method = intro_result
+                    return intro_text, main_tex.name, f"main_file_{method}"
+        except Exception as e:
+            logger.debug(f"[{paper_id}] Error reading main file {main_tex.name}: {e}")
+    
+    # Step 3: Search all remaining tex files
+    for member, _ in tex_files[1:]:  # Skip main file we already checked
+        try:
+            f = tar_file.extractfile(member)
+            if f:
+                content = f.read().decode('utf-8', errors='ignore')
+                intro_result = extract_introduction(content)
+                if intro_result:
+                    intro_text, method = intro_result
+                    return intro_text, member.name, f"aux_file_{method}"
+        except Exception as e:
+            logger.debug(f"[{paper_id}] Error reading {member.name}: {e}")
+            continue
+    
+    return None
+
+def verify_latex_source(url: str, timeout: int, min_size: int, max_retries: int = 3) -> bool:
+    """Verify that the LaTeX source exists and meets minimum requirements."""
+    retry_count = 0
+    while retry_count < max_retries:
+        try:
+            response = requests.head(url, timeout=timeout)
+            content_type = response.headers.get('content-type', '')
+            content_length = int(response.headers.get('content-length', 0))
+            
+            logger.info(f"HEAD {url} - Status: {response.status_code}, "
+                       f"Type: {content_type}, Size: {content_length} bytes")
+            
+            if response.status_code != 200:
+                logger.warning(f"LaTeX source not found: {url}")
+                return False
+            
+            # Check content type (should be gzip)
+            if 'gzip' not in content_type.lower():
+                logger.warning(f"Invalid content type for {url}: {content_type}")
+                return False
+                
+            # Check size
+            if content_length < min_size:
+                logger.warning(f"LaTeX source too small: {content_length} bytes")
+                return False
+                
+            return True
+            
+        except Exception as e:
+            retry_count += 1
+            if retry_count < max_retries:
+                logger.warning(f"Retry {retry_count}/{max_retries} for {url}: {e}")
+                time.sleep(2 ** retry_count)  # Exponential backoff
+            else:
+                logger.error(f"Error verifying LaTeX source after {max_retries} retries: {e}")
+                return False
+
+def check_latex_availability(paper: Paper, config: dict) -> bool:
+    """Check if LaTeX source is available for a paper (header check only)."""
+    try:
+        # Skip if already processed or marked for skipping
+        if paper.can_skip_intro_extraction():
+            return False
+            
+        # Convert PDF URL to LaTeX URL
+        if not paper.pdf_url:
+            paper.update_intro_status("no_latex_source")
+            paper.add_error("No PDF URL available")
+            return False
+            
+        paper.latex_url = paper.pdf_url.replace('/pdf/', '/src/')
+        
+        # Verify LaTeX source (header check only)
+        if verify_latex_source(paper.latex_url, config['timeout'], config['min_source_size']):
+            return True
+        else:
+            paper.update_intro_status("no_latex_source")
+            paper.add_error("LaTeX source verification failed")
+            return False
+    
+    except Exception as e:
+        paper.update_intro_status("no_latex_source")
+        paper.add_error(f"LaTeX availability check failed: {str(e)}")
+        logger.error(f"[{paper.id}] LaTeX availability check failed: {e}")
+        return False
+
+def download_and_extract_introduction(paper: Paper, config: dict) -> None:
+    """Download LaTeX source and extract introduction text."""
+    try:
+        # Download the LaTeX source
+        response = requests.get(paper.latex_url, timeout=config['timeout'])
+        
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Extract gzipped tar file
+            tar_path = Path(temp_dir) / "source.tar.gz"
+            tar_path.write_bytes(response.content)
+            
+            # Extract introduction using hierarchical approach
+            with tarfile.open(tar_path, 'r:gz') as tar:
+                result = find_introduction_in_archive(tar, paper.id)
+                
+                if result:
+                    intro_text, tex_filename, method = result
+                    
+                    # Validate and truncate if needed
+                    if len(intro_text) > config['max_introduction_length']:
+                        intro_text = intro_text[:config['max_introduction_length']] + "..."
+                    
+                    paper.introduction_text = intro_text
+                    paper.tex_file_name = tex_filename
+                    paper.intro_extraction_method = method
+                    paper.update_intro_status("intro_successful")
+                else:
+                    paper.update_intro_status("no_intro_found")
+                    paper.add_error("Could not find introduction section")
+                    logger.warning(f"[{paper.id}] No introduction found in any tex files")
+    
+    except Exception as e:
+        paper.update_intro_status("extraction_failed")
+        paper.add_error(f"Introduction extraction failed: {str(e)}")
+        logger.error(f"[{paper.id}] Introduction extraction failed: {e}")
+
+def run(papers: Dict[str, Paper], config: dict) -> Dict[str, Paper]:
+    """
+    Run the introduction extraction process on a batch of papers.
+    
+    This uses a proper two-phase approach:
+    Phase 1: Check LaTeX availability using threading (header checks only)
+    Phase 2: Download and extract introductions only from papers that passed Phase 1
+    
+    Args:
+        papers: Dictionary of paper_id -> Paper objects
+        config: Configuration dictionary with extraction parameters
+    
+    Returns:
+        The updated papers dictionary
+    """
+    logger.info(f"Starting introduction extraction for {len(papers)} papers")
+    
+    # Phase 1: Check LaTeX availability using threading
+    logger.info(f"\nPhase 1: Checking LaTeX source availability using {config['max_workers']} threads")
+    papers_with_latex = {}
+    papers_without_latex = {}
+    
+    # Submit all header check tasks
+    with ThreadPoolExecutor(max_workers=config['max_workers']) as executor:
+        # Submit header check tasks for all papers
+        future_to_paper = {
+            executor.submit(check_latex_availability, paper, config): (paper_id, paper)
+            for paper_id, paper in papers.items()
+        }
+        
+        # Collect results as they complete
+        for future in as_completed(future_to_paper):
+            paper_id, paper = future_to_paper[future]
+            try:
+                has_latex = future.result()
+                if has_latex:
+                    papers_with_latex[paper_id] = paper
+                else:
+                    papers_without_latex[paper_id] = paper
+            except Exception as e:
+                papers_without_latex[paper_id] = paper
+                logger.error(f" {paper_id} - Header check failed: {e}")
+
+    logger.info(f"Phase 1 complete: {len(papers_with_latex)}/{len(papers)} papers have LaTeX sources\n")
+    
+    # Phase 2: Extract introductions only from papers that passed Phase 1
+    if papers_with_latex:
+        logger.info(f"Phase 2: Extracting introductions from {len(papers_with_latex)} papers using {config['max_workers']} threads")
+        
+        # Submit download and extraction tasks for papers with LaTeX
+        with ThreadPoolExecutor(max_workers=config['max_workers']) as executor:
+            future_to_paper = {
+                executor.submit(download_and_extract_introduction, paper, config): (paper_id, paper)
+                for paper_id, paper in papers_with_latex.items()
+            }
+            
+            # Track results by extraction outcome
+            successful_extractions = 0
+            failed_extractions = 0
+            
+            # Collect results as they complete
+            for future in as_completed(future_to_paper):
+                paper_id, paper = future_to_paper[future]
+                try:
+                    future.result()
+                    if paper.is_intro_successful():
+                        successful_extractions += 1
+                        logger.info(f" {paper_id} - Introduction extraction SUCCESS - Method: {paper.intro_extraction_method}")
+                    else:
+                        failed_extractions += 1
+                        logger.info(f" {paper_id} - Introduction extraction FAILED - Status: {paper.intro_status}")
+                except Exception as e:
+                    failed_extractions += 1
+                    logger.error(f" {paper_id} - Introduction extraction FAILED: {e}")
+            
+            logger.info(f"Phase 2 complete: {successful_extractions} successful, {failed_extractions} failed")
+    
+    # Combine all papers back together
+    all_papers = {**papers_with_latex, **papers_without_latex}
+    
+    # Log final summary
+    total_papers = len(all_papers)
+    successful_count = sum(1 for p in all_papers.values() if p.is_intro_successful())
+    no_latex_count = sum(1 for p in all_papers.values() if p.intro_status == "no_latex_source")
+    failed_count = total_papers - successful_count - no_latex_count
+    
+    logger.info(f"\nFinal Summary:")
+    logger.info(f"  Total papers: {total_papers}")
+    logger.info(f"  Successful extractions: {successful_count}")
+    logger.info(f"  No LaTeX source: {no_latex_count}")
+    logger.info(f"  Failed extractions: {failed_count}")
+    
+    return all_papers 

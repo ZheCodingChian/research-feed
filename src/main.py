@@ -144,29 +144,35 @@ def main() -> None:
         # Save Point: Persist scraper results to cache
         save_to_cache(runtime_paper_dict)
         
+        # Step 2: Execute introduction extractor module
+        logger.info("Executing introduction extractor module")
+        from modules import intro_extractor
+        import config
+        runtime_paper_dict = intro_extractor.run(runtime_paper_dict, config.LATEX_EXTRACTION)
+        
+        # Save Point: Persist introduction extraction results to cache
+        save_to_cache(runtime_paper_dict)
+        
         # Future modules will be added here following the same pattern:
         # 1. Execute module
         # 2. Save to cache
         # 3. Continue to next module
         
         # TODO: Add subsequent modules here
-        # logger.info("Executing intro_extractor module")
-        # runtime_paper_dict = intro_extractor.run(runtime_paper_dict)
-        # save_to_cache(runtime_paper_dict)
-        
         # logger.info("Executing embed_similarity module")
         # runtime_paper_dict = embed_similarity.run(runtime_paper_dict)
         # save_to_cache(runtime_paper_dict)
-        
-        # ... and so on for other modules
         
         # Final summary
         total_papers = len(runtime_paper_dict)
         successful_papers = sum(1 for p in runtime_paper_dict.values() if p.is_successfully_scraped())
         failed_papers = sum(1 for p in runtime_paper_dict.values() if p.has_scraping_failed())
+        intro_successful = sum(1 for p in runtime_paper_dict.values() if p.is_intro_successful())
+        intro_failed = sum(1 for p in runtime_paper_dict.values() if p.intro_status not in ["not_extracted", "intro_successful"])
         
         logger.info(f"Pipeline completed: {total_papers} total papers, "
-                   f"{successful_papers} successful, {failed_papers} failed")
+                   f"{successful_papers} successfully scraped, {failed_papers} scraping failed")
+        logger.info(f"Introduction extraction: {intro_successful} successful, {intro_failed} failed/skipped")
         
     except KeyboardInterrupt:
         logger.info("Pipeline interrupted by user")

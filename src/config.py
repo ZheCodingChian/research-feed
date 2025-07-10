@@ -24,4 +24,22 @@ ARXIV = {
         # A random variation factor added to wait times to prevent synchronized requests (jitter).
         'jitter': 0.5
     }
+}
+
+# LaTeX Introduction Extraction Parameters
+LATEX_EXTRACTION = {
+    # Parallel processing settings
+    'max_workers': 3,
+    
+    # Rate limiting for arXiv downloads
+    'rate_limit_delay': 1.5,
+    'jitter': 0.5,
+    
+    # Retry settings
+    'max_retries': 3,
+    'timeout': 90,
+    
+    # Content limits
+    'max_introduction_length': 15000,
+    'min_source_size': 1000  # bytes
 } 
