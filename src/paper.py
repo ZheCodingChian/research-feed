@@ -35,7 +35,13 @@ class Paper:
     intro_extraction_method: Optional[str] = None  # How introduction was extracted
     tex_file_name: Optional[str] = None  # Source file name
     
-
+    # Embedding similarity fields
+    embedding_status: str = "not_embedded"  # Track embedding processing state
+    rlhf_score: Optional[float] = None  # Similarity score for RLHF topic
+    weak_supervision_score: Optional[float] = None  # Similarity score for weak supervision topic
+    diffusion_reasoning_score: Optional[float] = None  # Similarity score for diffusion reasoning topic
+    distributed_training_score: Optional[float] = None  # Similarity score for distributed training topic
+    highest_similarity_topic: Optional[str] = None  # Topic with highest similarity score
     
     # Metadata
     created_at: datetime = field(default_factory=datetime.now)
@@ -56,6 +62,11 @@ class Paper:
         self.intro_status = new_status
         self.updated_at = datetime.now()
     
+    def update_embedding_status(self, new_status: str) -> None:
+        """Update the paper's embedding status."""
+        self.embedding_status = new_status
+        self.updated_at = datetime.now()
+    
     def is_successfully_scraped(self) -> bool:
         """Check if the paper has been successfully scraped."""
         return self.scraper_status == "successfully_scraped"
@@ -70,4 +81,8 @@ class Paper:
     
     def can_skip_intro_extraction(self) -> bool:
         """Check if paper can skip introduction extraction."""
-        return self.intro_status in ["intro_successful", "no_latex_source", "no_intro_found"] 
+        return self.intro_status in ["intro_successful", "no_latex_source", "no_intro_found"]
+    
+    def is_embedding_completed(self) -> bool:
+        """Check if embedding similarity calculation was successful."""
+        return self.embedding_status == "completed"

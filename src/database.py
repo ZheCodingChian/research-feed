@@ -41,9 +41,26 @@ class PaperDatabase:
                     introduction_text TEXT,
                     intro_extraction_method TEXT,
                     tex_file_name TEXT,
+                    embedding_status TEXT DEFAULT 'not_embedded',
+                    rlhf_score REAL,
+                    weak_supervision_score REAL,
+                    diffusion_reasoning_score REAL,
+                    distributed_training_score REAL,
+                    highest_similarity_topic TEXT,
                     errors TEXT,  -- JSON array
                     created_at TEXT,  -- ISO format
                     updated_at TEXT   -- ISO format
+                )
+            """)
+            
+            # Create topic_embeddings table if it doesn't exist
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS topic_embeddings (
+                    topic_name TEXT PRIMARY KEY,
+                    description TEXT,
+                    embedding_vector TEXT,  -- JSON array of floats
+                    model TEXT,
+                    created_at TEXT
                 )
             """)
     
@@ -54,8 +71,10 @@ class PaperDatabase:
                 INSERT OR REPLACE INTO papers (
                     id, title, authors, categories, abstract, published_date,
                     arxiv_url, pdf_url, latex_url, scraper_status, intro_status, introduction_text,
-                    intro_extraction_method, tex_file_name, errors, created_at, updated_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    intro_extraction_method, tex_file_name, embedding_status, rlhf_score,
+                    weak_supervision_score, diffusion_reasoning_score, distributed_training_score,
+                    highest_similarity_topic, errors, created_at, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
                 paper.id,
                 paper.title,
@@ -71,6 +90,12 @@ class PaperDatabase:
                 paper.introduction_text,
                 paper.intro_extraction_method,
                 paper.tex_file_name,
+                paper.embedding_status,
+                paper.rlhf_score,
+                paper.weak_supervision_score,
+                paper.diffusion_reasoning_score,
+                paper.distributed_training_score,
+                paper.highest_similarity_topic,
                 json.dumps(paper.errors),
                 paper.created_at.isoformat(),
                 paper.updated_at.isoformat()
@@ -101,6 +126,12 @@ class PaperDatabase:
                 introduction_text=row['introduction_text'],
                 intro_extraction_method=row['intro_extraction_method'],
                 tex_file_name=row['tex_file_name'],
+                embedding_status=row['embedding_status'],
+                rlhf_score=row['rlhf_score'],
+                weak_supervision_score=row['weak_supervision_score'],
+                diffusion_reasoning_score=row['diffusion_reasoning_score'],
+                distributed_training_score=row['distributed_training_score'],
+                highest_similarity_topic=row['highest_similarity_topic'],
                 errors=json.loads(row['errors']),
                 created_at=datetime.fromisoformat(row['created_at']),
                 updated_at=datetime.fromisoformat(row['updated_at'])
@@ -116,8 +147,10 @@ class PaperDatabase:
                     INSERT OR REPLACE INTO papers (
                         id, title, authors, categories, abstract, published_date,
                         arxiv_url, pdf_url, latex_url, scraper_status, intro_status, introduction_text,
-                        intro_extraction_method, tex_file_name, errors, created_at, updated_at
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        intro_extraction_method, tex_file_name, embedding_status, rlhf_score,
+                        weak_supervision_score, diffusion_reasoning_score, distributed_training_score,
+                        highest_similarity_topic, errors, created_at, updated_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, (
                     paper.id,
                     paper.title,
@@ -133,6 +166,12 @@ class PaperDatabase:
                     paper.introduction_text,
                     paper.intro_extraction_method,
                     paper.tex_file_name,
+                    paper.embedding_status,
+                    paper.rlhf_score,
+                    paper.weak_supervision_score,
+                    paper.diffusion_reasoning_score,
+                    paper.distributed_training_score,
+                    paper.highest_similarity_topic,
                     json.dumps(paper.errors),
                     paper.created_at.isoformat(),
                     paper.updated_at.isoformat()
@@ -170,6 +209,12 @@ class PaperDatabase:
                     introduction_text=row['introduction_text'],
                     intro_extraction_method=row['intro_extraction_method'],
                     tex_file_name=row['tex_file_name'],
+                    embedding_status=row['embedding_status'],
+                    rlhf_score=row['rlhf_score'],
+                    weak_supervision_score=row['weak_supervision_score'],
+                    diffusion_reasoning_score=row['diffusion_reasoning_score'],
+                    distributed_training_score=row['distributed_training_score'],
+                    highest_similarity_topic=row['highest_similarity_topic'],
                     errors=json.loads(row['errors']),
                     created_at=datetime.fromisoformat(row['created_at']),
                     updated_at=datetime.fromisoformat(row['updated_at'])
@@ -177,4 +222,4 @@ class PaperDatabase:
                 papers[paper.id] = paper
         
         logger.info(f"Loaded {len(papers)} papers from database")
-        return papers 
+        return papers

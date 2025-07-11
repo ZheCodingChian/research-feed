@@ -1,6 +1,0 @@
-FOUNDATION IS DONE!
-
-TODO:
-
-1. find out what is wrong with the processing category logic. (why is help.ex still saved and not destroyed?)
-2. normalize the arxiv id so that its properly attributed as a skipped paper!

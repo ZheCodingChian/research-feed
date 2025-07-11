@@ -153,26 +153,28 @@ def main() -> None:
         # Save Point: Persist introduction extraction results to cache
         save_to_cache(runtime_paper_dict)
         
-        # Future modules will be added here following the same pattern:
-        # 1. Execute module
-        # 2. Save to cache
-        # 3. Continue to next module
+        # Step 3: Execute embedding similarity module
+        logger.info("Executing embedding similarity module")
+        from modules import embedding_similarity
+        runtime_paper_dict = embedding_similarity.run(runtime_paper_dict, config.EMBEDDING)
         
-        # TODO: Add subsequent modules here
-        # logger.info("Executing embed_similarity module")
-        # runtime_paper_dict = embed_similarity.run(runtime_paper_dict)
-        # save_to_cache(runtime_paper_dict)
+        # Save Point: Persist embedding similarity results to cache
+        save_to_cache(runtime_paper_dict)
         
+
         # Final summary
         total_papers = len(runtime_paper_dict)
         successful_papers = sum(1 for p in runtime_paper_dict.values() if p.is_successfully_scraped())
         failed_papers = sum(1 for p in runtime_paper_dict.values() if p.has_scraping_failed())
         intro_successful = sum(1 for p in runtime_paper_dict.values() if p.is_intro_successful())
         intro_failed = sum(1 for p in runtime_paper_dict.values() if p.intro_status not in ["not_extracted", "intro_successful"])
+        embedding_successful = sum(1 for p in runtime_paper_dict.values() if p.is_embedding_completed())
+        embedding_failed = sum(1 for p in runtime_paper_dict.values() if p.embedding_status == "failed")
         
         logger.info(f"Pipeline completed: {total_papers} total papers, "
                    f"{successful_papers} successfully scraped, {failed_papers} scraping failed")
         logger.info(f"Introduction extraction: {intro_successful} successful, {intro_failed} failed/skipped")
+        logger.info(f"Embedding similarity: {embedding_successful} successful, {embedding_failed} failed")
         
     except KeyboardInterrupt:
         logger.info("Pipeline interrupted by user")
@@ -183,4 +185,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main() 
+    main()

@@ -19,15 +19,6 @@ from paper import Paper
 
 logger = logging.getLogger('INTRO_EXTRACTOR')
 
-# Patterns for finding dedicated introduction files
-INTRO_FILE_PATTERNS = [
-    r'.*introduction\.tex$',
-    r'.*intro\.tex$',
-    r'.*[0-9]+-?intro\.tex$',
-    r'.*[0-9]+-?introduction\.tex$',
-    r'sections?/intro(duction)?\.tex$',
-]
-
 # We now use a more elegant semantic approach to find introduction sections
 # instead of exhaustive pattern matching
 
@@ -74,6 +65,100 @@ def clean_latex_markup(text: str) -> str:
     text = re.sub(r'\\[a-zA-Z]+', ' ', text)
     
     return text.strip()
+
+def is_latex_file(content: str) -> bool:
+    """
+    Determine if a file is a LaTeX source file by checking for common LaTeX structures.
+    
+    Args:
+        content: The content of the file to check
+        
+    Returns:
+        True if this appears to be a LaTeX file, False otherwise
+    """
+    # Look for common LaTeX document structures and commands
+    latex_indicators = [
+        r'\\document(class|style)',
+        r'\\begin\{document\}',
+        r'\\end\{document\}',
+        r'\\section',
+        r'\\chapter',
+        r'\\title',
+        r'\\author',
+        r'\\maketitle',
+        r'\\usepackage'
+    ]
+    
+    # Check for at least two indicators to confirm it's a LaTeX file
+    indicators_found = 0
+    for indicator in latex_indicators:
+        if re.search(indicator, content):
+            indicators_found += 1
+            if indicators_found >= 2:  # Requiring at least 2 indicators for higher confidence
+                return True
+    
+    return False
+
+
+def is_introduction_content(content: str) -> bool:
+    """
+    Verify if content appears to be introduction text by checking for LaTeX formatting
+    and academic writing indicators.
+    
+    Args:
+        content: The content to verify
+        
+    Returns:
+        True if this appears to be introduction content, False otherwise
+    """
+    if not content or len(content.strip()) < 100:
+        return False
+    
+    # Look for LaTeX formatting indicators
+    latex_indicators = [
+        r'\\cite\{',           # Citations
+        r'\\ref\{',            # References
+        r'\\label\{',          # Labels
+        r'\\textbf\{',         # Bold text
+        r'\\textit\{',         # Italic text
+        r'\\emph\{',           # Emphasized text
+        r'\\begin\{',          # Environment begins
+        r'\\end\{',            # Environment ends
+        r'~\\cite\{',          # Citation with non-breaking space
+        r'\\footnote',         # Footnotes
+        r'\\caption',          # Captions
+    ]
+    
+    # Count LaTeX indicators present
+    latex_count = 0
+    for indicator in latex_indicators:
+        if re.search(indicator, content):
+            latex_count += 1
+    
+    # Look for academic writing patterns
+    academic_patterns = [
+        r'\b(research|study|investigation|analysis|approach|method|framework)\b',
+        r'\b(propose|present|introduce|demonstrate|show|prove)\b',
+        r'\b(however|moreover|furthermore|nevertheless|therefore)\b',
+        r'\b(recent|previous|prior|existing|current)\s+(work|research|studies)\b',
+        r'\b(contribution|novel|significant|important)\b'
+    ]
+    
+    # Count academic patterns present
+    academic_count = 0
+    content_lower = content.lower()
+    for pattern in academic_patterns:
+        if re.search(pattern, content_lower):
+            academic_count += 1
+    
+    # Content is likely introduction if it has:
+    # - At least 2 LaTeX indicators OR
+    # - At least 3 academic writing patterns OR
+    # - At least 1 LaTeX indicator AND 2 academic patterns
+    return (latex_count >= 2 or 
+            academic_count >= 3 or 
+            (latex_count >= 1 and academic_count >= 2))
+
 
 def is_introduction_section(section_title: str) -> bool:
     """
@@ -205,31 +290,40 @@ def extract_introduction(tex_content: str) -> Optional[tuple[str, str]]:
 def find_introduction_in_archive(tar_file, paper_id: str) -> Optional[tuple[str, str, str]]:
     """
     Find introduction using a hierarchical approach:
-    1. Look for dedicated introduction files
+    1. Look for dedicated introduction files (any file with 'intro' or 'introduction' in name)
     2. Check the main (largest) tex file
     3. Search all tex files for introduction sections
     
     Returns (content, filename, method) or None if not found.
     """
-    # Step 1: Look for dedicated introduction files
+    # Step 1: Look for dedicated introduction files with two-stage verification
     for member in tar_file.getmembers():
-        if not member.isfile() or not member.name.endswith('.tex'):
+        if not member.isfile():
             continue
             
         filename_lower = member.name.lower()
-        for pattern in INTRO_FILE_PATTERNS:
-            if re.match(pattern, filename_lower):
-                try:
-                    f = tar_file.extractfile(member)
-                    if f:
-                        content = f.read().decode('utf-8', errors='ignore')
+        # Stage 1: Check if filename contains introduction-related keywords
+        if "introduction" in filename_lower or "intro" in filename_lower:
+            try:
+                f = tar_file.extractfile(member)
+                if f:
+                    content = f.read().decode('utf-8', errors='ignore')
+                    
+                    # Stage 2: Verify content is actually introduction text
+                    if is_introduction_content(content):
+                        # Try structured extraction first
                         intro_result = extract_introduction(content)
                         if intro_result:
                             intro_text, _ = intro_result
                             return intro_text, member.name, "dedicated_intro_file"
-                except Exception as e:
-                    logger.debug(f"[{paper_id}] Error reading {member.name}: {e}")
-                    continue
+                        
+                        # If structured extraction fails, use cleaned content
+                        cleaned_content = clean_latex_markup(content)
+                        if len(cleaned_content) >= 100:
+                            return cleaned_content, member.name, "dedicated_intro_file"
+            except Exception as e:
+                logger.debug(f"[{paper_id}] Error reading {member.name}: {e}")
+                continue
     
     # Step 2: Try the main (largest) tex file
     tex_files = [(m, m.size) for m in tar_file.getmembers() 
@@ -446,16 +540,12 @@ def run(papers: Dict[str, Paper], config: dict) -> Dict[str, Paper]:
     # Combine all papers back together
     all_papers = {**papers_with_latex, **papers_without_latex}
     
-    # Log final summary
+    # Log concise summary
     total_papers = len(all_papers)
     successful_count = sum(1 for p in all_papers.values() if p.is_intro_successful())
     no_latex_count = sum(1 for p in all_papers.values() if p.intro_status == "no_latex_source")
     failed_count = total_papers - successful_count - no_latex_count
     
-    logger.info(f"\nFinal Summary:")
-    logger.info(f"  Total papers: {total_papers}")
-    logger.info(f"  Successful extractions: {successful_count}")
-    logger.info(f"  No LaTeX source: {no_latex_count}")
-    logger.info(f"  Failed extractions: {failed_count}")
+    logger.info(f"Introduction extraction complete: {successful_count}/{total_papers} successful, {no_latex_count} no source, {failed_count} failed")
     
     return all_papers 

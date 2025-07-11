@@ -42,4 +42,17 @@ LATEX_EXTRACTION = {
     # Content limits
     'max_introduction_length': 15000,
     'min_source_size': 1000  # bytes
-} 
+}
+
+# Embedding Similarity Parameters
+EMBEDDING = {
+    # Model configuration
+    'model': 'text-embedding-3-large',
+    
+    # Batch processing
+    'batch_size': 100,
+    
+    # Retry settings
+    'max_retries': 3,
+    'timeout': 60
+}
