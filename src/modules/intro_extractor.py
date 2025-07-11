@@ -28,34 +28,8 @@ INTRO_FILE_PATTERNS = [
     r'sections?/intro(duction)?\.tex$',
 ]
 
-# Patterns for finding introduction sections in LaTeX content
-INTRO_SECTION_PATTERNS = [
-    # Standard section commands - case-insensitive matching
-    r'\\section\*?\{([Ii][Nn][Tt][Rr][Oo][Dd][Uu][Cc][Tt][Ii][Oo][Nn].*?)\}',
-    r'\\section\*?\{(INTRODUCTION.*?)\}',
-    r'\\section\*?\{([Ii][Nn][Tt][Rr][Oo].*?)\}',
-    
-    # Numbered sections - various numbering styles
-    r'\\section\*?\{\s*1\.?\s*([Ii][Nn][Tt][Rr][Oo][Dd][Uu][Cc][Tt][Ii][Oo][Nn].*?)\}',
-    r'\\section\*?\{\s*I\.?\s*([Ii][Nn][Tt][Rr][Oo][Dd][Uu][Cc][Tt][Ii][Oo][Nn].*?)\}',
-    r'\\section\*?\{\s*1\s+([Ii][Nn][Tt][Rr][Oo][Dd][Uu][Cc][Tt][Ii][Oo][Nn].*?)\}',
-    r'\\section\*?\{\s*I\s+([Ii][Nn][Tt][Rr][Oo][Dd][Uu][Cc][Tt][Ii][Oo][Nn].*?)\}',
-    r'\\section\*?\{\s*1\.?\s*(INTRODUCTION.*?)\}',
-    r'\\section\*?\{\s*I\.?\s*(INTRODUCTION.*?)\}',
-    
-    # Custom introduction commands
-    r'\\introduction\{([^}]+)\}',
-    r'\\Introduction\{([^}]+)\}',
-    r'\\INTRODUCTION\{([^}]+)\}',
-    
-    # Chapter-level introductions - case-insensitive
-    r'\\chapter\*?\{([Ii][Nn][Tt][Rr][Oo][Dd][Uu][Cc][Tt][Ii][Oo][Nn].*?)\}',
-    r'\\chapter\*?\{(INTRODUCTION.*?)\}',
-    r'\\chapter\*?\{\s*1\.?\s*([Ii][Nn][Tt][Rr][Oo][Dd][Uu][Cc][Tt][Ii][Oo][Nn].*?)\}',
-    r'\\chapter\*?\{\s*I\.?\s*([Ii][Nn][Tt][Rr][Oo][Dd][Uu][Cc][Tt][Ii][Oo][Nn].*?)\}',
-    r'\\chapter\*?\{\s*1\.?\s*(INTRODUCTION.*?)\}',
-    r'\\chapter\*?\{\s*I\.?\s*(INTRODUCTION.*?)\}',
-]
+# We now use a more elegant semantic approach to find introduction sections
+# instead of exhaustive pattern matching
 
 def clean_latex_markup(text: str) -> str:
     """Clean LaTeX markup from extracted text while preserving meaningful content."""
@@ -101,45 +75,121 @@ def clean_latex_markup(text: str) -> str:
     
     return text.strip()
 
+def is_introduction_section(section_title: str) -> bool:
+    """
+    Check if a section title represents an introduction section.
+    This checks for any form of the word 'introduction' after removing formatting commands.
+    
+    Args:
+        section_title: The text inside \section{...} or \section*{...}
+        
+    Returns:
+        True if this appears to be an introduction section, False otherwise
+    """
+    # Remove LaTeX formatting commands like \textbf{}, \emph{}, etc.
+    # This regex matches commands with their arguments and replaces them with just the content
+    clean_title = re.sub(r'\\[a-zA-Z]+\{([^}]*)\}', r'\1', section_title)
+    
+    # Case-insensitive check for "introduction" or "intro" in the cleaned title
+    return bool(re.search(r'intro(duction)?', clean_title, re.IGNORECASE))
+
 def extract_introduction(tex_content: str) -> Optional[tuple[str, str]]:
     """
-    Extract introduction from LaTeX content using multiple patterns.
+    Extract introduction from LaTeX content using a semantic approach.
     Returns (extracted_text, method_used) or None if no introduction found.
     """
-    # Pre-process: remove decorative comment blocks that might interfere with pattern matching
-    # This preserves the content structure while removing potential noise
-    clean_content = re.sub(r'(%+)[^\n]*\n', '\n', tex_content)
+    # Match any \section or \section* command and capture its title
+    section_pattern = r'\\section\*?\{([^}]+)\}'
     
-    # Try each pattern to find the introduction section
-    for pattern in INTRO_SECTION_PATTERNS:
-        # First try to find content until next section
-        match = re.search(pattern + r'(.*?)\\section', clean_content, re.DOTALL)
-        if match:
-            intro_text = match.group(2) if len(match.groups()) > 1 else match.group(1)
-            intro_text = clean_latex_markup(intro_text)
-            if len(intro_text) >= 100:  # Basic length validation
-                return intro_text, "section_boundary"
+    # Find all section commands in the document
+    sections = re.finditer(section_pattern, tex_content)
+    
+    for section_match in sections:
+        section_title = section_match.group(1)
         
-        # Fallback: try to find content until end of document
-        match = re.search(pattern + r'(.*)', clean_content, re.DOTALL)
+        # Check if this is an introduction section
+        if is_introduction_section(section_title):
+            # Get the position where this section starts
+            section_start = section_match.end()
+            
+            # Try to find the next section to determine where this section ends
+            next_section = re.search(r'\\section', tex_content[section_start:], re.DOTALL)
+            
+            if next_section:
+                # Extract content until the next section
+                content = tex_content[section_start:section_start + next_section.start()]
+                content = clean_latex_markup(content)
+                if len(content) >= 100:  # Basic length validation
+                    return content, "section_boundary"
+            else:
+                # No next section found, extract until end of document
+                content = tex_content[section_start:]
+                # Remove common trailing sections
+                content = re.sub(r'\\bibliography\{.*?\}.*', '', content, flags=re.DOTALL)
+                content = re.sub(r'\\appendix.*', '', content, flags=re.DOTALL)
+                content = re.sub(r'\\end\{document\}.*', '', content, flags=re.DOTALL)
+                content = clean_latex_markup(content)
+                if len(content) >= 100:
+                    return content, "document_end"
+
+    # Also try chapter-level introductions
+    chapter_pattern = r'\\chapter\*?\{([^}]+)\}'
+    chapters = re.finditer(chapter_pattern, tex_content)
+    
+    for chapter_match in chapters:
+        chapter_title = chapter_match.group(1)
+        
+        # Check if this is an introduction chapter
+        if is_introduction_section(chapter_title):
+            # Get the position where this chapter starts
+            chapter_start = chapter_match.end()
+            
+            # Try to find the next chapter or section to determine where this chapter ends
+            next_heading = re.search(r'\\(chapter|section)', tex_content[chapter_start:], re.DOTALL)
+            
+            if next_heading:
+                # Extract content until the next heading
+                content = tex_content[chapter_start:chapter_start + next_heading.start()]
+                content = clean_latex_markup(content)
+                if len(content) >= 100:  # Basic length validation
+                    return content, "chapter_boundary"
+            else:
+                # No next heading found, extract until end of document
+                content = tex_content[chapter_start:]
+                # Remove common trailing sections
+                content = re.sub(r'\\bibliography\{.*?\}.*', '', content, flags=re.DOTALL)
+                content = re.sub(r'\\appendix.*', '', content, flags=re.DOTALL)
+                content = re.sub(r'\\end\{document\}.*', '', content, flags=re.DOTALL)
+                content = clean_latex_markup(content)
+                if len(content) >= 100:
+                    return content, "chapter_end"
+    
+    # Check for custom introduction commands
+    intro_cmd_patterns = [
+        r'\\introduction\{([^}]+)\}',
+        r'\\Introduction\{([^}]+)\}',
+        r'\\INTRODUCTION\{([^}]+)\}'
+    ]
+    
+    for pattern in intro_cmd_patterns:
+        match = re.search(pattern + r'(.*?)\\(section|chapter)', tex_content, re.DOTALL)
         if match:
-            content = match.group(2) if len(match.groups()) > 1 else match.group(1)
+            content = match.group(2)
+            content = clean_latex_markup(content)
+            if len(content) >= 100:  # Basic length validation
+                return content, "custom_intro_command"
+            
+        # Also try until end of document
+        match = re.search(pattern + r'(.*)', tex_content, re.DOTALL)
+        if match:
+            content = match.group(2)
             # Remove common trailing sections
             content = re.sub(r'\\bibliography\{.*?\}.*', '', content, flags=re.DOTALL)
             content = re.sub(r'\\appendix.*', '', content, flags=re.DOTALL)
             content = re.sub(r'\\end\{document\}.*', '', content, flags=re.DOTALL)
             content = clean_latex_markup(content)
             if len(content) >= 100:
-                return content, "document_end"
-    
-    # If still not found, try the original content (in case pre-processing removed too much)
-    for pattern in INTRO_SECTION_PATTERNS:
-        match = re.search(pattern + r'(.*?)\\section', tex_content, re.DOTALL)
-        if match:
-            intro_text = match.group(2) if len(match.groups()) > 1 else match.group(1)
-            intro_text = clean_latex_markup(intro_text)
-            if len(intro_text) >= 100:  # Basic length validation
-                return intro_text, "section_boundary_original"
+                return content, "custom_intro_command_end"
     
     # Fallback: Try to find first section after abstract
     abstract_match = re.search(r'\\begin\{abstract\}.*?\\end\{abstract\}(.*?)\\section', 
@@ -149,17 +199,6 @@ def extract_introduction(tex_content: str) -> Optional[tuple[str, str]]:
         first_section = clean_latex_markup(first_section)
         if len(first_section) >= 100:
             return first_section, "post_abstract"
-    
-    # Last resort: Look for specific patterns that might indicate an introduction without explicit labeling
-    # This is useful for papers that don't explicitly label the first section as "Introduction"
-    first_section_match = re.search(r'\\begin\{document\}.*?\\maketitle.*?(.*?)\\section', 
-                                  tex_content, re.DOTALL)
-    if first_section_match:
-        first_content = first_section_match.group(1)
-        first_content = clean_latex_markup(first_content)
-        # Only consider this an introduction if it's substantial and doesn't look like just metadata
-        if len(first_content) >= 200 and not re.search(r'^\s*\\', first_content):
-            return first_content, "implicit_intro"
     
     return None
 
