@@ -47,6 +47,15 @@ class PaperDatabase:
                     diffusion_reasoning_score REAL,
                     distributed_training_score REAL,
                     highest_similarity_topic TEXT,
+                    llm_validation_status TEXT DEFAULT 'not_validated',
+                    rlhf_relevance TEXT DEFAULT 'not_validated',
+                    weak_supervision_relevance TEXT DEFAULT 'not_validated',
+                    diffusion_reasoning_relevance TEXT DEFAULT 'not_validated',
+                    distributed_training_relevance TEXT DEFAULT 'not_validated',
+                    rlhf_justification TEXT DEFAULT 'no_justification',
+                    weak_supervision_justification TEXT DEFAULT 'no_justification',
+                    diffusion_reasoning_justification TEXT DEFAULT 'no_justification',
+                    distributed_training_justification TEXT DEFAULT 'no_justification',
                     errors TEXT,  -- JSON array
                     created_at TEXT,  -- ISO format
                     updated_at TEXT   -- ISO format
@@ -73,8 +82,11 @@ class PaperDatabase:
                     arxiv_url, pdf_url, latex_url, scraper_status, intro_status, introduction_text,
                     intro_extraction_method, tex_file_name, embedding_status, rlhf_score,
                     weak_supervision_score, diffusion_reasoning_score, distributed_training_score,
-                    highest_similarity_topic, errors, created_at, updated_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    highest_similarity_topic, llm_validation_status, rlhf_relevance,
+                    weak_supervision_relevance, diffusion_reasoning_relevance, distributed_training_relevance,
+                    rlhf_justification, weak_supervision_justification, diffusion_reasoning_justification,
+                    distributed_training_justification, errors, created_at, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
                 paper.id,
                 paper.title,
@@ -96,6 +108,15 @@ class PaperDatabase:
                 paper.diffusion_reasoning_score,
                 paper.distributed_training_score,
                 paper.highest_similarity_topic,
+                paper.llm_validation_status,
+                paper.rlhf_relevance,
+                paper.weak_supervision_relevance,
+                paper.diffusion_reasoning_relevance,
+                paper.distributed_training_relevance,
+                paper.rlhf_justification,
+                paper.weak_supervision_justification,
+                paper.diffusion_reasoning_justification,
+                paper.distributed_training_justification,
                 json.dumps(paper.errors),
                 paper.created_at.isoformat(),
                 paper.updated_at.isoformat()
@@ -132,6 +153,15 @@ class PaperDatabase:
                 diffusion_reasoning_score=row['diffusion_reasoning_score'],
                 distributed_training_score=row['distributed_training_score'],
                 highest_similarity_topic=row['highest_similarity_topic'],
+                llm_validation_status=row['llm_validation_status'],
+                rlhf_relevance=row['rlhf_relevance'],
+                weak_supervision_relevance=row['weak_supervision_relevance'],
+                diffusion_reasoning_relevance=row['diffusion_reasoning_relevance'],
+                distributed_training_relevance=row['distributed_training_relevance'],
+                rlhf_justification=row['rlhf_justification'],
+                weak_supervision_justification=row['weak_supervision_justification'],
+                diffusion_reasoning_justification=row['diffusion_reasoning_justification'],
+                distributed_training_justification=row['distributed_training_justification'],
                 errors=json.loads(row['errors']),
                 created_at=datetime.fromisoformat(row['created_at']),
                 updated_at=datetime.fromisoformat(row['updated_at'])
@@ -149,8 +179,11 @@ class PaperDatabase:
                         arxiv_url, pdf_url, latex_url, scraper_status, intro_status, introduction_text,
                         intro_extraction_method, tex_file_name, embedding_status, rlhf_score,
                         weak_supervision_score, diffusion_reasoning_score, distributed_training_score,
-                        highest_similarity_topic, errors, created_at, updated_at
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        highest_similarity_topic, llm_validation_status, rlhf_relevance,
+                        weak_supervision_relevance, diffusion_reasoning_relevance, distributed_training_relevance,
+                        rlhf_justification, weak_supervision_justification, diffusion_reasoning_justification,
+                        distributed_training_justification, errors, created_at, updated_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, (
                     paper.id,
                     paper.title,
@@ -172,6 +205,15 @@ class PaperDatabase:
                     paper.diffusion_reasoning_score,
                     paper.distributed_training_score,
                     paper.highest_similarity_topic,
+                    paper.llm_validation_status,
+                    paper.rlhf_relevance,
+                    paper.weak_supervision_relevance,
+                    paper.diffusion_reasoning_relevance,
+                    paper.distributed_training_relevance,
+                    paper.rlhf_justification,
+                    paper.weak_supervision_justification,
+                    paper.diffusion_reasoning_justification,
+                    paper.distributed_training_justification,
                     json.dumps(paper.errors),
                     paper.created_at.isoformat(),
                     paper.updated_at.isoformat()

@@ -38,12 +38,27 @@ class EmbeddingSimilarity:
         self.config = config
         self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         
-        # Define research topics with concise descriptions
+        # Define research topics with detailed descriptions
         self.topics = {
-            'rlhf': "Reinforcement Learning from Human Feedback for aligning AI systems with human preferences.",
-            'weak_supervision': "Machine learning approaches that use weak or noisy labels instead of clean labeled data.",
-            'diffusion_reasoning': "AI models that use diffusion processes for reasoning and problem-solving tasks.",
-            'distributed_training': "Training machine learning models across multiple machines or devices in parallel."
+            'Reinforcement Learning from Human Feedback': """RLHF (Reinforcement Learning from Human Feedback)
+This field focuses on aligning AI systems, particularly large language and vision models, with human values and intentions. The core idea is to use human feedback to guide the model's learning process, moving beyond standard supervised fine-tuning. This includes techniques for collecting and modeling human preferences, often through pairwise comparisons or ratings, to learn a reward model. This reward model is then used to fine-tune the base model using reinforcement learning algorithms like Proximal Policy Optimization (PPO). Key areas include the development of high-quality preference datasets, methods to improve the sample efficiency of feedback, and alternative approaches that bypass an explicit reward model, such as Direct Preference Optimization (DPO). The ultimate goal is to create models that are more helpful, harmless, and honest by steering their behavior toward desired outcomes defined by human judges. This also encompasses related concepts like Constitutional AI, AI safety, value alignment, and mitigating reward hacking.
+
+Keywords: Reinforcement Learning from Human Feedback, RLHF, Direct Preference Optimization, DPO, Proximal Policy Optimization, PPO, reward model, preference learning, human preferences, pairwise comparison, preference dataset, instruction tuning, AI alignment, AI safety, Constitutional AI, human-in-the-loop, value alignment, helpfulness, harmlessness, honesty.""",
+            
+            'Weak Supervision': """Weak Supervision
+This area of machine learning addresses the challenge of creating large labeled datasets by using lower-quality, noisy, or imprecise sources of supervision instead of relying on manually annotated data. The central theme is leveraging imperfect information to train high-performing models. This includes methods like distant supervision, where knowledge bases are used to automatically label text, and data programming, where users provide a set of heuristic rules or "labeling functions" that are combined via a generative model to produce probabilistic labels. Frameworks like Snorkel are central to this paradigm. The research explores techniques for handling label noise, resolving conflicts between different weak sources, and programmatically creating and augmenting training data. The goal is to dramatically reduce the time and cost associated with data labeling while maintaining competitive model performance.
+
+Keywords: Weak supervision, distant supervision, programmatic labeling, data programming, labeling functions, noisy labels, imperfect labels, heuristic rules, label model, generative label model, Snorkel, data augmentation, semi-supervised learning, unreliable labels, probabilistic labels.""",
+            
+            'Diffusion-based Reasoning': """Diffusion-based Reasoning Models
+This emerging research direction explores the application of diffusion models, traditionally used for high-fidelity image and audio generation, to tasks requiring complex reasoning and structured thinking. Instead of simply generating pixels, these models are being adapted to produce structured outputs like text, code, or logical plans. A key focus is on emulating multi-step or chain-of-thought reasoning by conceptualizing the reasoning process as a denoising trajectory, generating intermediate steps to arrive at a final answer. This includes developing hybrid architectures that integrate diffusion mechanisms with transformers or other established reasoning modules. The research investigates how the iterative refinement process inherent in diffusion can be harnessed for logical inference, mathematical problem-solving, planning, and other cognitive tasks typically associated with large language models.
+
+Keywords: Diffusion model, denoising diffusion probabilistic models, DDPM, score-based generation, chain-of-thought, step-by-step reasoning, structured prediction, logical reasoning, planning, latent diffusion, generative reasoning, diffusion for language, hybrid architectures, transformer-diffusion models, iterative refinement.""",
+            
+            'Distributed Training': """Distributed Training
+This field focuses on the algorithms, systems, and infrastructure required to train massive machine learning models that cannot fit on a single accelerator (GPU/TPU). It involves techniques for parallelizing the training process across multiple devices, which can be located within a single server or distributed across a cluster of nodes. Core strategies include data parallelism, where the dataset is split across devices; model parallelism, where the model itself is partitioned (including tensor and pipeline parallelism); and ZeRO (Zero Redundancy Optimizer), which shards optimizer states, gradients, and parameters. Research in this area develops new parallelization strategies, communication-efficient algorithms to reduce network bottlenecks (e.g., gradient compression, collective communication libraries like NCCL), and robust systems for managing training at scale. This includes work on fault tolerance, checkpointing, and hardware-software co-design to optimize for specific network topologies and interconnects like NVLink and InfiniBand.
+
+Keywords: Distributed training, large-scale training, model parallelism, data parallelism, pipeline parallelism, tensor parallelism, Zero Redundancy Optimizer, ZeRO, FSDP, DeepSpeed, Megatron-LM, multi-GPU, multi-node, gradient accumulation, collective communication, all-reduce, parameter server, gradient compression, HPC, High-Performance Computing."""
         }
     
     def run(self, papers: Dict[str, Paper]) -> Dict[str, Paper]:
@@ -239,11 +254,11 @@ class EmbeddingSimilarity:
                         for topic, topic_vec in topic_embeddings.items()
                     }
                     
-                    # Store scores in paper object
-                    paper.rlhf_score = scores.get('rlhf')
-                    paper.weak_supervision_score = scores.get('weak_supervision')
-                    paper.diffusion_reasoning_score = scores.get('diffusion_reasoning')
-                    paper.distributed_training_score = scores.get('distributed_training')
+                    # Store scores in paper object (mapping natural language topic names to existing fields)
+                    paper.rlhf_score = scores.get('Reinforcement Learning from Human Feedback')
+                    paper.weak_supervision_score = scores.get('Weak Supervision')
+                    paper.diffusion_reasoning_score = scores.get('Diffusion-based Reasoning')
+                    paper.distributed_training_score = scores.get('Distributed Training')
                     
                     # Find highest scoring topic
                     highest_topic = max(scores, key=scores.get)

@@ -161,6 +161,13 @@ def main() -> None:
         # Save Point: Persist embedding similarity results to cache
         save_to_cache(runtime_paper_dict)
         
+        # Step 4: Execute LLM validation module
+        logger.info("Executing LLM validation module")
+        from modules import llm_validation
+        runtime_paper_dict = llm_validation.run(runtime_paper_dict, config.LLM_VALIDATION)
+        
+        # Save Point: Persist LLM validation results to cache
+        save_to_cache(runtime_paper_dict)
 
         # Final summary
         total_papers = len(runtime_paper_dict)
@@ -170,11 +177,14 @@ def main() -> None:
         intro_failed = sum(1 for p in runtime_paper_dict.values() if p.intro_status not in ["not_extracted", "intro_successful"])
         embedding_successful = sum(1 for p in runtime_paper_dict.values() if p.is_embedding_completed())
         embedding_failed = sum(1 for p in runtime_paper_dict.values() if p.embedding_status == "failed")
+        llm_validation_successful = sum(1 for p in runtime_paper_dict.values() if p.is_llm_validation_completed())
+        llm_validation_failed = sum(1 for p in runtime_paper_dict.values() if p.llm_validation_status == "failed")
         
         logger.info(f"Pipeline completed: {total_papers} total papers, "
                    f"{successful_papers} successfully scraped, {failed_papers} scraping failed")
         logger.info(f"Introduction extraction: {intro_successful} successful, {intro_failed} failed/skipped")
         logger.info(f"Embedding similarity: {embedding_successful} successful, {embedding_failed} failed")
+        logger.info(f"LLM validation: {llm_validation_successful} successful, {llm_validation_failed} failed")
         
     except KeyboardInterrupt:
         logger.info("Pipeline interrupted by user")

@@ -56,3 +56,24 @@ EMBEDDING = {
     'max_retries': 3,
     'timeout': 60
 }
+
+# LLM Validation Parameters
+LLM_VALIDATION = {
+    # OpenRouter API configuration
+    'api_base_url': 'https://openrouter.ai/api/v1',
+    'model': 'x-ai/grok-3-mini',
+    'api_key_env': 'OPENROUTER_API_KEY',
+    
+    # Similarity threshold for validation
+    'similarity_threshold': 0.4,
+    
+    # Parallel processing settings
+    'max_workers': 10,  # Number of concurrent API calls
+    'batch_size': 10,   # Papers to process in parallel batches
+    'max_retries': 3,
+    'timeout': 120,
+    
+    # Rate limiting (reduced since we're using parallel processing)
+    'rate_limit_delay': 0.5,  # Reduced delay between batches
+    'jitter': 0.2
+}

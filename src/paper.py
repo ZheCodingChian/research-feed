@@ -43,6 +43,17 @@ class Paper:
     distributed_training_score: Optional[float] = None  # Similarity score for distributed training topic
     highest_similarity_topic: Optional[str] = None  # Topic with highest similarity score
     
+    # LLM validation fields
+    llm_validation_status: str = "not_validated"  # Track LLM validation state
+    rlhf_relevance: str = "not_validated"  # LLM relevance assessment for RLHF
+    weak_supervision_relevance: str = "not_validated"  # LLM relevance assessment for weak supervision
+    diffusion_reasoning_relevance: str = "not_validated"  # LLM relevance assessment for diffusion reasoning
+    distributed_training_relevance: str = "not_validated"  # LLM relevance assessment for distributed training
+    rlhf_justification: str = "no_justification"  # LLM justification for RLHF assessment
+    weak_supervision_justification: str = "no_justification"  # LLM justification for weak supervision assessment
+    diffusion_reasoning_justification: str = "no_justification"  # LLM justification for diffusion reasoning assessment
+    distributed_training_justification: str = "no_justification"  # LLM justification for distributed training assessment
+    
     # Metadata
     created_at: datetime = field(default_factory=datetime.now)
     updated_at: datetime = field(default_factory=datetime.now)
@@ -86,3 +97,16 @@ class Paper:
     def is_embedding_completed(self) -> bool:
         """Check if embedding similarity calculation was successful."""
         return self.embedding_status == "completed"
+    
+    def update_llm_validation_status(self, new_status: str) -> None:
+        """Update the paper's LLM validation status."""
+        self.llm_validation_status = new_status
+        self.updated_at = datetime.now()
+    
+    def is_llm_validation_completed(self) -> bool:
+        """Check if LLM validation was successful."""
+        return self.llm_validation_status == "completed"
+    
+    def can_skip_llm_validation(self) -> bool:
+        """Check if paper can skip LLM validation."""
+        return self.llm_validation_status in ["completed", "failed"] or not self.is_embedding_completed()
