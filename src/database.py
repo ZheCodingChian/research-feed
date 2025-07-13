@@ -56,6 +56,14 @@ class PaperDatabase:
                     weak_supervision_justification TEXT DEFAULT 'no_justification',
                     diffusion_reasoning_justification TEXT DEFAULT 'no_justification',
                     distributed_training_justification TEXT DEFAULT 'no_justification',
+                    llm_score_status TEXT DEFAULT 'not_scored',
+                    summary TEXT,
+                    novelty_score TEXT,
+                    novelty_justification TEXT,
+                    impact_score TEXT,
+                    impact_justification TEXT,
+                    recommendation_score TEXT,
+                    recommendation_justification TEXT,
                     errors TEXT,  -- JSON array
                     created_at TEXT,  -- ISO format
                     updated_at TEXT   -- ISO format
@@ -85,8 +93,10 @@ class PaperDatabase:
                     highest_similarity_topic, llm_validation_status, rlhf_relevance,
                     weak_supervision_relevance, diffusion_reasoning_relevance, distributed_training_relevance,
                     rlhf_justification, weak_supervision_justification, diffusion_reasoning_justification,
-                    distributed_training_justification, errors, created_at, updated_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    distributed_training_justification, llm_score_status, summary, novelty_score,
+                    novelty_justification, impact_score, impact_justification, recommendation_score,
+                    recommendation_justification, errors, created_at, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
                 paper.id,
                 paper.title,
@@ -117,6 +127,14 @@ class PaperDatabase:
                 paper.weak_supervision_justification,
                 paper.diffusion_reasoning_justification,
                 paper.distributed_training_justification,
+                paper.llm_score_status,
+                paper.summary,
+                paper.novelty_score,
+                paper.novelty_justification,
+                paper.impact_score,
+                paper.impact_justification,
+                paper.recommendation_score,
+                paper.recommendation_justification,
                 json.dumps(paper.errors),
                 paper.created_at.isoformat(),
                 paper.updated_at.isoformat()
@@ -162,6 +180,14 @@ class PaperDatabase:
                 weak_supervision_justification=row['weak_supervision_justification'],
                 diffusion_reasoning_justification=row['diffusion_reasoning_justification'],
                 distributed_training_justification=row['distributed_training_justification'],
+                llm_score_status=row['llm_score_status'],
+                summary=row['summary'],
+                novelty_score=row['novelty_score'],
+                novelty_justification=row['novelty_justification'],
+                impact_score=row['impact_score'],
+                impact_justification=row['impact_justification'],
+                recommendation_score=row['recommendation_score'],
+                recommendation_justification=row['recommendation_justification'],
                 errors=json.loads(row['errors']),
                 created_at=datetime.fromisoformat(row['created_at']),
                 updated_at=datetime.fromisoformat(row['updated_at'])
@@ -182,8 +208,10 @@ class PaperDatabase:
                         highest_similarity_topic, llm_validation_status, rlhf_relevance,
                         weak_supervision_relevance, diffusion_reasoning_relevance, distributed_training_relevance,
                         rlhf_justification, weak_supervision_justification, diffusion_reasoning_justification,
-                        distributed_training_justification, errors, created_at, updated_at
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        distributed_training_justification, llm_score_status, summary, novelty_score,
+                        novelty_justification, impact_score, impact_justification, recommendation_score,
+                        recommendation_justification, errors, created_at, updated_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, (
                     paper.id,
                     paper.title,
@@ -214,6 +242,14 @@ class PaperDatabase:
                     paper.weak_supervision_justification,
                     paper.diffusion_reasoning_justification,
                     paper.distributed_training_justification,
+                    paper.llm_score_status,
+                    paper.summary,
+                    paper.novelty_score,
+                    paper.novelty_justification,
+                    paper.impact_score,
+                    paper.impact_justification,
+                    paper.recommendation_score,
+                    paper.recommendation_justification,
                     json.dumps(paper.errors),
                     paper.created_at.isoformat(),
                     paper.updated_at.isoformat()

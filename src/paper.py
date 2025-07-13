@@ -54,6 +54,16 @@ class Paper:
     diffusion_reasoning_justification: str = "no_justification"  # LLM justification for diffusion reasoning assessment
     distributed_training_justification: str = "no_justification"  # LLM justification for distributed training assessment
     
+    # LLM scoring fields
+    llm_score_status: str = "not_scored"  # Track LLM scoring state: not_scored, completed, failed, not_relevant_enough
+    summary: Optional[str] = None  # LLM-generated paper summary
+    novelty_score: Optional[str] = None  # High, Moderate, Low, None
+    novelty_justification: Optional[str] = None  # LLM justification for novelty score
+    impact_score: Optional[str] = None  # High, Moderate, Low, Negligible
+    impact_justification: Optional[str] = None  # LLM justification for impact score
+    recommendation_score: Optional[str] = None  # Must Read, Should Read, Can Skip, Ignore
+    recommendation_justification: Optional[str] = None  # LLM justification for recommendation
+    
     # Metadata
     created_at: datetime = field(default_factory=datetime.now)
     updated_at: datetime = field(default_factory=datetime.now)
@@ -110,3 +120,26 @@ class Paper:
     def can_skip_llm_validation(self) -> bool:
         """Check if paper can skip LLM validation."""
         return self.llm_validation_status in ["completed", "failed"] or not self.is_embedding_completed()
+    
+    def update_llm_score_status(self, new_status: str) -> None:
+        """Update the paper's LLM scoring status."""
+        self.llm_score_status = new_status
+        self.updated_at = datetime.now()
+    
+    def is_llm_score_completed(self) -> bool:
+        """Check if LLM scoring was successful."""
+        return self.llm_score_status == "completed"
+    
+    def can_skip_llm_scoring(self) -> bool:
+        """Check if paper can skip LLM scoring."""
+        return self.llm_score_status in ["completed", "failed", "not_relevant_enough"]
+    
+    def has_highly_relevant_topic(self) -> bool:
+        """Check if paper has at least one highly relevant topic."""
+        relevance_scores = [
+            self.rlhf_relevance,
+            self.weak_supervision_relevance,
+            self.diffusion_reasoning_relevance,
+            self.distributed_training_relevance
+        ]
+        return "highly_relevant" in relevance_scores
