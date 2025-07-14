@@ -12,7 +12,7 @@ import time
 import requests
 import tarfile
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict, Optional, List
 from paper import Paper
 
 logger = logging.getLogger('INTRO_EXTRACTOR')
@@ -360,10 +360,6 @@ def find_introduction_in_archive(tar_file, paper_id: str) -> Optional[tuple[str,
 
 def download_and_extract_introduction(paper: Paper, config: dict) -> None:
     """Download LaTeX source and extract introduction text with retry logic."""
-    # Skip if already processed or marked for skipping
-    if paper.can_skip_intro_extraction():
-        return
-        
     # Convert PDF URL to LaTeX URL
     if not paper.pdf_url:
         paper.update_intro_status("extraction_failed")
@@ -434,39 +430,104 @@ def run(papers: Dict[str, Paper], config: dict) -> Dict[str, Paper]:
         The updated papers dictionary
     """
     logger.info(f"Starting introduction extraction for {len(papers)} papers")
-    logger.info(f"Processing papers sequentially with {config['rate_limit_delay']}s delays")
     
-    # Process papers sequentially (no parallel downloads)
+    # Step 1: Identify papers needing processing
+    papers_to_process = _identify_papers_for_intro_extraction(papers)
+    skipped_papers = len(papers) - len(papers_to_process)
+    
+    if not papers_to_process:
+        logger.info("No papers require introduction extraction")
+        return papers
+    
+    logger.info(f"Processing {len(papers_to_process)} papers for introduction extraction with {config['rate_limit_delay']}s delays")
+    
+    # Step 2: Process filtered papers sequentially (no parallel downloads)
     successful_count = 0
     failed_count = 0
     
-    paper_items = list(papers.items())
-    
-    for i, (paper_id, paper) in enumerate(paper_items, 1):
-        logger.info(f"Processing paper {i}/{len(paper_items)}: {paper_id}")
+    for i, paper in enumerate(papers_to_process, 1):
+        logger.info(f"Processing paper {i}/{len(papers_to_process)}: {paper.id}")
         
         try:
             download_and_extract_introduction(paper, config)
             
             if paper.is_intro_successful():
                 successful_count += 1
-                logger.info(f"  {paper_id} - SUCCESS - Method: {paper.intro_extraction_method}")
+                logger.info(f"  {paper.id} - SUCCESS - Method: {paper.intro_extraction_method}")
             else:
                 failed_count += 1
-                logger.info(f"  {paper_id} - FAILED - Status: {paper.intro_status}")
+                logger.info(f"  {paper.id} - FAILED - Status: {paper.intro_status}")
         
         except Exception as e:
             failed_count += 1
-            logger.error(f"  {paper_id} - FAILED - Unexpected error: {e}")
+            logger.error(f"  {paper.id} - FAILED - Unexpected error: {e}")
         
         # Wait between requests (respect arXiv rate limits)
-        if i < len(paper_items):  # Don't wait after the last paper
+        if i < len(papers_to_process):  # Don't wait after the last paper
             delay = config['rate_limit_delay']
             logger.debug(f"Waiting {delay}s before next request...")
             time.sleep(delay)
     
-    # Log final summary
+    # Step 3: Log final summary
     total_papers = len(papers)
-    logger.info(f"Introduction extraction complete: {successful_count}/{total_papers} successful, {failed_count} failed")
+    logger.info(f"Introduction extraction complete: {successful_count}/{len(papers_to_process)} successful, {failed_count} failed, {skipped_papers} skipped")
     
-    return papers 
+    return papers
+
+def _identify_papers_for_intro_extraction(papers: Dict[str, Paper]) -> List[Paper]:
+    """
+    Identify papers that need introduction extraction.
+    
+    Args:
+        papers: Dictionary of papers
+        
+    Returns:
+        List of papers that need introduction extraction
+    """
+    papers_to_process = []
+    
+    # Counters for detailed logging
+    already_extracted = 0
+    no_latex_source = 0
+    no_intro_found = 0
+    extraction_failed = 0
+    
+    for paper in papers.values():
+        # Check specific skip reasons for detailed logging
+        if paper.intro_status == "intro_successful":
+            already_extracted += 1
+            continue
+        elif paper.intro_status == "no_latex_source":
+            no_latex_source += 1
+            continue
+        elif paper.intro_status == "no_intro_found":
+            no_intro_found += 1
+            continue
+        elif paper.intro_status == "extraction_failed":
+            extraction_failed += 1
+            continue
+        elif paper.intro_status == "not_extracted":
+            # This paper needs processing
+            papers_to_process.append(paper)
+            logger.debug(f"Paper {paper.id} needs introduction extraction")
+        else:
+            # Unknown status, log warning but include for processing
+            logger.warning(f"Paper {paper.id} has unknown intro_status: {paper.intro_status}, including for processing")
+            papers_to_process.append(paper)
+    
+    # Log detailed skip statistics
+    total_skipped = already_extracted + no_latex_source + no_intro_found + extraction_failed
+    if total_skipped > 0:
+        skip_details = []
+        if already_extracted > 0:
+            skip_details.append(f"{already_extracted} already extracted")
+        if no_latex_source > 0:
+            skip_details.append(f"{no_latex_source} no LaTeX source")
+        if no_intro_found > 0:
+            skip_details.append(f"{no_intro_found} no intro found")
+        if extraction_failed > 0:
+            skip_details.append(f"{extraction_failed} extraction failed")
+        
+        logger.info(f"Skipping {total_skipped} papers: {', '.join(skip_details)}")
+    
+    return papers_to_process

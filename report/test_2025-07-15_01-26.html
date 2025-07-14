@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ display_title }}</title>
+    <title>Test Papers</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <!-- KaTeX CSS for LaTeX math rendering -->
@@ -577,9 +577,9 @@
                 <a href="index.html" class="main-nav-link">← Back to Home</a>
             </div>
             <div class="header-title-section">
-                <h1 class="mb-3">{{ display_title }}</h1>
+                <h1 class="mb-3">Test Papers</h1>
                 
-                <p class="text-muted mb-0" id="paper-count">{{ paper_count }} papers</p>
+                <p class="text-muted mb-0" id="paper-count">1 papers</p>
             </div>
         </div>
         <div class="controls-section">
@@ -604,12 +604,27 @@
                     <div class="control-group">
                         <label class="form-label mb-0">Filter by topics:</label>
                         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                            {% for topic in topics %}
+                            
                             <label class="form-check-label" style="display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">
-                                <input type="checkbox" class="form-check-input topic-filter" value="{{ topic }}" checked>
-                                {{ topic.replace('_', ' ') }}
+                                <input type="checkbox" class="form-check-input topic-filter" value="RLHF" checked>
+                                RLHF
                             </label>
-                            {% endfor %}
+                            
+                            <label class="form-check-label" style="display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">
+                                <input type="checkbox" class="form-check-input topic-filter" value="Weak_supervision" checked>
+                                Weak supervision
+                            </label>
+                            
+                            <label class="form-check-label" style="display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">
+                                <input type="checkbox" class="form-check-input topic-filter" value="Diffusion_reasoning" checked>
+                                Diffusion reasoning
+                            </label>
+                            
+                            <label class="form-check-label" style="display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">
+                                <input type="checkbox" class="form-check-input topic-filter" value="Distributed_training" checked>
+                                Distributed training
+                            </label>
+                            
                         </div>
                     </div>
                     
@@ -666,7 +681,7 @@
                 
                 <div class="filter-count-section">
                     <span id="filter-count" class="filter-count-display">
-                        Showing {{ paper_count }}/{{ paper_count }} papers
+                        Showing 1/1 papers
                     </span>
                 </div>
             </div>
@@ -675,254 +690,402 @@
 
     <div class="container">
         <div id="papers-container">
-            {% for paper in papers %}
-            <div class="paper-card" data-paper-index="{{ loop.index0 }}">
+            
+            <div class="paper-card" data-paper-index="0">
                 <div class="paper-header">
-                    <div class="paper-number">#{{ loop.index }}</div>
+                    <div class="paper-number">#1</div>
                     <h5 class="paper-title">
-                        <a href="{{ paper.arxiv_url }}" class="paper-link" target="_blank">
-                            {{ paper.title }}
+                        <a href="http://arxiv.org/abs/2502.13417" class="paper-link" target="_blank">
+                            RLTHF: Targeted Human Feedback for LLM Alignment
                         </a>
                     </h5>
                     <div class="paper-meta">
-                        <strong>arXiv ID:</strong> {{ paper.arxiv_id }} |
-                        <strong>Published:</strong> {{ paper.published or 'Unknown' }} |
-                        {% if paper.highest_score %}
-                        <strong>Highest Score:</strong> {{ "%.3f"|format(paper.highest_score) }} {{ paper.highest_similarity_topic.replace('_', ' ') }}
-                        {% endif %}
+                        <strong>arXiv ID:</strong> 2502.13417 |
+                        <strong>Published:</strong> 2025-02-19T04:25:11+00:00 |
+                        
+                        <strong>Highest Score:</strong> 0.717 RLHF
+                        
                     </div>
                 </div>
                 
                 <div class="paper-body">
                     <div class="paper-abstract">
-                        <strong>Abstract:</strong> {{ paper.abstract }}
+                        <strong>Abstract:</strong> Fine-tuning large language models (LLMs) to align with user preferences is
+challenging due to the high cost of quality human annotations in Reinforcement
+Learning from Human Feedback (RLHF) and the generalizability limitations of AI
+Feedback. To address these challenges, we propose RLTHF, a human-AI hybrid
+framework that combines LLM-based initial alignment with selective human
+annotations to achieve full-human annotation alignment with minimal effort.
+RLTHF identifies hard-to-annotate samples mislabeled by LLMs using a reward
+model&#x27;s reward distribution and iteratively enhances alignment by integrating
+strategic human corrections while leveraging LLM&#x27;s correctly labeled samples.
+Evaluations on HH-RLHF and TL;DR datasets show that RLTHF reaches full-human
+annotation-level alignment with only 6-7% of the human annotation effort.
+Furthermore, models trained on RLTHF&#x27;s curated datasets for downstream tasks
+outperform those trained on fully human-annotated datasets, underscoring the
+effectiveness of RLTHF&#x27;s strategic data curation.
                     </div>
                     
-                    {% if paper.categories %}
+                    
                     <div class="paper-categories">
                         <strong>Categories:</strong>
-                        {% for category in paper.categories %}
-                        <span class="category-tag">{{ category }}</span>
-                        {% endfor %}
+                        
+                        <span class="category-tag">cs.CL</span>
+                        
+                        <span class="category-tag">cs.AI</span>
+                        
+                        <span class="category-tag">cs.LG</span>
+                        
                     </div>
-                    {% endif %}
                     
-                    {% if paper.scores_data %}
+                    
+                    
                     <div class="llm-scoring-widget">
                         <div class="llm-scoring-title">LLM Scoring:</div>
                         
-                        {% if paper.scores_data.recommendation %}
+                        
                         <div class="llm-scoring-row">
                             <div class="llm-scoring-left">
                                 <span class="llm-scoring-label">Recommendation:</span>
-                                <span class="llm-scoring-value {{ paper.scores_data.recommendation.lower().replace(' ', '-') }}">{{ paper.scores_data.recommendation }}</span>
+                                <span class="llm-scoring-value should-read">Should Read</span>
                             </div>
-                            {% if paper.scores_data.recommendation_justification %}
-                            <button class="llm-scoring-justification-btn" onclick="toggleLLMJustification('rec-{{ loop.index0 }}')">
+                            
+                            <button class="llm-scoring-justification-btn" onclick="toggleLLMJustification('rec-0')">
                                 Show Justification ▼
                             </button>
                         </div>
-                        <div class="llm-scoring-justification" id="rec-{{ loop.index0 }}">
-                            {{ paper.scores_data.recommendation_justification }}
+                        <div class="llm-scoring-justification" id="rec-0">
+                            This paper is valuable for researchers and practitioners working on LLM alignment and human-AI feedback mechanisms due to its practical contributions in cost reduction and performance improvements, but it may not be essential for those outside this specific area.
                         </div>
-                        {% else %}
-                        </div>
-                        {% endif %}
-                        {% endif %}
                         
-                        {% if paper.scores_data.novelty %}
+                        
+                        
+                        
                         <div class="llm-scoring-row">
                             <div class="llm-scoring-left">
                                 <span class="llm-scoring-label">Novelty:</span>
-                                <span class="llm-scoring-value {{ paper.scores_data.novelty.lower() }}">{{ paper.scores_data.novelty }}</span>
+                                <span class="llm-scoring-value moderate">Moderate</span>
                             </div>
-                            {% if paper.scores_data.novelty_justification %}
-                            <button class="llm-scoring-justification-btn" onclick="toggleLLMJustification('nov-{{ loop.index0 }}')">
+                            
+                            <button class="llm-scoring-justification-btn" onclick="toggleLLMJustification('nov-0')">
                                 Show Justification ▼
                             </button>
                         </div>
-                        <div class="llm-scoring-justification" id="nov-{{ loop.index0 }}">
-                            {{ paper.scores_data.novelty_justification }}
+                        <div class="llm-scoring-justification" id="nov-0">
+                            The paper presents a notable improvement by combining existing RLHF and RLAIF techniques with a new strategy for targeted human feedback using reward distributions, offering a clever way to address annotation challenges without introducing an entirely new problem or architecture.
                         </div>
-                        {% else %}
-                        </div>
-                        {% endif %}
-                        {% endif %}
                         
-                        {% if paper.scores_data.impact %}
+                        
+                        
+                        
                         <div class="llm-scoring-row">
                             <div class="llm-scoring-left">
                                 <span class="llm-scoring-label">Potential Impact:</span>
-                                <span class="llm-scoring-value {{ paper.scores_data.impact.lower() }}">{{ paper.scores_data.impact }}</span>
+                                <span class="llm-scoring-value moderate">Moderate</span>
                             </div>
-                            {% if paper.scores_data.impact_justification %}
-                            <button class="llm-scoring-justification-btn" onclick="toggleLLMJustification('imp-{{ loop.index0 }}')">
+                            
+                            <button class="llm-scoring-justification-btn" onclick="toggleLLMJustification('imp-0')">
                                 Show Justification ▼
                             </button>
                         </div>
-                        <div class="llm-scoring-justification" id="imp-{{ loop.index0 }}">
-                            {{ paper.scores_data.impact_justification }}
+                        <div class="llm-scoring-justification" id="imp-0">
+                            The work is likely to influence research and applications in LLM alignment by reducing annotation costs, making it relevant for subfields focused on efficient AI training, though its broader impact may be limited to specific practical implementations.
                         </div>
-                        {% else %}
-                        </div>
-                        {% endif %}
-                        {% endif %}
+                        
+                        
                     </div>
-                    {% else %}
-                    <div class="llm-scoring-not-relevant">
-                        Not relevant enough for LLM scoring.
-                        <div class="llm-scoring-tooltip">
-                            This paper does not have a topic similarity score high enough to warrant detailed LLM scoring analysis.
-                        </div>
-                    </div>
-                    {% endif %}
+                    
                     
                     <div class="paper-metrics-row">
                         <div class="similarity-scores">
-                            {% if paper.scores %}
+                            
                                 <div class="similarity-summary">
                                     <h6 style="margin-bottom: 1rem; color: #ffffff; font-weight: 600;">Similarity Scores:</h6>
                                     <div class="similarity-scores-content">
-                                        {% for topic, score in paper.scores.items() %}
-                                        <span class="similarity-label" data-topic="{{ topic }}">{{ topic.replace('_', ' ') }}:</span>
-                                        <div class="similarity-right-column" data-topic="{{ topic }}">
+                                        
+                                        <span class="similarity-label" data-topic="RLHF">RLHF:</span>
+                                        <div class="similarity-right-column" data-topic="RLHF">
                                             <div class="similarity-bar">
-                                                <div class="similarity-bar-fill" style="width: {{ (score * 100)|round(1) }}%"></div>
+                                                <div class="similarity-bar-fill" style="width: 71.7%"></div>
                                             </div>
-                                            <span class="similarity-value" data-original-score="{{ "%.3f"|format(score) }}">{{ "%.3f"|format(score) }}</span>
+                                            <span class="similarity-value" data-original-score="0.717">0.717</span>
                                         </div>
-                                        {% endfor %}
+                                        
+                                        <span class="similarity-label" data-topic="Weak_supervision">Weak supervision:</span>
+                                        <div class="similarity-right-column" data-topic="Weak_supervision">
+                                            <div class="similarity-bar">
+                                                <div class="similarity-bar-fill" style="width: 47.0%"></div>
+                                            </div>
+                                            <span class="similarity-value" data-original-score="0.470">0.470</span>
+                                        </div>
+                                        
+                                        <span class="similarity-label" data-topic="Diffusion_reasoning">Diffusion reasoning:</span>
+                                        <div class="similarity-right-column" data-topic="Diffusion_reasoning">
+                                            <div class="similarity-bar">
+                                                <div class="similarity-bar-fill" style="width: 40.9%"></div>
+                                            </div>
+                                            <span class="similarity-value" data-original-score="0.409">0.409</span>
+                                        </div>
+                                        
+                                        <span class="similarity-label" data-topic="Distributed_training">Distributed training:</span>
+                                        <div class="similarity-right-column" data-topic="Distributed_training">
+                                            <div class="similarity-bar">
+                                                <div class="similarity-bar-fill" style="width: 41.1%"></div>
+                                            </div>
+                                            <span class="similarity-value" data-original-score="0.411">0.411</span>
+                                        </div>
+                                        
                                     </div>
                                 </div>
-                            {% else %}
-                                <div class="similarity-summary">
-                                    <h6 style="margin-bottom: 1rem; color: #ffffff; font-weight: 600;">Similarity Scores:</h6>
-                                    <p class="text-muted">No similarity scores available</p>
-                                </div>
-                            {% endif %}
+                            
                         </div>
                         
                         <div class="llm-validation">
-                            {% if paper.llm_validation %}
+                            
                                 <div class="llm-validation-summary">
                                     <h6 style="margin-bottom: 1rem; color: #ffffff; font-weight: 600;">LLM Validation:</h6>
-                                    {% for topic in topics %}
-                                        {% if paper.llm_validation.get(topic) %}
-                                            {% set topic_data = paper.llm_validation[topic] %}
-                                            <div class="llm-validation-item" data-topic="{{ topic }}">
-                                                <span class="llm-topic-label">{{ topic.replace('_', ' ') }}:</span>
-                                                {% if topic_data.validated %}
-                                                    {% if topic_data.llm_relevant == 'yes' %}
-                                                        <span class="llm-status llm-yes">YES</span>
-                                                    {% elif topic_data.llm_relevant == 'no' %}
-                                                        <span class="llm-status llm-no">NO</span>
-                                                    {% else %}
-                                                        <span class="llm-status llm-disabled">{{ topic_data.llm_relevant.upper() }}</span>
-                                                    {% endif %}
-                                                {% else %}
-                                                    <span class="llm-status llm-disabled">NOT VALIDATED</span>
-                                                {% endif %}
+                                    
+                                        
+                                            
+                                            <div class="llm-validation-item" data-topic="RLHF">
+                                                <span class="llm-topic-label">RLHF:</span>
+                                                
+                                                    
+                                                        <span class="llm-status llm-disabled">HIGHLY_RELEVANT</span>
+                                                    
+                                                
                                             </div>
-                                        {% endif %}
-                                    {% endfor %}
+                                        
+                                    
+                                        
+                                            
+                                            <div class="llm-validation-item" data-topic="Weak_supervision">
+                                                <span class="llm-topic-label">Weak supervision:</span>
+                                                
+                                                    
+                                                        <span class="llm-status llm-disabled">MODERATELY_RELEVANT</span>
+                                                    
+                                                
+                                            </div>
+                                        
+                                    
+                                        
+                                            
+                                            <div class="llm-validation-item" data-topic="Diffusion_reasoning">
+                                                <span class="llm-topic-label">Diffusion reasoning:</span>
+                                                
+                                                    
+                                                        <span class="llm-status llm-disabled">NOT_RELEVANT</span>
+                                                    
+                                                
+                                            </div>
+                                        
+                                    
+                                        
+                                            
+                                            <div class="llm-validation-item" data-topic="Distributed_training">
+                                                <span class="llm-topic-label">Distributed training:</span>
+                                                
+                                                    
+                                                        <span class="llm-status llm-disabled">NOT_RELEVANT</span>
+                                                    
+                                                
+                                            </div>
+                                        
+                                    
                                     
                                     <div class="llm-buttons-row">
                                         <button class="btn btn-sm btn-outline-light llm-toggle" 
-                                                onclick="toggleLLMDetails('llm-details-{{ loop.index0 }}')">
+                                                onclick="toggleLLMDetails('llm-details-0')">
                                             Show Justifications ▼
                                         </button>
                                     </div>
                                     
-                                    <div class="llm-details" id="llm-details-{{ loop.index0 }}">
+                                    <div class="llm-details" id="llm-details-0">
                                         <h6 style="font-size: 0.9rem; margin-bottom: 0.5rem;">LLM Justifications:</h6>
-                                        {% for topic in topics %}
-                                            {% if paper.llm_validation.get(topic) and paper.llm_validation[topic].justification %}
+                                        
+                                            
                                             <div class="llm-justification">
-                                                <strong>{{ topic.replace('_', ' ') }}:</strong> {{ paper.llm_validation[topic].justification }}
+                                                <strong>RLHF:</strong> The paper directly builds on RLHF by proposing RLTHF, a framework that uses human feedback to align LLMs. It involves training a reward model on human-ranked data and iteratively refining it, aligning closely with RLHF's core principles of using human preferences for model fine-tuning.
                                             </div>
-                                            {% endif %}
-                                        {% endfor %}
+                                            
+                                        
+                                            
+                                            <div class="llm-justification">
+                                                <strong>Weak supervision:</strong> The paper employs LLMs to generate initial labels, which are noisy and imprecise, and then refines them with targeted human input, resembling weak supervision's use of programmatically derived labels. However, it focuses more on hybrid human-AI alignment than pure weak supervision techniques.
+                                            </div>
+                                            
+                                        
+                                            
+                                            <div class="llm-justification">
+                                                <strong>Diffusion reasoning:</strong> The paper does not involve diffusion models, iterative refinement for logical tasks, or treating Chain-of-Thought as a single entity for multi-step corrections; it focuses on RLHF alignment strategies without any diffusion-based components.
+                                            </div>
+                                            
+                                        
+                                            
+                                            <div class="llm-justification">
+                                                <strong>Distributed training:</strong> The paper does not address parallel computing, multi-node training, or partitioning data/computation across processors; its contributions are centered on data annotation and alignment, not distributed systems.
+                                            </div>
+                                            
+                                        
                                     </div>
                                 </div>
-                            {% else %}
-                                <div class="llm-validation-summary">
-                                    <h6 style="margin-bottom: 1rem; color: #ffffff; font-weight: 600;">LLM Validation:</h6>
-                                    <p class="text-muted">No LLM validation data available</p>
-                                </div>
-                            {% endif %}
+                            
                         </div>
                         
                         <div class="h-index-scores">
-                            {% if paper.author_h_indices.success %}
+                            
                                 <div class="h-index-summary">
                                     <h6 style="margin-bottom: 1rem; color: #ffffff; font-weight: 600;">Author H-Index:</h6>
                                     <div class="h-index-metric">
                                         <span class="h-index-label">Data found:</span>
-                                        <span class="h-index-value">{{ paper.author_h_indices.authors_with_h_index_count }}/{{ paper.author_h_indices.total_authors }} authors</span>
+                                        <span class="h-index-value">14/14 authors</span>
                                     </div>
                                     <div class="h-index-metric">
                                         <span class="h-index-label">H-index available:</span>
-                                        <span class="h-index-value">{{ paper.author_h_indices.authors_with_h_index_count }}/{{ paper.author_h_indices.authors_with_h_index_count }} found</span>
+                                        <span class="h-index-value">14/14 found</span>
                                     </div>
-                                    {% if paper.author_h_indices.highest_h_index %}
+                                    
                                     <div class="h-index-metric">
                                         <span class="h-index-label">Highest:</span>
-                                        <span class="h-index-value">{{ paper.author_h_indices.highest_h_index }}</span>
+                                        <span class="h-index-value">6</span>
                                     </div>
-                                    {% endif %}
-                                    {% if paper.author_h_indices.average_h_index %}
+                                    
+                                    
                                     <div class="h-index-metric">
                                         <span class="h-index-label">Average:</span>
-                                        <span class="h-index-value">{{ "%.1f"|format(paper.author_h_indices.average_h_index) }}</span>
+                                        <span class="h-index-value">2.6</span>
                                     </div>
-                                    {% endif %}
-                                    {% if paper.author_h_indices.notable_authors_count is defined %}
+                                    
+                                    
                                     <div class="h-index-metric">
                                         <span class="h-index-label">Notable (H>5):</span>
-                                        <span class="h-index-value">{{ paper.author_h_indices.notable_authors_count }}</span>
+                                        <span class="h-index-value">1</span>
                                     </div>
-                                    {% endif %}
-                                    {% if paper.author_h_indices.h_index_fetch_method %}
+                                    
+                                    
                                     <div class="h-index-metric">
                                         <span class="h-index-label">Source:</span>
-                                        <span class="h-index-value">{{ paper.author_h_indices.h_index_fetch_method.replace('_', ' ').title() }}</span>
+                                        <span class="h-index-value">Full Id</span>
                                     </div>
-                                    {% endif %}
                                     
-                                    {% if paper.author_h_indices.author_h_indexes %}
+                                    
+                                    
                                     <div class="h-index-expand">
                                         <button class="btn btn-sm btn-outline-light h-index-toggle" 
-                                                onclick="toggleHIndexDetails('h-details-{{ loop.index0 }}')">
+                                                onclick="toggleHIndexDetails('h-details-0')">
                                             Show Individual H-indices ▼
                                         </button>
-                                        <div class="h-index-details" id="h-details-{{ loop.index0 }}">
-                                            {% for author in paper.author_h_indices.author_h_indexes %}
+                                        <div class="h-index-details" id="h-details-0">
+                                            
                                             <div class="individual-h-index">
-                                                {% if author.semantic_scholar_url %}
-                                                <span class="author-name">
-                                                    <a href="{{ author.semantic_scholar_url }}" target="_blank" class="author-name-link">{{ author.name }}</a>
-                                                </span>
-                                                {% else %}
-                                                <span class="author-name">{{ author.name }}</span>
-                                                {% endif %}
-                                                <span class="author-h-value">{{ author.h_index if author.h_index is not none else 'N/A' }}</span>
+                                                
+                                                <span class="author-name">Yifei Xu</span>
+                                                
+                                                <span class="author-h-value">2</span>
                                             </div>
-                                            {% endfor %}
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Tusher Chakraborty</span>
+                                                
+                                                <span class="author-h-value">6</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Emre Kiciman</span>
+                                                
+                                                <span class="author-h-value">5</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Bibek Aryal</span>
+                                                
+                                                <span class="author-h-value">1</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Eduardo Rodrigues</span>
+                                                
+                                                <span class="author-h-value">1</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Srinagesh Sharma</span>
+                                                
+                                                <span class="author-h-value">1</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Roberto Estevão</span>
+                                                
+                                                <span class="author-h-value">2</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">M. A. D. L. Balaguer</span>
+                                                
+                                                <span class="author-h-value">5</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Jessica Wolk</span>
+                                                
+                                                <span class="author-h-value">1</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Rafael Padilha</span>
+                                                
+                                                <span class="author-h-value">2</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Leonardo Nunes</span>
+                                                
+                                                <span class="author-h-value">3</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Shobana Balakrishnan</span>
+                                                
+                                                <span class="author-h-value">1</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Songwu Lu</span>
+                                                
+                                                <span class="author-h-value">2</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Ranveer Chandra</span>
+                                                
+                                                <span class="author-h-value">4</span>
+                                            </div>
+                                            
                                         </div>
                                     </div>
-                                    {% endif %}
+                                    
                                 </div>
-                            {% else %}
-                                <div class="h-index-summary">
-                                    <h6 style="margin-bottom: 1rem; color: #ffffff; font-weight: 600;">Author H-Index:</h6>
-                                    <p class="text-muted">No H-index data available</p>
-                                </div>
-                            {% endif %}
+                            
                         </div>
                     </div>
                 </div>
             </div>
-            {% endfor %}
+            
         </div>
     </div>
 
@@ -981,7 +1144,7 @@
         }
         
         // Basic filtering and sorting functionality
-        const papers = {{ papers | tojson }};
+        const papers = [{"abstract": "Fine-tuning large language models (LLMs) to align with user preferences is\nchallenging due to the high cost of quality human annotations in Reinforcement\nLearning from Human Feedback (RLHF) and the generalizability limitations of AI\nFeedback. To address these challenges, we propose RLTHF, a human-AI hybrid\nframework that combines LLM-based initial alignment with selective human\nannotations to achieve full-human annotation alignment with minimal effort.\nRLTHF identifies hard-to-annotate samples mislabeled by LLMs using a reward\nmodel\u0026#x27;s reward distribution and iteratively enhances alignment by integrating\nstrategic human corrections while leveraging LLM\u0026#x27;s correctly labeled samples.\nEvaluations on HH-RLHF and TL;DR datasets show that RLTHF reaches full-human\nannotation-level alignment with only 6-7% of the human annotation effort.\nFurthermore, models trained on RLTHF\u0026#x27;s curated datasets for downstream tasks\noutperform those trained on fully human-annotated datasets, underscoring the\neffectiveness of RLTHF\u0026#x27;s strategic data curation.", "arxiv_id": "2502.13417", "arxiv_url": "http://arxiv.org/abs/2502.13417", "author_h_indices": {"author_h_indexes": [{"h_index": 2, "name": "Yifei Xu", "semantic_scholar_url": null}, {"h_index": 6, "name": "Tusher Chakraborty", "semantic_scholar_url": null}, {"h_index": 5, "name": "Emre Kiciman", "semantic_scholar_url": null}, {"h_index": 1, "name": "Bibek Aryal", "semantic_scholar_url": null}, {"h_index": 1, "name": "Eduardo Rodrigues", "semantic_scholar_url": null}, {"h_index": 1, "name": "Srinagesh Sharma", "semantic_scholar_url": null}, {"h_index": 2, "name": "Roberto Estev\u00e3o", "semantic_scholar_url": null}, {"h_index": 5, "name": "M. A. D. L. Balaguer", "semantic_scholar_url": null}, {"h_index": 1, "name": "Jessica Wolk", "semantic_scholar_url": null}, {"h_index": 2, "name": "Rafael Padilha", "semantic_scholar_url": null}, {"h_index": 3, "name": "Leonardo Nunes", "semantic_scholar_url": null}, {"h_index": 1, "name": "Shobana Balakrishnan", "semantic_scholar_url": null}, {"h_index": 2, "name": "Songwu Lu", "semantic_scholar_url": null}, {"h_index": 4, "name": "Ranveer Chandra", "semantic_scholar_url": null}], "authors_with_h_index_count": 14, "average_h_index": 2.5714285714285716, "h_index_fetch_method": "full_id", "highest_h_index": 6, "notable_authors_count": 1, "success": true, "total_authors": 14}, "authors": ["Yifei Xu", "Tusher Chakraborty", "Emre K\u0131c\u0131man", "Bibek Aryal", "Eduardo Rodrigues", "Srinagesh Sharma", "Roberto Estevao", "Maria Angels de Luis Balaguer", "Jessica Wolk", "Rafael Padilha", "Leonardo Nunes", "Shobana Balakrishnan", "Songwu Lu", "Ranveer Chandra"], "categories": ["cs.CL", "cs.AI", "cs.LG"], "embedding_completed": true, "h_index_completed": true, "highest_score": 0.717, "highest_similarity_topic": "RLHF", "id": "2502.13417", "llm_scoring_completed": true, "llm_validation": {"Diffusion_reasoning": {"justification": "The paper does not involve diffusion models, iterative refinement for logical tasks, or treating Chain-of-Thought as a single entity for multi-step corrections; it focuses on RLHF alignment strategies without any diffusion-based components.", "llm_relevant": "not_relevant", "validated": true}, "Distributed_training": {"justification": "The paper does not address parallel computing, multi-node training, or partitioning data/computation across processors; its contributions are centered on data annotation and alignment, not distributed systems.", "llm_relevant": "not_relevant", "validated": true}, "RLHF": {"justification": "The paper directly builds on RLHF by proposing RLTHF, a framework that uses human feedback to align LLMs. It involves training a reward model on human-ranked data and iteratively refining it, aligning closely with RLHF\u0027s core principles of using human preferences for model fine-tuning.", "llm_relevant": "highly_relevant", "validated": true}, "Weak_supervision": {"justification": "The paper employs LLMs to generate initial labels, which are noisy and imprecise, and then refines them with targeted human input, resembling weak supervision\u0027s use of programmatically derived labels. However, it focuses more on hybrid human-AI alignment than pure weak supervision techniques.", "llm_relevant": "moderately_relevant", "validated": true}}, "llm_validation_completed": true, "published": "2025-02-19T04:25:11+00:00", "scores": {"Diffusion_reasoning": 0.409, "Distributed_training": 0.411, "RLHF": 0.717, "Weak_supervision": 0.47}, "scores_data": {"impact": "Moderate", "impact_justification": "The work is likely to influence research and applications in LLM alignment by reducing annotation costs, making it relevant for subfields focused on efficient AI training, though its broader impact may be limited to specific practical implementations.", "novelty": "Moderate", "novelty_justification": "The paper presents a notable improvement by combining existing RLHF and RLAIF techniques with a new strategy for targeted human feedback using reward distributions, offering a clever way to address annotation challenges without introducing an entirely new problem or architecture.", "recommendation": "Should Read", "recommendation_justification": "This paper is valuable for researchers and practitioners working on LLM alignment and human-AI feedback mechanisms due to its practical contributions in cost reduction and performance improvements, but it may not be essential for those outside this specific area.", "summary": "The paper introduces RLTHF, a hybrid framework designed to align large language models (LLMs) with user preferences by combining initial LLM-based annotations with targeted human feedback, thereby minimizing the cost and effort of full human annotations. The methodology involves using a reward model\u0027s distribution to identify and correct hard-to-annotate samples iteratively, while leveraging correctly labeled samples from the LLM; evaluations on HH-RLHF and TL;DR datasets demonstrate that RLTHF achieves alignment quality comparable to fully human-annotated datasets with only 6-7% of the annotation effort and even enhances performance on downstream tasks."}, "title": "RLTHF: Targeted Human Feedback for LLM Alignment"}];
         let filteredPapers = [...papers];
         
         function updateDisplay() {
