@@ -28,20 +28,16 @@ ARXIV = {
 
 # LaTeX Introduction Extraction Parameters
 LATEX_EXTRACTION = {
-    # Parallel processing settings
-    'max_workers': 3,
-    
-    # Rate limiting for arXiv downloads
-    'rate_limit_delay': 1.5,
-    'jitter': 0.5,
+    # Rate limiting for arXiv downloads (sequential processing)
+    'rate_limit_delay': 1.0,  # Seconds to wait between each download request
     
     # Retry settings
     'max_retries': 3,
+    'retry_delays': [1, 5, 10],  # Retry backoff delays in seconds: 1s, 5s, 10s
     'timeout': 90,
     
     # Content limits
-    'max_introduction_length': 15000,
-    'min_source_size': 1000  # bytes
+    'max_introduction_length': 15000
 }
 
 # Embedding Similarity Parameters

@@ -9,10 +9,8 @@ import logging
 import re
 import tempfile
 import time
-import random
 import requests
 import tarfile
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Dict, Optional
 from paper import Paper
@@ -161,7 +159,7 @@ def is_introduction_content(content: str) -> bool:
 
 
 def is_introduction_section(section_title: str) -> bool:
-    """
+    r"""
     Check if a section title represents an introduction section.
     This checks for any form of the word 'introduction' after removing formatting commands.
     
@@ -358,115 +356,75 @@ def find_introduction_in_archive(tar_file, paper_id: str) -> Optional[tuple[str,
     
     return None
 
-def verify_latex_source(url: str, timeout: int, min_size: int, max_retries: int = 3) -> bool:
-    """Verify that the LaTeX source exists and meets minimum requirements."""
-    retry_count = 0
-    while retry_count < max_retries:
-        try:
-            response = requests.head(url, timeout=timeout)
-            content_type = response.headers.get('content-type', '')
-            content_length = int(response.headers.get('content-length', 0))
-            
-            logger.info(f"HEAD {url} - Status: {response.status_code}, "
-                       f"Type: {content_type}, Size: {content_length} bytes")
-            
-            if response.status_code != 200:
-                logger.warning(f"LaTeX source not found: {url}")
-                return False
-            
-            # Check content type (should be gzip)
-            if 'gzip' not in content_type.lower():
-                logger.warning(f"Invalid content type for {url}: {content_type}")
-                return False
-                
-            # Check size
-            if content_length < min_size:
-                logger.warning(f"LaTeX source too small: {content_length} bytes")
-                return False
-                
-            return True
-            
-        except Exception as e:
-            retry_count += 1
-            if retry_count < max_retries:
-                logger.warning(f"Retry {retry_count}/{max_retries} for {url}: {e}")
-                time.sleep(2 ** retry_count)  # Exponential backoff
-            else:
-                logger.error(f"Error verifying LaTeX source after {max_retries} retries: {e}")
-                return False
 
-def check_latex_availability(paper: Paper, config: dict) -> bool:
-    """Check if LaTeX source is available for a paper (header check only)."""
-    try:
-        # Skip if already processed or marked for skipping
-        if paper.can_skip_intro_extraction():
-            return False
-            
-        # Convert PDF URL to LaTeX URL
-        if not paper.pdf_url:
-            paper.update_intro_status("no_latex_source")
-            paper.add_error("No PDF URL available")
-            return False
-            
-        paper.latex_url = paper.pdf_url.replace('/pdf/', '/src/')
-        
-        # Verify LaTeX source (header check only)
-        if verify_latex_source(paper.latex_url, config['timeout'], config['min_source_size']):
-            return True
-        else:
-            paper.update_intro_status("no_latex_source")
-            paper.add_error("LaTeX source verification failed")
-            return False
-    
-    except Exception as e:
-        paper.update_intro_status("no_latex_source")
-        paper.add_error(f"LaTeX availability check failed: {str(e)}")
-        logger.error(f"[{paper.id}] LaTeX availability check failed: {e}")
-        return False
 
 def download_and_extract_introduction(paper: Paper, config: dict) -> None:
-    """Download LaTeX source and extract introduction text."""
-    try:
-        # Download the LaTeX source
-        response = requests.get(paper.latex_url, timeout=config['timeout'])
+    """Download LaTeX source and extract introduction text with retry logic."""
+    # Skip if already processed or marked for skipping
+    if paper.can_skip_intro_extraction():
+        return
         
-        with tempfile.TemporaryDirectory() as temp_dir:
-            # Extract gzipped tar file
-            tar_path = Path(temp_dir) / "source.tar.gz"
-            tar_path.write_bytes(response.content)
-            
-            # Extract introduction using hierarchical approach
-            with tarfile.open(tar_path, 'r:gz') as tar:
-                result = find_introduction_in_archive(tar, paper.id)
-                
-                if result:
-                    intro_text, tex_filename, method = result
-                    
-                    # Validate and truncate if needed
-                    if len(intro_text) > config['max_introduction_length']:
-                        intro_text = intro_text[:config['max_introduction_length']] + "..."
-                    
-                    paper.introduction_text = intro_text
-                    paper.tex_file_name = tex_filename
-                    paper.intro_extraction_method = method
-                    paper.update_intro_status("intro_successful")
-                else:
-                    paper.update_intro_status("no_intro_found")
-                    paper.add_error("Could not find introduction section")
-                    logger.warning(f"[{paper.id}] No introduction found in any tex files")
-    
-    except Exception as e:
+    # Convert PDF URL to LaTeX URL
+    if not paper.pdf_url:
         paper.update_intro_status("extraction_failed")
-        paper.add_error(f"Introduction extraction failed: {str(e)}")
-        logger.error(f"[{paper.id}] Introduction extraction failed: {e}")
+        paper.add_error("No PDF URL available")
+        return
+        
+    paper.latex_url = paper.pdf_url.replace('/pdf/', '/src/')
+    
+    # Retry logic with configurable backoff delays
+    max_retries = config['max_retries']
+    retry_delays = config['retry_delays']
+    
+    for retry_count in range(max_retries + 1):
+        try:
+            # Download the LaTeX source
+            response = requests.get(paper.latex_url, timeout=config['timeout'])
+            response.raise_for_status()
+            
+            with tempfile.TemporaryDirectory() as temp_dir:
+                # Extract gzipped tar file
+                tar_path = Path(temp_dir) / "source.tar.gz"
+                tar_path.write_bytes(response.content)
+                
+                # Extract introduction using hierarchical approach
+                with tarfile.open(tar_path, 'r:gz') as tar:
+                    result = find_introduction_in_archive(tar, paper.id)
+                    
+                    if result:
+                        intro_text, tex_filename, method = result
+                        
+                        # Validate and truncate if needed
+                        if len(intro_text) > config['max_introduction_length']:
+                            intro_text = intro_text[:config['max_introduction_length']] + "..."
+                        
+                        paper.introduction_text = intro_text
+                        paper.tex_file_name = tex_filename
+                        paper.intro_extraction_method = method
+                        paper.update_intro_status("intro_successful")
+                        return
+                    else:
+                        paper.update_intro_status("no_intro_found")
+                        paper.add_error("Could not find introduction section")
+                        logger.warning(f"[{paper.id}] No introduction found in any tex files")
+                        return
+        
+        except Exception as e:
+            if retry_count < max_retries:
+                delay = retry_delays[retry_count] if retry_count < len(retry_delays) else retry_delays[-1]
+                logger.warning(f"[{paper.id}] Retry {retry_count + 1}/{max_retries + 1} after {delay}s: {e}")
+                time.sleep(delay)
+            else:
+                paper.update_intro_status("extraction_failed")
+                paper.add_error(f"Introduction extraction failed after {max_retries + 1} attempts: {str(e)}")
+                logger.error(f"[{paper.id}] Introduction extraction failed after {max_retries + 1} attempts: {e}")
 
 def run(papers: Dict[str, Paper], config: dict) -> Dict[str, Paper]:
     """
-    Run the introduction extraction process on a batch of papers.
+    Run the introduction extraction process with sequential downloading and rate limiting.
     
-    This uses a proper two-phase approach:
-    Phase 1: Check LaTeX availability using threading (header checks only)
-    Phase 2: Download and extract introductions only from papers that passed Phase 1
+    Downloads papers sequentially with proper rate limiting (1 second delay between requests),
+    then extracts introductions using the 3-method hierarchical approach.
     
     Args:
         papers: Dictionary of paper_id -> Paper objects
@@ -476,76 +434,39 @@ def run(papers: Dict[str, Paper], config: dict) -> Dict[str, Paper]:
         The updated papers dictionary
     """
     logger.info(f"Starting introduction extraction for {len(papers)} papers")
+    logger.info(f"Processing papers sequentially with {config['rate_limit_delay']}s delays")
     
-    # Phase 1: Check LaTeX availability using threading
-    logger.info(f"\nPhase 1: Checking LaTeX source availability using {config['max_workers']} threads")
-    papers_with_latex = {}
-    papers_without_latex = {}
+    # Process papers sequentially (no parallel downloads)
+    successful_count = 0
+    failed_count = 0
     
-    # Submit all header check tasks
-    with ThreadPoolExecutor(max_workers=config['max_workers']) as executor:
-        # Submit header check tasks for all papers
-        future_to_paper = {
-            executor.submit(check_latex_availability, paper, config): (paper_id, paper)
-            for paper_id, paper in papers.items()
-        }
+    paper_items = list(papers.items())
+    
+    for i, (paper_id, paper) in enumerate(paper_items, 1):
+        logger.info(f"Processing paper {i}/{len(paper_items)}: {paper_id}")
         
-        # Collect results as they complete
-        for future in as_completed(future_to_paper):
-            paper_id, paper = future_to_paper[future]
-            try:
-                has_latex = future.result()
-                if has_latex:
-                    papers_with_latex[paper_id] = paper
-                else:
-                    papers_without_latex[paper_id] = paper
-            except Exception as e:
-                papers_without_latex[paper_id] = paper
-                logger.error(f" {paper_id} - Header check failed: {e}")
-
-    logger.info(f"Phase 1 complete: {len(papers_with_latex)}/{len(papers)} papers have LaTeX sources\n")
-    
-    # Phase 2: Extract introductions only from papers that passed Phase 1
-    if papers_with_latex:
-        logger.info(f"Phase 2: Extracting introductions from {len(papers_with_latex)} papers using {config['max_workers']} threads")
+        try:
+            download_and_extract_introduction(paper, config)
+            
+            if paper.is_intro_successful():
+                successful_count += 1
+                logger.info(f"  {paper_id} - SUCCESS - Method: {paper.intro_extraction_method}")
+            else:
+                failed_count += 1
+                logger.info(f"  {paper_id} - FAILED - Status: {paper.intro_status}")
         
-        # Submit download and extraction tasks for papers with LaTeX
-        with ThreadPoolExecutor(max_workers=config['max_workers']) as executor:
-            future_to_paper = {
-                executor.submit(download_and_extract_introduction, paper, config): (paper_id, paper)
-                for paper_id, paper in papers_with_latex.items()
-            }
-            
-            # Track results by extraction outcome
-            successful_extractions = 0
-            failed_extractions = 0
-            
-            # Collect results as they complete
-            for future in as_completed(future_to_paper):
-                paper_id, paper = future_to_paper[future]
-                try:
-                    future.result()
-                    if paper.is_intro_successful():
-                        successful_extractions += 1
-                        logger.info(f" {paper_id} - Introduction extraction SUCCESS - Method: {paper.intro_extraction_method}")
-                    else:
-                        failed_extractions += 1
-                        logger.info(f" {paper_id} - Introduction extraction FAILED - Status: {paper.intro_status}")
-                except Exception as e:
-                    failed_extractions += 1
-                    logger.error(f" {paper_id} - Introduction extraction FAILED: {e}")
-            
-            logger.info(f"Phase 2 complete: {successful_extractions} successful, {failed_extractions} failed")
+        except Exception as e:
+            failed_count += 1
+            logger.error(f"  {paper_id} - FAILED - Unexpected error: {e}")
+        
+        # Wait between requests (respect arXiv rate limits)
+        if i < len(paper_items):  # Don't wait after the last paper
+            delay = config['rate_limit_delay']
+            logger.debug(f"Waiting {delay}s before next request...")
+            time.sleep(delay)
     
-    # Combine all papers back together
-    all_papers = {**papers_with_latex, **papers_without_latex}
+    # Log final summary
+    total_papers = len(papers)
+    logger.info(f"Introduction extraction complete: {successful_count}/{total_papers} successful, {failed_count} failed")
     
-    # Log concise summary
-    total_papers = len(all_papers)
-    successful_count = sum(1 for p in all_papers.values() if p.is_intro_successful())
-    no_latex_count = sum(1 for p in all_papers.values() if p.intro_status == "no_latex_source")
-    failed_count = total_papers - successful_count - no_latex_count
-    
-    logger.info(f"Introduction extraction complete: {successful_count}/{total_papers} successful, {no_latex_count} no source, {failed_count} failed")
-    
-    return all_papers 
+    return papers 

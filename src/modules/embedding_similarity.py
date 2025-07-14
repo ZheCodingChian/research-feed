@@ -95,7 +95,10 @@ Keywords: Distributed training, large-scale training, model parallelism, data pa
             logger.info(f"Processing batch {i+1} with {batch_size} papers")
             self._process_batch(batch, topic_embeddings)
         
-        # Step 4: Log summary statistics
+        # Step 4: Round similarity scores to 3 significant figures
+        self._round_similarity_scores(papers)
+        
+        # Step 5: Log summary statistics
         completed_count = sum(1 for p in papers.values() if p.embedding_status == "completed")
         failed_count = sum(1 for p in papers.values() if p.embedding_status == "failed")
         
@@ -288,6 +291,44 @@ Keywords: Distributed training, large-scale training, model parallelism, data pa
             
             logger.error(f"Batch processing failed: {e}")
     
+    def _round_to_3_sig_figs(self, value: Optional[float]) -> Optional[float]:
+        """
+        Round a value to 3 significant figures.
+        
+        Args:
+            value: The value to round, can be None
+            
+        Returns:
+            Rounded value or None if input was None
+        """
+        if value is None:
+            return None
+        
+        if value == 0:
+            return 0.0
+            
+        import math
+        # Calculate the number of digits before the decimal point
+        magnitude = math.floor(math.log10(abs(value)))
+        # Round to 3 significant figures
+        factor = 10 ** (2 - magnitude)
+        return round(value * factor) / factor
+    
+    def _round_similarity_scores(self, papers: Dict[str, Paper]) -> None:
+        """
+        Round all similarity scores in papers to 3 significant figures.
+        
+        Args:
+            papers: Dictionary of paper objects to process
+        """
+        for paper in papers.values():
+            # Only round papers that have embedding scores
+            if paper.embedding_status == "completed":
+                paper.rlhf_score = self._round_to_3_sig_figs(paper.rlhf_score)
+                paper.weak_supervision_score = self._round_to_3_sig_figs(paper.weak_supervision_score)
+                paper.diffusion_reasoning_score = self._round_to_3_sig_figs(paper.diffusion_reasoning_score)
+                paper.distributed_training_score = self._round_to_3_sig_figs(paper.distributed_training_score)
+
     def _cosine_similarity(self, vec1: List[float], vec2: List[float]) -> float:
         """
         Calculate cosine similarity between two vectors.
