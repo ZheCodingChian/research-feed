@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Papers</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- KaTeX CSS for LaTeX math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstbeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-color: #0f1011;
+            color: #e0e0e0;
+        }
+        
+        .full-width-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding-top: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        
+        .header-title-section {
+            text-align: center;
+            margin-bottom: 0;
+            padding-bottom: 2rem;
+        }
+        
+        .controls-section {
+            background: rgba(0,0,0,0.2);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 1rem 0;
+            margin-top: 0;
+        }
+        
+        .paper-card {
+            margin-bottom: 1.5rem;
+            border: 1px solid #404040;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+            background-color: #191a1b;
+        }
+        
+        .paper-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+        
+        .paper-header {
+            padding: 1rem;
+            border-bottom: 1px solid #404040;
+            border-radius: 8px 8px 0 0;
+            background: linear-gradient(135deg, #2D3748 0%, #4A5568 100%);
+            color: #ffffff;
+        }
+        
+        .paper-title {
+            color: #ffffff;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .paper-meta {
+            color: #e0e0e0;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .paper-body {
+            padding: 1rem;
+            background-color: #191a1b;
+        }
+        
+        .paper-abstract {
+            margin-bottom: 1rem;
+            color: #d0d0d0;
+        }
+        
+        .paper-categories {
+            margin-bottom: 1rem;
+        }
+        
+        .category-tag {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            margin: 0.25rem;
+            background-color: #404040;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: #e0e0e0;
+        }
+        
+        .paper-scores-row {
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .score-item {
+            display: inline-block;
+            margin: 0.25rem;
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 0.75rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .score-label {
+            font-weight: 600;
+            color: #e0e0e0;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .score-value {
+            font-weight: bold;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .score-value.must-read { color: #28a745; }
+        .score-value.should-read { color: #17a2b8; }
+        .score-value.can-skip { color: #ffc107; }
+        .score-value.ignore { color: #dc3545; }
+        .score-value.high { color: #28a745; }
+        .score-value.moderate { color: #17a2b8; }
+        .score-value.low { color: #ffc107; }
+        .score-value.none, .score-value.negligible { color: #dc3545; }
+        
+        .justification-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #ffffff;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .justification-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .justification-text {
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            background: rgba(0,0,0,0.3);
+            border-radius: 4px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            color: #d0d0d0;
+            display: none;
+        }
+        
+        .paper-metrics-row {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+        
+        .similarity-scores {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .similarity-summary {
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .similarity-scores-content {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0.5rem 1rem;
+            align-items: center;
+        }
+        
+        .similarity-label {
+            font-weight: 600;
+            color: #e0e0e0;
+            white-space: nowrap;
+        }
+        
+        .similarity-right-column {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .similarity-bar {
+            height: 8px;
+            background-color: #404040;
+            border-radius: 4px;
+            overflow: hidden;
+            width: 100px;
+            flex-shrink: 0;
+        }
+        
+        .similarity-value {
+            color: #e0e0e0;
+            font-weight: 600;
+            min-width: 45px;
+            flex-shrink: 0;
+        }
+        
+        .similarity-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .paper-link {
+            color: #ffffff;
+            text-decoration: none;
+        }
+        
+        .paper-link:hover {
+            text-decoration: underline;
+            color: #f0f0f0;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .form-select, .form-control {
+            background-color: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #ffffff;
+        }
+        
+        .form-select option {
+            background-color: #2d2d2d;
+            color: #ffffff;
+        }
+        
+        .form-select:focus, .form-control:focus {
+            background-color: rgba(255,255,255,0.2);
+            border-color: #667eea;
+            color: #ffffff;
+            box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+        }
+        
+        .btn-outline-light {
+            border-color: rgba(255,255,255,0.5);
+        }
+        
+        .btn-outline-light:hover {
+            background-color: rgba(255,255,255,0.2);
+            border-color: #ffffff;
+        }
+        
+        .filter-count-section {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .filter-count-display {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .main-nav-link {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            transition: all 0.2s;
+            font-weight: 600;
+            font-size: 1rem;
+            background: linear-gradient(135deg, #2D3748 0%, #4A5568 100%);
+            border: 1px solid #404040;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .main-nav-link:hover {
+            background: linear-gradient(135deg, #4A5568 0%, #2D3748 100%);
+            text-decoration: none;
+            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+        
+        .paper-number {
+            font-weight: bold;
+            color: #ffffff;
+            margin-right: 0.5rem;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .llm-validation {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .h-index-scores {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .h-index-summary {
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .h-index-metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .h-index-metric:last-child {
+            margin-bottom: 0;
+        }
+        
+        .h-index-label {
+            font-weight: 600;
+            color: #e0e0e0;
+        }
+        
+        .h-index-value {
+            color: #ffffff;
+            font-weight: bold;
+        }
+        
+        .h-index-expand {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .h-index-toggle {
+            font-size: 0.85rem;
+            padding: 0.25rem 0.5rem;
+        }
+        
+        .h-index-details {
+            background-color: rgba(255,255,255,0.03);
+            border-radius: 4px;
+            padding: 0.75rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        .individual-h-index {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+        }
+        
+        .individual-h-index:last-child {
+            margin-bottom: 0;
+        }
+        
+        .author-name {
+            color: #e0e0e0;
+        }
+        
+        .author-name-link {
+            color: #00d4aa;
+            text-decoration: none;
+        }
+        
+        .author-name-link:hover {
+            color: #00ffcc;
+            text-decoration: underline;
+        }
+        
+        .author-h-value {
+            color: #ffffff;
+            font-weight: 600;
+        }
+        
+        .llm-validation-summary {
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .llm-validation-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .llm-validation-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .llm-topic-label {
+            font-weight: 600;
+            color: #e0e0e0;
+        }
+        
+        .llm-status {
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .llm-yes {
+            color: #28a745;
+        }
+        
+        .llm-no {
+            color: #dc3545;
+        }
+        
+        .llm-disabled {
+            color: #6c757d;
+        }
+        
+        .llm-buttons-row {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .llm-toggle {
+            font-size: 0.85rem;
+            padding: 0.25rem 0.5rem;
+        }
+        
+        .llm-details {
+            background-color: rgba(255,255,255,0.03);
+            border-radius: 4px;
+            padding: 0.75rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .llm-justification {
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .llm-justification:last-child {
+            margin-bottom: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .paper-metrics-row {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .paper-scores-row {
+                font-size: 12px;
+                line-height: 1.4;
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="full-width-header">
+        <div class="container">
+            <div style="position: absolute; top: 1rem; left: 1rem;">
+                <a href="index.html" class="main-nav-link">← Back to Home</a>
+            </div>
+            <div class="header-title-section">
+                <h1 class="mb-3">Test Papers</h1>
+                
+                <p class="lead mb-2">Test Mode - Specific Papers Analysis</p>
+                <p class="text-muted mb-2">Paper dates: 2025-02-19, 2025-03-12</p>
+                
+                <p class="text-muted mb-0" id="paper-count">2 papers</p>
+                
+                <div class="models-info mt-2">
+                    <small class="text-muted">
+                        <strong>Models:</strong> 
+                        Embedding: <span class="badge bg-secondary">openai-large</span>
+                        
+                        | LLM Validation: <span class="badge bg-secondary">x-ai/grok-3-mini</span>
+                        
+                        | LLM Scoring: <span class="badge bg-secondary">gemini-flash</span>
+                    </small>
+                </div>
+            </div>
+        </div>
+        <div class="controls-section">
+            <div class="container">
+                <div class="controls">
+                    <div class="control-group">
+                        <label for="sortBy" class="form-label mb-0">Sort by:</label>
+                        <select id="sortBy" class="form-select form-select-sm">
+                            <option value="recommendation_desc">Recommendation (Best First)</option>
+                            <option value="recommendation_asc">Recommendation (Worst First)</option>
+                            <option value="similarity_desc">Similarity score (Descending)</option>
+                            <option value="similarity_asc">Similarity score (Ascending)</option>
+                            <option value="title">Title</option>
+                            <option value="arxiv_id">arXiv ID</option>
+                            <option value="max_h_index_desc">Max H-index (Descending)</option>
+                            <option value="max_h_index_asc">Max H-index (Ascending)</option>
+                            <option value="avg_h_index_desc">Avg H-index (Descending)</option>
+                            <option value="avg_h_index_asc">Avg H-index (Ascending)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="form-label mb-0">Filter by topics:</label>
+                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                            
+                            <label class="form-check-label" style="display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">
+                                <input type="checkbox" class="form-check-input topic-filter" value="RLHF" checked>
+                                RLHF
+                            </label>
+                            
+                            <label class="form-check-label" style="display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">
+                                <input type="checkbox" class="form-check-input topic-filter" value="Weak_supervision" checked>
+                                Weak supervision
+                            </label>
+                            
+                            <label class="form-check-label" style="display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">
+                                <input type="checkbox" class="form-check-input topic-filter" value="Diffusion_reasoning" checked>
+                                Diffusion reasoning
+                            </label>
+                            
+                            <label class="form-check-label" style="display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">
+                                <input type="checkbox" class="form-check-input topic-filter" value="Distributed_training" checked>
+                                Distributed training
+                            </label>
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="form-label mb-0">LLM Validation:</label>
+                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <label class="form-check-label" style="display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">
+                                <input type="checkbox" class="form-check-input llm-filter" value="yes" checked>
+                                Yes
+                            </label>
+                            <label class="form-check-label" style="display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">
+                                <input type="checkbox" class="form-check-input llm-filter" value="no" checked>
+                                No
+                            </label>
+                            <label class="form-check-label" style="display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">
+                                <input type="checkbox" class="form-check-input llm-filter" value="not_validated" checked>
+                                Not Validated
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="form-label mb-0">H-Index Data:</label>
+                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <label class="form-check-label" style="display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">
+                                <input type="checkbox" class="form-check-input h-index-filter" value="full" checked>
+                                Full Data
+                            </label>
+                            <label class="form-check-label" style="display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">
+                                <input type="checkbox" class="form-check-input h-index-filter" value="partial" checked>
+                                Partial Data
+                            </label>
+                            <label class="form-check-label" style="display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">
+                                <input type="checkbox" class="form-check-input h-index-filter" value="none" checked>
+                                No Data
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="minScore" class="form-label mb-0">Min Score:</label>
+                        <input type="number" id="minScore" class="form-control form-control-sm" 
+                               step="0.01" min="0" max="1" value="0" style="width: 80px;">
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="maxScore" class="form-label mb-0">Max Score:</label>
+                        <input type="number" id="maxScore" class="form-control form-control-sm" 
+                               step="0.01" min="0" max="1" value="1" style="width: 80px;">
+                    </div>
+                    
+                    <button id="resetFilters" class="btn btn-outline-light btn-sm">Reset</button>
+                </div>
+                
+                <div class="filter-count-section">
+                    <span id="filter-count" class="filter-count-display">
+                        Showing 2/2 papers
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="papers-container">
+            
+            <div class="paper-card" data-paper-index="0">
+                <div class="paper-header">
+                    <div class="paper-number">#1</div>
+                    <h5 class="paper-title">
+                        <a href="http://arxiv.org/abs/2502.13417" class="paper-link" target="_blank">
+                            RLTHF: Targeted Human Feedback for LLM Alignment
+                        </a>
+                    </h5>
+                    <div class="paper-meta">
+                        <strong>arXiv ID:</strong> 2502.13417 |
+                        <strong>Published:</strong> 2025-02-19T04:25:11+00:00 |
+                        
+                        <strong>Highest Score:</strong> 0.720 RLHF
+                        
+                    </div>
+                </div>
+                
+                <div class="paper-body">
+                    <div class="paper-abstract">
+                        <strong>Abstract:</strong> Fine-tuning large language models (LLMs) to align with user preferences is
+challenging due to the high cost of quality human annotations in Reinforcement
+Learning from Human Feedback (RLHF) and the generalizability limitations of AI
+Feedback. To address these challenges, we propose RLTHF, a human-AI hybrid
+framework that combines LLM-based initial alignment with selective human
+annotations to achieve full-human annotation alignment with minimal effort.
+RLTHF identifies hard-to-annotate samples mislabeled by LLMs using a reward
+model&#x27;s reward distribution and iteratively enhances alignment by integrating
+strategic human corrections while leveraging LLM&#x27;s correctly labeled samples.
+Evaluations on HH-RLHF and TL;DR datasets show that RLTHF reaches full-human
+annotation-level alignment with only 6-7% of the human annotation effort.
+Furthermore, models trained on RLTHF&#x27;s curated datasets for downstream tasks
+outperform those trained on fully human-annotated datasets, underscoring the
+effectiveness of RLTHF&#x27;s strategic data curation.
+                    </div>
+                    
+                    
+                    <div class="paper-categories">
+                        <strong>Categories:</strong>
+                        
+                        <span class="category-tag">cs.CL</span>
+                        
+                        <span class="category-tag">cs.AI</span>
+                        
+                        <span class="category-tag">cs.LG</span>
+                        
+                    </div>
+                    
+                    
+                    
+                    <div class="paper-scores-row">
+                        
+                        <div class="score-item">
+                            <span class="score-label">Recommendation:</span>
+                            <span class="score-value should-read">Should Read</span>
+                            
+                            <button class="justification-btn" onclick="toggleJustification('rec-0')">
+                                Show Justification ▼
+                            </button>
+                            <div class="justification-text" id="rec-0">
+                                This paper provides valuable insights for researchers and practitioners working on LLM alignment and fine-tuning, offering practical methods to optimize human effort, though it may not be essential for those outside this specific subfield.
+                            </div>
+                            
+                        </div>
+                        
+                        
+                        
+                        <div class="score-item">
+                            <span class="score-label">Novelty:</span>
+                            <span class="score-value moderate">Moderate</span>
+                            
+                            <button class="justification-btn" onclick="toggleJustification('nov-0')">
+                                Show Justification ▼
+                            </button>
+                            <div class="justification-text" id="nov-0">
+                                The paper presents a notable improvement by combining existing RLHF and RLAIF techniques with a targeted human-AI hybrid approach to reduce annotation costs, though it builds on established concepts rather than introducing a entirely new problem or architecture.
+                            </div>
+                            
+                        </div>
+                        
+                        
+                        
+                        <div class="score-item">
+                            <span class="score-label">Potential Impact:</span>
+                            <span class="score-value high">High</span>
+                            
+                            <button class="justification-btn" onclick="toggleJustification('imp-0')">
+                                Show Justification ▼
+                            </button>
+                            <div class="justification-text" id="imp-0">
+                                The work could broadly influence LLM fine-tuning practices by making alignment more cost-effective and scalable, potentially affecting research and commercial applications in AI where human annotation is a bottleneck.
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    
+                    
+                    <div class="paper-metrics-row">
+                        <div class="similarity-scores">
+                            <h6>Similarity Scores:</h6>
+                            
+                                <div class="similarity-summary">
+                                    <div class="similarity-scores-content">
+                                        
+                                        <span class="similarity-label" data-topic="RLHF">RLHF:</span>
+                                        <div class="similarity-right-column" data-topic="RLHF">
+                                            <div class="similarity-bar">
+                                                <div class="similarity-bar-fill" style="width: 72.0%"></div>
+                                            </div>
+                                            <span class="similarity-value" data-original-score="0.720">0.720</span>
+                                        </div>
+                                        
+                                        <span class="similarity-label" data-topic="Weak_supervision">Weak supervision:</span>
+                                        <div class="similarity-right-column" data-topic="Weak_supervision">
+                                            <div class="similarity-bar">
+                                                <div class="similarity-bar-fill" style="width: 47.1%"></div>
+                                            </div>
+                                            <span class="similarity-value" data-original-score="0.471">0.471</span>
+                                        </div>
+                                        
+                                        <span class="similarity-label" data-topic="Diffusion_reasoning">Diffusion reasoning:</span>
+                                        <div class="similarity-right-column" data-topic="Diffusion_reasoning">
+                                            <div class="similarity-bar">
+                                                <div class="similarity-bar-fill" style="width: 40.9%"></div>
+                                            </div>
+                                            <span class="similarity-value" data-original-score="0.409">0.409</span>
+                                        </div>
+                                        
+                                        <span class="similarity-label" data-topic="Distributed_training">Distributed training:</span>
+                                        <div class="similarity-right-column" data-topic="Distributed_training">
+                                            <div class="similarity-bar">
+                                                <div class="similarity-bar-fill" style="width: 41.1%"></div>
+                                            </div>
+                                            <span class="similarity-value" data-original-score="0.411">0.411</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            
+                        </div>
+                        
+                        <div class="llm-validation">
+                            <h6>LLM Validation:</h6>
+                            
+                                <div class="llm-validation-summary">
+                                    
+                                        
+                                            
+                                            <div class="llm-validation-item" data-topic="RLHF">
+                                                <span class="llm-topic-label">RLHF:</span>
+                                                
+                                                    
+                                                        <span class="llm-status llm-disabled">HIGHLY_RELEVANT</span>
+                                                    
+                                                
+                                            </div>
+                                        
+                                    
+                                        
+                                            
+                                            <div class="llm-validation-item" data-topic="Weak_supervision">
+                                                <span class="llm-topic-label">Weak supervision:</span>
+                                                
+                                                    
+                                                        <span class="llm-status llm-disabled">MODERATELY_RELEVANT</span>
+                                                    
+                                                
+                                            </div>
+                                        
+                                    
+                                        
+                                            
+                                            <div class="llm-validation-item" data-topic="Diffusion_reasoning">
+                                                <span class="llm-topic-label">Diffusion reasoning:</span>
+                                                
+                                                    
+                                                        <span class="llm-status llm-disabled">NOT_RELEVANT</span>
+                                                    
+                                                
+                                            </div>
+                                        
+                                    
+                                        
+                                            
+                                            <div class="llm-validation-item" data-topic="Distributed_training">
+                                                <span class="llm-topic-label">Distributed training:</span>
+                                                
+                                                    
+                                                        <span class="llm-status llm-disabled">NOT_RELEVANT</span>
+                                                    
+                                                
+                                            </div>
+                                        
+                                    
+                                    
+                                    <div class="llm-buttons-row">
+                                        <button class="btn btn-sm btn-outline-light llm-toggle" 
+                                                onclick="toggleLLMDetails('llm-details-0')">
+                                            Show Justifications ▼
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="llm-details" id="llm-details-0">
+                                        <h6 style="font-size: 0.9rem; margin-bottom: 0.5rem;">LLM Justifications:</h6>
+                                        
+                                            
+                                            <div class="llm-justification">
+                                                <strong>RLHF:</strong> The paper directly builds on RLHF by proposing RLTHF, a framework that uses human feedback to train a reward model for aligning LLMs. It addresses RLHF's challenges, such as annotation costs, while maintaining core elements like human-ranked data and reinforcement learning for model fine-tuning, making it a direct extension of the topic.
+                                            </div>
+                                            
+                                        
+                                            
+                                            <div class="llm-justification">
+                                                <strong>Weak supervision:</strong> The paper employs LLM-based initial labeling as a noisy, programmatic source for annotations, which aligns with weak supervision's use of imprecise labels. However, it integrates selective human corrections, diverging from pure weak supervision by relying on human input for refinement, thus making it only partially relevant.
+                                            </div>
+                                            
+                                        
+                                            
+                                            <div class="llm-justification">
+                                                <strong>Diffusion reasoning:</strong> The paper focuses on iterative reward model training and human-AI feedback for alignment, with no mention of diffusion models, iterative refinement for logical tasks, or treating Chain-of-Thought as a single entity for multi-step correction.
+                                            </div>
+                                            
+                                        
+                                            
+                                            <div class="llm-justification">
+                                                <strong>Distributed training:</strong> The paper does not discuss parallel computing, multi-node setups, or strategies for partitioning data/computation across processors; it centers on data annotation and alignment techniques, with no reference to distributed training methods.
+                                            </div>
+                                            
+                                        
+                                    </div>
+                                </div>
+                            
+                        </div>
+                        
+                        <div class="h-index-scores">
+                            <h6>Author H-Index:</h6>
+                            
+                                <div class="h-index-summary">
+                                    <div class="h-index-metric">
+                                        <span class="h-index-label">Data found:</span>
+                                        <span class="h-index-value">14/14 authors</span>
+                                    </div>
+                                    <div class="h-index-metric">
+                                        <span class="h-index-label">H-index available:</span>
+                                        <span class="h-index-value">14/14 found</span>
+                                    </div>
+                                    
+                                    <div class="h-index-metric">
+                                        <span class="h-index-label">Highest:</span>
+                                        <span class="h-index-value">6</span>
+                                    </div>
+                                    
+                                    
+                                    <div class="h-index-metric">
+                                        <span class="h-index-label">Average:</span>
+                                        <span class="h-index-value">2.6</span>
+                                    </div>
+                                    
+                                    
+                                    <div class="h-index-metric">
+                                        <span class="h-index-label">Notable (H>5):</span>
+                                        <span class="h-index-value">1</span>
+                                    </div>
+                                    
+                                    
+                                    <div class="h-index-metric">
+                                        <span class="h-index-label">Source:</span>
+                                        <span class="h-index-value">Full Id</span>
+                                    </div>
+                                    
+                                    
+                                    
+                                    <div class="h-index-expand">
+                                        <button class="btn btn-sm btn-outline-light h-index-toggle" 
+                                                onclick="toggleHIndexDetails('h-details-0')">
+                                            Show Individual H-indices ▼
+                                        </button>
+                                        <div class="h-index-details" id="h-details-0">
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Yifei Xu</span>
+                                                
+                                                <span class="author-h-value">2</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Tusher Chakraborty</span>
+                                                
+                                                <span class="author-h-value">6</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Emre Kiciman</span>
+                                                
+                                                <span class="author-h-value">5</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Bibek Aryal</span>
+                                                
+                                                <span class="author-h-value">1</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Eduardo Rodrigues</span>
+                                                
+                                                <span class="author-h-value">1</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Srinagesh Sharma</span>
+                                                
+                                                <span class="author-h-value">1</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Roberto Estevão</span>
+                                                
+                                                <span class="author-h-value">2</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">M. A. D. L. Balaguer</span>
+                                                
+                                                <span class="author-h-value">5</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Jessica Wolk</span>
+                                                
+                                                <span class="author-h-value">1</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Rafael Padilha</span>
+                                                
+                                                <span class="author-h-value">2</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Leonardo Nunes</span>
+                                                
+                                                <span class="author-h-value">3</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Shobana Balakrishnan</span>
+                                                
+                                                <span class="author-h-value">1</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Songwu Lu</span>
+                                                
+                                                <span class="author-h-value">2</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Ranveer Chandra</span>
+                                                
+                                                <span class="author-h-value">4</span>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="paper-card" data-paper-index="1">
+                <div class="paper-header">
+                    <div class="paper-number">#2</div>
+                    <h5 class="paper-title">
+                        <a href="http://arxiv.org/abs/2503.09025" class="paper-link" target="_blank">
+                            Aligning to What? Limits to RLHF Based Alignment
+                        </a>
+                    </h5>
+                    <div class="paper-meta">
+                        <strong>arXiv ID:</strong> 2503.09025 |
+                        <strong>Published:</strong> 2025-03-12T03:24:44+00:00 |
+                        
+                        <strong>Highest Score:</strong> 0.626 RLHF
+                        
+                    </div>
+                </div>
+                
+                <div class="paper-body">
+                    <div class="paper-abstract">
+                        <strong>Abstract:</strong> Reinforcement Learning from Human Feedback (RLHF) is increasingly used to
+align large language models (LLMs) with human preferences. However, the
+effectiveness of RLHF in addressing underlying biases remains unclear. This
+study investigates the relationship between RLHF and both covert and overt
+biases in LLMs, particularly focusing on biases against African Americans. We
+applied various RLHF techniques (DPO, ORPO, and RLOO) to Llama 3 8B and
+evaluated the covert and overt biases of the resulting models using
+matched-guise probing and explicit bias testing. We performed additional tests
+with DPO on different base models and datasets; among several implications, we
+found that SFT before RLHF calcifies model biases. Additionally, we extend the
+tools for measuring biases to multi-modal models. Through our experiments we
+collect evidence that indicates that current alignment techniques are
+inadequate for nebulous tasks such as mitigating covert biases, highlighting
+the need for capable datasets, data curating techniques, or alignment tools.
+                    </div>
+                    
+                    
+                    <div class="paper-categories">
+                        <strong>Categories:</strong>
+                        
+                        <span class="category-tag">cs.CL</span>
+                        
+                    </div>
+                    
+                    
+                    
+                    <div class="paper-scores-row">
+                        
+                        <div class="score-item">
+                            <span class="score-label">Recommendation:</span>
+                            <span class="score-value should-read">Should Read</span>
+                            
+                            <button class="justification-btn" onclick="toggleJustification('rec-1')">
+                                Show Justification ▼
+                            </button>
+                            <div class="justification-text" id="rec-1">
+                                This paper offers valuable insights for researchers and practitioners focused on AI ethics, model alignment, and bias reduction in LLMs, making it a worthwhile read for those in this niche. However, it may not be essential for individuals outside this specific topic, as its relevance is targeted rather than field-wide.
+                            </div>
+                            
+                        </div>
+                        
+                        
+                        
+                        <div class="score-item">
+                            <span class="score-label">Novelty:</span>
+                            <span class="score-value moderate">Moderate</span>
+                            
+                            <button class="justification-btn" onclick="toggleJustification('nov-1')">
+                                Show Justification ▼
+                            </button>
+                            <div class="justification-text" id="nov-1">
+                                The paper presents a notable improvement by empirically examining the impact of RLHF on covert and overt biases in a way not extensively covered in prior literature, combining existing techniques to address a known problem with new experimental insights. However, it builds on established methods like RLHF and bias evaluation rather than introducing a entirely new architecture or problem.
+                            </div>
+                            
+                        </div>
+                        
+                        
+                        
+                        <div class="score-item">
+                            <span class="score-label">Potential Impact:</span>
+                            <span class="score-value moderate">Moderate</span>
+                            
+                            <button class="justification-btn" onclick="toggleJustification('imp-1')">
+                                Show Justification ▼
+                            </button>
+                            <div class="justification-text" id="imp-1">
+                                The work is likely to influence research in AI alignment and bias mitigation within the subfield of LLMs, as it provides evidence of RLHF's limitations that could guide future improvements in ethical AI development. While relevant, its applicability is somewhat confined to specific areas like model biases rather than broader commercial or technological advancements.
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    
+                    
+                    <div class="paper-metrics-row">
+                        <div class="similarity-scores">
+                            <h6>Similarity Scores:</h6>
+                            
+                                <div class="similarity-summary">
+                                    <div class="similarity-scores-content">
+                                        
+                                        <span class="similarity-label" data-topic="RLHF">RLHF:</span>
+                                        <div class="similarity-right-column" data-topic="RLHF">
+                                            <div class="similarity-bar">
+                                                <div class="similarity-bar-fill" style="width: 62.6%"></div>
+                                            </div>
+                                            <span class="similarity-value" data-original-score="0.626">0.626</span>
+                                        </div>
+                                        
+                                        <span class="similarity-label" data-topic="Weak_supervision">Weak supervision:</span>
+                                        <div class="similarity-right-column" data-topic="Weak_supervision">
+                                            <div class="similarity-bar">
+                                                <div class="similarity-bar-fill" style="width: 39.1%"></div>
+                                            </div>
+                                            <span class="similarity-value" data-original-score="0.391">0.391</span>
+                                        </div>
+                                        
+                                        <span class="similarity-label" data-topic="Diffusion_reasoning">Diffusion reasoning:</span>
+                                        <div class="similarity-right-column" data-topic="Diffusion_reasoning">
+                                            <div class="similarity-bar">
+                                                <div class="similarity-bar-fill" style="width: 37.4%"></div>
+                                            </div>
+                                            <span class="similarity-value" data-original-score="0.374">0.374</span>
+                                        </div>
+                                        
+                                        <span class="similarity-label" data-topic="Distributed_training">Distributed training:</span>
+                                        <div class="similarity-right-column" data-topic="Distributed_training">
+                                            <div class="similarity-bar">
+                                                <div class="similarity-bar-fill" style="width: 36.6%"></div>
+                                            </div>
+                                            <span class="similarity-value" data-original-score="0.366">0.366</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            
+                        </div>
+                        
+                        <div class="llm-validation">
+                            <h6>LLM Validation:</h6>
+                            
+                                <div class="llm-validation-summary">
+                                    
+                                        
+                                            
+                                            <div class="llm-validation-item" data-topic="RLHF">
+                                                <span class="llm-topic-label">RLHF:</span>
+                                                
+                                                    
+                                                        <span class="llm-status llm-disabled">HIGHLY_RELEVANT</span>
+                                                    
+                                                
+                                            </div>
+                                        
+                                    
+                                        
+                                            
+                                            <div class="llm-validation-item" data-topic="Weak_supervision">
+                                                <span class="llm-topic-label">Weak supervision:</span>
+                                                
+                                                    
+                                                        <span class="llm-status llm-disabled">NOT_VALIDATED</span>
+                                                    
+                                                
+                                            </div>
+                                        
+                                    
+                                        
+                                            
+                                            <div class="llm-validation-item" data-topic="Diffusion_reasoning">
+                                                <span class="llm-topic-label">Diffusion reasoning:</span>
+                                                
+                                                    
+                                                        <span class="llm-status llm-disabled">NOT_VALIDATED</span>
+                                                    
+                                                
+                                            </div>
+                                        
+                                    
+                                        
+                                            
+                                            <div class="llm-validation-item" data-topic="Distributed_training">
+                                                <span class="llm-topic-label">Distributed training:</span>
+                                                
+                                                    
+                                                        <span class="llm-status llm-disabled">NOT_VALIDATED</span>
+                                                    
+                                                
+                                            </div>
+                                        
+                                    
+                                    
+                                    <div class="llm-buttons-row">
+                                        <button class="btn btn-sm btn-outline-light llm-toggle" 
+                                                onclick="toggleLLMDetails('llm-details-1')">
+                                            Show Justifications ▼
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="llm-details" id="llm-details-1">
+                                        <h6 style="font-size: 0.9rem; margin-bottom: 0.5rem;">LLM Justifications:</h6>
+                                        
+                                            
+                                            <div class="llm-justification">
+                                                <strong>RLHF:</strong> The paper's main contribution focuses on evaluating the limitations of RLHF techniques (e.g., DPO, ORPO, RLOO) in aligning large language models with human preferences, particularly in mitigating biases. It conducts experiments using RLHF on models like Llama 3 8B, directly addressing the topic's definition of systems that use human feedback for alignment via reinforcement learning. This core analysis makes the paper highly relevant.
+                                            </div>
+                                            
+                                        
+                                            
+                                            <div class="llm-justification">
+                                                <strong>Weak supervision:</strong> below_threshold
+                                            </div>
+                                            
+                                        
+                                            
+                                            <div class="llm-justification">
+                                                <strong>Diffusion reasoning:</strong> below_threshold
+                                            </div>
+                                            
+                                        
+                                            
+                                            <div class="llm-justification">
+                                                <strong>Distributed training:</strong> below_threshold
+                                            </div>
+                                            
+                                        
+                                    </div>
+                                </div>
+                            
+                        </div>
+                        
+                        <div class="h-index-scores">
+                            <h6>Author H-Index:</h6>
+                            
+                                <div class="h-index-summary">
+                                    <div class="h-index-metric">
+                                        <span class="h-index-label">Data found:</span>
+                                        <span class="h-index-value">4/4 authors</span>
+                                    </div>
+                                    <div class="h-index-metric">
+                                        <span class="h-index-label">H-index available:</span>
+                                        <span class="h-index-value">4/4 found</span>
+                                    </div>
+                                    
+                                    <div class="h-index-metric">
+                                        <span class="h-index-label">Highest:</span>
+                                        <span class="h-index-value">3</span>
+                                    </div>
+                                    
+                                    
+                                    <div class="h-index-metric">
+                                        <span class="h-index-label">Average:</span>
+                                        <span class="h-index-value">1.8</span>
+                                    </div>
+                                    
+                                    
+                                    <div class="h-index-metric">
+                                        <span class="h-index-label">Notable (H>5):</span>
+                                        <span class="h-index-value">0</span>
+                                    </div>
+                                    
+                                    
+                                    <div class="h-index-metric">
+                                        <span class="h-index-label">Source:</span>
+                                        <span class="h-index-value">Full Id</span>
+                                    </div>
+                                    
+                                    
+                                    
+                                    <div class="h-index-expand">
+                                        <button class="btn btn-sm btn-outline-light h-index-toggle" 
+                                                onclick="toggleHIndexDetails('h-details-1')">
+                                            Show Individual H-indices ▼
+                                        </button>
+                                        <div class="h-index-details" id="h-details-1">
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Logan Barnhart</span>
+                                                
+                                                <span class="author-h-value">1</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Reza Akbarian Bafghi</span>
+                                                
+                                                <span class="author-h-value">3</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Stephen Becker</span>
+                                                
+                                                <span class="author-h-value">1</span>
+                                            </div>
+                                            
+                                            <div class="individual-h-index">
+                                                
+                                                <span class="author-name">Maziar Raissi</span>
+                                                
+                                                <span class="author-h-value">2</span>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleJustification(id) {
+            const element = document.getElementById(id);
+            const button = element.previousElementSibling;
+            
+            if (element.style.display === 'none' || element.style.display === '') {
+                element.style.display = 'block';
+                button.innerHTML = 'Hide Justification ▲';
+            } else {
+                element.style.display = 'none';
+                button.innerHTML = 'Show Justification ▼';
+            }
+        }
+        
+        function toggleLLMDetails(id) {
+            const element = document.getElementById(id);
+            const button = element.previousElementSibling.querySelector('.llm-toggle');
+            
+            if (element.style.display === 'none' || element.style.display === '') {
+                element.style.display = 'block';
+                button.innerHTML = 'Hide Justifications ▲';
+            } else {
+                element.style.display = 'none';
+                button.innerHTML = 'Show Justifications ▼';
+            }
+        }
+        
+        function toggleHIndexDetails(id) {
+            const element = document.getElementById(id);
+            const button = element.previousElementSibling;
+            
+            if (element.style.display === 'none' || element.style.display === '') {
+                element.style.display = 'block';
+                button.innerHTML = 'Hide Individual H-indices ▲';
+            } else {
+                element.style.display = 'none';
+                button.innerHTML = 'Show Individual H-indices ▼';
+            }
+        }
+        
+        // Basic filtering and sorting functionality
+        const papers = [{"abstract": "Fine-tuning large language models (LLMs) to align with user preferences is\nchallenging due to the high cost of quality human annotations in Reinforcement\nLearning from Human Feedback (RLHF) and the generalizability limitations of AI\nFeedback. To address these challenges, we propose RLTHF, a human-AI hybrid\nframework that combines LLM-based initial alignment with selective human\nannotations to achieve full-human annotation alignment with minimal effort.\nRLTHF identifies hard-to-annotate samples mislabeled by LLMs using a reward\nmodel\u0026#x27;s reward distribution and iteratively enhances alignment by integrating\nstrategic human corrections while leveraging LLM\u0026#x27;s correctly labeled samples.\nEvaluations on HH-RLHF and TL;DR datasets show that RLTHF reaches full-human\nannotation-level alignment with only 6-7% of the human annotation effort.\nFurthermore, models trained on RLTHF\u0026#x27;s curated datasets for downstream tasks\noutperform those trained on fully human-annotated datasets, underscoring the\neffectiveness of RLTHF\u0026#x27;s strategic data curation.", "arxiv_id": "2502.13417", "arxiv_url": "http://arxiv.org/abs/2502.13417", "author_h_indices": {"author_h_indexes": [{"h_index": 2, "name": "Yifei Xu", "semantic_scholar_url": null}, {"h_index": 6, "name": "Tusher Chakraborty", "semantic_scholar_url": null}, {"h_index": 5, "name": "Emre Kiciman", "semantic_scholar_url": null}, {"h_index": 1, "name": "Bibek Aryal", "semantic_scholar_url": null}, {"h_index": 1, "name": "Eduardo Rodrigues", "semantic_scholar_url": null}, {"h_index": 1, "name": "Srinagesh Sharma", "semantic_scholar_url": null}, {"h_index": 2, "name": "Roberto Estev\u00e3o", "semantic_scholar_url": null}, {"h_index": 5, "name": "M. A. D. L. Balaguer", "semantic_scholar_url": null}, {"h_index": 1, "name": "Jessica Wolk", "semantic_scholar_url": null}, {"h_index": 2, "name": "Rafael Padilha", "semantic_scholar_url": null}, {"h_index": 3, "name": "Leonardo Nunes", "semantic_scholar_url": null}, {"h_index": 1, "name": "Shobana Balakrishnan", "semantic_scholar_url": null}, {"h_index": 2, "name": "Songwu Lu", "semantic_scholar_url": null}, {"h_index": 4, "name": "Ranveer Chandra", "semantic_scholar_url": null}], "authors_with_h_index_count": 14, "average_h_index": 2.5714285714285716, "h_index_fetch_method": "full_id", "highest_h_index": 6, "notable_authors_count": 1, "success": true, "total_authors": 14}, "authors": ["Yifei Xu", "Tusher Chakraborty", "Emre K\u0131c\u0131man", "Bibek Aryal", "Eduardo Rodrigues", "Srinagesh Sharma", "Roberto Estevao", "Maria Angels de Luis Balaguer", "Jessica Wolk", "Rafael Padilha", "Leonardo Nunes", "Shobana Balakrishnan", "Songwu Lu", "Ranveer Chandra"], "categories": ["cs.CL", "cs.AI", "cs.LG"], "embedding_completed": true, "h_index_completed": true, "highest_score": 0.72, "highest_similarity_topic": "RLHF", "id": "2502.13417", "llm_scoring_completed": true, "llm_validation": {"Diffusion_reasoning": {"justification": "The paper focuses on iterative reward model training and human-AI feedback for alignment, with no mention of diffusion models, iterative refinement for logical tasks, or treating Chain-of-Thought as a single entity for multi-step correction.", "llm_relevant": "not_relevant", "validated": true}, "Distributed_training": {"justification": "The paper does not discuss parallel computing, multi-node setups, or strategies for partitioning data/computation across processors; it centers on data annotation and alignment techniques, with no reference to distributed training methods.", "llm_relevant": "not_relevant", "validated": true}, "RLHF": {"justification": "The paper directly builds on RLHF by proposing RLTHF, a framework that uses human feedback to train a reward model for aligning LLMs. It addresses RLHF\u0027s challenges, such as annotation costs, while maintaining core elements like human-ranked data and reinforcement learning for model fine-tuning, making it a direct extension of the topic.", "llm_relevant": "highly_relevant", "validated": true}, "Weak_supervision": {"justification": "The paper employs LLM-based initial labeling as a noisy, programmatic source for annotations, which aligns with weak supervision\u0027s use of imprecise labels. However, it integrates selective human corrections, diverging from pure weak supervision by relying on human input for refinement, thus making it only partially relevant.", "llm_relevant": "moderately_relevant", "validated": true}}, "llm_validation_completed": true, "published": "2025-02-19T04:25:11+00:00", "scores": {"Diffusion_reasoning": 0.409, "Distributed_training": 0.411, "RLHF": 0.72, "Weak_supervision": 0.471}, "scores_data": {"impact": "High", "impact_justification": "The work could broadly influence LLM fine-tuning practices by making alignment more cost-effective and scalable, potentially affecting research and commercial applications in AI where human annotation is a bottleneck.", "novelty": "Moderate", "novelty_justification": "The paper presents a notable improvement by combining existing RLHF and RLAIF techniques with a targeted human-AI hybrid approach to reduce annotation costs, though it builds on established concepts rather than introducing a entirely new problem or architecture.", "recommendation": "Should Read", "recommendation_justification": "This paper provides valuable insights for researchers and practitioners working on LLM alignment and fine-tuning, offering practical methods to optimize human effort, though it may not be essential for those outside this specific subfield.", "summary": "The paper introduces RLTHF, a hybrid framework for aligning large language models (LLMs) with user preferences by combining initial LLM-based annotations with targeted human feedback on hard-to-annotate samples. It leverages a reward model\u0027s distribution to identify and correct mislabeled data iteratively, achieving alignment quality comparable to full human annotations with only 6-7% of the effort, and demonstrates superior performance on downstream tasks like HH-RLHF and TL;DR datasets."}, "title": "RLTHF: Targeted Human Feedback for LLM Alignment"}, {"abstract": "Reinforcement Learning from Human Feedback (RLHF) is increasingly used to\nalign large language models (LLMs) with human preferences. However, the\neffectiveness of RLHF in addressing underlying biases remains unclear. This\nstudy investigates the relationship between RLHF and both covert and overt\nbiases in LLMs, particularly focusing on biases against African Americans. We\napplied various RLHF techniques (DPO, ORPO, and RLOO) to Llama 3 8B and\nevaluated the covert and overt biases of the resulting models using\nmatched-guise probing and explicit bias testing. We performed additional tests\nwith DPO on different base models and datasets; among several implications, we\nfound that SFT before RLHF calcifies model biases. Additionally, we extend the\ntools for measuring biases to multi-modal models. Through our experiments we\ncollect evidence that indicates that current alignment techniques are\ninadequate for nebulous tasks such as mitigating covert biases, highlighting\nthe need for capable datasets, data curating techniques, or alignment tools.", "arxiv_id": "2503.09025", "arxiv_url": "http://arxiv.org/abs/2503.09025", "author_h_indices": {"author_h_indexes": [{"h_index": 1, "name": "Logan Barnhart", "semantic_scholar_url": null}, {"h_index": 3, "name": "Reza Akbarian Bafghi", "semantic_scholar_url": null}, {"h_index": 1, "name": "Stephen Becker", "semantic_scholar_url": null}, {"h_index": 2, "name": "Maziar Raissi", "semantic_scholar_url": null}], "authors_with_h_index_count": 4, "average_h_index": 1.75, "h_index_fetch_method": "full_id", "highest_h_index": 3, "notable_authors_count": 0, "success": true, "total_authors": 4}, "authors": ["Logan Barnhart", "Reza Akbarian Bafghi", "Stephen Becker", "Maziar Raissi"], "categories": ["cs.CL"], "embedding_completed": true, "h_index_completed": true, "highest_score": 0.626, "highest_similarity_topic": "RLHF", "id": "2503.09025", "llm_scoring_completed": true, "llm_validation": {"Diffusion_reasoning": {"justification": "below_threshold", "llm_relevant": "not_validated", "validated": true}, "Distributed_training": {"justification": "below_threshold", "llm_relevant": "not_validated", "validated": true}, "RLHF": {"justification": "The paper\u0027s main contribution focuses on evaluating the limitations of RLHF techniques (e.g., DPO, ORPO, RLOO) in aligning large language models with human preferences, particularly in mitigating biases. It conducts experiments using RLHF on models like Llama 3 8B, directly addressing the topic\u0027s definition of systems that use human feedback for alignment via reinforcement learning. This core analysis makes the paper highly relevant.", "llm_relevant": "highly_relevant", "validated": true}, "Weak_supervision": {"justification": "below_threshold", "llm_relevant": "not_validated", "validated": true}}, "llm_validation_completed": true, "published": "2025-03-12T03:24:44+00:00", "scores": {"Diffusion_reasoning": 0.374, "Distributed_training": 0.366, "RLHF": 0.626, "Weak_supervision": 0.391}, "scores_data": {"impact": "Moderate", "impact_justification": "The work is likely to influence research in AI alignment and bias mitigation within the subfield of LLMs, as it provides evidence of RLHF\u0027s limitations that could guide future improvements in ethical AI development. While relevant, its applicability is somewhat confined to specific areas like model biases rather than broader commercial or technological advancements.", "novelty": "Moderate", "novelty_justification": "The paper presents a notable improvement by empirically examining the impact of RLHF on covert and overt biases in a way not extensively covered in prior literature, combining existing techniques to address a known problem with new experimental insights. However, it builds on established methods like RLHF and bias evaluation rather than introducing a entirely new architecture or problem.", "recommendation": "Should Read", "recommendation_justification": "This paper offers valuable insights for researchers and practitioners focused on AI ethics, model alignment, and bias reduction in LLMs, making it a worthwhile read for those in this niche. However, it may not be essential for individuals outside this specific topic, as its relevance is targeted rather than field-wide.", "summary": "This paper investigates the limitations of Reinforcement Learning from Human Feedback (RLHF) in aligning large language models (LLMs) with human preferences, particularly in mitigating covert and overt biases against African Americans. By applying RLHF techniques such as DPO, ORPO, and RLOO to models like Llama 3 8B, evaluating biases through matched-guise probing and explicit testing, and extending methods to multi-modal models, the authors find that RLHF does not substantially reduce these biases, with supervised fine-tuning potentially calcifying them, ultimately highlighting the need for improved datasets and alignment tools."}, "title": "Aligning to What? Limits to RLHF Based Alignment"}];
+        let filteredPapers = [...papers];
+        
+        function updateDisplay() {
+            const container = document.getElementById('papers-container');
+            const filterCount = document.getElementById('filter-count');
+            
+            filterCount.textContent = `Showing ${filteredPapers.length}/${papers.length} papers`;
+            
+            // Show/hide paper cards
+            const cards = container.querySelectorAll('.paper-card');
+            cards.forEach((card, index) => {
+                const isVisible = filteredPapers.some(p => papers.indexOf(p) === index);
+                card.style.display = isVisible ? 'block' : 'none';
+            });
+        }
+        
+        function applyFilters() {
+            const selectedTopics = Array.from(document.querySelectorAll('.topic-filter:checked')).map(cb => cb.value);
+            const selectedLLM = Array.from(document.querySelectorAll('.llm-filter:checked')).map(cb => cb.value);
+            const selectedHIndex = Array.from(document.querySelectorAll('.h-index-filter:checked')).map(cb => cb.value);
+            const minScore = parseFloat(document.getElementById('minScore').value) || 0;
+            const maxScore = parseFloat(document.getElementById('maxScore').value) || 1;
+            
+            filteredPapers = papers.filter(paper => {
+                // Topic filter
+                if (selectedTopics.length > 0 && paper.scores) {
+                    const hasSelectedTopic = selectedTopics.some(topic => 
+                        paper.scores.hasOwnProperty(topic) && 
+                        paper.scores[topic] >= minScore && 
+                        paper.scores[topic] <= maxScore
+                    );
+                    if (!hasSelectedTopic) return false;
+                }
+                
+                return true;
+            });
+            
+            updateDisplay();
+        }
+        
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.topic-filter, .llm-filter, .h-index-filter').forEach(cb => {
+                cb.addEventListener('change', applyFilters);
+            });
+            
+            document.getElementById('minScore').addEventListener('input', applyFilters);
+            document.getElementById('maxScore').addEventListener('input', applyFilters);
+            
+            document.getElementById('resetFilters').addEventListener('click', function() {
+                document.querySelectorAll('.topic-filter, .llm-filter, .h-index-filter').forEach(cb => cb.checked = true);
+                document.getElementById('minScore').value = 0;
+                document.getElementById('maxScore').value = 1;
+                applyFilters();
+            });
+        });
+    </script>
+</body>
+</html>

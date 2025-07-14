@@ -101,3 +101,28 @@ H_INDEX_FETCHING = {
     # Processing thresholds
     'notable_h_index_threshold': 5  # H-index threshold for "notable" authors
 }
+
+# HTML Generation Parameters
+HTML_GENERATION = {
+    # Output directory for generated HTML files
+    'output_dir': 'report',
+    
+    # Template directory
+    'template_dir': 'templates',
+    
+    # Landing page filename
+    'landing_page_filename': 'index.html',
+    
+    # File naming modes
+    'filename_modes': {
+        'date': '%Y-%m-%d.html',      # e.g., "2025-01-15.html"
+        'test': 'test_%Y%m%d_%H%M%S.html'  # e.g., "test_20250115_143052.html"
+    },
+    
+    # Paper count extraction for landing page
+    'paper_count_patterns': {
+        'total_papers': r'<div class="paper-count">(\d+)</div>',
+        'must_read': r'<span class="badge.*?bg-danger.*?">.*?(\d+).*?</span>',
+        'should_read': r'<span class="badge.*?bg-warning.*?">.*?(\d+).*?</span>'
+    }
+}

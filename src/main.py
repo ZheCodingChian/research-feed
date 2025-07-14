@@ -184,6 +184,11 @@ def main() -> None:
         
         # Save Point: Persist H-index results to cache
         save_to_cache(runtime_paper_dict)
+        
+        # Step 7: Execute HTML generation module
+        logger.info("Executing HTML generation module")
+        from modules import html_generator
+        html_generator.run(runtime_paper_dict, run_mode, run_value, config.HTML_GENERATION)
 
         # Final summary
         total_papers = len(runtime_paper_dict)
