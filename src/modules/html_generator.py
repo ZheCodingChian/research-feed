@@ -275,40 +275,15 @@ class HTMLGenerator:
             # Determine display information
             if run_mode == 'test':
                 display_title = "Test Papers"
-                display_mode = "Test Mode - Specific Papers Analysis"
-                # Extract unique publication dates from papers
-                paper_dates = set()
-                for paper_data in papers_list:
-                    if paper_data.get('published'):
-                        try:
-                            # published_date is already a datetime object
-                            pub_date = paper_data['published']
-                            if hasattr(pub_date, 'strftime'):
-                                paper_dates.add(pub_date.strftime('%Y-%m-%d'))
-                            else:
-                                # If it's a string, try to parse it
-                                pub_date = datetime.fromisoformat(str(pub_date).replace('Z', '+00:00'))
-                                paper_dates.add(pub_date.strftime('%Y-%m-%d'))
-                        except:
-                            pass
-                date_info = f"Paper dates: {', '.join(sorted(paper_dates))}" if paper_dates else "Various dates"
+                display_mode = ""  # Remove subtitle for test mode
+                date_info = ""     # Remove date info
             else:
-                display_title = f"Papers - {run_value}"
-                display_mode = "Daily Report"
-                date_info = f"Submitted on {run_value}"
+                display_title = f"Papers from {run_value}"  # Changed format
+                display_mode = ""  # Remove subtitle
+                date_info = ""     # Remove date info
             
-            # Extract model information (should be consistent across papers)
-            models_info = {
-                'embedding': 'unknown',
-                'llm_validation': 'unknown', 
-                'llm_scoring': 'unknown'
-            }
-            
-            if papers_list:
-                # Try to extract model info from config or first paper
-                models_info['embedding'] = self.config.get('embedding_model', 'openai-large')
-                models_info['llm_validation'] = self.config.get('llm_model', 'x-ai/grok-3-mini')
-                models_info['llm_scoring'] = self.config.get('scoring_model', 'gemini-flash')
+            # Remove model information section entirely
+            models_info = {}
             
             # Prepare template data
             template_data = {

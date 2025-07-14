@@ -498,21 +498,7 @@
             <div class="header-title-section">
                 <h1 class="mb-3">{{ display_title }}</h1>
                 
-                <p class="lead mb-2">{{ display_mode }}</p>
-                <p class="text-muted mb-2">{{ date_info }}</p>
-                
                 <p class="text-muted mb-0" id="paper-count">{{ paper_count }} papers</p>
-                
-                <div class="models-info mt-2">
-                    <small class="text-muted">
-                        <strong>Models:</strong> 
-                        Embedding: <span class="badge bg-secondary">{{ models_info.embedding }}</span>
-                        
-                        | LLM Validation: <span class="badge bg-secondary">{{ models_info.llm_validation }}</span>
-                        
-                        | LLM Scoring: <span class="badge bg-secondary">{{ models_info.llm_scoring }}</span>
-                    </small>
-                </div>
             </div>
         </div>
         <div class="controls-section">
@@ -698,9 +684,9 @@
                     
                     <div class="paper-metrics-row">
                         <div class="similarity-scores">
-                            <h6>Similarity Scores:</h6>
                             {% if paper.scores %}
                                 <div class="similarity-summary">
+                                    <h6 style="margin-bottom: 1rem; color: #ffffff; font-weight: 600;">Similarity Scores:</h6>
                                     <div class="similarity-scores-content">
                                         {% for topic, score in paper.scores.items() %}
                                         <span class="similarity-label" data-topic="{{ topic }}">{{ topic.replace('_', ' ') }}:</span>
@@ -714,14 +700,17 @@
                                     </div>
                                 </div>
                             {% else %}
-                                <p class="text-muted">No similarity scores available</p>
+                                <div class="similarity-summary">
+                                    <h6 style="margin-bottom: 1rem; color: #ffffff; font-weight: 600;">Similarity Scores:</h6>
+                                    <p class="text-muted">No similarity scores available</p>
+                                </div>
                             {% endif %}
                         </div>
                         
                         <div class="llm-validation">
-                            <h6>LLM Validation:</h6>
                             {% if paper.llm_validation %}
                                 <div class="llm-validation-summary">
+                                    <h6 style="margin-bottom: 1rem; color: #ffffff; font-weight: 600;">LLM Validation:</h6>
                                     {% for topic in topics %}
                                         {% if paper.llm_validation.get(topic) %}
                                             {% set topic_data = paper.llm_validation[topic] %}
@@ -761,14 +750,17 @@
                                     </div>
                                 </div>
                             {% else %}
-                                <p class="text-muted">No LLM validation data available</p>
+                                <div class="llm-validation-summary">
+                                    <h6 style="margin-bottom: 1rem; color: #ffffff; font-weight: 600;">LLM Validation:</h6>
+                                    <p class="text-muted">No LLM validation data available</p>
+                                </div>
                             {% endif %}
                         </div>
                         
                         <div class="h-index-scores">
-                            <h6>Author H-Index:</h6>
                             {% if paper.author_h_indices.success %}
                                 <div class="h-index-summary">
+                                    <h6 style="margin-bottom: 1rem; color: #ffffff; font-weight: 600;">Author H-Index:</h6>
                                     <div class="h-index-metric">
                                         <span class="h-index-label">Data found:</span>
                                         <span class="h-index-value">{{ paper.author_h_indices.authors_with_h_index_count }}/{{ paper.author_h_indices.total_authors }} authors</span>
@@ -826,7 +818,10 @@
                                     {% endif %}
                                 </div>
                             {% else %}
-                                <p class="text-muted">No H-index data available</p>
+                                <div class="h-index-summary">
+                                    <h6 style="margin-bottom: 1rem; color: #ffffff; font-weight: 600;">Author H-Index:</h6>
+                                    <p class="text-muted">No H-index data available</p>
+                                </div>
                             {% endif %}
                         </div>
                     </div>
