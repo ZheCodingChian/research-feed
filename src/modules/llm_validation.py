@@ -352,7 +352,7 @@ Paper Information:
 
 {topics_section}
 Step-by-step instructions:
-1. Read the paper abstract and title. Fully understand the paper's main contribution.
+1. Read the paper's text. Fully understand the paper's main contribution.
 2. Evaluate if the paper's main contribution is relevant to any of the topics presented.
 3. Respond ONLY in this exact XML format:
 
