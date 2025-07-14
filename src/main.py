@@ -176,6 +176,14 @@ def main() -> None:
         
         # Save Point: Persist LLM scoring results to cache
         save_to_cache(runtime_paper_dict)
+        
+        # Step 6: Execute H-index fetching module
+        logger.info("Executing H-index fetching module")
+        from modules import h_index_fetching
+        runtime_paper_dict = h_index_fetching.run(runtime_paper_dict, config.H_INDEX_FETCHING)
+        
+        # Save Point: Persist H-index results to cache
+        save_to_cache(runtime_paper_dict)
 
         # Final summary
         total_papers = len(runtime_paper_dict)
@@ -189,6 +197,8 @@ def main() -> None:
         llm_validation_failed = sum(1 for p in runtime_paper_dict.values() if p.llm_validation_status == "failed")
         llm_scoring_successful = sum(1 for p in runtime_paper_dict.values() if p.is_llm_score_completed())
         llm_scoring_failed = sum(1 for p in runtime_paper_dict.values() if p.llm_score_status == "failed")
+        h_index_successful = sum(1 for p in runtime_paper_dict.values() if p.is_h_index_completed())
+        h_index_failed = sum(1 for p in runtime_paper_dict.values() if p.h_index_status == "failed")
         
         logger.info(f"Pipeline completed: {total_papers} total papers, "
                    f"{successful_papers} successfully scraped, {failed_papers} scraping failed")
@@ -196,6 +206,7 @@ def main() -> None:
         logger.info(f"Embedding similarity: {embedding_successful} successful, {embedding_failed} failed")
         logger.info(f"LLM validation: {llm_validation_successful} successful, {llm_validation_failed} failed")
         logger.info(f"LLM scoring: {llm_scoring_successful} successful, {llm_scoring_failed} failed")
+        logger.info(f"H-index fetching: {h_index_successful} successful, {h_index_failed} failed")
         
     except KeyboardInterrupt:
         logger.info("Pipeline interrupted by user")

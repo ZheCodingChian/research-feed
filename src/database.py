@@ -4,7 +4,7 @@ import logging
 from datetime import datetime
 from typing import Dict, Optional
 from pathlib import Path
-from paper import Paper
+from paper import Paper, AuthorHIndex
 
 logger = logging.getLogger('DATABASE')
 
@@ -64,6 +64,15 @@ class PaperDatabase:
                     impact_justification TEXT,
                     recommendation_score TEXT,
                     recommendation_justification TEXT,
+                    h_index_status TEXT DEFAULT 'not_fetched',
+                    semantic_scholar_url TEXT,
+                    h_index_fetch_method TEXT,
+                    total_authors INTEGER,
+                    authors_found INTEGER,
+                    highest_h_index INTEGER,
+                    average_h_index REAL,
+                    notable_authors_count INTEGER,
+                    author_h_indexes TEXT,  -- JSON array of AuthorHIndex objects
                     errors TEXT,  -- JSON array
                     created_at TEXT,  -- ISO format
                     updated_at TEXT   -- ISO format
@@ -95,8 +104,10 @@ class PaperDatabase:
                     rlhf_justification, weak_supervision_justification, diffusion_reasoning_justification,
                     distributed_training_justification, llm_score_status, summary, novelty_score,
                     novelty_justification, impact_score, impact_justification, recommendation_score,
-                    recommendation_justification, errors, created_at, updated_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    recommendation_justification, h_index_status, semantic_scholar_url, h_index_fetch_method,
+                    total_authors, authors_found, highest_h_index, average_h_index, notable_authors_count,
+                    author_h_indexes, errors, created_at, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
                 paper.id,
                 paper.title,
@@ -135,6 +146,19 @@ class PaperDatabase:
                 paper.impact_justification,
                 paper.recommendation_score,
                 paper.recommendation_justification,
+                paper.h_index_status,
+                paper.semantic_scholar_url,
+                paper.h_index_fetch_method,
+                paper.total_authors,
+                paper.authors_found,
+                paper.highest_h_index,
+                paper.average_h_index,
+                paper.notable_authors_count,
+                json.dumps([{
+                    'name': auth.name,
+                    'profile_url': auth.profile_url,
+                    'h_index': auth.h_index
+                } for auth in paper.author_h_indexes]),
                 json.dumps(paper.errors),
                 paper.created_at.isoformat(),
                 paper.updated_at.isoformat()
@@ -188,6 +212,21 @@ class PaperDatabase:
                 impact_justification=row['impact_justification'],
                 recommendation_score=row['recommendation_score'],
                 recommendation_justification=row['recommendation_justification'],
+                h_index_status=row['h_index_status'],
+                semantic_scholar_url=row['semantic_scholar_url'],
+                h_index_fetch_method=row['h_index_fetch_method'],
+                total_authors=row['total_authors'],
+                authors_found=row['authors_found'],
+                highest_h_index=row['highest_h_index'],
+                average_h_index=row['average_h_index'],
+                notable_authors_count=row['notable_authors_count'],
+                author_h_indexes=[
+                    AuthorHIndex(
+                        name=auth['name'],
+                        profile_url=auth['profile_url'],
+                        h_index=auth['h_index']
+                    ) for auth in json.loads(row['author_h_indexes'])
+                ] if row['author_h_indexes'] else [],
                 errors=json.loads(row['errors']),
                 created_at=datetime.fromisoformat(row['created_at']),
                 updated_at=datetime.fromisoformat(row['updated_at'])
@@ -210,8 +249,10 @@ class PaperDatabase:
                         rlhf_justification, weak_supervision_justification, diffusion_reasoning_justification,
                         distributed_training_justification, llm_score_status, summary, novelty_score,
                         novelty_justification, impact_score, impact_justification, recommendation_score,
-                        recommendation_justification, errors, created_at, updated_at
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        recommendation_justification, h_index_status, semantic_scholar_url, h_index_fetch_method,
+                        total_authors, authors_found, highest_h_index, average_h_index, notable_authors_count,
+                        author_h_indexes, errors, created_at, updated_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, (
                     paper.id,
                     paper.title,
@@ -250,6 +291,19 @@ class PaperDatabase:
                     paper.impact_justification,
                     paper.recommendation_score,
                     paper.recommendation_justification,
+                    paper.h_index_status,
+                    paper.semantic_scholar_url,
+                    paper.h_index_fetch_method,
+                    paper.total_authors,
+                    paper.authors_found,
+                    paper.highest_h_index,
+                    paper.average_h_index,
+                    paper.notable_authors_count,
+                    json.dumps([{
+                        'name': auth.name,
+                        'profile_url': auth.profile_url,
+                        'h_index': auth.h_index
+                    } for auth in paper.author_h_indexes]),
                     json.dumps(paper.errors),
                     paper.created_at.isoformat(),
                     paper.updated_at.isoformat()
@@ -293,6 +347,38 @@ class PaperDatabase:
                     diffusion_reasoning_score=row['diffusion_reasoning_score'],
                     distributed_training_score=row['distributed_training_score'],
                     highest_similarity_topic=row['highest_similarity_topic'],
+                    llm_validation_status=row['llm_validation_status'],
+                    rlhf_relevance=row['rlhf_relevance'],
+                    weak_supervision_relevance=row['weak_supervision_relevance'],
+                    diffusion_reasoning_relevance=row['diffusion_reasoning_relevance'],
+                    distributed_training_relevance=row['distributed_training_relevance'],
+                    rlhf_justification=row['rlhf_justification'],
+                    weak_supervision_justification=row['weak_supervision_justification'],
+                    diffusion_reasoning_justification=row['diffusion_reasoning_justification'],
+                    distributed_training_justification=row['distributed_training_justification'],
+                    llm_score_status=row['llm_score_status'],
+                    summary=row['summary'],
+                    novelty_score=row['novelty_score'],
+                    novelty_justification=row['novelty_justification'],
+                    impact_score=row['impact_score'],
+                    impact_justification=row['impact_justification'],
+                    recommendation_score=row['recommendation_score'],
+                    recommendation_justification=row['recommendation_justification'],
+                    h_index_status=row['h_index_status'],
+                    semantic_scholar_url=row['semantic_scholar_url'],
+                    h_index_fetch_method=row['h_index_fetch_method'],
+                    total_authors=row['total_authors'],
+                    authors_found=row['authors_found'],
+                    highest_h_index=row['highest_h_index'],
+                    average_h_index=row['average_h_index'],
+                    notable_authors_count=row['notable_authors_count'],
+                    author_h_indexes=[
+                        AuthorHIndex(
+                            name=auth['name'],
+                            profile_url=auth['profile_url'],
+                            h_index=auth['h_index']
+                        ) for auth in json.loads(row['author_h_indexes'])
+                    ] if row['author_h_indexes'] else [],
                     errors=json.loads(row['errors']),
                     created_at=datetime.fromisoformat(row['created_at']),
                     updated_at=datetime.fromisoformat(row['updated_at'])

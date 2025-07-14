@@ -85,3 +85,19 @@ LLM_SCORING = {
     'max_workers': 5,   # Number of concurrent API calls
     'timeout': 120
 }
+
+# H-Index Fetching Parameters
+H_INDEX_FETCHING = {
+    # Semantic Scholar API configuration
+    'api_base_url': 'https://api.semanticscholar.org/graph/v1',
+    
+    # Sequential processing settings
+    'timeout': 30,
+    'max_retries': 3,
+    
+    # Rate limiting (conservative to respect Semantic Scholar's public API limits)
+    'rate_limit_delay': 1.0,  # 1 second delay between requests
+    
+    # Processing thresholds
+    'notable_h_index_threshold': 5  # H-index threshold for "notable" authors
+}

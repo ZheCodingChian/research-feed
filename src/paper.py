@@ -4,6 +4,14 @@ from datetime import datetime
 
 
 @dataclass
+class AuthorHIndex:
+    """Represents H-index data for a single author."""
+    name: str
+    profile_url: Optional[str] = None
+    h_index: Optional[int] = None
+
+
+@dataclass
 class Paper:
     """
     Represents a single academic paper with all its metadata and processing status.
@@ -63,6 +71,17 @@ class Paper:
     impact_justification: Optional[str] = None  # LLM justification for impact score
     recommendation_score: Optional[str] = None  # Must Read, Should Read, Can Skip, Ignore
     recommendation_justification: Optional[str] = None  # LLM justification for recommendation
+    
+    # H-index fetching fields
+    h_index_status: str = "not_fetched"  # Track H-index processing: not_fetched, completed, failed
+    semantic_scholar_url: Optional[str] = None  # URL to paper on Semantic Scholar
+    h_index_fetch_method: Optional[str] = None  # Method used: full_id, base_id, title_search
+    total_authors: Optional[int] = None  # Total number of authors
+    authors_found: Optional[int] = None  # Authors found with profile data
+    highest_h_index: Optional[int] = None  # Highest H-index among authors
+    average_h_index: Optional[float] = None  # Average H-index of authors with data
+    notable_authors_count: Optional[int] = None  # Authors with H-index > 5
+    author_h_indexes: List[AuthorHIndex] = field(default_factory=list)  # Detailed author H-index data
     
     # Metadata
     created_at: datetime = field(default_factory=datetime.now)
@@ -143,3 +162,20 @@ class Paper:
             self.distributed_training_relevance
         ]
         return "highly_relevant" in relevance_scores
+    
+    def update_h_index_status(self, new_status: str) -> None:
+        """Update the paper's H-index fetching status."""
+        self.h_index_status = new_status
+        self.updated_at = datetime.now()
+    
+    def is_h_index_completed(self) -> bool:
+        """Check if H-index fetching was successful."""
+        return self.h_index_status == "completed"
+    
+    def can_skip_h_index_fetching(self) -> bool:
+        """Check if paper can skip H-index fetching."""
+        return self.h_index_status in ["completed", "failed"]
+    
+    def is_valuable_paper(self) -> bool:
+        """Check if paper has Must Read or Should Read recommendation."""
+        return self.recommendation_score in ["Must Read", "Should Read"]
