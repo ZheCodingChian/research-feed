@@ -331,6 +331,232 @@
             padding: 0.25rem 0.5rem;
         }
         
+        /* LLM Validation Widget Styles */
+        .llm-validation-title-section {
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        
+        .llm-validation-title {
+            margin-bottom: 0;
+            color: #ffffff;
+            font-weight: 600;
+        }
+        
+        .llm-validation-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0.5rem 1rem;
+            align-items: center;
+        }
+        
+        .llm-validation-topic-label {
+            font-weight: 600;
+            color: #e0e0e0;
+            white-space: nowrap;
+        }
+        
+        .llm-validation-value {
+            color: #e0e0e0;
+            font-weight: 600;
+            text-align: right;
+        }
+        
+        .llm-validation-value.highly-relevant {
+            color: #28a745;
+        }
+        
+        .llm-validation-value.moderately-relevant {
+            color: #0202c9;
+        }
+        
+        .llm-validation-value.tangentially-relevant {
+            color: #ffc107;
+        }
+        
+        .llm-validation-value.not-relevant {
+            color: #dc3545;
+        }
+        
+        .llm-validation-tooltip-wrapper {
+            position: relative;
+            cursor: help;
+        }
+        
+        .llm-validation-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2d2d2d;
+            color: #ffffff;
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+            z-index: 1000;
+            margin-bottom: 5px;
+            border: 1px solid #404040;
+        }
+        
+        .llm-validation-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: #2d2d2d;
+        }
+        
+        .llm-validation-tooltip-wrapper:hover .llm-validation-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* H-Index Widget Styles */
+        .h-index-title-section {
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        
+        .h-index-title {
+            margin-bottom: 0;
+            color: #ffffff;
+            font-weight: 600;
+        }
+        
+        .h-index-summary-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0.5rem 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .h-index-label {
+            font-weight: 600;
+            color: #e0e0e0;
+            white-space: nowrap;
+        }
+        
+        .h-index-value {
+            color: #e0e0e0;
+            font-weight: 600;
+            text-align: right;
+        }
+        
+        .h-index-controls-section {
+            width: 100%;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .h-index-toggle {
+            font-size: 0.85rem;
+            padding: 0.25rem 0.5rem;
+        }
+        
+        .h-index-details-section {
+            width: 100%;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 1rem;
+        }
+        
+        .h-index-details-title {
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+        
+        .h-index-authors-list {
+            margin-bottom: 1rem;
+        }
+        
+        .h-index-author-item {
+            color: #e0e0e0;
+            margin-bottom: 0.25rem;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+        
+        .h-index-paper-link {
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .h-index-paper-link a {
+            color: #00d4aa;
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        
+        .h-index-paper-link a:hover {
+            color: #00ffcc;
+            text-decoration: underline;
+        }
+        
+        .h-index-error-message {
+            color: #dc3545;
+            font-size: 0.85rem;
+            font-style: italic;
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        .h-index-not-available {
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        .h-index-tooltip-wrapper {
+            position: relative;
+            cursor: help;
+            color: #9ca3af;
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+        
+        .h-index-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2d2d2d;
+            color: #ffffff;
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+            z-index: 1000;
+            margin-bottom: 5px;
+            border: 1px solid #404040;
+            font-style: normal;
+        }
+        
+        .h-index-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: #2d2d2d;
+        }
+        
+        .h-index-tooltip-wrapper:hover .h-index-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+        
         /* Responsive design */
         @media (max-width: 768px) {
             .title-content h1 {
@@ -551,13 +777,179 @@
                             </div>
                             
                             <div class="module">
-                                <h6 class="module-title">LLM Validation</h6>
-                                <div class="module-placeholder">LLM validation widget</div>
+                                <!-- LLM Validation Title Section -->
+                                <div class="llm-validation-title-section">
+                                    <h6 class="llm-validation-title">LLM Validation</h6>
+                                </div>
+                                
+                                <!-- LLM Validation Grid -->
+                                <div class="llm-validation-grid">
+                                    <!-- RLHF Row -->
+                                    <div class="llm-validation-topic-label">RLHF:</div>
+                                    <div class="llm-validation-value-wrapper">
+                                        {% if paper.rlhf_relevance == 'not_validated' %}
+                                        <div class="llm-validation-tooltip-wrapper">
+                                            <span class="llm-validation-value not-relevant">Not Relevant*</span>
+                                            <div class="llm-validation-tooltip">Topic similarity score below 0.4, hence deemed not relevant</div>
+                                        </div>
+                                        {% elif paper.rlhf_relevance == 'Highly Relevant' %}
+                                        <span class="llm-validation-value highly-relevant">Highly Relevant</span>
+                                        {% elif paper.rlhf_relevance == 'Moderately Relevant' %}
+                                        <span class="llm-validation-value moderately-relevant">Moderately Relevant</span>
+                                        {% elif paper.rlhf_relevance == 'Tangentially Relevant' %}
+                                        <span class="llm-validation-value tangentially-relevant">Tangentially Relevant</span>
+                                        {% elif paper.rlhf_relevance == 'Not Relevant' %}
+                                        <span class="llm-validation-value not-relevant">Not Relevant</span>
+                                        {% else %}
+                                        <span class="llm-validation-value not-relevant">Error</span>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <!-- Weak Supervision Row -->
+                                    <div class="llm-validation-topic-label">Weak supervision:</div>
+                                    <div class="llm-validation-value-wrapper">
+                                        {% if paper.weak_supervision_relevance == 'not_validated' %}
+                                        <div class="llm-validation-tooltip-wrapper">
+                                            <span class="llm-validation-value not-relevant">Not Relevant*</span>
+                                            <div class="llm-validation-tooltip">Topic similarity score below 0.4, hence deemed not relevant</div>
+                                        </div>
+                                        {% elif paper.weak_supervision_relevance == 'Highly Relevant' %}
+                                        <span class="llm-validation-value highly-relevant">Highly Relevant</span>
+                                        {% elif paper.weak_supervision_relevance == 'Moderately Relevant' %}
+                                        <span class="llm-validation-value moderately-relevant">Moderately Relevant</span>
+                                        {% elif paper.weak_supervision_relevance == 'Tangentially Relevant' %}
+                                        <span class="llm-validation-value tangentially-relevant">Tangentially Relevant</span>
+                                        {% elif paper.weak_supervision_relevance == 'Not Relevant' %}
+                                        <span class="llm-validation-value not-relevant">Not Relevant</span>
+                                        {% else %}
+                                        <span class="llm-validation-value not-relevant">Error</span>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <!-- Diffusion Reasoning Row -->
+                                    <div class="llm-validation-topic-label">Diffusion reasoning:</div>
+                                    <div class="llm-validation-value-wrapper">
+                                        {% if paper.diffusion_reasoning_relevance == 'not_validated' %}
+                                        <div class="llm-validation-tooltip-wrapper">
+                                            <span class="llm-validation-value not-relevant">Not Relevant*</span>
+                                            <div class="llm-validation-tooltip">Topic similarity score below 0.4, hence deemed not relevant</div>
+                                        </div>
+                                        {% elif paper.diffusion_reasoning_relevance == 'Highly Relevant' %}
+                                        <span class="llm-validation-value highly-relevant">Highly Relevant</span>
+                                        {% elif paper.diffusion_reasoning_relevance == 'Moderately Relevant' %}
+                                        <span class="llm-validation-value moderately-relevant">Moderately Relevant</span>
+                                        {% elif paper.diffusion_reasoning_relevance == 'Tangentially Relevant' %}
+                                        <span class="llm-validation-value tangentially-relevant">Tangentially Relevant</span>
+                                        {% elif paper.diffusion_reasoning_relevance == 'Not Relevant' %}
+                                        <span class="llm-validation-value not-relevant">Not Relevant</span>
+                                        {% else %}
+                                        <span class="llm-validation-value not-relevant">Error</span>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <!-- Distributed Training Row -->
+                                    <div class="llm-validation-topic-label">Distributed training:</div>
+                                    <div class="llm-validation-value-wrapper">
+                                        {% if paper.distributed_training_relevance == 'not_validated' %}
+                                        <div class="llm-validation-tooltip-wrapper">
+                                            <span class="llm-validation-value not-relevant">Not Relevant*</span>
+                                            <div class="llm-validation-tooltip">Topic similarity score below 0.4, hence deemed not relevant</div>
+                                        </div>
+                                        {% elif paper.distributed_training_relevance == 'Highly Relevant' %}
+                                        <span class="llm-validation-value highly-relevant">Highly Relevant</span>
+                                        {% elif paper.distributed_training_relevance == 'Moderately Relevant' %}
+                                        <span class="llm-validation-value moderately-relevant">Moderately Relevant</span>
+                                        {% elif paper.distributed_training_relevance == 'Tangentially Relevant' %}
+                                        <span class="llm-validation-value tangentially-relevant">Tangentially Relevant</span>
+                                        {% elif paper.distributed_training_relevance == 'Not Relevant' %}
+                                        <span class="llm-validation-value not-relevant">Not Relevant</span>
+                                        {% else %}
+                                        <span class="llm-validation-value not-relevant">Error</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="module">
-                                <h6 class="module-title">Author H-Index</h6>
-                                <div class="module-placeholder">H-index widget</div>
+                                <!-- H-Index Title Section -->
+                                <div class="h-index-title-section">
+                                    <h6 class="h-index-title">Author H-Index</h6>
+                                </div>
+                                
+                                {% if paper.h_index_status == 'completed' %}
+                                <!-- H-Index Summary Grid -->
+                                <div class="h-index-summary-grid">
+                                    <div class="h-index-label">Authors found:</div>
+                                    <div class="h-index-value">{{ paper.authors_found or 0 }}/{{ paper.total_authors or paper.authors|length }}</div>
+                                    
+                                    <div class="h-index-label">Highest:</div>
+                                    <div class="h-index-value">{{ paper.highest_h_index or 'N/A' }}</div>
+                                    
+                                    <div class="h-index-label">Average:</div>
+                                    <div class="h-index-value">{{ '%.1f'|format(paper.average_h_index) if paper.average_h_index else 'N/A' }}</div>
+                                    
+                                    <div class="h-index-label">Notable (H>5):</div>
+                                    <div class="h-index-value">{{ paper.notable_authors_count or 0 }}</div>
+                                    
+                                    <div class="h-index-label">Source:</div>
+                                    <div class="h-index-value">
+                                        {% if paper.h_index_fetch_method == 'full_id' %}
+                                        Full ID match
+                                        {% elif paper.h_index_fetch_method == 'base_id' %}
+                                        Base ID match
+                                        {% elif paper.h_index_fetch_method == 'title_search' %}
+                                        Title match
+                                        {% else %}
+                                        {{ paper.h_index_fetch_method or 'Unknown' }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                <!-- Controls Section -->
+                                <div class="h-index-controls-section">
+                                    <button class="btn btn-sm btn-outline-light h-index-toggle" 
+                                            onclick="toggleHIndexDetails('h-index-{{ loop.index0 }}')">
+                                        Show Individual H-Indices ▼
+                                    </button>
+                                </div>
+                                
+                                <!-- Expandable Details Section (initially hidden) -->
+                                <div class="h-index-details-section" id="h-index-details-{{ loop.index0 }}" style="display: none;">
+                                    <div class="h-index-details-title">Individual Author H-Indices:</div>
+                                    <div class="h-index-authors-list">
+                                        {% for author_h in paper.author_h_indexes %}
+                                        <div class="h-index-author-item">
+                                            {% if author_h.profile_url %}
+                                            <a href="{{ author_h.profile_url }}" target="_blank" class="author-link">{{ author_h.name }}</a>:
+                                            {% else %}
+                                            {{ author_h.name }}:
+                                            {% endif %}
+                                            {{ author_h.h_index if author_h.h_index is not none else 'N/A' }}
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    {% if paper.semantic_scholar_url %}
+                                    <div class="h-index-paper-link">
+                                        <a href="{{ paper.semantic_scholar_url }}" target="_blank" class="author-link">
+                                            🔗 Verify paper on Semantic Scholar
+                                        </a>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                
+                                {% elif paper.h_index_status == 'failed' %}
+                                <div class="h-index-error-message">
+                                    Processing failed for H-index fetching
+                                </div>
+                                
+                                {% else %}
+                                <div class="h-index-not-available">
+                                    <span class="h-index-tooltip-wrapper">
+                                        No H-index data available
+                                        <div class="h-index-tooltip">Paper deemed not relevant enough. H-index data not fetched.</div>
+                                    </span>
+                                </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -613,6 +1005,21 @@
                     bars[index].style.width = `${(parseFloat(rawScore) * 100).toFixed(1)}%`;
                     bars[index].classList.remove('normalized');
                 });
+            }
+        }
+        
+        function toggleHIndexDetails(containerId) {
+            const detailsSection = document.getElementById('h-index-details-' + containerId.split('-')[2]);
+            const button = document.querySelector(`[onclick="toggleHIndexDetails('${containerId}')"]`);
+            
+            if (detailsSection.style.display === 'none' || detailsSection.style.display === '') {
+                // Show details
+                detailsSection.style.display = 'block';
+                button.textContent = 'Hide Individual H-Indices ▲';
+            } else {
+                // Hide details
+                detailsSection.style.display = 'none';
+                button.textContent = 'Show Individual H-Indices ▼';
             }
         }
     </script>
