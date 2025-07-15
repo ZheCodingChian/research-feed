@@ -161,8 +161,7 @@
         
         /* AI Summary */
         .ai-summary {
-            background: linear-gradient(135deg, #20b2aa 0%, #17a2b8 100%);
-            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
             padding: 1rem;
             margin-bottom: 1.5rem;
             color: #ffffff;
@@ -259,6 +258,8 @@
         .similarity-title-section {
             width: 100%;
             margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         
         .similarity-title {
@@ -335,6 +336,8 @@
         .llm-validation-title-section {
             width: 100%;
             margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         
         .llm-validation-title {
@@ -362,12 +365,16 @@
             text-align: right;
         }
         
+        .llm-validation-value-wrapper {
+            text-align: right;
+        }
+        
         .llm-validation-value.highly-relevant {
             color: #28a745;
         }
         
         .llm-validation-value.moderately-relevant {
-            color: #0202c9;
+            color: #0585f5;
         }
         
         .llm-validation-value.tangentially-relevant {
@@ -421,6 +428,8 @@
         .h-index-title-section {
             width: 100%;
             margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         
         .h-index-title {
@@ -481,8 +490,18 @@
         .h-index-author-item {
             color: #e0e0e0;
             margin-bottom: 0.25rem;
-            font-size: 0.85rem;
+            font-size: 1rem;
             line-height: 1.4;
+        }
+        
+        .h-index-author-item a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+        
+        .h-index-author-item a:hover {
+            color: #d97706;
+            text-decoration: underline;
         }
         
         .h-index-paper-link {
@@ -491,13 +510,13 @@
         }
         
         .h-index-paper-link a {
-            color: #00d4aa;
+            color: #f59e0b;
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 1rem;
         }
         
         .h-index-paper-link a:hover {
-            color: #00ffcc;
+            color: #d97706;
             text-decoration: underline;
         }
         
@@ -633,21 +652,22 @@
                         {% endif %}
                     </div>
                     <div class="paper-authors">
-                        <strong>Authors:</strong> 
-                        {% for author in paper.authors %}
-                            {% set author_profile = None %}
+                        <strong>Authors:</strong>
+                        {% if paper.h_index_status == 'completed' %}
                             {% for author_h in paper.author_h_indexes %}
-                                {% if author_h.name == author and author_h.profile_url %}
-                                    {% set author_profile = author_h.profile_url %}
+                                {% if loop.index > 1 %}, {% endif %}
+                                {% if author_h.profile_url %}
+                                    <a href="{{ author_h.profile_url }}" target="_blank" class="author-link">{{ author_h.name }}</a>
+                                {% else %}
+                                    {{ author_h.name }}
                                 {% endif %}
                             {% endfor %}
-                            {% if author_profile %}
-                                <a href="{{ author_profile }}" target="_blank" class="author-link">{{ author }}</a>
-                            {% else %}
+                        {% else %}
+                            {% for author in paper.authors %}
+                                {% if loop.index > 1 %}, {% endif %}
                                 {{ author }}
-                            {% endif %}
-                            {%- if not loop.last %}, {% endif %}
-                        {% endfor %}
+                            {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
                 
@@ -771,7 +791,7 @@
                                 <div class="similarity-controls-section">
                                     <button class="btn btn-sm btn-outline-light similarity-toggle" 
                                             onclick="toggleSimilarityMode('similarity-grid-{{ loop.index0 }}')">
-                                        Show Normalized Scores ▼
+                                        Show Normalized Scores
                                     </button>
                                 </div>
                             </div>
@@ -969,7 +989,7 @@
             
             if (button.textContent.includes('Show Normalized')) {
                 // Switch to normalized view
-                button.textContent = 'Show Raw Scores ▲';
+                button.textContent = 'Show Raw Scores';
                 
                 // Calculate total from all valid scores
                 const rawScores = [];
@@ -997,7 +1017,7 @@
                 }
             } else {
                 // Switch back to raw view
-                button.textContent = 'Show Normalized Scores ▼';
+                button.textContent = 'Show Normalized Scores';
                 
                 values.forEach((value, index) => {
                     const rawScore = value.getAttribute('data-raw-score');
