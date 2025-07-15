@@ -240,6 +240,102 @@
             padding: 2rem;
         }
         
+        /* LLM Scoring Widget Styles */
+        .llm-scoring-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        .llm-scoring-content.not-relevant,
+        .llm-scoring-content.failed {
+            display: block;
+            text-align: center;
+            color: #9ca3af;
+            padding: 2rem;
+            font-style: italic;
+        }
+        
+        .llm-dimension {
+            background-color: rgba(255,255,255,0.03);
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.08);
+            overflow: hidden;
+        }
+        
+        .llm-dimension-header {
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .llm-dimension-title {
+            font-weight: 600;
+            color: #ffffff;
+            margin: 0;
+        }
+        
+        .llm-score {
+            font-weight: 700;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        /* Score color coding */
+        .score-must-read { background-color: #10b981; color: #ffffff; }
+        .score-should-read { background-color: #f59e0b; color: #ffffff; }
+        .score-can-skip { background-color: #ef4444; color: #ffffff; }
+        .score-ignore { background-color: #6b7280; color: #ffffff; }
+        
+        .score-high { background-color: #10b981; color: #ffffff; }
+        .score-moderate { background-color: #f59e0b; color: #ffffff; }
+        .score-low { background-color: #ef4444; color: #ffffff; }
+        .score-none, .score-negligible { background-color: #6b7280; color: #ffffff; }
+        
+        .llm-justification-toggle {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: rgba(255,255,255,0.05);
+            border: none;
+            color: #e0e0e0;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+        
+        .llm-justification-toggle:hover {
+            background-color: rgba(255,255,255,0.08);
+        }
+        
+        .llm-justification-content {
+            padding: 1rem;
+            background-color: rgba(255,255,255,0.02);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #d1d5db;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            display: none;
+        }
+        
+        .llm-justification-content.show {
+            display: block;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .llm-scoring-content {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+        
         /* Three-column bottom row */
         .three-column-modules {
             display: grid;
@@ -744,7 +840,85 @@
                         <!-- LLM Scoring - Full width -->
                         <div class="llm-scoring-module">
                             <h6 class="module-title">LLM Scoring</h6>
-                            <div class="module-placeholder">LLM Scoring widget content will go here</div>
+                            
+                            {% if paper.llm_score_status == 'not_relevant_enough' %}
+                                <div class="llm-scoring-content not-relevant">
+                                    Paper deemed not relevant enough. No LLM scoring data available.
+                                </div>
+                            {% elif paper.llm_score_status == 'failed' %}
+                                <div class="llm-scoring-content failed">
+                                    LLM Scoring failed
+                                </div>
+                            {% elif paper.llm_score_status == 'completed' %}
+                                <div class="llm-scoring-content">
+                                    <!-- Recommendation Dimension -->
+                                    <div class="llm-dimension">
+                                        <div class="llm-dimension-header">
+                                            <span class="llm-dimension-title">Recommendation:</span>
+                                            {% if paper.recommendation_score %}
+                                                <span class="llm-score score-{{ paper.recommendation_score.lower().replace(' ', '-') }}">
+                                                    {{ paper.recommendation_score }}
+                                                </span>
+                                            {% else %}
+                                                <span class="llm-score score-none">N/A</span>
+                                            {% endif %}
+                                        </div>
+                                        <button class="llm-justification-toggle" onclick="toggleJustification('recommendation-{{ loop.index0 }}')">
+                                            <span>Show Justification</span>
+                                            <span class="toggle-icon">▼</span>
+                                        </button>
+                                        <div class="llm-justification-content" id="recommendation-{{ loop.index0 }}">
+                                            {{ paper.recommendation_justification or 'No justification provided.' }}
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Novelty Dimension -->
+                                    <div class="llm-dimension">
+                                        <div class="llm-dimension-header">
+                                            <span class="llm-dimension-title">Novelty:</span>
+                                            {% if paper.novelty_score %}
+                                                <span class="llm-score score-{{ paper.novelty_score.lower() }}">
+                                                    {{ paper.novelty_score }}
+                                                </span>
+                                            {% else %}
+                                                <span class="llm-score score-none">N/A</span>
+                                            {% endif %}
+                                        </div>
+                                        <button class="llm-justification-toggle" onclick="toggleJustification('novelty-{{ loop.index0 }}')">
+                                            <span>Show Justification</span>
+                                            <span class="toggle-icon">▼</span>
+                                        </button>
+                                        <div class="llm-justification-content" id="novelty-{{ loop.index0 }}">
+                                            {{ paper.novelty_justification or 'No justification provided.' }}
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Potential Impact Dimension -->
+                                    <div class="llm-dimension">
+                                        <div class="llm-dimension-header">
+                                            <span class="llm-dimension-title">Potential Impact:</span>
+                                            {% if paper.impact_score %}
+                                                <span class="llm-score score-{{ paper.impact_score.lower() }}">
+                                                    {{ paper.impact_score }}
+                                                </span>
+                                            {% else %}
+                                                <span class="llm-score score-none">N/A</span>
+                                            {% endif %}
+                                        </div>
+                                        <button class="llm-justification-toggle" onclick="toggleJustification('impact-{{ loop.index0 }}')">
+                                            <span>Show Justification</span>
+                                            <span class="toggle-icon">▼</span>
+                                        </button>
+                                        <div class="llm-justification-content" id="impact-{{ loop.index0 }}">
+                                            {{ paper.impact_justification or 'No justification provided.' }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="llm-scoring-content not-relevant">
+                                    LLM scoring not yet processed
+                                </div>
+                            {% endif %}
                         </div>
                         
                         <!-- Three-column modules -->
@@ -1153,6 +1327,25 @@
                 // Hide details
                 detailsSection.style.display = 'none';
                 button.textContent = 'Show Justifications ▼';
+            }
+        }
+        
+        function toggleJustification(elementId) {
+            const justificationContent = document.getElementById(elementId);
+            const button = document.querySelector(`[onclick="toggleJustification('${elementId}')"]`);
+            const textSpan = button.querySelector('span:first-child');
+            const iconSpan = button.querySelector('.toggle-icon');
+            
+            if (justificationContent.classList.contains('show')) {
+                // Hide justification
+                justificationContent.classList.remove('show');
+                textSpan.textContent = 'Show Justification';
+                iconSpan.textContent = '▼';
+            } else {
+                // Show justification
+                justificationContent.classList.add('show');
+                textSpan.textContent = 'Hide Justification';
+                iconSpan.textContent = '▲';
             }
         }
     </script>
