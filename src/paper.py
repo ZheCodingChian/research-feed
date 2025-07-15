@@ -161,7 +161,7 @@ class Paper:
             self.diffusion_reasoning_relevance,
             self.distributed_training_relevance
         ]
-        return "highly_relevant" in relevance_scores
+        return "Highly Relevant" in relevance_scores
     
     def update_h_index_status(self, new_status: str) -> None:
         """Update the paper's H-index fetching status."""

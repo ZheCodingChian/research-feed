@@ -86,7 +86,7 @@ class HTMLGenerator:
                     'justification': 'No justification available'
                 }
                 
-                # Map topic to paper fields
+                # Map topic to paper fields and use actual relevance values
                 if topic == 'RLHF':
                     validation_data['llm_relevant'] = paper.rlhf_relevance
                     validation_data['justification'] = paper.rlhf_justification

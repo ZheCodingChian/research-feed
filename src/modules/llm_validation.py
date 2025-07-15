@@ -358,7 +358,7 @@ Step-by-step instructions:
 
 <validation_response>
     <topic name="{topics_to_validate[0]}">
-        <conclusion>highly_relevant|moderately_relevant|tangentially_relevant|not_relevant</conclusion>
+        <conclusion>Highly Relevant|Moderately Relevant|Tangentially Relevant|Not Relevant</conclusion>
         <justification><![CDATA[Your detailed reasoning here]]></justification>
     </topic>
     [Include similar structure for each topic listed above]
@@ -451,7 +451,7 @@ Important: Ensure you evaluate ALL {len(topics_to_validate)} topics listed and u
                 raise Exception(f"Invalid root tag: {root.tag}, expected 'validation_response'")
             
             results = {}
-            valid_conclusions = {'highly_relevant', 'moderately_relevant', 'tangentially_relevant', 'not_relevant'}
+            valid_conclusions = {'Highly Relevant', 'Moderately Relevant', 'Tangentially Relevant', 'Not Relevant'}
             
             # Extract results for each topic
             for topic_element in root.findall('topic'):

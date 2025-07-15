@@ -106,44 +106,54 @@
             display: none;
         }
         
-        /* New LLM Scoring Widget Styles */
-        .llm-scoring-widget {
-            background-color: rgba(255,255,255,0.05);
-            border-radius: 8px;
-            padding: 1rem;
-            border: 1px solid rgba(255,255,255,0.1);
-            margin: 1rem 0;
-        }
-        
-        .llm-scoring-title {
-            color: #ffffff;
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-        }
-        
-        .llm-scoring-row {
+        /* Updated LLM Scoring Widget Styles - Consistent with Similarity Widget */
+        .llm-scoring-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 1rem;
         }
         
-        .llm-scoring-row:last-child {
-            border-bottom: none;
+        .llm-scoring-toggle {
+            font-size: 0.85rem;
+            padding: 0.25rem 0.5rem;
         }
         
-        .llm-scoring-left {
+        .llm-scoring-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .llm-scoring-columns {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+        }
+        
+        .llm-scoring-column {
+            display: flex;
+            flex-direction: column;
+            padding: 0.75rem;
+            background-color: rgba(255,255,255,0.03);
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .llm-scoring-inline {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
         }
         
         .llm-scoring-label {
             font-weight: 600;
             color: #e0e0e0;
-            min-width: 120px;
+            font-size: 0.9rem;
+            white-space: nowrap;
         }
         
         .llm-scoring-value {
@@ -160,43 +170,64 @@
         .llm-scoring-value.low { color: #ffc107; }
         .llm-scoring-value.none, .llm-scoring-value.negligible { color: #dc3545; }
         
-        .llm-scoring-justification-btn {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: #ffffff;
-            padding: 0.25rem 0.5rem;
+        .llm-scoring-individual-justification {
+            background-color: rgba(0,0,0,0.2);
             border-radius: 4px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .llm-scoring-justification-btn:hover {
-            background: rgba(255,255,255,0.2);
-        }
-        
-        .llm-scoring-justification {
-            padding: 0.75rem;
-            background: rgba(0,0,0,0.3);
-            border-radius: 4px;
+            padding: 0.5rem;
             font-size: 0.85rem;
             line-height: 1.4;
             color: #d0d0d0;
+            border-top: 1px solid rgba(255,255,255,0.1);
             margin-top: 0.5rem;
-            display: none;
         }
         
-        .llm-scoring-not-relevant {
-            background-color: rgba(255,255,255,0.05);
+        /* AI Summary Styling */
+        .ai-summary {
+            background: linear-gradient(135deg, #20b2aa 0%, #17a2b8 100%);
             border-radius: 8px;
-            padding: 0.75rem 1rem;
-            border: 1px solid rgba(255,255,255,0.1);
-            margin: 1rem 0;
-            text-align: center;
-            color: #6c757d;
-            font-style: italic;
-            position: relative;
-            cursor: help;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .ai-summary-label {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .ai-summary-text {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        /* Widget Spacing */
+        .paper-metrics-row {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            margin-top: 1.5rem;
+        }
+        
+        .similarity-scores {
+            flex: 1;
+            min-width: 0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .llm-validation {
+            flex: 1;
+            min-width: 0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .h-index-scores {
+            flex: 1;
+            min-width: 0;
+            margin-bottom: 1.5rem;
         }
         
         .llm-scoring-tooltip {
@@ -506,12 +537,60 @@
             font-size: 0.9rem;
         }
         
-        .llm-yes {
+        .llm-highly-relevant {
             color: #28a745;
         }
         
-        .llm-no {
+        .llm-moderately-relevant {
+            color: #17a2b8;
+        }
+        
+        .llm-tangentially-relevant {
+            color: #ffc107;
+        }
+        
+        .llm-not-relevant {
             color: #dc3545;
+        }
+        
+        .llm-not-relevant-asterisk {
+            color: #dc3545;
+            position: relative;
+            cursor: help;
+        }
+        
+        .llm-validation-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2d2d2d;
+            color: #ffffff;
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+            z-index: 1000;
+            margin-bottom: 5px;
+            border: 1px solid #404040;
+        }
+        
+        .llm-validation-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: #2d2d2d;
+        }
+        
+        .llm-not-relevant-asterisk:hover .llm-validation-tooltip {
+            opacity: 1;
+            visibility: visible;
         }
         
         .llm-disabled {
@@ -694,6 +773,13 @@
                 </div>
                 
                 <div class="paper-body">
+                    {% if paper.scores_data and paper.scores_data.summary %}
+                    <div class="ai-summary">
+                        <div class="ai-summary-label">AI Summary</div>
+                        <div class="ai-summary-text">{{ paper.scores_data.summary }}</div>
+                    </div>
+                    {% endif %}
+                    
                     <div class="paper-abstract">
                         <strong>Abstract:</strong> {{ paper.abstract }}
                     </div>
@@ -708,72 +794,72 @@
                     {% endif %}
                     
                     {% if paper.scores_data %}
-                    <div class="llm-scoring-widget">
-                        <div class="llm-scoring-title">LLM Scoring:</div>
-                        
-                        {% if paper.scores_data.recommendation %}
-                        <div class="llm-scoring-row">
-                            <div class="llm-scoring-left">
-                                <span class="llm-scoring-label">Recommendation:</span>
-                                <span class="llm-scoring-value {{ paper.scores_data.recommendation.lower().replace(' ', '-') }}">{{ paper.scores_data.recommendation }}</span>
-                            </div>
-                            {% if paper.scores_data.recommendation_justification %}
-                            <button class="llm-scoring-justification-btn" onclick="toggleLLMJustification('rec-{{ loop.index0 }}')">
+                    <div class="similarity-summary">
+                        <div class="llm-scoring-header">
+                            <h6 style="margin-bottom: 1rem; color: #ffffff; font-weight: 600; display: inline;">LLM Scoring:</h6>
+                            <button class="btn btn-sm btn-outline-light llm-scoring-toggle" 
+                                    onclick="toggleLLMScoringJustifications('llm-scoring-{{ loop.index0 }}')">
                                 Show Justification ▼
                             </button>
                         </div>
-                        <div class="llm-scoring-justification" id="rec-{{ loop.index0 }}">
-                            {{ paper.scores_data.recommendation_justification }}
-                        </div>
-                        {% else %}
-                        </div>
-                        {% endif %}
-                        {% endif %}
                         
-                        {% if paper.scores_data.novelty %}
-                        <div class="llm-scoring-row">
-                            <div class="llm-scoring-left">
-                                <span class="llm-scoring-label">Novelty:</span>
-                                <span class="llm-scoring-value {{ paper.scores_data.novelty.lower() }}">{{ paper.scores_data.novelty }}</span>
+                        <div class="llm-scoring-columns">
+                            <!-- Recommendation Column -->
+                            <div class="llm-scoring-column" id="rec-card-{{ loop.index0 }}">
+                                <div class="llm-scoring-inline">
+                                    <span class="llm-scoring-label">Recommendation:</span>
+                                    {% if paper.scores_data.recommendation %}
+                                    <span class="llm-scoring-value {{ paper.scores_data.recommendation.lower().replace(' ', '-') }}">{{ paper.scores_data.recommendation }}</span>
+                                    {% else %}
+                                    <span class="llm-scoring-value">N/A</span>
+                                    {% endif %}
+                                </div>
+                                {% if paper.scores_data.recommendation_justification %}
+                                <div class="llm-scoring-individual-justification" id="rec-just-{{ loop.index0 }}" style="display: none;">
+                                    <strong>Justification:</strong> {{ paper.scores_data.recommendation_justification }}
+                                </div>
+                                {% endif %}
                             </div>
-                            {% if paper.scores_data.novelty_justification %}
-                            <button class="llm-scoring-justification-btn" onclick="toggleLLMJustification('nov-{{ loop.index0 }}')">
-                                Show Justification ▼
-                            </button>
-                        </div>
-                        <div class="llm-scoring-justification" id="nov-{{ loop.index0 }}">
-                            {{ paper.scores_data.novelty_justification }}
-                        </div>
-                        {% else %}
-                        </div>
-                        {% endif %}
-                        {% endif %}
-                        
-                        {% if paper.scores_data.impact %}
-                        <div class="llm-scoring-row">
-                            <div class="llm-scoring-left">
-                                <span class="llm-scoring-label">Potential Impact:</span>
-                                <span class="llm-scoring-value {{ paper.scores_data.impact.lower() }}">{{ paper.scores_data.impact }}</span>
+                            
+                            <!-- Novelty Column -->
+                            <div class="llm-scoring-column" id="nov-card-{{ loop.index0 }}">
+                                <div class="llm-scoring-inline">
+                                    <span class="llm-scoring-label">Novelty:</span>
+                                    {% if paper.scores_data.novelty %}
+                                    <span class="llm-scoring-value {{ paper.scores_data.novelty.lower() }}">{{ paper.scores_data.novelty }}</span>
+                                    {% else %}
+                                    <span class="llm-scoring-value">N/A</span>
+                                    {% endif %}
+                                </div>
+                                {% if paper.scores_data.novelty_justification %}
+                                <div class="llm-scoring-individual-justification" id="nov-just-{{ loop.index0 }}" style="display: none;">
+                                    <strong>Justification:</strong> {{ paper.scores_data.novelty_justification }}
+                                </div>
+                                {% endif %}
                             </div>
-                            {% if paper.scores_data.impact_justification %}
-                            <button class="llm-scoring-justification-btn" onclick="toggleLLMJustification('imp-{{ loop.index0 }}')">
-                                Show Justification ▼
-                            </button>
+                            
+                            <!-- Potential Impact Column -->
+                            <div class="llm-scoring-column" id="imp-card-{{ loop.index0 }}">
+                                <div class="llm-scoring-inline">
+                                    <span class="llm-scoring-label">Potential Impact:</span>
+                                    {% if paper.scores_data.impact %}
+                                    <span class="llm-scoring-value {{ paper.scores_data.impact.lower() }}">{{ paper.scores_data.impact }}</span>
+                                    {% else %}
+                                    <span class="llm-scoring-value">N/A</span>
+                                    {% endif %}
+                                </div>
+                                {% if paper.scores_data.impact_justification %}
+                                <div class="llm-scoring-individual-justification" id="imp-just-{{ loop.index0 }}" style="display: none;">
+                                    <strong>Justification:</strong> {{ paper.scores_data.impact_justification }}
+                                </div>
+                                {% endif %}
+                            </div>
                         </div>
-                        <div class="llm-scoring-justification" id="imp-{{ loop.index0 }}">
-                            {{ paper.scores_data.impact_justification }}
-                        </div>
-                        {% else %}
-                        </div>
-                        {% endif %}
-                        {% endif %}
                     </div>
                     {% else %}
-                    <div class="llm-scoring-not-relevant">
-                        Not relevant enough for LLM scoring.
-                        <div class="llm-scoring-tooltip">
-                            This paper does not have a topic similarity score high enough to warrant detailed LLM scoring analysis.
-                        </div>
+                    <div class="similarity-summary">
+                        <h6 style="color: #ffffff; font-weight: 600; display: inline; margin-bottom: 0;">LLM Scoring:</h6>
+                        <span class="text-muted" style="margin-left: 0.5rem;">No LLM Scoring available. (No Highly Relevant Topics)</span>
                     </div>
                     {% endif %}
                     
@@ -812,20 +898,44 @@
                                             <div class="llm-validation-item" data-topic="{{ topic }}">
                                                 <span class="llm-topic-label">{{ topic.replace('_', ' ') }}:</span>
                                                 {% if topic_data.validated %}
-                                                    {% if topic_data.llm_relevant == 'yes' %}
-                                                        <span class="llm-status llm-yes">YES</span>
-                                                    {% elif topic_data.llm_relevant == 'no' %}
-                                                        <span class="llm-status llm-no">NO</span>
+                                                    {% if topic_data.llm_relevant == 'Highly Relevant' %}
+                                                        <span class="llm-status llm-highly-relevant">Highly Relevant</span>
+                                                    {% elif topic_data.llm_relevant == 'Moderately Relevant' %}
+                                                        <span class="llm-status llm-moderately-relevant">Moderately Relevant</span>
+                                                    {% elif topic_data.llm_relevant == 'Tangentially Relevant' %}
+                                                        <span class="llm-status llm-tangentially-relevant">Tangentially Relevant</span>
+                                                    {% elif topic_data.llm_relevant == 'Not Relevant' %}
+                                                        <span class="llm-status llm-not-relevant">Not Relevant</span>
+                                                    {% elif topic_data.llm_relevant == 'not_validated' %}
+                                                        <span class="llm-status llm-not-relevant-asterisk">
+                                                            Not Relevant*
+                                                            <div class="llm-validation-tooltip">
+                                                                Topic similarity score below 0.4, hence deemed not relevant
+                                                            </div>
+                                                        </span>
                                                     {% else %}
                                                         <span class="llm-status llm-disabled">{{ topic_data.llm_relevant.upper() }}</span>
                                                     {% endif %}
                                                 {% else %}
-                                                    <span class="llm-status llm-disabled">NOT VALIDATED</span>
+                                                    <span class="llm-status llm-not-relevant-asterisk">
+                                                        Not Relevant*
+                                                        <div class="llm-validation-tooltip">
+                                                            Topic similarity score below 0.4, hence deemed not relevant
+                                                        </div>
+                                                    </span>
                                                 {% endif %}
                                             </div>
                                         {% endif %}
                                     {% endfor %}
                                     
+                                    {% set has_validated_topics = namespace(value=false) %}
+                                    {% for topic in topics %}
+                                        {% if paper.llm_validation.get(topic) and paper.llm_validation[topic].justification and paper.llm_validation[topic].llm_relevant != 'not_validated' and paper.llm_validation[topic].justification != 'below_threshold' %}
+                                            {% set has_validated_topics.value = true %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    
+                                    {% if has_validated_topics.value %}
                                     <div class="llm-buttons-row">
                                         <button class="btn btn-sm btn-outline-light llm-toggle" 
                                                 onclick="toggleLLMDetails('llm-details-{{ loop.index0 }}')">
@@ -836,13 +946,14 @@
                                     <div class="llm-details" id="llm-details-{{ loop.index0 }}">
                                         <h6 style="font-size: 0.9rem; margin-bottom: 0.5rem;">LLM Justifications:</h6>
                                         {% for topic in topics %}
-                                            {% if paper.llm_validation.get(topic) and paper.llm_validation[topic].justification %}
+                                            {% if paper.llm_validation.get(topic) and paper.llm_validation[topic].justification and paper.llm_validation[topic].llm_relevant != 'not_validated' and paper.llm_validation[topic].justification != 'below_threshold' %}
                                             <div class="llm-justification">
                                                 <strong>{{ topic.replace('_', ' ') }}:</strong> {{ paper.llm_validation[topic].justification }}
                                             </div>
                                             {% endif %}
                                         {% endfor %}
                                     </div>
+                                    {% endif %}
                                 </div>
                             {% else %}
                                 <div class="llm-validation-summary">
@@ -928,6 +1039,39 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        function toggleLLMScoringJustifications(cardPrefix) {
+            // Extract the paper index from the cardPrefix (e.g., 'llm-scoring-0' -> '0')
+            const paperIndex = cardPrefix.split('-').pop();
+            const button = document.querySelector(`[onclick="toggleLLMScoringJustifications('${cardPrefix}')"]`);
+            
+            // Get all three justification elements for this paper
+            const recJust = document.getElementById(`rec-just-${paperIndex}`);
+            const novJust = document.getElementById(`nov-just-${paperIndex}`);
+            const impJust = document.getElementById(`imp-just-${paperIndex}`);
+            
+            // Check current state (use first available justification as reference)
+            const isCurrentlyHidden = (recJust && recJust.style.display === 'none') || 
+                                    (novJust && novJust.style.display === 'none') || 
+                                    (impJust && impJust.style.display === 'none') ||
+                                    (!recJust || recJust.style.display === '') ||
+                                    (!novJust || novJust.style.display === '') ||
+                                    (!impJust || impJust.style.display === '');
+            
+            if (isCurrentlyHidden) {
+                // Show all justifications
+                if (recJust) recJust.style.display = 'block';
+                if (novJust) novJust.style.display = 'block';
+                if (impJust) impJust.style.display = 'block';
+                button.innerHTML = 'Hide Justification ▲';
+            } else {
+                // Hide all justifications
+                if (recJust) recJust.style.display = 'none';
+                if (novJust) novJust.style.display = 'none';
+                if (impJust) impJust.style.display = 'none';
+                button.innerHTML = 'Show Justification ▼';
+            }
+        }
+        
         function toggleJustification(id) {
             const element = document.getElementById(id);
             const button = element.previousElementSibling;
@@ -964,19 +1108,6 @@
             } else {
                 element.style.display = 'none';
                 button.innerHTML = 'Show Individual H-indices ▼';
-            }
-        }
-        
-        function toggleLLMJustification(id) {
-            const element = document.getElementById(id);
-            const button = element.parentElement.previousElementSibling.querySelector('.llm-scoring-justification-btn');
-            
-            if (element.style.display === 'none' || element.style.display === '') {
-                element.style.display = 'block';
-                button.innerHTML = 'Hide Justification ▲';
-            } else {
-                element.style.display = 'none';
-                button.innerHTML = 'Show Justification ▼';
             }
         }
         
