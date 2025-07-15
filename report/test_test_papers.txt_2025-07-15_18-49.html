@@ -351,6 +351,7 @@
             grid-template-columns: auto 1fr;
             gap: 0.5rem 1rem;
             align-items: center;
+            margin-bottom: 1rem;
         }
         
         .llm-validation-topic-label {
@@ -422,6 +423,48 @@
         .llm-validation-tooltip-wrapper:hover .llm-validation-tooltip {
             opacity: 1;
             visibility: visible;
+        }
+        
+        /* LLM Validation Controls and Justification Styles */
+        .llm-validation-controls-section {
+            width: 100%;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .llm-validation-toggle {
+            font-size: 0.85rem;
+            padding: 0.25rem 0.5rem;
+        }
+        
+        .llm-validation-details-section {
+            width: 100%;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 1rem;
+        }
+        
+        .llm-validation-details-title {
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+        
+        .llm-validation-justifications-list {
+            margin-bottom: 1rem;
+        }
+        
+        .llm-validation-justification-item {
+            color: #e0e0e0;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+        
+        .llm-validation-justification-topic {
+            font-weight: 600;
+            color: #ffffff;
         }
         
         /* H-Index Widget Styles */
@@ -653,312 +696,58 @@
                         
                     </div>
                     <div class="paper-authors">
-                        <strong>Authors:</strong> 
+                        <strong>Authors:</strong>
                         
                             
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Jiacheng Ye
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Shansan Gong
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Liheng Chen
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Lin Zheng
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
                                 
-                            
-                            
-                                Jiahui Gao
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Han Shi
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Chuan Wu
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
                                 
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Xin Jiang
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Zhenguo Li
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
+                                    <a href="https://www.semanticscholar.org/author/65846898" target="_blank" class="author-link">Jiacheng Ye</a>
                                 
                             
+                                , 
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2165001433" target="_blank" class="author-link">Shansan Gong</a>
                                 
                             
+                                , 
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2283870581" target="_blank" class="author-link">Liheng Chen</a>
                                 
                             
+                                , 
                                 
-                                    
+                                    <a href="https://www.semanticscholar.org/author/1633166807" target="_blank" class="author-link">Lin Zheng</a>
                                 
                             
+                                , 
                                 
-                            
-                            
-                                Wei Bi
-                            , 
-                        
-                            
-                            
+                                    <a href="https://www.semanticscholar.org/author/144407296" target="_blank" class="author-link">Jiahui Gao</a>
                                 
                             
+                                , 
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2285182555" target="_blank" class="author-link">Han Shi</a>
                                 
                             
+                                , 
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2284032895" target="_blank" class="author-link">Chuan Wu</a>
                                 
                             
+                                , 
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2249755860" target="_blank" class="author-link">Zhenguo Li</a>
                                 
                             
+                                , 
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2283842274" target="_blank" class="author-link">Wei Bi</a>
                                 
                             
+                                , 
                                 
-                                    
+                                    <a href="https://www.semanticscholar.org/author/2260528279" target="_blank" class="author-link">Lingpeng Kong</a>
                                 
-                            
-                            
-                                Lingpeng Kong
                             
                         
                     </div>
@@ -1137,6 +926,32 @@ understanding and development of reasoning with diffusion language models.
                                         
                                     </div>
                                 </div>
+                                
+                                <!-- Controls Section -->
+                                <div class="llm-validation-controls-section">
+                                    <button class="btn btn-sm btn-outline-light llm-validation-toggle" 
+                                            onclick="toggleLlmValidationDetails('llm-validation-0')">
+                                        Show Justifications ▼
+                                    </button>
+                                </div>
+                                
+                                <!-- Expandable Justifications Section (initially hidden) -->
+                                <div class="llm-validation-details-section" id="llm-validation-details-0" style="display: none;">
+                                    <div class="llm-validation-details-title">LLM Justifications:</div>
+                                    <div class="llm-validation-justifications-list">
+                                        
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Diffusion Reasoning:</span>
+                                            
+                                            The paper's main contribution, Diffusion-of-Thought (DoT), directly adapts the iterative refinement process of diffusion models to enable multi-step logical reasoning, treating the chain-of-thought as a dynamically evolving entity that can be corrected and improved over diffusion timesteps. It addresses complex tasks like multiplication and math problems, fulfilling the topic's criteria for holistic reasoning path refinement.
+                                            
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="module">
@@ -1286,96 +1101,33 @@ understanding and development of reasoning with diffusion language models.
                         
                     </div>
                     <div class="paper-authors">
-                        <strong>Authors:</strong> 
+                        <strong>Authors:</strong>
                         
                             
-                            
                                 
-                                    
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2327176332" target="_blank" class="author-link">Zemin Huang</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2315290492" target="_blank" class="author-link">Zhiyang Chen</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2361504857" target="_blank" class="author-link">Zijun Wang</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2333454859" target="_blank" class="author-link">Tiancheng Li</a>
                                 
                             
-                            
-                                Zemin Huang
-                            , 
-                        
-                            
-                            
+                                , 
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2327045558" target="_blank" class="author-link">Guo-Jun Qi</a>
                                 
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Zhiyang Chen
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Zijun Wang
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                            
-                                Tiancheng Li
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                            
-                                Guo-Jun Qi
                             
                         
                     </div>
@@ -1551,6 +1303,39 @@ MBPP, and HumanEval.
                                         
                                     </div>
                                 </div>
+                                
+                                <!-- Controls Section -->
+                                <div class="llm-validation-controls-section">
+                                    <button class="btn btn-sm btn-outline-light llm-validation-toggle" 
+                                            onclick="toggleLlmValidationDetails('llm-validation-1')">
+                                        Show Justifications ▼
+                                    </button>
+                                </div>
+                                
+                                <!-- Expandable Justifications Section (initially hidden) -->
+                                <div class="llm-validation-details-section" id="llm-validation-details-1" style="display: none;">
+                                    <div class="llm-validation-details-title">LLM Justifications:</div>
+                                    <div class="llm-validation-justifications-list">
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">RLHF:</span>
+                                            
+                                            The paper uses outcome-based reinforcement learning with rule-based rewards focused on the correctness of final answers, such as accuracy on tasks like GSM8K. It does not involve human-ranked data, a separate reward model trained on human preferences, or any form of human feedback, which are core to RLHF.
+                                            
+                                        </div>
+                                        
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Diffusion Reasoning:</span>
+                                            
+                                            The paper's main contribution, DCoLT, directly adapts the iterative reverse diffusion process in diffusion language models (e.g., SEDD and LLaDA) for multi-step logical reasoning. It treats the entire chain of lateral thought as a holistic entity for optimization, enabling non-linear reasoning and iterative refinement to improve final outcomes on complex tasks.
+                                            
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="module">
@@ -1664,504 +1449,78 @@ MBPP, and HumanEval.
                         
                     </div>
                     <div class="paper-authors">
-                        <strong>Authors:</strong> 
+                        <strong>Authors:</strong>
                         
                             
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Yifei Xu
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Tusher Chakraborty
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Emre Kıcıman
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Bibek Aryal
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Eduardo Rodrigues
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Srinagesh Sharma
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Roberto Estevao
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Maria Angels de Luis Balaguer
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Jessica Wolk
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Rafael Padilha
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Leonardo Nunes
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Shobana Balakrishnan
-                            , 
-                        
-                            
-                            
                                 
-                            
-                                
-                            
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2268722396" target="_blank" class="author-link">Yifei Xu</a>
                                 
                             
+                                , 
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/3431742" target="_blank" class="author-link">Tusher Chakraborty</a>
                                 
                             
+                                , 
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2264962872" target="_blank" class="author-link">Emre Kiciman</a>
                                 
                             
+                                , 
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2312460794" target="_blank" class="author-link">Bibek Aryal</a>
                                 
                             
+                                , 
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2346116388" target="_blank" class="author-link">Eduardo Rodrigues</a>
                                 
                             
+                                , 
                                 
-                                    
+                                    <a href="https://www.semanticscholar.org/author/2346253357" target="_blank" class="author-link">Srinagesh Sharma</a>
                                 
                             
+                                , 
                                 
-                            
-                            
-                                Songwu Lu
-                            , 
-                        
-                            
-                            
+                                    <a href="https://www.semanticscholar.org/author/2256989289" target="_blank" class="author-link">Roberto Estevão</a>
                                 
                             
+                                , 
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/34938986" target="_blank" class="author-link">M. A. D. L. Balaguer</a>
                                 
                             
+                                , 
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2332536904" target="_blank" class="author-link">Jessica Wolk</a>
                                 
                             
+                                , 
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2279548480" target="_blank" class="author-link">Rafael Padilha</a>
                                 
                             
+                                , 
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2256989583" target="_blank" class="author-link">Leonardo Nunes</a>
                                 
                             
+                                , 
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2346253640" target="_blank" class="author-link">Shobana Balakrishnan</a>
                                 
                             
+                                , 
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2268727460" target="_blank" class="author-link">Songwu Lu</a>
                                 
                             
+                                , 
                                 
-                                    
+                                    <a href="https://www.semanticscholar.org/author/2256993742" target="_blank" class="author-link">Ranveer Chandra</a>
                                 
-                            
-                            
-                                Ranveer Chandra
                             
                         
                     </div>
@@ -2326,6 +1685,53 @@ effectiveness of RLTHF's strategic data curation.
                                     <div class="llm-validation-value-wrapper">
                                         
                                         <span class="llm-validation-value not-relevant">Not Relevant</span>
+                                        
+                                    </div>
+                                </div>
+                                
+                                <!-- Controls Section -->
+                                <div class="llm-validation-controls-section">
+                                    <button class="btn btn-sm btn-outline-light llm-validation-toggle" 
+                                            onclick="toggleLlmValidationDetails('llm-validation-2')">
+                                        Show Justifications ▼
+                                    </button>
+                                </div>
+                                
+                                <!-- Expandable Justifications Section (initially hidden) -->
+                                <div class="llm-validation-details-section" id="llm-validation-details-2" style="display: none;">
+                                    <div class="llm-validation-details-title">LLM Justifications:</div>
+                                    <div class="llm-validation-justifications-list">
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">RLHF:</span>
+                                            
+                                            The paper directly builds on RLHF by proposing RLTHF, a framework that uses human feedback to train a reward model and align LLMs, addressing the challenges of high-cost annotations in RLHF. It iteratively integrates targeted human corrections with LLM-labeled data, aligning with the core RLHF definition of using human-ranked data for model fine-tuning via reinforcement learning.
+                                            
+                                        </div>
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Weak Supervision:</span>
+                                            
+                                            The paper employs LLMs to generate initial labels for data, which are noisy and imprecise, resembling weak supervision by programmatically creating labels from high-level sources. However, it combines this with targeted human annotations for refinement, making it not purely weak supervision but incorporating elements to reduce reliance on fully hand-labeled data.
+                                            
+                                        </div>
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Diffusion Reasoning:</span>
+                                            
+                                            The paper focuses on iterative alignment using reward models and human feedback, with no mention of diffusion models, iterative refinement for logical tasks, or treating Chain-of-Thought as a single entity for multi-step correction.
+                                            
+                                        </div>
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Distributed Training:</span>
+                                            
+                                            The paper does not discuss parallel computing, multi-node machine learning, or strategies for partitioning data or computation across processors; it centers on data annotation and alignment techniques for LLMs.
+                                            
+                                        </div>
                                         
                                     </div>
                                 </div>
@@ -2506,96 +1912,33 @@ effectiveness of RLTHF's strategic data curation.
                         
                     </div>
                     <div class="paper-authors">
-                        <strong>Authors:</strong> 
+                        <strong>Authors:</strong>
                         
                             
-                            
                                 
-                                    
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2354165813" target="_blank" class="author-link">Kai Ye</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2354224430" target="_blank" class="author-link">Hongyi Zhou</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2354195275" target="_blank" class="author-link">Jin Zhu</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2354179582" target="_blank" class="author-link">Francesco Quinzan</a>
                                 
                             
-                            
-                                Kai Ye
-                            , 
-                        
-                            
-                            
+                                , 
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2325201916" target="_blank" class="author-link">Chengchun Shi</a>
                                 
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Hongyi Zhou
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Jin Zhu
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                            
-                                Francesco Quinzan
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                            
-                                Chengchun Shi
                             
                         
                     </div>
@@ -2761,6 +2104,53 @@ Helpful and Harmless dataset.
                                         
                                     </div>
                                 </div>
+                                
+                                <!-- Controls Section -->
+                                <div class="llm-validation-controls-section">
+                                    <button class="btn btn-sm btn-outline-light llm-validation-toggle" 
+                                            onclick="toggleLlmValidationDetails('llm-validation-3')">
+                                        Show Justifications ▼
+                                    </button>
+                                </div>
+                                
+                                <!-- Expandable Justifications Section (initially hidden) -->
+                                <div class="llm-validation-details-section" id="llm-validation-details-3" style="display: none;">
+                                    <div class="llm-validation-details-title">LLM Justifications:</div>
+                                    <div class="llm-validation-justifications-list">
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">RLHF:</span>
+                                            
+                                            The paper's main contribution is directly centered on enhancing RLHF for fine-tuning large language models. It proposes VRPO to address model misspecification in RLHF, improving reward and policy estimation, which aligns perfectly with the topic's definition of using human feedback to train reward models and fine-tune AI systems.
+                                            
+                                        </div>
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Weak Supervision:</span>
+                                            
+                                            The paper involves human feedback in RLHF, which can be noisy or inconsistent, potentially overlapping with weak supervision's use of imprecise labels. However, it does not focus on programmatically generating labels or weak supervision techniques, instead emphasizing RLHF optimization, making the connection indirect.
+                                            
+                                        </div>
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Diffusion Reasoning:</span>
+                                            
+                                            The paper does not involve diffusion models, iterative refinement for logical tasks, or multi-step reasoning processes. Its focus is solely on RLHF for preference alignment in LLMs, with no components related to diffusion-based methods.
+                                            
+                                        </div>
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Distributed Training:</span>
+                                            
+                                            The paper does not discuss distributed training, parallel computing, or multi-node systems for accelerating model training. It concentrates on algorithmic improvements in RLHF, such as variance reduction, without any mention of partitioning data or computation across processors.
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="module">
@@ -2874,28 +2264,18 @@ Helpful and Harmless dataset.
                         
                     </div>
                     <div class="paper-authors">
-                        <strong>Authors:</strong> 
+                        <strong>Authors:</strong>
                         
                             
-                            
+                                
+                                
+                                    <a href="https://www.semanticscholar.org/author/52630992" target="_blank" class="author-link">J. Vlimant</a>
                                 
                             
+                                , 
                                 
-                            
-                            
-                                Jean-Roch Vlimant
-                            , 
-                        
-                            
-                            
+                                    <a href="https://www.semanticscholar.org/author/1779195" target="_blank" class="author-link">Junqi Yin</a>
                                 
-                            
-                                
-                                    
-                                
-                            
-                            
-                                Junqi Yin
                             
                         
                     </div>
@@ -3062,6 +2442,32 @@ context of high energy physics.
                                         
                                     </div>
                                 </div>
+                                
+                                <!-- Controls Section -->
+                                <div class="llm-validation-controls-section">
+                                    <button class="btn btn-sm btn-outline-light llm-validation-toggle" 
+                                            onclick="toggleLlmValidationDetails('llm-validation-4')">
+                                        Show Justifications ▼
+                                    </button>
+                                </div>
+                                
+                                <!-- Expandable Justifications Section (initially hidden) -->
+                                <div class="llm-validation-details-section" id="llm-validation-details-4" style="display: none;">
+                                    <div class="llm-validation-details-title">LLM Justifications:</div>
+                                    <div class="llm-validation-justifications-list">
+                                        
+                                        
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Distributed Training:</span>
+                                            
+                                            The paper's main contribution is a review and practical guide on distributed training methods for neural networks, including strategies for parallelizing computations such as parameter distribution, data distribution, and model parallelism. This directly aligns with the topic's focus on distributed training, parallel computing, and multi-node machine learning, as it discusses algorithms and systems for accelerating training by partitioning data, architecture, or computation across multiple processors or nodes. The paper's emphasis on reducing training time in contexts like high energy physics further underscores its relevance.
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="module">
@@ -3155,70 +2561,28 @@ context of high energy physics.
                         
                     </div>
                     <div class="paper-authors">
-                        <strong>Authors:</strong> 
+                        <strong>Authors:</strong>
                         
                             
-                            
                                 
-                                    
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2260172378" target="_blank" class="author-link">Siyan Zhao</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2357079322" target="_blank" class="author-link">Devaansh Gupta</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2166847" target="_blank" class="author-link">Qinqing Zheng</a>
                                 
                             
-                            
-                                Siyan Zhao
-                            , 
-                        
-                            
-                            
+                                , 
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2267723293" target="_blank" class="author-link">Aditya Grover</a>
                                 
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Devaansh Gupta
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                            
-                                Qinqing Zheng
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                            
-                                Aditya Grover
                             
                         
                     </div>
@@ -3393,6 +2757,46 @@ https://dllm-reasoning.github.io/.
                                         
                                     </div>
                                 </div>
+                                
+                                <!-- Controls Section -->
+                                <div class="llm-validation-controls-section">
+                                    <button class="btn btn-sm btn-outline-light llm-validation-toggle" 
+                                            onclick="toggleLlmValidationDetails('llm-validation-5')">
+                                        Show Justifications ▼
+                                    </button>
+                                </div>
+                                
+                                <!-- Expandable Justifications Section (initially hidden) -->
+                                <div class="llm-validation-details-section" id="llm-validation-details-5" style="display: none;">
+                                    <div class="llm-validation-details-title">LLM Justifications:</div>
+                                    <div class="llm-validation-justifications-list">
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">RLHF:</span>
+                                            
+                                            The paper focuses on using reinforcement learning (RL) techniques, such as diffu-GRPO, to enhance reasoning in diffusion-based LLMs, but it does not involve training with human preferences or a separate reward model based on human-ranked data. Instead, RL is applied using task-based rewards from benchmarks like math and planning tasks, which aligns more with general RL rather than RLHF.
+                                            
+                                        </div>
+                                        
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Diffusion Reasoning:</span>
+                                            
+                                            The paper's main contribution is the d1 framework, which adapts diffusion-based LLMs (dLLMs) for reasoning tasks through iterative denoising and refinement processes. It explicitly addresses multi-step logical reasoning by integrating RL with dLLMs, treating sequences as entities that can be holistically improved, directly aligning with diffusion-based reasoning concepts.
+                                            
+                                        </div>
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Distributed Training:</span>
+                                            
+                                            The paper does not discuss distributed training, parallel computing, or multi-node machine learning techniques. It focuses on RL and SFT methods for improving reasoning in dLLMs, with mentions of computational efficiency in RL, but without any reference to partitioning data or computation across processors or nodes.
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="module">
@@ -3499,16 +2903,13 @@ https://dllm-reasoning.github.io/.
                         
                     </div>
                     <div class="paper-authors">
-                        <strong>Authors:</strong> 
+                        <strong>Authors:</strong>
                         
                             
-                            
                                 
-                                    
                                 
-                            
-                            
-                                Sriram Vasudevan
+                                    <a href="https://www.semanticscholar.org/author/2305795476" target="_blank" class="author-link">Sriram Vasudevan</a>
+                                
                             
                         
                     </div>
@@ -3673,6 +3074,46 @@ system.
                                         
                                     </div>
                                 </div>
+                                
+                                <!-- Controls Section -->
+                                <div class="llm-validation-controls-section">
+                                    <button class="btn btn-sm btn-outline-light llm-validation-toggle" 
+                                            onclick="toggleLlmValidationDetails('llm-validation-6')">
+                                        Show Justifications ▼
+                                    </button>
+                                </div>
+                                
+                                <!-- Expandable Justifications Section (initially hidden) -->
+                                <div class="llm-validation-details-section" id="llm-validation-details-6" style="display: none;">
+                                    <div class="llm-validation-details-title">LLM Justifications:</div>
+                                    <div class="llm-validation-justifications-list">
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">RLHF:</span>
+                                            
+                                            The paper focuses on weak supervision for generating labels in search systems and does not involve reinforcement learning, human feedback for training a reward model, or fine-tuning models with RL techniques.
+                                            
+                                        </div>
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Weak Supervision:</span>
+                                            
+                                            The paper's main contribution is a weak supervision approach that programmatically generates labels using heuristics and a small ground truth set for training search models, directly aligning with the definition of weak supervision.
+                                            
+                                        </div>
+                                        
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Distributed Training:</span>
+                                            
+                                            The paper mentions a distributed and scalable weak supervision solution for label generation, which may involve parallel computing elements, but it does not primarily address distributed training of machine learning models across nodes.
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="module">
@@ -3759,160 +3200,43 @@ system.
                         
                     </div>
                     <div class="paper-authors">
-                        <strong>Authors:</strong> 
+                        <strong>Authors:</strong>
                         
                             
-                            
                                 
-                                    
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2340048194" target="_blank" class="author-link">Tianyi Zhang</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2340439703" target="_blank" class="author-link">Linrong Cai</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2340172144" target="_blank" class="author-link">Jeffrey Li</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2340014150" target="_blank" class="author-link">Nicholas Roberts</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2820009" target="_blank" class="author-link">Neel Guha</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2340362174" target="_blank" class="author-link">Jinoh Lee</a>
                                 
                             
-                            
-                                Tianyi Zhang
-                            , 
-                        
-                            
-                            
+                                , 
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2269049908" target="_blank" class="author-link">Frederic Sala</a>
                                 
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Linrong Cai
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Jeffrey Li
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Nicholas Roberts
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Neel Guha
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                            
-                                Jinoh Lee
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                            
-                                Frederic Sala
                             
                         
                     </div>
@@ -4082,6 +3406,46 @@ substantial amounts (1000+) of labeled examples to match WS in many settings.
                                         
                                     </div>
                                 </div>
+                                
+                                <!-- Controls Section -->
+                                <div class="llm-validation-controls-section">
+                                    <button class="btn btn-sm btn-outline-light llm-validation-toggle" 
+                                            onclick="toggleLlmValidationDetails('llm-validation-7')">
+                                        Show Justifications ▼
+                                    </button>
+                                </div>
+                                
+                                <!-- Expandable Justifications Section (initially hidden) -->
+                                <div class="llm-validation-details-section" id="llm-validation-details-7" style="display: none;">
+                                    <div class="llm-validation-details-title">LLM Justifications:</div>
+                                    <div class="llm-validation-justifications-list">
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">RLHF:</span>
+                                            
+                                            The paper focuses on weak supervision for generating training labels and does not involve reinforcement learning, human feedback, reward models, or aligning AI models with human preferences.
+                                            
+                                        </div>
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Weak Supervision:</span>
+                                            
+                                            The paper's main contribution is centered on weak supervision, including introducing a new benchmark (BOXWRENCH), evaluating its effectiveness in realistic tasks, and addressing challenges like label generation from noisy sources, making it directly aligned with the topic.
+                                            
+                                        </div>
+                                        
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Distributed Training:</span>
+                                            
+                                            The paper does not address distributed training, parallel computing, or multi-node machine learning; it instead focuses on benchmarking weak supervision techniques for label-efficient learning.
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="module">
@@ -4209,70 +3573,28 @@ substantial amounts (1000+) of labeled examples to match WS in many settings.
                         
                     </div>
                     <div class="paper-authors">
-                        <strong>Authors:</strong> 
+                        <strong>Authors:</strong>
                         
                             
-                            
                                 
-                                    
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2349646347" target="_blank" class="author-link">Logan Barnhart</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2231396710" target="_blank" class="author-link">Reza Akbarian Bafghi</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2349623568" target="_blank" class="author-link">Stephen Becker</a>
                                 
                             
-                            
-                                Logan Barnhart
-                            , 
-                        
-                            
-                            
+                                , 
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2324389999" target="_blank" class="author-link">Maziar Raissi</a>
                                 
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Reza Akbarian Bafghi
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                            
-                                Stephen Becker
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                            
-                                Maziar Raissi
                             
                         
                     </div>
@@ -4445,6 +3767,32 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                         
                                     </div>
                                 </div>
+                                
+                                <!-- Controls Section -->
+                                <div class="llm-validation-controls-section">
+                                    <button class="btn btn-sm btn-outline-light llm-validation-toggle" 
+                                            onclick="toggleLlmValidationDetails('llm-validation-8')">
+                                        Show Justifications ▼
+                                    </button>
+                                </div>
+                                
+                                <!-- Expandable Justifications Section (initially hidden) -->
+                                <div class="llm-validation-details-section" id="llm-validation-details-8" style="display: none;">
+                                    <div class="llm-validation-details-title">LLM Justifications:</div>
+                                    <div class="llm-validation-justifications-list">
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">RLHF:</span>
+                                            
+                                            The paper's main contribution is an in-depth analysis of RLHF techniques (e.g., DPO, ORPO, and RLOO) and their limitations in aligning LLMs with human preferences, particularly in mitigating biases. It directly involves training models using RLHF on human feedback data, evaluating its effectiveness, and concluding that it falls short for complex objectives like bias reduction. This core focus aligns precisely with the topic's definition of systems that use human-ranked data for reinforcement learning-based alignment.
+                                            
+                                        </div>
+                                        
+                                        
+                                        
+                                        
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="module">
@@ -4551,126 +3899,38 @@ the need for capable datasets, data curating techniques, or alignment tools.
                         
                     </div>
                     <div class="paper-authors">
-                        <strong>Authors:</strong> 
+                        <strong>Authors:</strong>
                         
                             
-                            
                                 
-                                    
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2116822245" target="_blank" class="author-link">Tzu-Heng Huang</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2312271010" target="_blank" class="author-link">Catherine Cao</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2136775815" target="_blank" class="author-link">Spencer Schoenberg</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/27638084" target="_blank" class="author-link">Harit Vishwakarma</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2340014150" target="_blank" class="author-link">Nicholas Roberts</a>
                                 
                             
-                            
-                                Tzu-Heng Huang
-                            , 
-                        
-                            
-                            
+                                , 
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2269049908" target="_blank" class="author-link">Frederic Sala</a>
                                 
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Catherine Cao
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Spencer Schoenberg
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Harit Vishwakarma
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                            
-                                Nicholas Roberts
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                            
-                                Frederic Sala
                             
                         
                     </div>
@@ -4835,6 +4095,46 @@ hand-crafted sources, maintains accuracy and greatly improves coverage.
                                         
                                     </div>
                                 </div>
+                                
+                                <!-- Controls Section -->
+                                <div class="llm-validation-controls-section">
+                                    <button class="btn btn-sm btn-outline-light llm-validation-toggle" 
+                                            onclick="toggleLlmValidationDetails('llm-validation-9')">
+                                        Show Justifications ▼
+                                    </button>
+                                </div>
+                                
+                                <!-- Expandable Justifications Section (initially hidden) -->
+                                <div class="llm-validation-details-section" id="llm-validation-details-9" style="display: none;">
+                                    <div class="llm-validation-details-title">LLM Justifications:</div>
+                                    <div class="llm-validation-justifications-list">
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">RLHF:</span>
+                                            
+                                            The paper focuses on using code-generation models to create labeling functions for weak supervision, with no mention of reinforcement learning, human feedback, reward models, or aligning AI models with preferences. It does not involve any elements of RLHF.
+                                            
+                                        </div>
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Weak Supervision:</span>
+                                            
+                                            The paper's core contribution is the development of ScriptoriumWS, a system that enhances weak supervision by generating programmatic labeling functions via code-generation models, directly addressing the topic's definition of programmatically generating noisy labels for training without hand-labeled data. It discusses strategies, experiments, and improvements in accuracy and coverage.
+                                            
+                                        </div>
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Diffusion Reasoning:</span>
+                                            
+                                            The paper deals with code generation for weak supervision and does not involve diffusion models, iterative refinement processes, or multi-step logical reasoning for complex tasks. There are no components related to treating reasoning paths as entities for correction.
+                                            
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="module">
@@ -4955,68 +4255,28 @@ hand-crafted sources, maintains accuracy and greatly improves coverage.
                         
                     </div>
                     <div class="paper-authors">
-                        <strong>Authors:</strong> 
+                        <strong>Authors:</strong>
                         
                             
-                            
                                 
-                                    
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/14006040" target="_blank" class="author-link">Hesham G. Moussa</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/66193246" target="_blank" class="author-link">Arashmid Akhavain</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2340001346" target="_blank" class="author-link">S. M. Hosseini</a>
                                 
                             
-                            
-                                Hesham G. Moussa
-                            , 
-                        
-                            
-                            
+                                , 
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2256522006" target="_blank" class="author-link">Bill McCormick</a>
                                 
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Arashmid Akhavain
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                S. Maryam Hosseini
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                            
-                                Bill McCormick
                             
                         
                     </div>
@@ -5181,6 +4441,53 @@ associated challenges and research areas are highlighted.
                                         
                                     </div>
                                 </div>
+                                
+                                <!-- Controls Section -->
+                                <div class="llm-validation-controls-section">
+                                    <button class="btn btn-sm btn-outline-light llm-validation-toggle" 
+                                            onclick="toggleLlmValidationDetails('llm-validation-10')">
+                                        Show Justifications ▼
+                                    </button>
+                                </div>
+                                
+                                <!-- Expandable Justifications Section (initially hidden) -->
+                                <div class="llm-validation-details-section" id="llm-validation-details-10" style="display: none;">
+                                    <div class="llm-validation-details-title">LLM Justifications:</div>
+                                    <div class="llm-validation-justifications-list">
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">RLHF:</span>
+                                            
+                                            The paper focuses on distributed AI systems, decentralized training, and inference frameworks like DA-ITN, without any mention of human feedback, reward models, or reinforcement learning techniques for aligning models with preferences.
+                                            
+                                        </div>
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Weak Supervision:</span>
+                                            
+                                            The paper discusses distributed data handling and training methods but does not address programmatically generating labels from noisy sources or alternatives to hand-labeled data, focusing instead on decentralization and networking aspects.
+                                            
+                                        </div>
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Diffusion Reasoning:</span>
+                                            
+                                            The paper proposes a framework for distributed AI training and inference without referencing diffusion models, iterative refinement for logical reasoning, or multi-step chain-of-thought processes.
+                                            
+                                        </div>
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Distributed Training:</span>
+                                            
+                                            The paper's main contribution is a framework (DA-ITN) for distributed AI systems, explicitly covering distributed training methods like federated learning, gossip learning, and parallel computing across nodes to enhance scalability and efficiency.
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="module">
@@ -5287,92 +4594,33 @@ associated challenges and research areas are highlighted.
                         
                     </div>
                     <div class="paper-authors">
-                        <strong>Authors:</strong> 
+                        <strong>Authors:</strong>
                         
                             
-                            
+                                
+                                
+                                    <a href="https://www.semanticscholar.org/author/2051209" target="_blank" class="author-link">J. Kolehmainen</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2347536546" target="_blank" class="author-link">Nikolay Blagoev</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2253812306" target="_blank" class="author-link">John Donaghy</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2179107345" target="_blank" class="author-link">Ouguzhan Ersoy</a>
                                 
                             
+                                , 
                                 
-                            
-                            
-                                Jari Kolehmainen
-                            , 
-                        
-                            
-                            
+                                    <a href="https://www.semanticscholar.org/author/2366564213" target="_blank" class="author-link">Christopher Nies</a>
                                 
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Nikolay Blagoev
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                John Donaghy
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Oğuzhan Ersoy
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                            
-                                Christopher Nies
                             
                         
                     </div>
@@ -5556,6 +4804,32 @@ model sizes and accelerator counts.
                                         
                                     </div>
                                 </div>
+                                
+                                <!-- Controls Section -->
+                                <div class="llm-validation-controls-section">
+                                    <button class="btn btn-sm btn-outline-light llm-validation-toggle" 
+                                            onclick="toggleLlmValidationDetails('llm-validation-11')">
+                                        Show Justifications ▼
+                                    </button>
+                                </div>
+                                
+                                <!-- Expandable Justifications Section (initially hidden) -->
+                                <div class="llm-validation-details-section" id="llm-validation-details-11" style="display: none;">
+                                    <div class="llm-validation-details-title">LLM Justifications:</div>
+                                    <div class="llm-validation-justifications-list">
+                                        
+                                        
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Distributed Training:</span>
+                                            
+                                            The paper's main contribution is a novel optimization method, NoLoCo, designed for distributed training of large models. It focuses on reducing communication overhead in multi-node environments by eliminating all-reduce operations and using implicit synchronization, which directly aligns with distributed training techniques for parallel computing and accelerating model training across processors or nodes. The paper provides theoretical analysis and empirical results on various model sizes and accelerator counts, making it a core advancement in this field.
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="module">
@@ -5669,46 +4943,23 @@ model sizes and accelerator counts.
                         
                     </div>
                     <div class="paper-authors">
-                        <strong>Authors:</strong> 
+                        <strong>Authors:</strong>
                         
                             
-                            
+                                
+                                
+                                    <a href="https://www.semanticscholar.org/author/2283307289" target="_blank" class="author-link">Emmanuel J. Candes</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2366565634" target="_blank" class="author-link">Andrew Ilyas</a>
                                 
                             
+                                , 
                                 
-                            
-                            
-                                Emmanuel J. Candès
-                            , 
-                        
-                            
-                            
+                                    <a href="https://www.semanticscholar.org/author/7830023" target="_blank" class="author-link">Tijana Zrnic</a>
                                 
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                            
-                                Andrew Ilyas
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                            
-                                Tijana Zrnic
                             
                         
                     </div>
@@ -5875,6 +5126,39 @@ pre-trained vision models, and protein folding analysis with AlphaFold.
                                         
                                     </div>
                                 </div>
+                                
+                                <!-- Controls Section -->
+                                <div class="llm-validation-controls-section">
+                                    <button class="btn btn-sm btn-outline-light llm-validation-toggle" 
+                                            onclick="toggleLlmValidationDetails('llm-validation-12')">
+                                        Show Justifications ▼
+                                    </button>
+                                </div>
+                                
+                                <!-- Expandable Justifications Section (initially hidden) -->
+                                <div class="llm-validation-details-section" id="llm-validation-details-12" style="display: none;">
+                                    <div class="llm-validation-details-title">LLM Justifications:</div>
+                                    <div class="llm-validation-justifications-list">
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">RLHF:</span>
+                                            
+                                            The paper focuses on creating labeled datasets by combining expert labels with AI predictions, emphasizing cost-effective labeling with error guarantees. It does not involve training or fine-tuning AI models using human feedback, reinforcement learning, or reward models, which are core to RLHF. Thus, there is no connection to RLHF.
+                                            
+                                        </div>
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Weak Supervision:</span>
+                                            
+                                            The paper's main contribution involves using AI predictions from pre-trained models as noisy or imprecise labels to supplement expert labels, thereby reducing the need for fully hand-labeled data while ensuring overall label quality. This directly aligns with weak supervision, which relies on programmatically generated labels from high-level sources to train models efficiently.
+                                            
+                                        </div>
+                                        
+                                        
+                                        
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="module">
@@ -5975,94 +5259,33 @@ pre-trained vision models, and protein folding analysis with AlphaFold.
                         
                     </div>
                     <div class="paper-authors">
-                        <strong>Authors:</strong> 
+                        <strong>Authors:</strong>
                         
                             
-                            
                                 
-                                    
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/2099233786" target="_blank" class="author-link">Konstantinos Vilouras</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2357971801" target="_blank" class="author-link">Ilias Stogiannidis</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2316014855" target="_blank" class="author-link">Junyu Yan</a>
                                 
                             
+                                , 
+                                
+                                    <a href="https://www.semanticscholar.org/author/2256995488" target="_blank" class="author-link">Alison Q. O'Neil</a>
                                 
                             
-                            
-                                Konstantinos Vilouras
-                            , 
-                        
-                            
-                            
+                                , 
                                 
-                            
+                                    <a href="https://www.semanticscholar.org/author/1919157" target="_blank" class="author-link">S. Tsaftaris</a>
                                 
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Ilias Stogiannidis
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Junyu Yan
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                                    
-                                
-                            
-                                
-                            
-                            
-                                Alison Q. O'Neil
-                            , 
-                        
-                            
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            
-                                Sotirios A. Tsaftaris
                             
                         
                     </div>
@@ -6234,6 +5457,39 @@ available.
                                         
                                     </div>
                                 </div>
+                                
+                                <!-- Controls Section -->
+                                <div class="llm-validation-controls-section">
+                                    <button class="btn btn-sm btn-outline-light llm-validation-toggle" 
+                                            onclick="toggleLlmValidationDetails('llm-validation-13')">
+                                        Show Justifications ▼
+                                    </button>
+                                </div>
+                                
+                                <!-- Expandable Justifications Section (initially hidden) -->
+                                <div class="llm-validation-details-section" id="llm-validation-details-13" style="display: none;">
+                                    <div class="llm-validation-details-title">LLM Justifications:</div>
+                                    <div class="llm-validation-justifications-list">
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Weak Supervision:</span>
+                                            
+                                            The paper's main contribution involves deriving supervision signals from free-text radiology reports using a pre-trained clinical entity recognition model and a small set of anatomical annotations, which aligns directly with weak supervision. This approach programmatically generates labels from high-level, noisy sources rather than relying on precise, hand-labeled data, enabling efficient fine-tuning for image-text alignment.
+                                            
+                                        </div>
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Diffusion Reasoning:</span>
+                                            
+                                            The paper focuses on fine-tuning Latent Diffusion Models for improving image-text alignment in medical imaging, such as phrase grounding, but does not involve adapting diffusion processes for multi-step logical reasoning or treating a Chain-of-Thought as a holistic entity for iterative correction. There is no evidence of diffusion being used for complex logical tasks.
+                                            
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="module">
@@ -6348,35 +5604,22 @@ available.
                         
                     </div>
                     <div class="paper-authors">
-                        <strong>Authors:</strong> 
+                        <strong>Authors:</strong>
                         
                             
-                            
-                            
+                                
                                 Mengchen Fan
-                            , 
-                        
                             
-                            
-                            
+                                , 
                                 Keren Li
-                            , 
-                        
                             
-                            
-                            
+                                , 
                                 Tianyun Zhang
-                            , 
-                        
                             
-                            
-                            
+                                , 
                                 Qing Tian
-                            , 
-                        
                             
-                            
-                            
+                                , 
                                 Baocheng Geng
                             
                         
@@ -6551,6 +5794,39 @@ and decentralized systems.
                                         
                                     </div>
                                 </div>
+                                
+                                <!-- Controls Section -->
+                                <div class="llm-validation-controls-section">
+                                    <button class="btn btn-sm btn-outline-light llm-validation-toggle" 
+                                            onclick="toggleLlmValidationDetails('llm-validation-14')">
+                                        Show Justifications ▼
+                                    </button>
+                                </div>
+                                
+                                <!-- Expandable Justifications Section (initially hidden) -->
+                                <div class="llm-validation-details-section" id="llm-validation-details-14" style="display: none;">
+                                    <div class="llm-validation-details-title">LLM Justifications:</div>
+                                    <div class="llm-validation-justifications-list">
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">RLHF:</span>
+                                            
+                                            The paper focuses entirely on personalized federated learning and decentralized training strategies, with no mention of human feedback, reward models, or reinforcement learning techniques. It deals with machine learning in distributed settings without any human preference alignment.
+                                            
+                                        </div>
+                                        
+                                        
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Distributed Training:</span>
+                                            
+                                            The paper's core contribution is the PFedDST framework, which enhances distributed training by addressing challenges in federated learning, such as non-IID data, communication bottlenecks, and device disparities. It involves strategic peer selection and aggregation across multiple nodes, directly aligning with distributed training, parallel computing, and multi-node machine learning concepts.
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="module">
@@ -6589,47 +5865,28 @@ and decentralized systems.
                         
                     </div>
                     <div class="paper-authors">
-                        <strong>Authors:</strong> 
+                        <strong>Authors:</strong>
                         
                             
-                            
-                            
+                                
                                 Yiming Ji
-                            , 
-                        
                             
-                            
-                            
+                                , 
                                 Kaijie Yun
-                            , 
-                        
                             
-                            
-                            
+                                , 
                                 Yang Liu
-                            , 
-                        
                             
-                            
-                            
+                                , 
                                 Zhengpu Wang
-                            , 
-                        
                             
-                            
-                            
+                                , 
                                 Boyu Ma
-                            , 
-                        
                             
-                            
-                            
+                                , 
                                 Zongwu Xie
-                            , 
-                        
                             
-                            
-                            
+                                , 
                                 Hong Liu
                             
                         
@@ -6805,6 +6062,32 @@ it. Experiments on Gibson and MP3D show the effectiveness of our method.
                                         
                                     </div>
                                 </div>
+                                
+                                <!-- Controls Section -->
+                                <div class="llm-validation-controls-section">
+                                    <button class="btn btn-sm btn-outline-light llm-validation-toggle" 
+                                            onclick="toggleLlmValidationDetails('llm-validation-15')">
+                                        Show Justifications ▼
+                                    </button>
+                                </div>
+                                
+                                <!-- Expandable Justifications Section (initially hidden) -->
+                                <div class="llm-validation-details-section" id="llm-validation-details-15" style="display: none;">
+                                    <div class="llm-validation-details-title">LLM Justifications:</div>
+                                    <div class="llm-validation-justifications-list">
+                                        
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Diffusion Reasoning:</span>
+                                            
+                                            The paper uses a diffusion model for generating semantic maps in Object Navigation, employing iterative denoising to refine maps based on explored regions and LLM-derived guidance. This aligns somewhat with the topic's focus on iterative refinement for reasoning, as it facilitates long-term goal inference (e.g., predicting object locations). However, the diffusion process is primarily for spatial and generative tasks rather than multi-step logical reasoning or holistic Chain-of-Thought correction, making it only moderately relevant.
+                                            
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="module">
@@ -6844,41 +6127,25 @@ it. Experiments on Gibson and MP3D show the effectiveness of our method.
                         
                     </div>
                     <div class="paper-authors">
-                        <strong>Authors:</strong> 
+                        <strong>Authors:</strong>
                         
                             
-                            
-                            
+                                
                                 Adam Zweiger
-                            , 
-                        
                             
-                            
-                            
+                                , 
                                 Jyothish Pari
-                            , 
-                        
                             
-                            
-                            
+                                , 
                                 Han Guo
-                            , 
-                        
                             
-                            
-                            
+                                , 
                                 Ekin Akyürek
-                            , 
-                        
                             
-                            
-                            
+                                , 
                                 Yoon Kim
-                            , 
-                        
                             
-                            
-                            
+                                , 
                                 Pulkit Agrawal
                             
                         
@@ -7043,6 +6310,46 @@ website and code is available at https://jyopari.github.io/posts/seal.
                                         
                                     </div>
                                 </div>
+                                
+                                <!-- Controls Section -->
+                                <div class="llm-validation-controls-section">
+                                    <button class="btn btn-sm btn-outline-light llm-validation-toggle" 
+                                            onclick="toggleLlmValidationDetails('llm-validation-16')">
+                                        Show Justifications ▼
+                                    </button>
+                                </div>
+                                
+                                <!-- Expandable Justifications Section (initially hidden) -->
+                                <div class="llm-validation-details-section" id="llm-validation-details-16" style="display: none;">
+                                    <div class="llm-validation-details-title">LLM Justifications:</div>
+                                    <div class="llm-validation-justifications-list">
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">RLHF:</span>
+                                            
+                                            The paper uses reinforcement learning based on downstream task performance as the reward signal, not human feedback or a reward model trained on human-ranked data. Therefore, it does not align with RLHF, which specifically requires human preferences.
+                                            
+                                        </div>
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Weak Supervision:</span>
+                                            
+                                            The paper involves generating synthetic data programmatically for finetuning, which resembles weak supervision by using high-level, potentially noisy sources to create training data without relying on hand-labeled examples. However, it is not the primary focus, as the main contribution is on self-adaptation via RL.
+                                            
+                                        </div>
+                                        
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Diffusion Reasoning:</span>
+                                            
+                                            The paper does not involve diffusion models, iterative refinement processes, or multi-step logical reasoning in the context of diffusion. It focuses on self-adapting LLMs through RL and data generation, with no components related to diffusion-based approaches.
+                                            
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="module">
@@ -7082,41 +6389,25 @@ website and code is available at https://jyopari.github.io/posts/seal.
                         
                     </div>
                     <div class="paper-authors">
-                        <strong>Authors:</strong> 
+                        <strong>Authors:</strong>
                         
                             
-                            
-                            
+                                
                                 Kurt Horvath
-                            , 
-                        
                             
-                            
-                            
+                                , 
                                 Shpresa Tuda
-                            , 
-                        
                             
-                            
-                            
+                                , 
                                 Blerta Idrizi
-                            , 
-                        
                             
-                            
-                            
+                                , 
                                 Stojan Kitanov
-                            , 
-                        
                             
-                            
-                            
+                                , 
                                 Fisnik Doko
-                            , 
-                        
                             
-                            
-                            
+                                , 
                                 Dragi Kimovski
                             
                         
@@ -7289,6 +6580,25 @@ the requirements of next-generation AI applications.
                                         
                                     </div>
                                 </div>
+                                
+                                <!-- Controls Section -->
+                                <div class="llm-validation-controls-section">
+                                    <button class="btn btn-sm btn-outline-light llm-validation-toggle" 
+                                            onclick="toggleLlmValidationDetails('llm-validation-17')">
+                                        Show Justifications ▼
+                                    </button>
+                                </div>
+                                
+                                <!-- Expandable Justifications Section (initially hidden) -->
+                                <div class="llm-validation-details-section" id="llm-validation-details-17" style="display: none;">
+                                    <div class="llm-validation-details-title">LLM Justifications:</div>
+                                    <div class="llm-validation-justifications-list">
+                                        
+                                        
+                                        
+                                        
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="module">
@@ -7329,17 +6639,13 @@ the requirements of next-generation AI applications.
                         
                     </div>
                     <div class="paper-authors">
-                        <strong>Authors:</strong> 
+                        <strong>Authors:</strong>
                         
                             
-                            
-                            
+                                
                                 Subhash Paudel
-                            , 
-                        
                             
-                            
-                            
+                                , 
                                 Nail K. Yamaleev
                             
                         
@@ -7518,6 +6824,25 @@ both smooth and discontinuous solutions.
                                         
                                     </div>
                                 </div>
+                                
+                                <!-- Controls Section -->
+                                <div class="llm-validation-controls-section">
+                                    <button class="btn btn-sm btn-outline-light llm-validation-toggle" 
+                                            onclick="toggleLlmValidationDetails('llm-validation-18')">
+                                        Show Justifications ▼
+                                    </button>
+                                </div>
+                                
+                                <!-- Expandable Justifications Section (initially hidden) -->
+                                <div class="llm-validation-details-section" id="llm-validation-details-18" style="display: none;">
+                                    <div class="llm-validation-details-title">LLM Justifications:</div>
+                                    <div class="llm-validation-justifications-list">
+                                        
+                                        
+                                        
+                                        
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="module">
@@ -7558,17 +6883,13 @@ both smooth and discontinuous solutions.
                         
                     </div>
                     <div class="paper-authors">
-                        <strong>Authors:</strong> 
+                        <strong>Authors:</strong>
                         
                             
-                            
-                            
+                                
                                 Mir Mohammad Yousuf
-                            , 
-                        
                             
-                            
-                            
+                                , 
                                 Shabir Ahmad Sofi
                             
                         
@@ -7752,6 +7073,25 @@ hardware-related issues.
                                         
                                     </div>
                                 </div>
+                                
+                                <!-- Controls Section -->
+                                <div class="llm-validation-controls-section">
+                                    <button class="btn btn-sm btn-outline-light llm-validation-toggle" 
+                                            onclick="toggleLlmValidationDetails('llm-validation-19')">
+                                        Show Justifications ▼
+                                    </button>
+                                </div>
+                                
+                                <!-- Expandable Justifications Section (initially hidden) -->
+                                <div class="llm-validation-details-section" id="llm-validation-details-19" style="display: none;">
+                                    <div class="llm-validation-details-title">LLM Justifications:</div>
+                                    <div class="llm-validation-justifications-list">
+                                        
+                                        
+                                        
+                                        
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="module">
@@ -7838,6 +7178,21 @@ hardware-related issues.
                 // Hide details
                 detailsSection.style.display = 'none';
                 button.textContent = 'Show Individual H-Indices ▼';
+            }
+        }
+        
+        function toggleLlmValidationDetails(containerId) {
+            const detailsSection = document.getElementById('llm-validation-details-' + containerId.split('-')[2]);
+            const button = document.querySelector(`[onclick="toggleLlmValidationDetails('${containerId}')"]`);
+            
+            if (detailsSection.style.display === 'none' || detailsSection.style.display === '') {
+                // Show details
+                detailsSection.style.display = 'block';
+                button.textContent = 'Hide Justifications ▲';
+            } else {
+                // Hide details
+                detailsSection.style.display = 'none';
+                button.textContent = 'Show Justifications ▼';
             }
         }
     </script>

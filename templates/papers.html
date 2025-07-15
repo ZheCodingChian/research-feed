@@ -351,6 +351,7 @@
             grid-template-columns: auto 1fr;
             gap: 0.5rem 1rem;
             align-items: center;
+            margin-bottom: 1rem;
         }
         
         .llm-validation-topic-label {
@@ -422,6 +423,48 @@
         .llm-validation-tooltip-wrapper:hover .llm-validation-tooltip {
             opacity: 1;
             visibility: visible;
+        }
+        
+        /* LLM Validation Controls and Justification Styles */
+        .llm-validation-controls-section {
+            width: 100%;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .llm-validation-toggle {
+            font-size: 0.85rem;
+            padding: 0.25rem 0.5rem;
+        }
+        
+        .llm-validation-details-section {
+            width: 100%;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 1rem;
+        }
+        
+        .llm-validation-details-title {
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+        
+        .llm-validation-justifications-list {
+            margin-bottom: 1rem;
+        }
+        
+        .llm-validation-justification-item {
+            color: #e0e0e0;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+        
+        .llm-validation-justification-topic {
+            font-weight: 600;
+            color: #ffffff;
         }
         
         /* H-Index Widget Styles */
@@ -676,7 +719,7 @@
                     <!-- AI Summary (if available) -->
                     {% if paper.summary %}
                     <div class="ai-summary">
-                        <div class="ai-summary-label">AI Summary</div>
+                        <div class="ai-summary-label">AI-generated summary:</div>
                         <div class="ai-summary-text">{{ paper.summary }}</div>
                     </div>
                     {% endif %}
@@ -888,6 +931,61 @@
                                         {% endif %}
                                     </div>
                                 </div>
+                                
+                                <!-- Controls Section -->
+                                <div class="llm-validation-controls-section">
+                                    <button class="btn btn-sm btn-outline-light llm-validation-toggle" 
+                                            onclick="toggleLlmValidationDetails('llm-validation-{{ loop.index0 }}')">
+                                        Show Justifications ▼
+                                    </button>
+                                </div>
+                                
+                                <!-- Expandable Justifications Section (initially hidden) -->
+                                <div class="llm-validation-details-section" id="llm-validation-details-{{ loop.index0 }}" style="display: none;">
+                                    <div class="llm-validation-details-title">LLM Justifications:</div>
+                                    <div class="llm-validation-justifications-list">
+                                        {% if paper.rlhf_relevance != 'not_validated' %}
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">RLHF:</span>
+                                            {% if paper.rlhf_justification == 'no_justification' %}
+                                            No AI generated justification available.
+                                            {% else %}
+                                            {{ paper.rlhf_justification }}
+                                            {% endif %}
+                                        </div>
+                                        {% endif %}
+                                        {% if paper.weak_supervision_relevance != 'not_validated' %}
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Weak Supervision:</span>
+                                            {% if paper.weak_supervision_justification == 'no_justification' %}
+                                            No AI generated justification available.
+                                            {% else %}
+                                            {{ paper.weak_supervision_justification }}
+                                            {% endif %}
+                                        </div>
+                                        {% endif %}
+                                        {% if paper.diffusion_reasoning_relevance != 'not_validated' %}
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Diffusion Reasoning:</span>
+                                            {% if paper.diffusion_reasoning_justification == 'no_justification' %}
+                                            No AI generated justification available.
+                                            {% else %}
+                                            {{ paper.diffusion_reasoning_justification }}
+                                            {% endif %}
+                                        </div>
+                                        {% endif %}
+                                        {% if paper.distributed_training_relevance != 'not_validated' %}
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Distributed Training:</span>
+                                            {% if paper.distributed_training_justification == 'no_justification' %}
+                                            No AI generated justification available.
+                                            {% else %}
+                                            {{ paper.distributed_training_justification }}
+                                            {% endif %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="module">
@@ -1040,6 +1138,21 @@
                 // Hide details
                 detailsSection.style.display = 'none';
                 button.textContent = 'Show Individual H-Indices ▼';
+            }
+        }
+        
+        function toggleLlmValidationDetails(containerId) {
+            const detailsSection = document.getElementById('llm-validation-details-' + containerId.split('-')[2]);
+            const button = document.querySelector(`[onclick="toggleLlmValidationDetails('${containerId}')"]`);
+            
+            if (detailsSection.style.display === 'none' || detailsSection.style.display === '') {
+                // Show details
+                detailsSection.style.display = 'block';
+                button.textContent = 'Hide Justifications ▲';
+            } else {
+                // Hide details
+                detailsSection.style.display = 'none';
+                button.textContent = 'Show Justifications ▼';
             }
         }
     </script>
