@@ -107,22 +107,24 @@ HTML_GENERATION = {
     # Output directory for generated HTML files
     'output_dir': 'report',
     
-    # Template directory
+    # Template directory (relative to project root)
     'template_dir': 'templates',
     
-    # Landing page filename
-    'landing_page_filename': 'index.html',
-    
-    # File naming modes
-    'filename_modes': {
-        'date': '%Y-%m-%d.html',      # e.g., "2025-01-15.html"
-        'test': 'test_%Y%m%d_%H%M%S.html'  # e.g., "test_20250115_143052.html"
+    # File naming configuration
+    'naming': {
+        # For normal date runs: --date 2025-01-15 -> "2025-01-15.html"
+        'date_format': '{date}.html',
+        
+        # For test runs: --test papers.txt -> "test_papers.txt_2025-01-15_14-30.html"
+        'test_format': 'test_{test_name}_{timestamp}.html'
     },
     
-    # Paper count extraction for landing page
-    'paper_count_patterns': {
-        'total_papers': r'<div class="paper-count">(\d+)</div>',
-        'must_read': r'<span class="badge.*?bg-danger.*?">.*?(\d+).*?</span>',
-        'should_read': r'<span class="badge.*?bg-warning.*?">.*?(\d+).*?</span>'
+    # Title configuration for different run types
+    'titles': {
+        # For normal runs: "Papers from 2025-01-15"
+        'date_title': 'Papers from {date}',
+        
+        # For test runs: "Test Papers: papers.txt"
+        'test_title': 'Test Papers: {test_name}'
     }
 }

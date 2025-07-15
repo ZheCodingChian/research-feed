@@ -10,34 +10,45 @@
             background-color: #0f1011;
             color: #e0e0e0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
         }
         
-        .header {
+        /* Hero section - Reasonable height */
+        .hero-section {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 4rem 0;
             text-align: center;
-            margin-bottom: 3rem;
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
         
-        .header h1 {
-            font-size: 3.5rem;
+        .hero-content h1 {
+            font-size: 3rem;
             font-weight: 700;
             margin-bottom: 1rem;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
         
-        .header p {
+        .hero-content p {
             font-size: 1.3rem;
             opacity: 0.9;
             margin-bottom: 0;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Reports section */
+        .reports-section {
+            padding: 4rem 0;
+            background-color: #0f1011;
         }
         
         .reports-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
             margin-bottom: 3rem;
         }
         
@@ -48,24 +59,41 @@
             box-shadow: 0 6px 20px rgba(0,0,0,0.4);
             transition: all 0.3s ease;
             border: 1px solid #333;
+            text-decoration: none;
+            color: inherit;
         }
         
         .report-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-decoration: none;
+            color: inherit;
         }
         
-        /* Regular run cards - Purple gradient */
-        .report-card.regular .card-header {
+        /* Normal date run cards - Purple gradient */
+        .report-card.normal .card-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
         }
         
-        .report-card.regular:hover {
+        .report-card.normal:hover {
             border-color: #667eea;
         }
         
-        /* Test run cards - Yellow gradient */
+        .report-card.normal .view-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 3px 12px rgba(102, 126, 234, 0.3);
+        }
+        
+        .report-card.normal .view-button:hover {
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .report-card.normal .paper-count {
+            color: #667eea;
+        }
+        
+        /* Test run cards - Yellow/Orange gradient */
         .report-card.test .card-header {
             background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
             color: white;
@@ -73,6 +101,19 @@
         
         .report-card.test:hover {
             border-color: #f59e0b;
+        }
+        
+        .report-card.test .view-button {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            box-shadow: 0 3px 12px rgba(245, 158, 11, 0.3);
+        }
+        
+        .report-card.test .view-button:hover {
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+        
+        .report-card.test .paper-count {
+            color: #f59e0b;
         }
         
         .card-header {
@@ -103,13 +144,8 @@
         .paper-count {
             font-size: 1.8rem;
             font-weight: 600;
-            color: #667eea;
             margin-bottom: 0.25rem;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .test .paper-count {
-            color: #f59e0b;
         }
         
         .paper-label {
@@ -120,7 +156,6 @@
         }
         
         .view-button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border: none;
             color: white;
             padding: 0.75rem 2rem;
@@ -130,24 +165,14 @@
             text-decoration: none;
             display: inline-block;
             transition: all 0.3s ease;
-            box-shadow: 0 3px 12px rgba(102, 126, 234, 0.3);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         
         .view-button:hover {
             transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
             color: white;
-        }
-        
-        .test .view-button {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            box-shadow: 0 3px 12px rgba(245, 158, 11, 0.3);
-        }
-        
-        .test .view-button:hover {
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+            text-decoration: none;
         }
         
         .no-reports {
@@ -182,17 +207,18 @@
         
         /* Responsive adjustments */
         @media (max-width: 768px) {
-            .header h1 {
+            .hero-content h1 {
                 font-size: 2.5rem;
             }
             
-            .header p {
-                font-size: 1.1rem;
+            .hero-content p {
+                font-size: 1.2rem;
+                padding: 0 1rem;
             }
             
             .reports-grid {
                 grid-template-columns: 1fr;
-                gap: 1rem;
+                gap: 1.5rem;
             }
             
             .card-header {
@@ -210,40 +236,43 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="container">
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="hero-content">
             <h1>arXiv Daily Newsletter</h1>
             <p>Your curated collection of research papers with AI-powered analysis</p>
         </div>
     </div>
 
-    <div class="container">
-        {% if reports %}
-        <div class="reports-grid">
-            {% for report in reports %}
-            <div class="report-card {% if report.is_test %}test{% else %}regular{% endif %}">
-                <div class="card-header">
-                    <div class="card-title">{{ report.display_name }}</div>
-                    <div class="card-subtitle">{% if report.is_test %}Experimental Run{% else %}Daily Report{% endif %}</div>
-                </div>
-                <div class="card-body">
-                    <div class="paper-count">{{ report.paper_count }}</div>
-                    <div class="paper-label">papers</div>
-                    <a href="{{ report.filename }}" class="view-button">
-                        View Papers
+    <!-- Reports Section -->
+    <div class="reports-section">
+        <div class="container">
+            {% if reports %}
+                <div class="reports-grid">
+                    {% for report in reports %}
+                    <a href="{{ report.filename }}" class="report-card {{ report.run_type }}">
+                        <div class="card-header">
+                            <div class="card-title">{{ report.title }}</div>
+                            <div class="card-subtitle">{{ report.subtitle }}</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="paper-count">{{ report.paper_count }}</div>
+                            <div class="paper-label">{{ 'paper' if report.paper_count == 1 else 'papers' }}</div>
+                            <div class="view-button">View Papers</div>
+                        </div>
                     </a>
+                    {% endfor %}
                 </div>
-            </div>
-            {% endfor %}
+            {% else %}
+                <div class="no-reports">
+                    <h3>No Reports Available</h3>
+                    <p>No paper analysis reports have been generated yet. Run the pipeline to create your first report!</p>
+                </div>
+            {% endif %}
         </div>
-        {% else %}
-        <div class="no-reports">
-            <h3>No Reports Yet</h3>
-            <p>No paper analysis reports have been generated yet. Run the pipeline to create your first report!</p>
-        </div>
-        {% endif %}
     </div>
 
+    <!-- Footer -->
     <div class="footer">
         <div class="container">
             <p>&copy; {{ current_year }} arXiv Daily Newsletter. Generated automatically from arXiv.org.</p>

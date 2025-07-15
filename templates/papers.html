@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0f1011;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Title section - Reasonable height */
+        .title-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .back-home-btn {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            background: rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
+        }
+        
+        .back-home-btn:hover {
+            color: #ffffff;
+            text-decoration: none;
+            background: rgba(0,0,0,0.3);
+        }
+        
+        .title-content {
+            text-align: center;
+            padding-bottom: 1rem;
+        }
+        
+        .title-content h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .title-content p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 0;
+        }
+        
+        /* Filter section */
+        .filter-section {
+            background: rgba(0,0,0,0.2);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 1rem 0;
+            margin-top: 0;
+        }
+        
+        .filter-placeholder {
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+            font-style: italic;
+        }
+        
+        /* Main content */
+        .content-section {
+            padding: 2rem 0;
+            background-color: #0f1011;
+        }
+        
+        /* Paper cards */
+        .paper-card {
+            margin-bottom: 2rem;
+            border: 1px solid #404040;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+            background-color: #1a1b1c;
+            overflow: hidden;
+        }
+        
+        .paper-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+        
+        /* Paper header - Grey-blue */
+        .paper-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #404040;
+            background: linear-gradient(135deg, #2D3748 0%, #4A5568 100%);
+            color: #ffffff;
+        }
+        
+        .paper-number {
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .paper-title {
+            color: #ffffff;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        
+        .paper-title a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+        
+        .paper-title a:hover {
+            text-decoration: underline;
+            color: #f0f0f0;
+        }
+        
+        .paper-meta {
+            color: #e0e0e0;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+        
+        .paper-authors {
+            color: #e0e0e0;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .author-link {
+            color: #00d4aa;
+            text-decoration: none;
+        }
+        
+        .author-link:hover {
+            color: #00ffcc;
+            text-decoration: underline;
+        }
+        
+        /* Paper body - Dark grey */
+        .paper-body {
+            padding: 1.5rem;
+            background-color: #2a2a2a;
+        }
+        
+        /* AI Summary */
+        .ai-summary {
+            background: linear-gradient(135deg, #20b2aa 0%, #17a2b8 100%);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .ai-summary-label {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .ai-summary-text {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        /* Abstract */
+        .paper-abstract {
+            margin-bottom: 1.5rem;
+            color: #d0d0d0;
+            line-height: 1.6;
+        }
+        
+        .paper-abstract strong {
+            color: #ffffff;
+        }
+        
+        /* Categories */
+        .paper-categories {
+            margin-bottom: 2rem;
+        }
+        
+        .paper-categories strong {
+            color: #ffffff;
+        }
+        
+        .category-tag {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            margin: 0.25rem 0.25rem 0.25rem 0;
+            background-color: #404040;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: #e0e0e0;
+        }
+        
+        /* Data modules section */
+        .data-modules {
+            display: grid;
+            grid-template-rows: auto auto;
+            gap: 1.5rem;
+        }
+        
+        /* LLM Scoring - Full width top row */
+        .llm-scoring-module {
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .module-title {
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .module-placeholder {
+            color: #9ca3af;
+            font-style: italic;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        /* Three-column bottom row */
+        .three-column-modules {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        .module {
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* Similarity Scores Widget Styles */
+        .similarity-title-section {
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        
+        .similarity-title {
+            margin-bottom: 0;
+            color: #ffffff;
+            font-weight: 600;
+        }
+        
+        .similarity-scores-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0.5rem 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .similarity-topic-label {
+            font-weight: 600;
+            color: #e0e0e0;
+            white-space: nowrap;
+        }
+        
+        .similarity-score-display {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .similarity-bar {
+            height: 8px;
+            background-color: #404040;
+            border-radius: 4px;
+            overflow: hidden;
+            width: 100px;
+            flex-shrink: 0;
+        }
+        
+        .similarity-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .similarity-bar-fill.normalized {
+            background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
+        }
+        
+        .similarity-value {
+            color: #e0e0e0;
+            font-weight: 600;
+            min-width: 45px;
+            flex-shrink: 0;
+        }
+        
+        .similarity-error {
+            color: #dc3545;
+            font-size: 0.8rem;
+            font-style: italic;
+        }
+        
+        .similarity-controls-section {
+            width: 100%;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .similarity-toggle {
+            font-size: 0.85rem;
+            padding: 0.25rem 0.5rem;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .title-content h1 {
+                font-size: 2rem;
+            }
+            
+            .title-content p {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+            
+            .back-home-btn {
+                position: static;
+                display: block;
+                text-align: center;
+                margin-bottom: 1rem;
+                width: fit-content;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .three-column-modules {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .paper-header {
+                padding: 1.25rem;
+            }
+            
+            .paper-body {
+                padding: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Title Section -->
+    <div class="title-section">
+        <a href="index.html" class="back-home-btn">← Back to Home</a>
+        <div class="container">
+            <div class="title-content">
+                <h1>{{ page_title }}</h1>
+                <p id="paper-count">{{ paper_count }} papers</p>
+            </div>
+        </div>
+        <div class="filter-section">
+            <div class="container">
+                <div class="filter-placeholder">
+                    FILTER AND SORT GOES HERE
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Section -->
+    <div class="content-section">
+        <div class="container">
+            {% for paper in papers %}
+            <div class="paper-card">
+                <!-- Paper Header -->
+                <div class="paper-header">
+                    <div class="paper-number">#{{ loop.index }}</div>
+                    <h5 class="paper-title">
+                        <a href="http://arxiv.org/abs/{{ paper.id }}" target="_blank">
+                            {{ paper.title }}
+                        </a>
+                    </h5>
+                    <div class="paper-meta">
+                        <strong>arXiv ID:</strong> {{ paper.id }} |
+                        <strong>Published:</strong> {{ paper.published_date.strftime('%Y-%m-%d') if paper.published_date else 'Unknown' }}
+                        {% if paper.highest_score %}
+                        | <strong>Highest Score:</strong> {{ "%.3f"|format(paper.highest_score) }} {{ paper.highest_similarity_topic.replace('_', ' ') if paper.highest_similarity_topic else '' }}
+                        {% endif %}
+                    </div>
+                    <div class="paper-authors">
+                        <strong>Authors:</strong> 
+                        {% for author in paper.authors %}
+                            {% set author_profile = None %}
+                            {% for author_h in paper.author_h_indexes %}
+                                {% if author_h.name == author and author_h.profile_url %}
+                                    {% set author_profile = author_h.profile_url %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if author_profile %}
+                                <a href="{{ author_profile }}" target="_blank" class="author-link">{{ author }}</a>
+                            {% else %}
+                                {{ author }}
+                            {% endif %}
+                            {%- if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Paper Body -->
+                <div class="paper-body">
+                    <!-- AI Summary (if available) -->
+                    {% if paper.summary %}
+                    <div class="ai-summary">
+                        <div class="ai-summary-label">AI Summary</div>
+                        <div class="ai-summary-text">{{ paper.summary }}</div>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Abstract -->
+                    <div class="paper-abstract">
+                        <strong>Abstract:</strong> {{ paper.abstract }}
+                    </div>
+                    
+                    <!-- Categories -->
+                    {% if paper.categories %}
+                    <div class="paper-categories">
+                        <strong>Categories:</strong>
+                        {% for category in paper.categories %}
+                        <span class="category-tag">{{ category }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Data Modules -->
+                    <div class="data-modules">
+                        <!-- LLM Scoring - Full width -->
+                        <div class="llm-scoring-module">
+                            <h6 class="module-title">LLM Scoring</h6>
+                            <div class="module-placeholder">LLM Scoring widget content will go here</div>
+                        </div>
+                        
+                        <!-- Three-column modules -->
+                        <div class="three-column-modules">
+                            <div class="module">
+                                <!-- Similarity Title Section -->
+                                <div class="similarity-title-section">
+                                    <h6 class="similarity-title">Similarity Scores</h6>
+                                </div>
+                                
+                                <!-- Similarity Scores Grid -->
+                                <div class="similarity-scores-grid" id="similarity-grid-{{ loop.index0 }}">
+                                    <!-- RLHF Row -->
+                                    <div class="similarity-topic-label">RLHF:</div>
+                                    <div class="similarity-score-display">
+                                        {% if paper.rlhf_score is not none %}
+                                        <div class="similarity-bar">
+                                            <div class="similarity-bar-fill" style="width: {{ (paper.rlhf_score * 100)|round(1) }}%"></div>
+                                        </div>
+                                        <span class="similarity-value" 
+                                              data-raw-score="{{ '%.3f'|format(paper.rlhf_score) }}" 
+                                              data-topic="rlhf">{{ '%.3f'|format(paper.rlhf_score) }}</span>
+                                        {% else %}
+                                        <div class="similarity-bar">
+                                            <div class="similarity-bar-fill" style="width: 0%"></div>
+                                        </div>
+                                        <span class="similarity-error">Error</span>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <!-- Weak Supervision Row -->
+                                    <div class="similarity-topic-label">Weak supervision:</div>
+                                    <div class="similarity-score-display">
+                                        {% if paper.weak_supervision_score is not none %}
+                                        <div class="similarity-bar">
+                                            <div class="similarity-bar-fill" style="width: {{ (paper.weak_supervision_score * 100)|round(1) }}%"></div>
+                                        </div>
+                                        <span class="similarity-value" 
+                                              data-raw-score="{{ '%.3f'|format(paper.weak_supervision_score) }}" 
+                                              data-topic="weak_supervision">{{ '%.3f'|format(paper.weak_supervision_score) }}</span>
+                                        {% else %}
+                                        <div class="similarity-bar">
+                                            <div class="similarity-bar-fill" style="width: 0%"></div>
+                                        </div>
+                                        <span class="similarity-error">Error</span>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <!-- Diffusion Reasoning Row -->
+                                    <div class="similarity-topic-label">Diffusion reasoning:</div>
+                                    <div class="similarity-score-display">
+                                        {% if paper.diffusion_reasoning_score is not none %}
+                                        <div class="similarity-bar">
+                                            <div class="similarity-bar-fill" style="width: {{ (paper.diffusion_reasoning_score * 100)|round(1) }}%"></div>
+                                        </div>
+                                        <span class="similarity-value" 
+                                              data-raw-score="{{ '%.3f'|format(paper.diffusion_reasoning_score) }}" 
+                                              data-topic="diffusion_reasoning">{{ '%.3f'|format(paper.diffusion_reasoning_score) }}</span>
+                                        {% else %}
+                                        <div class="similarity-bar">
+                                            <div class="similarity-bar-fill" style="width: 0%"></div>
+                                        </div>
+                                        <span class="similarity-error">Error</span>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <!-- Distributed Training Row -->
+                                    <div class="similarity-topic-label">Distributed training:</div>
+                                    <div class="similarity-score-display">
+                                        {% if paper.distributed_training_score is not none %}
+                                        <div class="similarity-bar">
+                                            <div class="similarity-bar-fill" style="width: {{ (paper.distributed_training_score * 100)|round(1) }}%"></div>
+                                        </div>
+                                        <span class="similarity-value" 
+                                              data-raw-score="{{ '%.3f'|format(paper.distributed_training_score) }}" 
+                                              data-topic="distributed_training">{{ '%.3f'|format(paper.distributed_training_score) }}</span>
+                                        {% else %}
+                                        <div class="similarity-bar">
+                                            <div class="similarity-bar-fill" style="width: 0%"></div>
+                                        </div>
+                                        <span class="similarity-error">Error</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                <!-- Controls Section -->
+                                <div class="similarity-controls-section">
+                                    <button class="btn btn-sm btn-outline-light similarity-toggle" 
+                                            onclick="toggleSimilarityMode('similarity-grid-{{ loop.index0 }}')">
+                                        Show Normalized Scores ▼
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="module">
+                                <h6 class="module-title">LLM Validation</h6>
+                                <div class="module-placeholder">LLM validation widget</div>
+                            </div>
+                            
+                            <div class="module">
+                                <h6 class="module-title">Author H-Index</h6>
+                                <div class="module-placeholder">H-index widget</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleSimilarityMode(containerId) {
+            const container = document.getElementById(containerId);
+            const button = container.parentElement.querySelector('.similarity-toggle');
+            const bars = container.querySelectorAll('.similarity-bar-fill');
+            const values = container.querySelectorAll('.similarity-value[data-raw-score]');
+            
+            if (button.textContent.includes('Show Normalized')) {
+                // Switch to normalized view
+                button.textContent = 'Show Raw Scores ▲';
+                
+                // Calculate total from all valid scores
+                const rawScores = [];
+                values.forEach(value => {
+                    const score = parseFloat(value.getAttribute('data-raw-score'));
+                    if (!isNaN(score)) {
+                        rawScores.push(score);
+                    }
+                });
+                
+                const total = rawScores.reduce((sum, score) => sum + score, 0);
+                
+                if (total > 0) {
+                    let scoreIndex = 0;
+                    values.forEach((value, index) => {
+                        const score = parseFloat(value.getAttribute('data-raw-score'));
+                        if (!isNaN(score)) {
+                            const normalized = (score / total * 100).toFixed(1);
+                            value.textContent = `${normalized}%`;
+                            bars[index].style.width = `${normalized}%`;
+                            bars[index].classList.add('normalized');
+                            scoreIndex++;
+                        }
+                    });
+                }
+            } else {
+                // Switch back to raw view
+                button.textContent = 'Show Normalized Scores ▼';
+                
+                values.forEach((value, index) => {
+                    const rawScore = value.getAttribute('data-raw-score');
+                    value.textContent = rawScore;
+                    bars[index].style.width = `${(parseFloat(rawScore) * 100).toFixed(1)}%`;
+                    bars[index].classList.remove('normalized');
+                });
+            }
+        }
+    </script>
+</body>
+</html>
