@@ -245,6 +245,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 1.5rem;
+            align-items: start;
         }
         
         .llm-scoring-content.not-relevant,
@@ -261,6 +262,7 @@
             border-radius: 6px;
             border: 1px solid rgba(255,255,255,0.08);
             overflow: hidden;
+            align-self: start;
         }
         
         .llm-dimension-header {
@@ -279,21 +281,19 @@
         
         .llm-score {
             font-weight: 700;
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
             font-size: 0.9rem;
         }
         
         /* Score color coding */
-        .score-must-read { background-color: #10b981; color: #ffffff; }
-        .score-should-read { background-color: #f59e0b; color: #ffffff; }
-        .score-can-skip { background-color: #ef4444; color: #ffffff; }
-        .score-ignore { background-color: #6b7280; color: #ffffff; }
+        .score-must-read { color: #10b981; }
+        .score-should-read { color: #f59e0b; }
+        .score-can-skip { color: #ef4444; }
+        .score-ignore { color: #6b7280; }
         
-        .score-high { background-color: #10b981; color: #ffffff; }
-        .score-moderate { background-color: #f59e0b; color: #ffffff; }
-        .score-low { background-color: #ef4444; color: #ffffff; }
-        .score-none, .score-negligible { background-color: #6b7280; color: #ffffff; }
+        .score-high { color: #10b981; }
+        .score-moderate { color: #f59e0b; }
+        .score-low { color: #ef4444; }
+        .score-none, .score-negligible { color: #6b7280; }
         
         .llm-justification-toggle {
             width: 100%;
@@ -341,6 +341,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 1.5rem;
+            align-items: start;
         }
         
         .module {
@@ -348,6 +349,7 @@
             border-radius: 8px;
             padding: 1.5rem;
             border: 1px solid rgba(255,255,255,0.1);
+            align-self: start;
         }
         
         /* Similarity Scores Widget Styles */
@@ -369,7 +371,7 @@
             grid-template-columns: auto 1fr;
             gap: 0.5rem 1rem;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 3rem;
         }
         
         .similarity-topic-label {
@@ -447,7 +449,7 @@
             grid-template-columns: auto 1fr;
             gap: 0.5rem 1rem;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 3rem;
         }
         
         .llm-validation-topic-label {
@@ -1006,9 +1008,10 @@
                                 
                                 <!-- Controls Section -->
                                 <div class="similarity-controls-section">
-                                    <button class="btn btn-sm btn-outline-light similarity-toggle" 
+                                    <button class="llm-justification-toggle" 
                                             onclick="toggleSimilarityMode('similarity-grid-{{ loop.index0 }}')">
-                                        Show Normalized Scores
+                                        <span>Show Normalized Scores</span>
+                                        <span class="toggle-icon">⇄</span>
                                     </button>
                                 </div>
                             </div>
@@ -1108,9 +1111,10 @@
                                 
                                 <!-- Controls Section -->
                                 <div class="llm-validation-controls-section">
-                                    <button class="btn btn-sm btn-outline-light llm-validation-toggle" 
+                                    <button class="llm-justification-toggle" 
                                             onclick="toggleLlmValidationDetails('llm-validation-{{ loop.index0 }}')">
-                                        Show Justifications ▼
+                                        <span>Show Justifications</span>
+                                        <span class="toggle-icon">▼</span>
                                     </button>
                                 </div>
                                 
@@ -1199,9 +1203,10 @@
                                 
                                 <!-- Controls Section -->
                                 <div class="h-index-controls-section">
-                                    <button class="btn btn-sm btn-outline-light h-index-toggle" 
+                                    <button class="llm-justification-toggle" 
                                             onclick="toggleHIndexDetails('h-index-{{ loop.index0 }}')">
-                                        Show Individual H-Indices ▼
+                                        <span>Show Individual H-Indices</span>
+                                        <span class="toggle-icon">▼</span>
                                     </button>
                                 </div>
                                 
@@ -1255,13 +1260,16 @@
     <script>
         function toggleSimilarityMode(containerId) {
             const container = document.getElementById(containerId);
-            const button = container.parentElement.querySelector('.similarity-toggle');
+            const button = container.parentElement.querySelector('.llm-justification-toggle');
+            const textSpan = button.querySelector('span:first-child');
+            const iconSpan = button.querySelector('.toggle-icon');
             const bars = container.querySelectorAll('.similarity-bar-fill');
             const values = container.querySelectorAll('.similarity-value[data-raw-score]');
             
-            if (button.textContent.includes('Show Normalized')) {
+            if (textSpan.textContent.includes('Show Normalized')) {
                 // Switch to normalized view
-                button.textContent = 'Show Raw Scores';
+                textSpan.textContent = 'Show Raw Scores';
+                iconSpan.textContent = '⇄';
                 
                 // Calculate total from all valid scores
                 const rawScores = [];
@@ -1289,7 +1297,8 @@
                 }
             } else {
                 // Switch back to raw view
-                button.textContent = 'Show Normalized Scores';
+                textSpan.textContent = 'Show Normalized Scores';
+                iconSpan.textContent = '⇄';
                 
                 values.forEach((value, index) => {
                     const rawScore = value.getAttribute('data-raw-score');
@@ -1303,30 +1312,38 @@
         function toggleHIndexDetails(containerId) {
             const detailsSection = document.getElementById('h-index-details-' + containerId.split('-')[2]);
             const button = document.querySelector(`[onclick="toggleHIndexDetails('${containerId}')"]`);
+            const textSpan = button.querySelector('span:first-child');
+            const iconSpan = button.querySelector('.toggle-icon');
             
             if (detailsSection.style.display === 'none' || detailsSection.style.display === '') {
                 // Show details
                 detailsSection.style.display = 'block';
-                button.textContent = 'Hide Individual H-Indices ▲';
+                textSpan.textContent = 'Hide Individual H-Indices';
+                iconSpan.textContent = '▲';
             } else {
                 // Hide details
                 detailsSection.style.display = 'none';
-                button.textContent = 'Show Individual H-Indices ▼';
+                textSpan.textContent = 'Show Individual H-Indices';
+                iconSpan.textContent = '▼';
             }
         }
         
         function toggleLlmValidationDetails(containerId) {
             const detailsSection = document.getElementById('llm-validation-details-' + containerId.split('-')[2]);
             const button = document.querySelector(`[onclick="toggleLlmValidationDetails('${containerId}')"]`);
+            const textSpan = button.querySelector('span:first-child');
+            const iconSpan = button.querySelector('.toggle-icon');
             
             if (detailsSection.style.display === 'none' || detailsSection.style.display === '') {
                 // Show details
                 detailsSection.style.display = 'block';
-                button.textContent = 'Hide Justifications ▲';
+                textSpan.textContent = 'Hide Justifications';
+                iconSpan.textContent = '▲';
             } else {
                 // Hide details
                 detailsSection.style.display = 'none';
-                button.textContent = 'Show Justifications ▼';
+                textSpan.textContent = 'Show Justifications';
+                iconSpan.textContent = '▼';
             }
         }
         
