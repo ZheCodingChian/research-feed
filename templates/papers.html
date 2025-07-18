@@ -69,16 +69,70 @@
             margin-top: 0;
         }
         
-        .filter-placeholder {
-            text-align: center;
-            color: rgba(255,255,255,0.7);
-            font-style: italic;
+        .filter-section .form-label {
+            color: rgba(255,255,255,0.9);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .filter-section .form-select {
+            background-color: #2a2d30;
+            border: 1px solid #404040;
+            color: #e0e0e0;
+        }
+        
+        .filter-section .form-select:focus {
+            background-color: #2a2d30;
+            border-color: #667eea;
+            color: #e0e0e0;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        
+        .filter-section .dropdown-toggle {
+            background-color: #2a2d30;
+            border: 1px solid #404040;
+            color: #e0e0e0;
+            text-align: left;
+        }
+        
+        .filter-section .dropdown-toggle:hover,
+        .filter-section .dropdown-toggle:focus {
+            background-color: #2a2d30;
+            border-color: #667eea;
+            color: #e0e0e0;
+        }
+        
+        .filter-section .dropdown-menu {
+            background-color: #2a2d30;
+            border: 1px solid #404040;
+        }
+        
+        .filter-section .dropdown-item {
+            color: #e0e0e0;
+        }
+        
+        .filter-section .dropdown-item:hover,
+        .filter-section .dropdown-item:focus {
+            background-color: #404040;
+            color: #e0e0e0;
+        }
+        
+        .paper-count-display {
+            color: rgba(255,255,255,0.9);
+            font-weight: 500;
+            text-align: right;
+            padding-top: 2rem;
         }
         
         /* Main content */
         .content-section {
             padding: 2rem 0;
             background-color: #0f1011;
+        }
+        
+        #papers-container {
+            display: flex;
+            flex-direction: column;
         }
         
         /* Paper cards */
@@ -765,8 +819,57 @@
         </div>
         <div class="filter-section">
             <div class="container">
-                <div class="filter-placeholder">
-                    FILTER AND SORT GOES HERE
+                <div class="row align-items-center">
+                    <div class="col-md-4">
+                        <label for="sort-select" class="form-label">Sort by:</label>
+                        <select id="sort-select" class="form-select">
+                            <option value="recommendation-best">Recommendation (Best first)</option>
+                            <option value="recommendation-worst">Recommendation (Worst first)</option>
+                            <option value="arxiv-desc">arXiv ID (Descending)</option>
+                            <option value="arxiv-asc">arXiv ID (Ascending)</option>
+                            <option value="title-az">Title (A-Z)</option>
+                            <option value="title-za">Title (Z-A)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="filter-select" class="form-label">LLM Score Status:</label>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" id="filter-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                All selected
+                            </button>
+                            <ul class="dropdown-menu w-100" aria-labelledby="filter-dropdown">
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="filter-completed" checked>
+                                        Completed
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="filter-failed" checked>
+                                        Failed
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="filter-not-relevant" checked>
+                                        Not relevant enough
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="filter-not-scored" checked>
+                                        Not scored
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="paper-count-display">
+                            <span id="filtered-count">{{ paper_count }}</span>/<span id="total-count">{{ paper_count }}</span> papers
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -774,9 +877,9 @@
 
     <!-- Content Section -->
     <div class="content-section">
-        <div class="container">
+        <div class="container" id="papers-container">
             {% for paper in papers %}
-            <div class="paper-card">
+            <div class="paper-card" data-paper-id="{{ paper.id }}">
                 <!-- Paper Header -->
                 <div class="paper-header">
                     <div class="paper-number">#{{ loop.index }}</div>
@@ -1365,6 +1468,232 @@
                 iconSpan.textContent = '▲';
             }
         }
+        
+        // Paper data for sorting and filtering
+        window.paperData = {{ papers_json|tojson|safe }};
+        
+        // Sorting and filtering functionality
+        class PaperManager {
+            constructor() {
+                this.allPapers = window.paperData;
+                this.filteredPapers = [...this.allPapers];
+                this.currentSort = 'recommendation-best';
+                this.currentFilters = {
+                    completed: true,
+                    failed: true,
+                    not_relevant_enough: true,
+                    not_scored: true
+                };
+                
+                this.initializeEventListeners();
+                this.loadUserPreferences();
+                this.applyFiltersAndSort();
+            }
+            
+            initializeEventListeners() {
+                // Sort dropdown
+                document.getElementById('sort-select').addEventListener('change', (e) => {
+                    this.currentSort = e.target.value;
+                    this.saveUserPreferences();
+                    this.applyFiltersAndSort();
+                });
+                
+                // Filter checkboxes
+                const filterCheckboxes = ['filter-completed', 'filter-failed', 'filter-not-relevant', 'filter-not-scored'];
+                filterCheckboxes.forEach(id => {
+                    document.getElementById(id).addEventListener('change', () => {
+                        this.updateFilters();
+                        this.updateDropdownLabel();
+                        this.saveUserPreferences();
+                        this.applyFiltersAndSort();
+                    });
+                });
+            }
+            
+            updateFilters() {
+                this.currentFilters = {
+                    completed: document.getElementById('filter-completed').checked,
+                    failed: document.getElementById('filter-failed').checked,
+                    not_relevant_enough: document.getElementById('filter-not-relevant').checked,
+                    not_scored: document.getElementById('filter-not-scored').checked
+                };
+            }
+            
+            updateDropdownLabel() {
+                const checkedCount = Object.values(this.currentFilters).filter(v => v).length;
+                const totalCount = Object.keys(this.currentFilters).length;
+                const button = document.getElementById('filter-dropdown');
+                
+                if (checkedCount === totalCount) {
+                    button.textContent = 'All selected';
+                } else if (checkedCount === 0) {
+                    button.textContent = 'None selected';
+                } else {
+                    button.textContent = `${checkedCount} selected`;
+                }
+            }
+            
+            filterPapers() {
+                return this.allPapers.filter(paper => {
+                    const status = paper.llm_score_status;
+                    switch(status) {
+                        case 'completed':
+                            return this.currentFilters.completed;
+                        case 'failed':
+                            return this.currentFilters.failed;
+                        case 'not_relevant_enough':
+                            return this.currentFilters.not_relevant_enough;
+                        case 'not_scored':
+                            return this.currentFilters.not_scored;
+                        default:
+                            return this.currentFilters.not_scored; // Default to not_scored for unknown statuses
+                    }
+                });
+            }
+            
+            sortPapers(papers) {
+                const sorted = [...papers];
+                
+                switch(this.currentSort) {
+                    case 'recommendation-best':
+                        return sorted.sort((a, b) => {
+                            const priorityMap = {'Must Read': 4, 'Should Read': 3, 'Can Skip': 2, 'Ignore': 1};
+                            const aPriority = priorityMap[a.recommendation_score] || 0;
+                            const bPriority = priorityMap[b.recommendation_score] || 0;
+                            return bPriority - aPriority;
+                        });
+                    case 'recommendation-worst':
+                        return sorted.sort((a, b) => {
+                            const priorityMap = {'Must Read': 4, 'Should Read': 3, 'Can Skip': 2, 'Ignore': 1};
+                            const aPriority = priorityMap[a.recommendation_score] || 0;
+                            const bPriority = priorityMap[b.recommendation_score] || 0;
+                            return aPriority - bPriority;
+                        });
+                    case 'arxiv-desc':
+                        return sorted.sort((a, b) => {
+                            const aMatch = a.id.match(/(\d{4})\.(\d+)/);
+                            const bMatch = b.id.match(/(\d{4})\.(\d+)/);
+                            if (aMatch && bMatch) {
+                                const aYear = parseInt(aMatch[1]);
+                                const bYear = parseInt(bMatch[1]);
+                                if (aYear !== bYear) return bYear - aYear;
+                                return parseInt(bMatch[2]) - parseInt(aMatch[2]);
+                            }
+                            return b.id.localeCompare(a.id);
+                        });
+                    case 'arxiv-asc':
+                        return sorted.sort((a, b) => {
+                            const aMatch = a.id.match(/(\d{4})\.(\d+)/);
+                            const bMatch = b.id.match(/(\d{4})\.(\d+)/);
+                            if (aMatch && bMatch) {
+                                const aYear = parseInt(aMatch[1]);
+                                const bYear = parseInt(bMatch[1]);
+                                if (aYear !== bYear) return aYear - bYear;
+                                return parseInt(aMatch[2]) - parseInt(bMatch[2]);
+                            }
+                            return a.id.localeCompare(b.id);
+                        });
+                    case 'title-az':
+                        return sorted.sort((a, b) => a.title.localeCompare(b.title));
+                    case 'title-za':
+                        return sorted.sort((a, b) => b.title.localeCompare(a.title));
+                    default:
+                        return sorted;
+                }
+            }
+            
+            applyFiltersAndSort() {
+                this.filteredPapers = this.filterPapers();
+                this.filteredPapers = this.sortPapers(this.filteredPapers);
+                this.updatePaperDisplay();
+                this.updatePaperCount();
+            }
+            
+            updatePaperDisplay() {
+                const container = document.getElementById('papers-container');
+                const allPaperCards = container.querySelectorAll('.paper-card');
+                
+                // Hide all papers first
+                allPaperCards.forEach(card => {
+                    card.style.display = 'none';
+                });
+                
+                // Show and reorder filtered papers
+                this.filteredPapers.forEach((paper, index) => {
+                    const card = container.querySelector(`[data-paper-id="${paper.id}"]`);
+                    if (card) {
+                        card.style.display = 'block';
+                        card.style.order = index;
+                        
+                        // Update the paper number to reflect current position
+                        const paperNumber = card.querySelector('.paper-number');
+                        if (paperNumber) {
+                            paperNumber.textContent = `#${index + 1}`;
+                        }
+                    }
+                });
+            }
+            
+            updatePaperCount() {
+                document.getElementById('filtered-count').textContent = this.filteredPapers.length;
+                document.getElementById('total-count').textContent = this.allPapers.length;
+            }
+            
+            saveUserPreferences() {
+                const preferences = {
+                    sort: this.currentSort,
+                    filters: this.currentFilters
+                };
+                localStorage.setItem('paperPreferences', JSON.stringify(preferences));
+            }
+            
+            loadUserPreferences() {
+                const saved = localStorage.getItem('paperPreferences');
+                if (saved) {
+                    const preferences = JSON.parse(saved);
+                    this.currentSort = preferences.sort || 'recommendation-best';
+                    this.currentFilters = preferences.filters || this.currentFilters;
+                    
+                    // Update UI
+                    document.getElementById('sort-select').value = this.currentSort;
+                    document.getElementById('filter-completed').checked = this.currentFilters.completed;
+                    document.getElementById('filter-failed').checked = this.currentFilters.failed;
+                    document.getElementById('filter-not-relevant').checked = this.currentFilters.not_relevant_enough;
+                    document.getElementById('filter-not-scored').checked = this.currentFilters.not_scored;
+                    this.updateDropdownLabel();
+                }
+            }
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new PaperManager();
+            
+            // Ensure Bootstrap dropdown works properly
+            const dropdownButton = document.getElementById('filter-dropdown');
+            if (dropdownButton) {
+                // Fix dropdown toggle behavior
+                dropdownButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const dropdownMenu = this.nextElementSibling;
+                    if (dropdownMenu.style.display === 'block') {
+                        dropdownMenu.style.display = 'none';
+                    } else {
+                        dropdownMenu.style.display = 'block';
+                    }
+                });
+                
+                // Hide dropdown when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!dropdownButton.contains(e.target) && !dropdownButton.nextElementSibling.contains(e.target)) {
+                        dropdownButton.nextElementSibling.style.display = 'none';
+                    }
+                });
+            }
+        });
     </script>
+    
+    <!-- Bootstrap JS for dropdown functionality -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -213,26 +213,38 @@ class HTMLGenerator:
                     
                     papers_list.append(paper)
             
-            # Sort papers by recommendation score, then similarity, then h-index
-            def get_sort_key(paper):
-                # Primary: Recommendation score priority
-                rec_score = paper.recommendation_score or ''
-                rec_priority = {
-                    'Must Read': 4, 
-                    'Should Read': 3, 
-                    'Can Skip': 2, 
-                    'Ignore': 1
-                }.get(rec_score, 0)
-                
-                # Secondary: Highest similarity score
-                similarity_score = getattr(paper, 'highest_score', 0) or 0
-                
-                # Tertiary: H-index
-                h_index = paper.highest_h_index or 0
-                
-                return (rec_priority, similarity_score, h_index)
+            # Papers will be sorted on the client-side with JavaScript
+            # No backend sorting needed
             
-            papers_list.sort(key=get_sort_key, reverse=True)
+            # Convert Paper objects to JSON-serializable dictionaries
+            papers_json = []
+            for paper in papers_list:
+                paper_dict = {
+                    'id': paper.id,
+                    'title': paper.title,
+                    'authors': paper.authors,
+                    'categories': paper.categories,
+                    'abstract': paper.abstract,
+                    'published_date': paper.published_date.isoformat() if paper.published_date else None,
+                    'recommendation_score': paper.recommendation_score,
+                    'llm_score_status': paper.llm_score_status,
+                    'highest_h_index': paper.highest_h_index,
+                    'summary': paper.summary,
+                    'novelty_score': paper.novelty_score,
+                    'impact_score': paper.impact_score,
+                    'rlhf_score': paper.rlhf_score,
+                    'weak_supervision_score': paper.weak_supervision_score,
+                    'diffusion_reasoning_score': paper.diffusion_reasoning_score,
+                    'distributed_training_score': paper.distributed_training_score,
+                    'highest_similarity_topic': paper.highest_similarity_topic,
+                    'highest_score': getattr(paper, 'highest_score', None),
+                    'scraper_status': paper.scraper_status,
+                    'intro_status': paper.intro_status,
+                    'embedding_status': paper.embedding_status,
+                    'llm_validation_status': paper.llm_validation_status,
+                    'h_index_status': paper.h_index_status
+                }
+                papers_json.append(paper_dict)
             
             # Generate filename and title
             filename = self.generate_filename(run_mode, run_value)
@@ -240,7 +252,8 @@ class HTMLGenerator:
             
             # Prepare template data
             template_data = {
-                'papers': papers_list,
+                'papers': papers_list,  # Full Paper objects for template rendering
+                'papers_json': papers_json,  # JSON-serializable data for JavaScript
                 'paper_count': len(papers_list),
                 'page_title': page_title,
                 'run_mode': run_mode,
