@@ -204,6 +204,8 @@ class HTMLGenerator:
                         scores['Diffusion_reasoning'] = paper.diffusion_reasoning_score
                     if paper.distributed_training_score is not None:
                         scores['Distributed_training'] = paper.distributed_training_score
+                    if paper.datasets_score is not None:
+                        scores['Datasets'] = paper.datasets_score
                     
                     if scores:
                         highest_topic = max(scores, key=scores.get)
@@ -236,6 +238,7 @@ class HTMLGenerator:
                     'weak_supervision_score': paper.weak_supervision_score,
                     'diffusion_reasoning_score': paper.diffusion_reasoning_score,
                     'distributed_training_score': paper.distributed_training_score,
+                    'datasets_score': paper.datasets_score,
                     'highest_similarity_topic': paper.highest_similarity_topic,
                     'highest_score': getattr(paper, 'highest_score', None),
                     'scraper_status': paper.scraper_status,

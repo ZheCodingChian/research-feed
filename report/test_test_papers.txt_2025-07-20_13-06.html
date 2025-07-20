@@ -982,7 +982,7 @@
                     
                     <div class="ai-summary">
                         <div class="ai-summary-label">AI-generated summary:</div>
-                        <div class="ai-summary-text">The paper introduces RLTHF, a hybrid framework designed to align large language models (LLMs) with user preferences by combining initial LLM-based labeling with targeted human feedback on hard-to-annotate samples. Using a reward model to identify and iteratively correct mislabeled data, RLTHF achieves alignment quality equivalent to full human annotations with only 6-7% of the effort, and models trained on its curated datasets outperform those on fully human-annotated ones, as demonstrated on HH-RLHF and TL;DR datasets.</div>
+                        <div class="ai-summary-text">The paper introduces RLTHF, a hybrid framework designed to align large language models (LLMs) with user preferences by combining initial LLM-based labeling with targeted human feedback on hard-to-annotate samples, thereby minimizing the cost and effort of human annotations. The methodology involves using a reward model's distribution to identify mislabeled instances, iteratively refining the dataset through strategic human corrections, and evaluating on datasets like HH-RLHF and TL;DR, where RLTHF achieves full-human annotation quality with only 6-7% of the effort and enables models to outperform those trained on fully human-annotated data.</div>
                     </div>
                     
                     
@@ -1041,7 +1041,7 @@ effectiveness of RLTHF's strategic data curation.
                                             <span class="toggle-icon">▼</span>
                                         </button>
                                         <div class="llm-justification-content" id="recommendation-0">
-                                            This paper provides valuable insights and practical methods for researchers working on LLM alignment and efficiency, making it essential for those in AI ethics and model fine-tuning. However, it may not be critical for readers outside this specific subfield.
+                                            This paper offers valuable insights and methods for those specifically working on LLM fine-tuning and alignment, as its efficient approach could optimize real-world applications, but it is not essential for readers outside this niche.
                                         </div>
                                     </div>
                                     
@@ -1060,7 +1060,7 @@ effectiveness of RLTHF's strategic data curation.
                                             <span class="toggle-icon">▼</span>
                                         </button>
                                         <div class="llm-justification-content" id="novelty-0">
-                                            The paper presents a clever combination of existing RLHF and RLAIF techniques by introducing targeted human feedback based on reward model analysis, offering a notable improvement in efficiency for LLM alignment. While it builds on known methods, it innovatively reduces annotation costs without introducing entirely new architectures.
+                                            RLTHF presents a notable improvement by cleverly combining existing RLHF and RLAIF techniques with targeted human feedback to enhance efficiency, though it builds on established concepts rather than introducing a entirely new problem or architecture.
                                         </div>
                                     </div>
                                     
@@ -1069,8 +1069,8 @@ effectiveness of RLTHF's strategic data curation.
                                         <div class="llm-dimension-header">
                                             <span class="llm-dimension-title">Potential Impact:</span>
                                             
-                                                <span class="llm-score score-high">
-                                                    High
+                                                <span class="llm-score score-moderate">
+                                                    Moderate
                                                 </span>
                                             
                                         </div>
@@ -1079,7 +1079,7 @@ effectiveness of RLTHF's strategic data curation.
                                             <span class="toggle-icon">▼</span>
                                         </button>
                                         <div class="llm-justification-content" id="impact-0">
-                                            The work has the potential to influence a wide range of future research and commercial applications by making LLM alignment more cost-effective and scalable, addressing key barriers in AI development. Its demonstrated performance gains could lead to broader adoption in industries relying on fine-tuned models.
+                                            The work is likely to influence future research in LLM alignment and data curation by addressing practical annotation challenges, making it relevant for subfields in AI, though its broader commercial impact may depend on further validation.
                                         </div>
                                     </div>
                                 </div>
@@ -1153,11 +1153,9 @@ effectiveness of RLTHF's strategic data curation.
                                     <div class="similarity-score-display">
                                         
                                         <div class="similarity-bar">
-                                            <div class="similarity-bar-fill" style="width: 38.7%"></div>
+                                            <div class="similarity-bar-fill" style="width: 0%"></div>
                                         </div>
-                                        <span class="similarity-value" 
-                                              data-raw-score="0.387" 
-                                              data-topic="datasets">0.387</span>
+                                        <span class="similarity-error">Error</span>
                                         
                                     </div>
                                 </div>
@@ -1241,7 +1239,7 @@ effectiveness of RLTHF's strategic data curation.
                                         <div class="llm-validation-justification-item">
                                             <span class="llm-validation-justification-topic">RLHF:</span>
                                             
-                                            The paper's main contribution, RLTHF, is a direct extension of RLHF, focusing on improving alignment of LLMs with human preferences through a reward model and selective human feedback. It builds on RLHF by addressing its challenges like annotation costs, making it core to the topic.
+                                            The paper's main contribution, RLTHF, is a direct enhancement of RLHF, focusing on optimizing human feedback to align LLMs. It uses a reward model trained on human-ranked data and iterative feedback, aligning closely with RLHF's core principles of fine-tuning models based on human preferences.
                                             
                                         </div>
                                         
@@ -1249,7 +1247,7 @@ effectiveness of RLTHF's strategic data curation.
                                         <div class="llm-validation-justification-item">
                                             <span class="llm-validation-justification-topic">Weak Supervision:</span>
                                             
-                                            The paper uses LLM-generated labels as noisy, programmatic sources for initial alignment, which aligns with weak supervision by relying on imprecise annotations refined later, though it incorporates human feedback, differentiating it from pure weak supervision.
+                                            The paper employs LLM-generated labels as noisy, programmatic annotations for initial alignment, which is refined with human input, resembling weak supervision by relying on imperfect sources for training data. However, it is not the primary focus, as the emphasis is on RLHF integration.
                                             
                                         </div>
                                         
@@ -1257,7 +1255,7 @@ effectiveness of RLTHF's strategic data curation.
                                         <div class="llm-validation-justification-item">
                                             <span class="llm-validation-justification-topic">Diffusion Reasoning:</span>
                                             
-                                            The paper does not involve diffusion models, iterative refinement for logical tasks, or Chain-of-Thought processes; it focuses on RLHF-based alignment and annotation strategies without any multi-step reasoning components.
+                                            The paper does not involve diffusion models, iterative refinement for logical tasks, or Chain-of-Thought processing; it centers on RLHF and human feedback for model alignment, with no components related to diffusion-based approaches.
                                             
                                         </div>
                                         
@@ -1265,7 +1263,7 @@ effectiveness of RLTHF's strategic data curation.
                                         <div class="llm-validation-justification-item">
                                             <span class="llm-validation-justification-topic">Distributed Training:</span>
                                             
-                                            The paper does not address distributed computing, parallel processing, or multi-node training; it is centered on data annotation and alignment techniques, with no mention of partitioning data or computation across nodes.
+                                            The paper does not address distributed training, parallel computing, or multi-node systems; its focus is solely on data annotation strategies for LLM alignment, without any mention of partitioning data or computation across processors.
                                             
                                         </div>
                                         
@@ -1482,7 +1480,7 @@ effectiveness of RLTHF's strategic data curation.
                     
                     <div class="ai-summary">
                         <div class="ai-summary-label">AI-generated summary:</div>
-                        <div class="ai-summary-text">This paper investigates the limitations of Reinforcement Learning from Human Feedback (RLHF) in aligning large language models (LLMs) with human preferences, specifically focusing on its inability to effectively reduce covert and overt biases against African Americans. The authors apply RLHF techniques such as DPO, ORPO, and RLOO to models like Llama 3 8B, evaluate biases using matched-guise probing and explicit testing, and extend methods to multi-modal models, finding that RLHF does not meaningfully alter biases, supervised fine-tuning calcifies them, and current alignment strategies are inadequate for nuanced tasks like bias mitigation.</div>
+                        <div class="ai-summary-text">This paper investigates the limitations of Reinforcement Learning from Human Feedback (RLHF) in aligning large language models (LLMs) with human preferences, particularly in mitigating covert and overt biases against African Americans. The authors apply RLHF techniques such as DPO, ORPO, and RLOO to models like Llama 3 8B, evaluate biases using matched-guise probing and explicit testing, and extend bias measurement to multi-modal models, finding that RLHF fails to meaningfully reduce biases and may even calcify them through supervised fine-tuning, highlighting the need for better datasets and alignment tools.</div>
                     </div>
                     
                     
@@ -1537,7 +1535,7 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                             <span class="toggle-icon">▼</span>
                                         </button>
                                         <div class="llm-justification-content" id="recommendation-1">
-                                            This paper offers valuable insights for researchers specifically focused on LLM alignment and bias mitigation, making it worth reading for those addressing these challenges in AI development.
+                                            This paper is valuable for researchers focused on AI alignment and bias in LLMs, as it provides critical insights into the limitations of current techniques, but it may not be essential for those outside this specific area.
                                         </div>
                                     </div>
                                     
@@ -1556,7 +1554,7 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                             <span class="toggle-icon">▼</span>
                                         </button>
                                         <div class="llm-justification-content" id="novelty-1">
-                                            The paper presents a notable improvement by empirically examining the underexplored relationship between RLHF and model biases, combining existing techniques in new experiments to highlight limitations, though it does not introduce entirely novel architectures or problems.
+                                            The paper presents a notable improvement by empirically examining the relationship between RLHF and model biases, which is underexplored, and extends bias evaluation to multi-modal models, though it builds on existing RLHF techniques rather than introducing entirely new ones.
                                         </div>
                                     </div>
                                     
@@ -1575,7 +1573,7 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                             <span class="toggle-icon">▼</span>
                                         </button>
                                         <div class="llm-justification-content" id="impact-1">
-                                            The work is likely to be cited and built upon in the subfield of AI ethics and LLM alignment, as it exposes critical flaws in RLHF for bias reduction, potentially guiding future improvements in model training.
+                                            The work is likely to influence research in AI ethics and LLM alignment by highlighting RLHF's inadequacies in bias mitigation, potentially leading to citations and developments in specific subfields, though its broader commercial impact may be limited.
                                         </div>
                                     </div>
                                 </div>
@@ -1610,11 +1608,11 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                     <div class="similarity-score-display">
                                         
                                         <div class="similarity-bar">
-                                            <div class="similarity-bar-fill" style="width: 39.1%"></div>
+                                            <div class="similarity-bar-fill" style="width: 39.0%"></div>
                                         </div>
                                         <span class="similarity-value" 
-                                              data-raw-score="0.391" 
-                                              data-topic="weak_supervision">0.391</span>
+                                              data-raw-score="0.390" 
+                                              data-topic="weak_supervision">0.390</span>
                                         
                                     </div>
                                     
@@ -1649,11 +1647,9 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                     <div class="similarity-score-display">
                                         
                                         <div class="similarity-bar">
-                                            <div class="similarity-bar-fill" style="width: 32.6%"></div>
+                                            <div class="similarity-bar-fill" style="width: 0%"></div>
                                         </div>
-                                        <span class="similarity-value" 
-                                              data-raw-score="0.326" 
-                                              data-topic="datasets">0.326</span>
+                                        <span class="similarity-error">Error</span>
                                         
                                     </div>
                                 </div>
@@ -1746,7 +1742,7 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                         <div class="llm-validation-justification-item">
                                             <span class="llm-validation-justification-topic">RLHF:</span>
                                             
-                                            The paper's main contribution centers on evaluating the limitations of RLHF in aligning LLMs with human preferences, specifically by applying RLHF techniques like DPO, ORPO, and RLOO to models such as Llama 3 8B. It directly addresses how RLHF uses human feedback to fine-tune models and assesses its effectiveness in mitigating biases, aligning closely with the topic's definition of systems that train reward models on human-ranked data for reinforcement learning-based alignment. This focus makes the paper's analysis core to understanding RLHF's strengths and weaknesses.
+                                            The paper's main contribution directly investigates the limitations and effectiveness of RLHF techniques (e.g., DPO, ORPO, RLOO) in aligning large language models with human preferences, such as reducing biases. It conducts experiments on models like Llama 3 8B, analyzes the impact of RLHF on overt and covert biases, and concludes that current RLHF methods are inadequate for nuanced tasks like bias mitigation. This aligns closely with the topic's definition of systems using human feedback for model alignment via reinforcement learning.
                                             
                                         </div>
                                         
@@ -1860,7 +1856,7 @@ the need for capable datasets, data curating techniques, or alignment tools.
                         <strong>arXiv ID:</strong> 1711.06475 |
                         <strong>Published:</strong> 2017-11-17
                         
-                        | <strong>Highest Score:</strong> 0.392 Weak supervision
+                        | <strong>Highest Score:</strong> 0.391 Weak supervision
                         
                     </div>
                     <div class="paper-authors">
@@ -1937,7 +1933,7 @@ the need for capable datasets, data curating techniques, or alignment tools.
                     
                     <div class="ai-summary">
                         <div class="ai-summary-label">AI-generated summary:</div>
-                        <div class="ai-summary-text">The AI Challenger dataset addresses the limitations of existing computer vision datasets by introducing a large-scale resource with over 600,000 images annotated for three tasks: human keypoint detection (300,000 images with keypoints and bounding boxes), large-scale attribute dataset for zero-shot recognition (81,658 images with labels, bounding boxes, and attributes), and image Chinese captioning (300,000 images with five captions each). The methodology involves crawling images from the internet, categorizing them, and providing rich annotations to bridge the semantic gap in image understanding, positioning the dataset as a new benchmark for evaluating and pre-training models in these areas.</div>
+                        <div class="ai-summary-text">The AI Challenger paper introduces a large-scale dataset comprising three sub-datasets for advancing image understanding: human keypoint detection (HKD) with 300,000 annotated images, large-scale attribute dataset (LAD) with 81,658 images for zero-shot recognition, and image Chinese captioning (ICC) with 300,000 images each annotated with five captions. The methodology involves crawling images from the internet, filtering them into categories, and enriching them with annotations like keypoints, bounding boxes, attributes, and captions to bridge semantic gaps, serving as a new benchmark for evaluating and pre-training models in these computer vision tasks.</div>
                     </div>
                     
                     
@@ -1990,7 +1986,7 @@ models.
                                             <span class="toggle-icon">▼</span>
                                         </button>
                                         <div class="llm-justification-content" id="recommendation-2">
-                                            This paper is valuable for researchers specifically working on computer vision tasks like keypoint detection or image captioning, as it provides a new dataset for experimentation and benchmarking. However, it may not be essential for those outside these subfields.
+                                            This paper is valuable for researchers in computer vision, particularly those focused on dataset development or specific tasks like keypoint detection and captioning, as it provides a new resource that could enhance their work.
                                         </div>
                                     </div>
                                     
@@ -2009,7 +2005,7 @@ models.
                                             <span class="toggle-icon">▼</span>
                                         </button>
                                         <div class="llm-justification-content" id="novelty-2">
-                                            The paper introduces a truly new large-scale dataset with rich annotations for tasks like Chinese captioning and zero-shot recognition, significantly advancing the state-of-the-art by addressing gaps in existing datasets. This represents a novel contribution as it provides comprehensive resources not previously available at this scale.
+                                            The paper introduces a truly new large-scale dataset with rich annotations for underrepresented tasks like Chinese image captioning and human keypoint detection, significantly advancing the state-of-the-art by providing resources that go beyond existing datasets.
                                         </div>
                                     </div>
                                     
@@ -2028,7 +2024,7 @@ models.
                                             <span class="toggle-icon">▼</span>
                                         </button>
                                         <div class="llm-justification-content" id="impact-2">
-                                            The work is likely to influence a wide range of future research in computer vision, particularly in multilingual captioning and zero-shot learning, by offering a new benchmark and pre-training resource. Its scale and diversity could lead to broader commercial applications in areas like human activity recognition and image description.
+                                            The work is likely to influence future research in computer vision by offering a comprehensive benchmark for tasks such as zero-shot recognition and multilingual captioning, potentially enabling broader applications in AI model pre-training and real-world scenarios.
                                         </div>
                                     </div>
                                 </div>
@@ -2063,11 +2059,11 @@ models.
                                     <div class="similarity-score-display">
                                         
                                         <div class="similarity-bar">
-                                            <div class="similarity-bar-fill" style="width: 39.2%"></div>
+                                            <div class="similarity-bar-fill" style="width: 39.1%"></div>
                                         </div>
                                         <span class="similarity-value" 
-                                              data-raw-score="0.392" 
-                                              data-topic="weak_supervision">0.392</span>
+                                              data-raw-score="0.391" 
+                                              data-topic="weak_supervision">0.391</span>
                                         
                                     </div>
                                     
@@ -2076,11 +2072,11 @@ models.
                                     <div class="similarity-score-display">
                                         
                                         <div class="similarity-bar">
-                                            <div class="similarity-bar-fill" style="width: 33.0%"></div>
+                                            <div class="similarity-bar-fill" style="width: 32.9%"></div>
                                         </div>
                                         <span class="similarity-value" 
-                                              data-raw-score="0.330" 
-                                              data-topic="diffusion_reasoning">0.330</span>
+                                              data-raw-score="0.329" 
+                                              data-topic="diffusion_reasoning">0.329</span>
                                         
                                     </div>
                                     
@@ -2089,11 +2085,11 @@ models.
                                     <div class="similarity-score-display">
                                         
                                         <div class="similarity-bar">
-                                            <div class="similarity-bar-fill" style="width: 35.8%"></div>
+                                            <div class="similarity-bar-fill" style="width: 35.7%"></div>
                                         </div>
                                         <span class="similarity-value" 
-                                              data-raw-score="0.358" 
-                                              data-topic="distributed_training">0.358</span>
+                                              data-raw-score="0.357" 
+                                              data-topic="distributed_training">0.357</span>
                                         
                                     </div>
                                     
@@ -2102,11 +2098,9 @@ models.
                                     <div class="similarity-score-display">
                                         
                                         <div class="similarity-bar">
-                                            <div class="similarity-bar-fill" style="width: 52.6%"></div>
+                                            <div class="similarity-bar-fill" style="width: 0%"></div>
                                         </div>
-                                        <span class="similarity-value" 
-                                              data-raw-score="0.526" 
-                                              data-topic="datasets">0.526</span>
+                                        <span class="similarity-error">Error</span>
                                         
                                     </div>
                                 </div>
@@ -2177,7 +2171,10 @@ models.
                                     <div class="llm-validation-topic-label">Datasets:</div>
                                     <div class="llm-validation-value-wrapper">
                                         
-                                        <span class="llm-validation-value highly-relevant">Highly Relevant</span>
+                                        <div class="llm-validation-tooltip-wrapper">
+                                            <span class="llm-validation-value not-relevant">Not Relevant*</span>
+                                            <div class="llm-validation-tooltip">Topic similarity score below 0.4, hence deemed not relevant</div>
+                                        </div>
                                         
                                     </div>
                                 </div>
@@ -2199,13 +2196,6 @@ models.
                                         
                                         
                                         
-                                        
-                                        <div class="llm-validation-justification-item">
-                                            <span class="llm-validation-justification-topic">Datasets:</span>
-                                            
-                                            The paper's main contribution is the introduction of a new large-scale dataset (AI Challenger) for image understanding tasks, including detailed descriptions of dataset creation, annotation processes (e.g., keypoint coordinates, attributes, and captions), and its use as a benchmark for evaluating AI models. This directly aligns with research on creating, curating, and benchmarking datasets for machine learning applications.
-                                            
-                                        </div>
                                         
                                     </div>
                                 </div>
@@ -2516,11 +2506,9 @@ AgeDB-30, but also shows great benefit for practical use.
                                     <div class="similarity-score-display">
                                         
                                         <div class="similarity-bar">
-                                            <div class="similarity-bar-fill" style="width: 49.4%"></div>
+                                            <div class="similarity-bar-fill" style="width: 0%"></div>
                                         </div>
-                                        <span class="similarity-value" 
-                                              data-raw-score="0.494" 
-                                              data-topic="datasets">0.494</span>
+                                        <span class="similarity-error">Error</span>
                                         
                                     </div>
                                 </div>
@@ -2588,7 +2576,10 @@ AgeDB-30, but also shows great benefit for practical use.
                                     <div class="llm-validation-topic-label">Datasets:</div>
                                     <div class="llm-validation-value-wrapper">
                                         
-                                        <span class="llm-validation-value tangentially-relevant">Tangentially Relevant</span>
+                                        <div class="llm-validation-tooltip-wrapper">
+                                            <span class="llm-validation-value not-relevant">Not Relevant*</span>
+                                            <div class="llm-validation-tooltip">Topic similarity score below 0.4, hence deemed not relevant</div>
+                                        </div>
                                         
                                     </div>
                                 </div>
@@ -2613,17 +2604,10 @@ AgeDB-30, but also shows great benefit for practical use.
                                         <div class="llm-validation-justification-item">
                                             <span class="llm-validation-justification-topic">Distributed Training:</span>
                                             
-                                            The paper focuses on improving face recognition through a dataset-aware loss and domain adaptation techniques for multi-dataset training, but it does not address distributed training, parallel computing, or partitioning data/computation across multiple nodes or processors.
+                                            The paper focuses on a dataset-aware loss function and domain adaptation techniques for face recognition, specifically addressing identity overlapping and domain invariance when combining datasets. It does not discuss distributed training, parallel computing, multi-node setups, or strategies for partitioning data or computation across processors.
                                             
                                         </div>
                                         
-                                        
-                                        <div class="llm-validation-justification-item">
-                                            <span class="llm-validation-justification-topic">Datasets:</span>
-                                            
-                                            The paper discusses challenges like identity overlapping and domain differences when combining datasets for face recognition, which touches on dataset analysis and curation, but its main contribution is a new learning method rather than creating, benchmarking, or evaluating datasets directly.
-                                            
-                                        </div>
                                         
                                     </div>
                                 </div>
@@ -2764,7 +2748,7 @@ AgeDB-30, but also shows great benefit for practical use.
         }
         
         // Paper data for sorting and filtering
-        window.paperData = [{"abstract": "Fine-tuning large language models (LLMs) to align with user preferences is\nchallenging due to the high cost of quality human annotations in Reinforcement\nLearning from Human Feedback (RLHF) and the generalizability limitations of AI\nFeedback. To address these challenges, we propose RLTHF, a human-AI hybrid\nframework that combines LLM-based initial alignment with selective human\nannotations to achieve full-human annotation alignment with minimal effort.\nRLTHF identifies hard-to-annotate samples mislabeled by LLMs using a reward\nmodel\u0027s reward distribution and iteratively enhances alignment by integrating\nstrategic human corrections while leveraging LLM\u0027s correctly labeled samples.\nEvaluations on HH-RLHF and TL;DR datasets show that RLTHF reaches full-human\nannotation-level alignment with only 6-7% of the human annotation effort.\nFurthermore, models trained on RLTHF\u0027s curated datasets for downstream tasks\noutperform those trained on fully human-annotated datasets, underscoring the\neffectiveness of RLTHF\u0027s strategic data curation.", "authors": ["Yifei Xu", "Tusher Chakraborty", "Emre K\u0131c\u0131man", "Bibek Aryal", "Eduardo Rodrigues", "Srinagesh Sharma", "Roberto Estevao", "Maria Angels de Luis Balaguer", "Jessica Wolk", "Rafael Padilha", "Leonardo Nunes", "Shobana Balakrishnan", "Songwu Lu", "Ranveer Chandra"], "categories": ["cs.CL", "cs.AI", "cs.LG"], "diffusion_reasoning_score": 0.409, "distributed_training_score": 0.411, "embedding_status": "completed", "h_index_status": "completed", "highest_h_index": 7, "highest_score": 0.717, "highest_similarity_topic": "RLHF", "id": "2502.13417", "impact_score": "High", "intro_status": "intro_successful", "llm_score_status": "completed", "llm_validation_status": "completed", "novelty_score": "Moderate", "published_date": "2025-02-19T04:25:11+00:00", "recommendation_score": "Should Read", "rlhf_score": 0.717, "scraper_status": "successfully_scraped", "summary": "The paper introduces RLTHF, a hybrid framework designed to align large language models (LLMs) with user preferences by combining initial LLM-based labeling with targeted human feedback on hard-to-annotate samples. Using a reward model to identify and iteratively correct mislabeled data, RLTHF achieves alignment quality equivalent to full human annotations with only 6-7% of the effort, and models trained on its curated datasets outperform those on fully human-annotated ones, as demonstrated on HH-RLHF and TL;DR datasets.", "title": "RLTHF: Targeted Human Feedback for LLM Alignment", "weak_supervision_score": 0.47}, {"abstract": "Reinforcement Learning from Human Feedback (RLHF) is increasingly used to\nalign large language models (LLMs) with human preferences. However, the\neffectiveness of RLHF in addressing underlying biases remains unclear. This\nstudy investigates the relationship between RLHF and both covert and overt\nbiases in LLMs, particularly focusing on biases against African Americans. We\napplied various RLHF techniques (DPO, ORPO, and RLOO) to Llama 3 8B and\nevaluated the covert and overt biases of the resulting models using\nmatched-guise probing and explicit bias testing. We performed additional tests\nwith DPO on different base models and datasets; among several implications, we\nfound that SFT before RLHF calcifies model biases. Additionally, we extend the\ntools for measuring biases to multi-modal models. Through our experiments we\ncollect evidence that indicates that current alignment techniques are\ninadequate for nebulous tasks such as mitigating covert biases, highlighting\nthe need for capable datasets, data curating techniques, or alignment tools.", "authors": ["Logan Barnhart", "Reza Akbarian Bafghi", "Stephen Becker", "Maziar Raissi"], "categories": ["cs.CL"], "diffusion_reasoning_score": 0.374, "distributed_training_score": 0.366, "embedding_status": "completed", "h_index_status": "completed", "highest_h_index": 3, "highest_score": 0.626, "highest_similarity_topic": "RLHF", "id": "2503.09025", "impact_score": "Moderate", "intro_status": "intro_successful", "llm_score_status": "completed", "llm_validation_status": "completed", "novelty_score": "Moderate", "published_date": "2025-03-12T03:24:44+00:00", "recommendation_score": "Should Read", "rlhf_score": 0.626, "scraper_status": "successfully_scraped", "summary": "This paper investigates the limitations of Reinforcement Learning from Human Feedback (RLHF) in aligning large language models (LLMs) with human preferences, specifically focusing on its inability to effectively reduce covert and overt biases against African Americans. The authors apply RLHF techniques such as DPO, ORPO, and RLOO to models like Llama 3 8B, evaluate biases using matched-guise probing and explicit testing, and extend methods to multi-modal models, finding that RLHF does not meaningfully alter biases, supervised fine-tuning calcifies them, and current alignment strategies are inadequate for nuanced tasks like bias mitigation.", "title": "Aligning to What? Limits to RLHF Based Alignment", "weak_supervision_score": 0.391}, {"abstract": "Significant progress has been achieved in Computer Vision by leveraging\nlarge-scale image datasets. However, large-scale datasets for complex Computer\nVision tasks beyond classification are still limited. This paper proposed a\nlarge-scale dataset named AIC (AI Challenger) with three sub-datasets, human\nkeypoint detection (HKD), large-scale attribute dataset (LAD) and image Chinese\ncaptioning (ICC). In this dataset, we annotate class labels (LAD), keypoint\ncoordinate (HKD), bounding box (HKD and LAD), attribute (LAD) and caption\n(ICC). These rich annotations bridge the semantic gap between low-level images\nand high-level concepts. The proposed dataset is an effective benchmark to\nevaluate and improve different computational methods. In addition, for related\ntasks, others can also use our dataset as a new resource to pre-train their\nmodels.", "authors": ["Jiahong Wu", "He Zheng", "Bo Zhao", "Yixin Li", "Baoming Yan", "Rui Liang", "Wenjia Wang", "Shipei Zhou", "Guosen Lin", "Yanwei Fu", "Yizhou Wang", "Yonggang Wang"], "categories": ["cs.CV"], "diffusion_reasoning_score": 0.33, "distributed_training_score": 0.358, "embedding_status": "completed", "h_index_status": "completed", "highest_h_index": 52, "highest_score": 0.392, "highest_similarity_topic": "Weak_supervision", "id": "1711.06475", "impact_score": "High", "intro_status": "intro_successful", "llm_score_status": "completed", "llm_validation_status": "completed", "novelty_score": "High", "published_date": "2017-11-17T09:58:20+00:00", "recommendation_score": "Should Read", "rlhf_score": 0.351, "scraper_status": "successfully_scraped", "summary": "The AI Challenger dataset addresses the limitations of existing computer vision datasets by introducing a large-scale resource with over 600,000 images annotated for three tasks: human keypoint detection (300,000 images with keypoints and bounding boxes), large-scale attribute dataset for zero-shot recognition (81,658 images with labels, bounding boxes, and attributes), and image Chinese captioning (300,000 images with five captions each). The methodology involves crawling images from the internet, categorizing them, and providing rich annotations to bridge the semantic gap in image understanding, positioning the dataset as a new benchmark for evaluating and pre-training models in these areas.", "title": "AI Challenger : A Large-scale Dataset for Going Deeper in Image\n  Understanding", "weak_supervision_score": 0.392}, {"abstract": "To achieve good performance in face recognition, a large scale training\ndataset is usually required. A simple yet effective way to improve recognition\nperformance is to use a dataset as large as possible by combining multiple\ndatasets in the training. However, it is problematic and troublesome to naively\ncombine different datasets due to two major issues. First, the same person can\npossibly appear in different datasets, leading to an identity overlapping issue\nbetween different datasets. Naively treating the same person as different\nclasses in different datasets during training will affect back-propagation and\ngenerate non-representative embeddings. On the other hand, manually cleaning\nlabels may take formidable human efforts, especially when there are millions of\nimages and thousands of identities. Second, different datasets are collected in\ndifferent situations and thus will lead to different domain distributions.\nNaively combining datasets will make it difficult to learn domain invariant\nembeddings across different datasets. In this paper, we propose DAIL:\nDataset-Aware and Invariant Learning to resolve the above-mentioned issues. To\nsolve the first issue of identity overlapping, we propose a dataset-aware loss\nfor multi-dataset training by reducing the penalty when the same person appears\nin multiple datasets. This can be readily achieved with a modified softmax loss\nwith a dataset-aware term. To solve the second issue, domain adaptation with\ngradient reversal layers is employed for dataset invariant learning. The\nproposed approach not only achieves state-of-the-art results on several\ncommonly used face recognition validation sets, including LFW, CFP-FP, and\nAgeDB-30, but also shows great benefit for practical use.", "authors": ["Gaoang Wang", "Lin Chen", "Tianqiang Liu", "Mingwei He", "Jiebo Luo"], "categories": ["cs.CV"], "diffusion_reasoning_score": 0.332, "distributed_training_score": 0.421, "embedding_status": "completed", "h_index_status": "not_fetched", "highest_h_index": null, "highest_score": 0.421, "highest_similarity_topic": "Distributed_training", "id": "2101.05419", "impact_score": null, "intro_status": "intro_successful", "llm_score_status": "not_relevant_enough", "llm_validation_status": "completed", "novelty_score": null, "published_date": "2021-01-14T01:59:52+00:00", "recommendation_score": null, "rlhf_score": 0.359, "scraper_status": "successfully_scraped", "summary": null, "title": "DAIL: Dataset-Aware and Invariant Learning for Face Recognition", "weak_supervision_score": 0.391}];
+        window.paperData = [{"abstract": "Fine-tuning large language models (LLMs) to align with user preferences is\nchallenging due to the high cost of quality human annotations in Reinforcement\nLearning from Human Feedback (RLHF) and the generalizability limitations of AI\nFeedback. To address these challenges, we propose RLTHF, a human-AI hybrid\nframework that combines LLM-based initial alignment with selective human\nannotations to achieve full-human annotation alignment with minimal effort.\nRLTHF identifies hard-to-annotate samples mislabeled by LLMs using a reward\nmodel\u0027s reward distribution and iteratively enhances alignment by integrating\nstrategic human corrections while leveraging LLM\u0027s correctly labeled samples.\nEvaluations on HH-RLHF and TL;DR datasets show that RLTHF reaches full-human\nannotation-level alignment with only 6-7% of the human annotation effort.\nFurthermore, models trained on RLTHF\u0027s curated datasets for downstream tasks\noutperform those trained on fully human-annotated datasets, underscoring the\neffectiveness of RLTHF\u0027s strategic data curation.", "authors": ["Yifei Xu", "Tusher Chakraborty", "Emre K\u0131c\u0131man", "Bibek Aryal", "Eduardo Rodrigues", "Srinagesh Sharma", "Roberto Estevao", "Maria Angels de Luis Balaguer", "Jessica Wolk", "Rafael Padilha", "Leonardo Nunes", "Shobana Balakrishnan", "Songwu Lu", "Ranveer Chandra"], "categories": ["cs.CL", "cs.AI", "cs.LG"], "diffusion_reasoning_score": 0.409, "distributed_training_score": 0.411, "embedding_status": "completed", "h_index_status": "completed", "highest_h_index": 7, "highest_score": 0.717, "highest_similarity_topic": "RLHF", "id": "2502.13417", "impact_score": "Moderate", "intro_status": "intro_successful", "llm_score_status": "completed", "llm_validation_status": "completed", "novelty_score": "Moderate", "published_date": "2025-02-19T04:25:11+00:00", "recommendation_score": "Should Read", "rlhf_score": 0.717, "scraper_status": "successfully_scraped", "summary": "The paper introduces RLTHF, a hybrid framework designed to align large language models (LLMs) with user preferences by combining initial LLM-based labeling with targeted human feedback on hard-to-annotate samples, thereby minimizing the cost and effort of human annotations. The methodology involves using a reward model\u0027s distribution to identify mislabeled instances, iteratively refining the dataset through strategic human corrections, and evaluating on datasets like HH-RLHF and TL;DR, where RLTHF achieves full-human annotation quality with only 6-7% of the effort and enables models to outperform those trained on fully human-annotated data.", "title": "RLTHF: Targeted Human Feedback for LLM Alignment", "weak_supervision_score": 0.47}, {"abstract": "Reinforcement Learning from Human Feedback (RLHF) is increasingly used to\nalign large language models (LLMs) with human preferences. However, the\neffectiveness of RLHF in addressing underlying biases remains unclear. This\nstudy investigates the relationship between RLHF and both covert and overt\nbiases in LLMs, particularly focusing on biases against African Americans. We\napplied various RLHF techniques (DPO, ORPO, and RLOO) to Llama 3 8B and\nevaluated the covert and overt biases of the resulting models using\nmatched-guise probing and explicit bias testing. We performed additional tests\nwith DPO on different base models and datasets; among several implications, we\nfound that SFT before RLHF calcifies model biases. Additionally, we extend the\ntools for measuring biases to multi-modal models. Through our experiments we\ncollect evidence that indicates that current alignment techniques are\ninadequate for nebulous tasks such as mitigating covert biases, highlighting\nthe need for capable datasets, data curating techniques, or alignment tools.", "authors": ["Logan Barnhart", "Reza Akbarian Bafghi", "Stephen Becker", "Maziar Raissi"], "categories": ["cs.CL"], "diffusion_reasoning_score": 0.374, "distributed_training_score": 0.366, "embedding_status": "completed", "h_index_status": "completed", "highest_h_index": 3, "highest_score": 0.626, "highest_similarity_topic": "RLHF", "id": "2503.09025", "impact_score": "Moderate", "intro_status": "intro_successful", "llm_score_status": "completed", "llm_validation_status": "completed", "novelty_score": "Moderate", "published_date": "2025-03-12T03:24:44+00:00", "recommendation_score": "Should Read", "rlhf_score": 0.626, "scraper_status": "successfully_scraped", "summary": "This paper investigates the limitations of Reinforcement Learning from Human Feedback (RLHF) in aligning large language models (LLMs) with human preferences, particularly in mitigating covert and overt biases against African Americans. The authors apply RLHF techniques such as DPO, ORPO, and RLOO to models like Llama 3 8B, evaluate biases using matched-guise probing and explicit testing, and extend bias measurement to multi-modal models, finding that RLHF fails to meaningfully reduce biases and may even calcify them through supervised fine-tuning, highlighting the need for better datasets and alignment tools.", "title": "Aligning to What? Limits to RLHF Based Alignment", "weak_supervision_score": 0.39}, {"abstract": "Significant progress has been achieved in Computer Vision by leveraging\nlarge-scale image datasets. However, large-scale datasets for complex Computer\nVision tasks beyond classification are still limited. This paper proposed a\nlarge-scale dataset named AIC (AI Challenger) with three sub-datasets, human\nkeypoint detection (HKD), large-scale attribute dataset (LAD) and image Chinese\ncaptioning (ICC). In this dataset, we annotate class labels (LAD), keypoint\ncoordinate (HKD), bounding box (HKD and LAD), attribute (LAD) and caption\n(ICC). These rich annotations bridge the semantic gap between low-level images\nand high-level concepts. The proposed dataset is an effective benchmark to\nevaluate and improve different computational methods. In addition, for related\ntasks, others can also use our dataset as a new resource to pre-train their\nmodels.", "authors": ["Jiahong Wu", "He Zheng", "Bo Zhao", "Yixin Li", "Baoming Yan", "Rui Liang", "Wenjia Wang", "Shipei Zhou", "Guosen Lin", "Yanwei Fu", "Yizhou Wang", "Yonggang Wang"], "categories": ["cs.CV"], "diffusion_reasoning_score": 0.329, "distributed_training_score": 0.357, "embedding_status": "completed", "h_index_status": "completed", "highest_h_index": 52, "highest_score": 0.391, "highest_similarity_topic": "Weak_supervision", "id": "1711.06475", "impact_score": "High", "intro_status": "intro_successful", "llm_score_status": "completed", "llm_validation_status": "completed", "novelty_score": "High", "published_date": "2017-11-17T09:58:20+00:00", "recommendation_score": "Should Read", "rlhf_score": 0.351, "scraper_status": "successfully_scraped", "summary": "The AI Challenger paper introduces a large-scale dataset comprising three sub-datasets for advancing image understanding: human keypoint detection (HKD) with 300,000 annotated images, large-scale attribute dataset (LAD) with 81,658 images for zero-shot recognition, and image Chinese captioning (ICC) with 300,000 images each annotated with five captions. The methodology involves crawling images from the internet, filtering them into categories, and enriching them with annotations like keypoints, bounding boxes, attributes, and captions to bridge semantic gaps, serving as a new benchmark for evaluating and pre-training models in these computer vision tasks.", "title": "AI Challenger : A Large-scale Dataset for Going Deeper in Image\n  Understanding", "weak_supervision_score": 0.391}, {"abstract": "To achieve good performance in face recognition, a large scale training\ndataset is usually required. A simple yet effective way to improve recognition\nperformance is to use a dataset as large as possible by combining multiple\ndatasets in the training. However, it is problematic and troublesome to naively\ncombine different datasets due to two major issues. First, the same person can\npossibly appear in different datasets, leading to an identity overlapping issue\nbetween different datasets. Naively treating the same person as different\nclasses in different datasets during training will affect back-propagation and\ngenerate non-representative embeddings. On the other hand, manually cleaning\nlabels may take formidable human efforts, especially when there are millions of\nimages and thousands of identities. Second, different datasets are collected in\ndifferent situations and thus will lead to different domain distributions.\nNaively combining datasets will make it difficult to learn domain invariant\nembeddings across different datasets. In this paper, we propose DAIL:\nDataset-Aware and Invariant Learning to resolve the above-mentioned issues. To\nsolve the first issue of identity overlapping, we propose a dataset-aware loss\nfor multi-dataset training by reducing the penalty when the same person appears\nin multiple datasets. This can be readily achieved with a modified softmax loss\nwith a dataset-aware term. To solve the second issue, domain adaptation with\ngradient reversal layers is employed for dataset invariant learning. The\nproposed approach not only achieves state-of-the-art results on several\ncommonly used face recognition validation sets, including LFW, CFP-FP, and\nAgeDB-30, but also shows great benefit for practical use.", "authors": ["Gaoang Wang", "Lin Chen", "Tianqiang Liu", "Mingwei He", "Jiebo Luo"], "categories": ["cs.CV"], "diffusion_reasoning_score": 0.332, "distributed_training_score": 0.421, "embedding_status": "completed", "h_index_status": "not_fetched", "highest_h_index": null, "highest_score": 0.421, "highest_similarity_topic": "Distributed_training", "id": "2101.05419", "impact_score": null, "intro_status": "intro_successful", "llm_score_status": "not_relevant_enough", "llm_validation_status": "completed", "novelty_score": null, "published_date": "2021-01-14T01:59:52+00:00", "recommendation_score": null, "rlhf_score": 0.359, "scraper_status": "successfully_scraped", "summary": null, "title": "DAIL: Dataset-Aware and Invariant Learning for Face Recognition", "weak_supervision_score": 0.391}];
         
         // Sorting and filtering functionality
         class PaperManager {
