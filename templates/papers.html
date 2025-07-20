@@ -1735,6 +1735,15 @@
                     this.closeDropdown('topics-dropdown');
                 });
                 
+                // Reset pending state when dropdowns are closed without applying
+                document.getElementById('filter-dropdown').addEventListener('hidden.bs.dropdown', () => {
+                    this.resetPendingFilters();
+                });
+                
+                document.getElementById('topics-dropdown').addEventListener('hidden.bs.dropdown', () => {
+                    this.resetPendingTopicFilters();
+                });
+                
                 // Prevent topics dropdown from closing when clicking on checkboxes or buttons
                 document.querySelectorAll('ul[aria-labelledby="topics-dropdown"] .dropdown-item, ul[aria-labelledby="topics-dropdown"] .dropdown-apply-section').forEach(item => {
                     item.addEventListener('click', (e) => {
@@ -1863,6 +1872,27 @@
                 if (dropdown) {
                     dropdown.hide();
                 }
+            }
+            
+            // Reset pending filters to current applied state
+            resetPendingFilters() {
+                this.pendingFilters = { ...this.currentFilters };
+                // Sync checkboxes with current state
+                document.getElementById('filter-completed').checked = this.currentFilters.completed;
+                document.getElementById('filter-failed').checked = this.currentFilters.failed;
+                document.getElementById('filter-not-relevant').checked = this.currentFilters.not_relevant_enough;
+                document.getElementById('filter-not-scored').checked = this.currentFilters.not_scored;
+            }
+            
+            // Reset pending topic filters to current applied state  
+            resetPendingTopicFilters() {
+                this.pendingTopicFilters = { ...this.currentTopicFilters };
+                // Sync checkboxes with current state
+                document.getElementById('topic-rlhf').checked = this.currentTopicFilters.rlhf;
+                document.getElementById('topic-weak-supervision').checked = this.currentTopicFilters.weak_supervision;
+                document.getElementById('topic-diffusion-reasoning').checked = this.currentTopicFilters.diffusion_reasoning;
+                document.getElementById('topic-distributed-training').checked = this.currentTopicFilters.distributed_training;
+                document.getElementById('topic-datasets').checked = this.currentTopicFilters.datasets;
             }
             
             updateFilters() {
@@ -2226,10 +2256,22 @@
                 if (separator.style.display === 'none') {
                     // Show hidden topics
                     separator.style.display = 'block';
+                    
+                    // Check if we're in normalized view by looking at visible bars
+                    const isNormalized = moduleType === 'similarity' && 
+                        grid.querySelector('.similarity-bar-fill.normalized') !== null;
+                    
                     hiddenElements.forEach(el => {
                         // Restore proper display types based on element class
                         if (el.classList.contains('similarity-score-display')) {
                             el.style.display = 'flex'; // Similarity score displays need flex
+                            
+                            // If in normalized view, apply normalization to hidden topics
+                            if (isNormalized) {
+                                // When showing hidden topics in normalized view, we need to recalculate
+                                // all percentages to maintain consistency
+                                this.recalculateNormalizedScores(grid);
+                            }
                         } else if (el.classList.contains('similarity-topic-label') || 
                                    el.classList.contains('llm-validation-topic-label') || 
                                    el.classList.contains('llm-validation-value-wrapper')) {
@@ -2246,6 +2288,45 @@
                     hiddenElements.forEach(el => el.style.display = 'none');
                     textSpan.textContent = 'Show other topics';
                     iconSpan.textContent = '▼';
+                }
+            }
+            
+            // Helper method to recalculate all normalized scores when showing/hiding topics
+            recalculateNormalizedScores(grid) {
+                const allValueElements = Array.from(grid.querySelectorAll('.similarity-value[data-raw-score]'));
+                const allBarElements = Array.from(grid.querySelectorAll('.similarity-bar-fill'));
+                
+                // Get all currently visible values
+                const visibleValues = allValueElements.filter(value => {
+                    const display = value.closest('.similarity-score-display');
+                    return display && display.style.display !== 'none';
+                });
+                
+                // Calculate total from visible scores
+                const rawScores = visibleValues.map(value => {
+                    const score = parseFloat(value.getAttribute('data-raw-score'));
+                    return isNaN(score) ? 0 : score;
+                });
+                
+                const total = rawScores.reduce((sum, score) => sum + score, 0);
+                
+                if (total > 0) {
+                    // Apply normalized percentages to all visible elements
+                    visibleValues.forEach((value, index) => {
+                        const rawScore = parseFloat(value.getAttribute('data-raw-score'));
+                        if (!isNaN(rawScore)) {
+                            const normalized = (rawScore / total * 100).toFixed(1);
+                            value.textContent = `${normalized}%`;
+                            
+                            // Find corresponding bar element
+                            const display = value.closest('.similarity-score-display');
+                            const bar = display ? display.querySelector('.similarity-bar-fill') : null;
+                            if (bar) {
+                                bar.style.width = `${normalized}%`;
+                                bar.classList.add('normalized');
+                            }
+                        }
+                    });
                 }
             }
         }
