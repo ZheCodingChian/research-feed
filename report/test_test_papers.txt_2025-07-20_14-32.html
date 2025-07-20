@@ -117,6 +117,35 @@
             color: #ffffff;
         }
         
+        /* Apply Filter Button Styles */
+        .dropdown-apply-button {
+            background-color: #667eea;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            padding: 0.5rem 1rem;
+            width: 100%;
+            margin-top: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        .dropdown-apply-button:hover {
+            background-color: #5a6fd8;
+        }
+        
+        .dropdown-apply-button:focus {
+            outline: 2px solid #667eea;
+            outline-offset: 2px;
+        }
+        
+        .dropdown-apply-section {
+            padding: 0.5rem 1rem;
+            border-top: 1px solid #404040;
+            background-color: #242729;
+        }
+        
         .paper-count-display {
             color: rgba(255,255,255,0.9);
             font-weight: 500;
@@ -835,7 +864,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="dropdown">
                             <button class="btn btn-outline-secondary dropdown-toggle w-100 text-start" type="button" id="filter-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="dropdown-label">LLM Score Status:</span> <span id="filter-selected">All selected</span>
@@ -865,10 +894,59 @@
                                         Not scored
                                     </label>
                                 </li>
+                                <li class="dropdown-apply-section">
+                                    <button type="button" class="dropdown-apply-button" id="filter-apply-button">
+                                        Apply Filter
+                                    </button>
+                                </li>
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle w-100 text-start" type="button" id="topics-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="dropdown-label">Topics:</span> <span id="topics-selected">All selected</span>
+                            </button>
+                            <ul class="dropdown-menu w-100" aria-labelledby="topics-dropdown">
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="topic-rlhf" checked>
+                                        RLHF
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="topic-weak-supervision" checked>
+                                        Weak supervision
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="topic-diffusion-reasoning" checked>
+                                        Diffusion reasoning
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="topic-distributed-training" checked>
+                                        Distributed training
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="topic-datasets" checked>
+                                        Datasets
+                                    </label>
+                                </li>
+                                <li class="dropdown-apply-section">
+                                    <button type="button" class="dropdown-apply-button" id="topics-apply-button">
+                                        Apply Filter
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
                         <div class="paper-count-display">
                             <span id="filtered-count">4</span>/<span id="total-count">4</span> papers
                         </div>
@@ -895,7 +973,7 @@
                         <strong>arXiv ID:</strong> 2502.13417 |
                         <strong>Published:</strong> 2025-02-19
                         
-                        | <strong>Highest Score:</strong> 0.717 RLHF
+                        | <strong>Highest Score:</strong> 0.718 RLHF
                         
                     </div>
                     <div class="paper-authors">
@@ -982,7 +1060,7 @@
                     
                     <div class="ai-summary">
                         <div class="ai-summary-label">AI-generated summary:</div>
-                        <div class="ai-summary-text">The paper introduces RLTHF, a hybrid framework designed to align large language models (LLMs) with user preferences by combining initial LLM-based labeling with targeted human feedback on hard-to-annotate samples, thereby minimizing the cost and effort of human annotations. The methodology involves using a reward model's distribution to identify mislabeled instances, iteratively refining the dataset through strategic human corrections, and evaluating on datasets like HH-RLHF and TL;DR, where RLTHF achieves full-human annotation quality with only 6-7% of the effort and enables models to outperform those trained on fully human-annotated data.</div>
+                        <div class="ai-summary-text">The paper introduces RLTHF, a hybrid human-AI framework designed to align large language models (LLMs) with user preferences by combining initial LLM-based annotations with targeted human feedback. It uses a reward model's distribution to identify and correct hard-to-annotate samples iteratively, achieving alignment quality comparable to full human annotations with only 6-7% of the effort, and demonstrates that models trained on RLTHF-curated datasets outperform those on fully human-annotated ones in downstream tasks.</div>
                     </div>
                     
                     
@@ -1041,7 +1119,7 @@ effectiveness of RLTHF's strategic data curation.
                                             <span class="toggle-icon">▼</span>
                                         </button>
                                         <div class="llm-justification-content" id="recommendation-0">
-                                            This paper offers valuable insights and methods for those specifically working on LLM fine-tuning and alignment, as its efficient approach could optimize real-world applications, but it is not essential for readers outside this niche.
+                                            This paper provides a high-quality, practical contribution to efficient LLM alignment that is valuable for researchers and practitioners in AI, though it is not essential for those outside the specific area of human-AI feedback.
                                         </div>
                                     </div>
                                     
@@ -1060,7 +1138,7 @@ effectiveness of RLTHF's strategic data curation.
                                             <span class="toggle-icon">▼</span>
                                         </button>
                                         <div class="llm-justification-content" id="novelty-0">
-                                            RLTHF presents a notable improvement by cleverly combining existing RLHF and RLAIF techniques with targeted human feedback to enhance efficiency, though it builds on established concepts rather than introducing a entirely new problem or architecture.
+                                            The paper presents a clever combination of existing RLHF and AI feedback techniques by introducing targeted human annotations based on reward model analysis, offering a notable improvement in efficiency without introducing an entirely new problem or architecture.
                                         </div>
                                     </div>
                                     
@@ -1079,7 +1157,7 @@ effectiveness of RLTHF's strategic data curation.
                                             <span class="toggle-icon">▼</span>
                                         </button>
                                         <div class="llm-justification-content" id="impact-0">
-                                            The work is likely to influence future research in LLM alignment and data curation by addressing practical annotation challenges, making it relevant for subfields in AI, though its broader commercial impact may depend on further validation.
+                                            The work is likely to influence research and applications in LLM alignment by reducing annotation costs, making it relevant for subfields like AI ethics and model fine-tuning, though its impact may be limited to specific domains rather than widespread adoption.
                                         </div>
                                     </div>
                                 </div>
@@ -1097,34 +1175,34 @@ effectiveness of RLTHF's strategic data curation.
                                 <!-- Similarity Scores Grid -->
                                 <div class="similarity-scores-grid" id="similarity-grid-0">
                                     <!-- RLHF Row -->
-                                    <div class="similarity-topic-label">RLHF:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="rlhf">RLHF:</div>
+                                    <div class="similarity-score-display" data-topic="rlhf">
                                         
                                         <div class="similarity-bar">
-                                            <div class="similarity-bar-fill" style="width: 71.7%"></div>
+                                            <div class="similarity-bar-fill" style="width: 71.8%"></div>
                                         </div>
                                         <span class="similarity-value" 
-                                              data-raw-score="0.717" 
-                                              data-topic="rlhf">0.717</span>
+                                              data-raw-score="0.718" 
+                                              data-topic="rlhf">0.718</span>
                                         
                                     </div>
                                     
                                     <!-- Weak Supervision Row -->
-                                    <div class="similarity-topic-label">Weak supervision:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="weak_supervision">Weak supervision:</div>
+                                    <div class="similarity-score-display" data-topic="weak_supervision">
                                         
                                         <div class="similarity-bar">
-                                            <div class="similarity-bar-fill" style="width: 47.0%"></div>
+                                            <div class="similarity-bar-fill" style="width: 46.9%"></div>
                                         </div>
                                         <span class="similarity-value" 
-                                              data-raw-score="0.470" 
-                                              data-topic="weak_supervision">0.470</span>
+                                              data-raw-score="0.469" 
+                                              data-topic="weak_supervision">0.469</span>
                                         
                                     </div>
                                     
                                     <!-- Diffusion Reasoning Row -->
-                                    <div class="similarity-topic-label">Diffusion reasoning:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="diffusion_reasoning">Diffusion reasoning:</div>
+                                    <div class="similarity-score-display" data-topic="diffusion_reasoning">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 40.9%"></div>
@@ -1136,8 +1214,8 @@ effectiveness of RLTHF's strategic data curation.
                                     </div>
                                     
                                     <!-- Distributed Training Row -->
-                                    <div class="similarity-topic-label">Distributed training:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="distributed_training">Distributed training:</div>
+                                    <div class="similarity-score-display" data-topic="distributed_training">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 41.1%"></div>
@@ -1149,13 +1227,15 @@ effectiveness of RLTHF's strategic data curation.
                                     </div>
                                     
                                     <!-- Datasets Row -->
-                                    <div class="similarity-topic-label">Datasets:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="datasets">Datasets:</div>
+                                    <div class="similarity-score-display" data-topic="datasets">
                                         
                                         <div class="similarity-bar">
-                                            <div class="similarity-bar-fill" style="width: 0%"></div>
+                                            <div class="similarity-bar-fill" style="width: 38.7%"></div>
                                         </div>
-                                        <span class="similarity-error">Error</span>
+                                        <span class="similarity-value" 
+                                              data-raw-score="0.387" 
+                                              data-topic="datasets">0.387</span>
                                         
                                     </div>
                                 </div>
@@ -1179,40 +1259,40 @@ effectiveness of RLTHF's strategic data curation.
                                 <!-- LLM Validation Grid -->
                                 <div class="llm-validation-grid">
                                     <!-- RLHF Row -->
-                                    <div class="llm-validation-topic-label">RLHF:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="rlhf">RLHF:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="rlhf">
                                         
                                         <span class="llm-validation-value highly-relevant">Highly Relevant</span>
                                         
                                     </div>
                                     
                                     <!-- Weak Supervision Row -->
-                                    <div class="llm-validation-topic-label">Weak supervision:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="weak_supervision">Weak supervision:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="weak_supervision">
                                         
                                         <span class="llm-validation-value moderately-relevant">Moderately Relevant</span>
                                         
                                     </div>
                                     
                                     <!-- Diffusion Reasoning Row -->
-                                    <div class="llm-validation-topic-label">Diffusion reasoning:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="diffusion_reasoning">Diffusion reasoning:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="diffusion_reasoning">
                                         
                                         <span class="llm-validation-value not-relevant">Not Relevant</span>
                                         
                                     </div>
                                     
                                     <!-- Distributed Training Row -->
-                                    <div class="llm-validation-topic-label">Distributed training:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="distributed_training">Distributed training:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="distributed_training">
                                         
                                         <span class="llm-validation-value not-relevant">Not Relevant</span>
                                         
                                     </div>
                                     
                                     <!-- Datasets Row -->
-                                    <div class="llm-validation-topic-label">Datasets:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="datasets">Datasets:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="datasets">
                                         
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -1239,7 +1319,7 @@ effectiveness of RLTHF's strategic data curation.
                                         <div class="llm-validation-justification-item">
                                             <span class="llm-validation-justification-topic">RLHF:</span>
                                             
-                                            The paper's main contribution, RLTHF, is a direct enhancement of RLHF, focusing on optimizing human feedback to align LLMs. It uses a reward model trained on human-ranked data and iterative feedback, aligning closely with RLHF's core principles of fine-tuning models based on human preferences.
+                                            The paper directly builds on RLHF by proposing RLTHF, a framework that uses human feedback to train a reward model and align LLMs, addressing challenges like annotation costs. It iteratively integrates human corrections with LLM-labeled data, aligning with RLHF's core principles of using human-ranked data for reward-based fine-tuning.
                                             
                                         </div>
                                         
@@ -1247,7 +1327,7 @@ effectiveness of RLTHF's strategic data curation.
                                         <div class="llm-validation-justification-item">
                                             <span class="llm-validation-justification-topic">Weak Supervision:</span>
                                             
-                                            The paper employs LLM-generated labels as noisy, programmatic annotations for initial alignment, which is refined with human input, resembling weak supervision by relying on imperfect sources for training data. However, it is not the primary focus, as the emphasis is on RLHF integration.
+                                            The paper employs LLM-based initial labeling as a noisy, programmatic source for annotations, which aligns with weak supervision's use of imprecise labels. However, it incorporates targeted human feedback for refinement, making it a hybrid approach rather than pure weak supervision.
                                             
                                         </div>
                                         
@@ -1255,7 +1335,7 @@ effectiveness of RLTHF's strategic data curation.
                                         <div class="llm-validation-justification-item">
                                             <span class="llm-validation-justification-topic">Diffusion Reasoning:</span>
                                             
-                                            The paper does not involve diffusion models, iterative refinement for logical tasks, or Chain-of-Thought processing; it centers on RLHF and human feedback for model alignment, with no components related to diffusion-based approaches.
+                                            The paper does not involve diffusion models, iterative refinement for logical tasks, or treating Chain-of-Thought as a single entity for multi-step correction; it focuses on reward model training and human feedback integration instead.
                                             
                                         </div>
                                         
@@ -1263,7 +1343,7 @@ effectiveness of RLTHF's strategic data curation.
                                         <div class="llm-validation-justification-item">
                                             <span class="llm-validation-justification-topic">Distributed Training:</span>
                                             
-                                            The paper does not address distributed training, parallel computing, or multi-node systems; its focus is solely on data annotation strategies for LLM alignment, without any mention of partitioning data or computation across processors.
+                                            The paper does not address parallel computing, multi-node setups, or partitioning data/computation across processors; it centers on data annotation strategies for LLM alignment, not training acceleration techniques.
                                             
                                         </div>
                                         
@@ -1480,7 +1560,7 @@ effectiveness of RLTHF's strategic data curation.
                     
                     <div class="ai-summary">
                         <div class="ai-summary-label">AI-generated summary:</div>
-                        <div class="ai-summary-text">This paper investigates the limitations of Reinforcement Learning from Human Feedback (RLHF) in aligning large language models (LLMs) with human preferences, particularly in mitigating covert and overt biases against African Americans. The authors apply RLHF techniques such as DPO, ORPO, and RLOO to models like Llama 3 8B, evaluate biases using matched-guise probing and explicit testing, and extend bias measurement to multi-modal models, finding that RLHF fails to meaningfully reduce biases and may even calcify them through supervised fine-tuning, highlighting the need for better datasets and alignment tools.</div>
+                        <div class="ai-summary-text">This paper examines the limitations of Reinforcement Learning from Human Feedback (RLHF) in aligning large language models (LLMs) with human preferences by investigating its impact on covert and overt biases, particularly against African Americans. Using techniques such as DPO, ORPO, and RLOO on models like Llama 3 8B, the authors evaluate biases through matched-guise probing and explicit testing, finding that RLHF fails to meaningfully reduce these biases and that supervised fine-tuning prior to RLHF exacerbates them; they also extend bias measurement to multi-modal models and conclude that current alignment methods are inadequate for addressing subtle biases, highlighting the need for improved datasets and techniques.</div>
                     </div>
                     
                     
@@ -1535,7 +1615,7 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                             <span class="toggle-icon">▼</span>
                                         </button>
                                         <div class="llm-justification-content" id="recommendation-1">
-                                            This paper is valuable for researchers focused on AI alignment and bias in LLMs, as it provides critical insights into the limitations of current techniques, but it may not be essential for those outside this specific area.
+                                            This paper offers valuable insights into the shortcomings of current alignment techniques for reducing biases, making it a significant contribution that researchers in AI safety and ethics should be aware of to inform their work.
                                         </div>
                                     </div>
                                     
@@ -1554,7 +1634,7 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                             <span class="toggle-icon">▼</span>
                                         </button>
                                         <div class="llm-justification-content" id="novelty-1">
-                                            The paper presents a notable improvement by empirically examining the relationship between RLHF and model biases, which is underexplored, and extends bias evaluation to multi-modal models, though it builds on existing RLHF techniques rather than introducing entirely new ones.
+                                            The paper presents a notable improvement by investigating the previously underexplored relationship between RLHF and model biases, combining existing techniques in a new way to analyze covert biases, though it does not introduce a entirely new problem or architecture.
                                         </div>
                                     </div>
                                     
@@ -1573,7 +1653,7 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                             <span class="toggle-icon">▼</span>
                                         </button>
                                         <div class="llm-justification-content" id="impact-1">
-                                            The work is likely to influence research in AI ethics and LLM alignment by highlighting RLHF's inadequacies in bias mitigation, potentially leading to citations and developments in specific subfields, though its broader commercial impact may be limited.
+                                            The work is likely to be cited and built upon in the subfield of AI ethics and model alignment, as it highlights critical limitations of RLHF in bias mitigation, potentially influencing future research on safer AI development.
                                         </div>
                                     </div>
                                 </div>
@@ -1591,8 +1671,8 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                 <!-- Similarity Scores Grid -->
                                 <div class="similarity-scores-grid" id="similarity-grid-1">
                                     <!-- RLHF Row -->
-                                    <div class="similarity-topic-label">RLHF:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="rlhf">RLHF:</div>
+                                    <div class="similarity-score-display" data-topic="rlhf">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 62.6%"></div>
@@ -1604,8 +1684,8 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                     </div>
                                     
                                     <!-- Weak Supervision Row -->
-                                    <div class="similarity-topic-label">Weak supervision:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="weak_supervision">Weak supervision:</div>
+                                    <div class="similarity-score-display" data-topic="weak_supervision">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 39.0%"></div>
@@ -1617,8 +1697,8 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                     </div>
                                     
                                     <!-- Diffusion Reasoning Row -->
-                                    <div class="similarity-topic-label">Diffusion reasoning:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="diffusion_reasoning">Diffusion reasoning:</div>
+                                    <div class="similarity-score-display" data-topic="diffusion_reasoning">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 37.4%"></div>
@@ -1630,8 +1710,8 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                     </div>
                                     
                                     <!-- Distributed Training Row -->
-                                    <div class="similarity-topic-label">Distributed training:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="distributed_training">Distributed training:</div>
+                                    <div class="similarity-score-display" data-topic="distributed_training">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 36.6%"></div>
@@ -1643,13 +1723,15 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                     </div>
                                     
                                     <!-- Datasets Row -->
-                                    <div class="similarity-topic-label">Datasets:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="datasets">Datasets:</div>
+                                    <div class="similarity-score-display" data-topic="datasets">
                                         
                                         <div class="similarity-bar">
-                                            <div class="similarity-bar-fill" style="width: 0%"></div>
+                                            <div class="similarity-bar-fill" style="width: 32.6%"></div>
                                         </div>
-                                        <span class="similarity-error">Error</span>
+                                        <span class="similarity-value" 
+                                              data-raw-score="0.326" 
+                                              data-topic="datasets">0.326</span>
                                         
                                     </div>
                                 </div>
@@ -1673,16 +1755,16 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                 <!-- LLM Validation Grid -->
                                 <div class="llm-validation-grid">
                                     <!-- RLHF Row -->
-                                    <div class="llm-validation-topic-label">RLHF:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="rlhf">RLHF:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="rlhf">
                                         
                                         <span class="llm-validation-value highly-relevant">Highly Relevant</span>
                                         
                                     </div>
                                     
                                     <!-- Weak Supervision Row -->
-                                    <div class="llm-validation-topic-label">Weak supervision:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="weak_supervision">Weak supervision:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="weak_supervision">
                                         
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -1692,8 +1774,8 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                     </div>
                                     
                                     <!-- Diffusion Reasoning Row -->
-                                    <div class="llm-validation-topic-label">Diffusion reasoning:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="diffusion_reasoning">Diffusion reasoning:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="diffusion_reasoning">
                                         
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -1703,8 +1785,8 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                     </div>
                                     
                                     <!-- Distributed Training Row -->
-                                    <div class="llm-validation-topic-label">Distributed training:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="distributed_training">Distributed training:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="distributed_training">
                                         
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -1714,8 +1796,8 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                     </div>
                                     
                                     <!-- Datasets Row -->
-                                    <div class="llm-validation-topic-label">Datasets:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="datasets">Datasets:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="datasets">
                                         
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -1742,7 +1824,7 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                         <div class="llm-validation-justification-item">
                                             <span class="llm-validation-justification-topic">RLHF:</span>
                                             
-                                            The paper's main contribution directly investigates the limitations and effectiveness of RLHF techniques (e.g., DPO, ORPO, RLOO) in aligning large language models with human preferences, such as reducing biases. It conducts experiments on models like Llama 3 8B, analyzes the impact of RLHF on overt and covert biases, and concludes that current RLHF methods are inadequate for nuanced tasks like bias mitigation. This aligns closely with the topic's definition of systems using human feedback for model alignment via reinforcement learning.
+                                            The paper's main contribution is a detailed analysis of RLHF techniques (e.g., DPO, ORPO, and RLOO) and their limitations in aligning LLMs with human preferences, particularly in mitigating biases. It directly applies RLHF to models like Llama 3 8B, evaluates its effectiveness, and discusses implications for alignment strategies, making it core to the topic of RLHF as defined.
                                             
                                         </div>
                                         
@@ -1778,7 +1860,7 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                     <div class="h-index-label">Source:</div>
                                     <div class="h-index-value">
                                         
-                                        Full ID match
+                                        Title match
                                         
                                     </div>
                                 </div>
@@ -1856,7 +1938,7 @@ the need for capable datasets, data curating techniques, or alignment tools.
                         <strong>arXiv ID:</strong> 1711.06475 |
                         <strong>Published:</strong> 2017-11-17
                         
-                        | <strong>Highest Score:</strong> 0.391 Weak supervision
+                        | <strong>Highest Score:</strong> 0.525 Datasets
                         
                     </div>
                     <div class="paper-authors">
@@ -1933,7 +2015,7 @@ the need for capable datasets, data curating techniques, or alignment tools.
                     
                     <div class="ai-summary">
                         <div class="ai-summary-label">AI-generated summary:</div>
-                        <div class="ai-summary-text">The AI Challenger paper introduces a large-scale dataset comprising three sub-datasets for advancing image understanding: human keypoint detection (HKD) with 300,000 annotated images, large-scale attribute dataset (LAD) with 81,658 images for zero-shot recognition, and image Chinese captioning (ICC) with 300,000 images each annotated with five captions. The methodology involves crawling images from the internet, filtering them into categories, and enriching them with annotations like keypoints, bounding boxes, attributes, and captions to bridge semantic gaps, serving as a new benchmark for evaluating and pre-training models in these computer vision tasks.</div>
+                        <div class="ai-summary-text">The AI Challenger dataset paper introduces a large-scale resource comprising three sub-datasets for advanced computer vision tasks: human keypoint detection (HKD), large-scale attribute dataset (LAD) for zero-shot recognition, and image Chinese captioning (ICC). By annotating over 300,000 images with keypoints, bounding boxes, attributes, and Chinese captions, the authors aim to bridge the semantic gap between low-level image features and high-level concepts, providing a new benchmark for evaluating and pre-training models in these areas, while highlighting the dataset's scale as a notable improvement over existing resources.</div>
                     </div>
                     
                     
@@ -1986,7 +2068,7 @@ models.
                                             <span class="toggle-icon">▼</span>
                                         </button>
                                         <div class="llm-justification-content" id="recommendation-2">
-                                            This paper is valuable for researchers in computer vision, particularly those focused on dataset development or specific tasks like keypoint detection and captioning, as it provides a new resource that could enhance their work.
+                                            This paper represents a strong contribution by providing a valuable new dataset for advanced image understanding tasks, making it essential for researchers in computer vision to be aware of for benchmarking and model development. While not groundbreaking, its practical utility warrants attention from relevant specialists.
                                         </div>
                                     </div>
                                     
@@ -1995,8 +2077,8 @@ models.
                                         <div class="llm-dimension-header">
                                             <span class="llm-dimension-title">Novelty:</span>
                                             
-                                                <span class="llm-score score-high">
-                                                    High
+                                                <span class="llm-score score-moderate">
+                                                    Moderate
                                                 </span>
                                             
                                         </div>
@@ -2005,7 +2087,7 @@ models.
                                             <span class="toggle-icon">▼</span>
                                         </button>
                                         <div class="llm-justification-content" id="novelty-2">
-                                            The paper introduces a truly new large-scale dataset with rich annotations for underrepresented tasks like Chinese image captioning and human keypoint detection, significantly advancing the state-of-the-art by providing resources that go beyond existing datasets.
+                                            The paper presents a notable improvement by creating a large-scale dataset with rich annotations for underrepresented tasks like Chinese captioning, combining existing ideas in a new way to address limitations in current benchmarks. However, it does not introduce a fundamentally new problem or technique beyond dataset expansion.
                                         </div>
                                     </div>
                                     
@@ -2014,8 +2096,8 @@ models.
                                         <div class="llm-dimension-header">
                                             <span class="llm-dimension-title">Potential Impact:</span>
                                             
-                                                <span class="llm-score score-high">
-                                                    High
+                                                <span class="llm-score score-moderate">
+                                                    Moderate
                                                 </span>
                                             
                                         </div>
@@ -2024,7 +2106,7 @@ models.
                                             <span class="toggle-icon">▼</span>
                                         </button>
                                         <div class="llm-justification-content" id="impact-2">
-                                            The work is likely to influence future research in computer vision by offering a comprehensive benchmark for tasks such as zero-shot recognition and multilingual captioning, potentially enabling broader applications in AI model pre-training and real-world scenarios.
+                                            The work is likely to be cited and utilized for pre-training models in specific subfields like keypoint detection and multilingual captioning, given its scale and novelty in Chinese annotations. Nonetheless, its influence may be limited to niche areas within computer vision rather than broader applications.
                                         </div>
                                     </div>
                                 </div>
@@ -2042,21 +2124,21 @@ models.
                                 <!-- Similarity Scores Grid -->
                                 <div class="similarity-scores-grid" id="similarity-grid-2">
                                     <!-- RLHF Row -->
-                                    <div class="similarity-topic-label">RLHF:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="rlhf">RLHF:</div>
+                                    <div class="similarity-score-display" data-topic="rlhf">
                                         
                                         <div class="similarity-bar">
-                                            <div class="similarity-bar-fill" style="width: 35.1%"></div>
+                                            <div class="similarity-bar-fill" style="width: 35.0%"></div>
                                         </div>
                                         <span class="similarity-value" 
-                                              data-raw-score="0.351" 
-                                              data-topic="rlhf">0.351</span>
+                                              data-raw-score="0.350" 
+                                              data-topic="rlhf">0.350</span>
                                         
                                     </div>
                                     
                                     <!-- Weak Supervision Row -->
-                                    <div class="similarity-topic-label">Weak supervision:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="weak_supervision">Weak supervision:</div>
+                                    <div class="similarity-score-display" data-topic="weak_supervision">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 39.1%"></div>
@@ -2068,39 +2150,41 @@ models.
                                     </div>
                                     
                                     <!-- Diffusion Reasoning Row -->
-                                    <div class="similarity-topic-label">Diffusion reasoning:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="diffusion_reasoning">Diffusion reasoning:</div>
+                                    <div class="similarity-score-display" data-topic="diffusion_reasoning">
                                         
                                         <div class="similarity-bar">
-                                            <div class="similarity-bar-fill" style="width: 32.9%"></div>
+                                            <div class="similarity-bar-fill" style="width: 33.0%"></div>
                                         </div>
                                         <span class="similarity-value" 
-                                              data-raw-score="0.329" 
-                                              data-topic="diffusion_reasoning">0.329</span>
+                                              data-raw-score="0.330" 
+                                              data-topic="diffusion_reasoning">0.330</span>
                                         
                                     </div>
                                     
                                     <!-- Distributed Training Row -->
-                                    <div class="similarity-topic-label">Distributed training:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="distributed_training">Distributed training:</div>
+                                    <div class="similarity-score-display" data-topic="distributed_training">
                                         
                                         <div class="similarity-bar">
-                                            <div class="similarity-bar-fill" style="width: 35.7%"></div>
+                                            <div class="similarity-bar-fill" style="width: 35.8%"></div>
                                         </div>
                                         <span class="similarity-value" 
-                                              data-raw-score="0.357" 
-                                              data-topic="distributed_training">0.357</span>
+                                              data-raw-score="0.358" 
+                                              data-topic="distributed_training">0.358</span>
                                         
                                     </div>
                                     
                                     <!-- Datasets Row -->
-                                    <div class="similarity-topic-label">Datasets:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="datasets">Datasets:</div>
+                                    <div class="similarity-score-display" data-topic="datasets">
                                         
                                         <div class="similarity-bar">
-                                            <div class="similarity-bar-fill" style="width: 0%"></div>
+                                            <div class="similarity-bar-fill" style="width: 52.5%"></div>
                                         </div>
-                                        <span class="similarity-error">Error</span>
+                                        <span class="similarity-value" 
+                                              data-raw-score="0.525" 
+                                              data-topic="datasets">0.525</span>
                                         
                                     </div>
                                 </div>
@@ -2124,8 +2208,8 @@ models.
                                 <!-- LLM Validation Grid -->
                                 <div class="llm-validation-grid">
                                     <!-- RLHF Row -->
-                                    <div class="llm-validation-topic-label">RLHF:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="rlhf">RLHF:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="rlhf">
                                         
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -2135,8 +2219,8 @@ models.
                                     </div>
                                     
                                     <!-- Weak Supervision Row -->
-                                    <div class="llm-validation-topic-label">Weak supervision:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="weak_supervision">Weak supervision:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="weak_supervision">
                                         
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -2146,8 +2230,8 @@ models.
                                     </div>
                                     
                                     <!-- Diffusion Reasoning Row -->
-                                    <div class="llm-validation-topic-label">Diffusion reasoning:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="diffusion_reasoning">Diffusion reasoning:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="diffusion_reasoning">
                                         
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -2157,8 +2241,8 @@ models.
                                     </div>
                                     
                                     <!-- Distributed Training Row -->
-                                    <div class="llm-validation-topic-label">Distributed training:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="distributed_training">Distributed training:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="distributed_training">
                                         
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -2168,13 +2252,10 @@ models.
                                     </div>
                                     
                                     <!-- Datasets Row -->
-                                    <div class="llm-validation-topic-label">Datasets:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="datasets">Datasets:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="datasets">
                                         
-                                        <div class="llm-validation-tooltip-wrapper">
-                                            <span class="llm-validation-value not-relevant">Not Relevant*</span>
-                                            <div class="llm-validation-tooltip">Topic similarity score below 0.4, hence deemed not relevant</div>
-                                        </div>
+                                        <span class="llm-validation-value highly-relevant">Highly Relevant</span>
                                         
                                     </div>
                                 </div>
@@ -2196,6 +2277,13 @@ models.
                                         
                                         
                                         
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Datasets:</span>
+                                            
+                                            The paper's main contribution is the introduction of a new large-scale dataset (AI Challenger) with sub-datasets for human keypoint detection, attribute recognition, and image captioning. It details dataset curation methodologies, such as image crawling, annotation processes (e.g., keypoints, bounding boxes, attributes, and captions), and categorization of images. Additionally, it positions the dataset as a benchmark for evaluating AI methods and a resource for pre-training, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for machine learning and AI applications.
+                                            
+                                        </div>
                                         
                                     </div>
                                 </div>
@@ -2358,7 +2446,7 @@ models.
                         <strong>arXiv ID:</strong> 2101.05419 |
                         <strong>Published:</strong> 2021-01-14
                         
-                        | <strong>Highest Score:</strong> 0.421 Distributed training
+                        | <strong>Highest Score:</strong> 0.494 Datasets
                         
                     </div>
                     <div class="paper-authors">
@@ -2450,8 +2538,8 @@ AgeDB-30, but also shows great benefit for practical use.
                                 <!-- Similarity Scores Grid -->
                                 <div class="similarity-scores-grid" id="similarity-grid-3">
                                     <!-- RLHF Row -->
-                                    <div class="similarity-topic-label">RLHF:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="rlhf">RLHF:</div>
+                                    <div class="similarity-score-display" data-topic="rlhf">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 35.9%"></div>
@@ -2463,21 +2551,21 @@ AgeDB-30, but also shows great benefit for practical use.
                                     </div>
                                     
                                     <!-- Weak Supervision Row -->
-                                    <div class="similarity-topic-label">Weak supervision:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="weak_supervision">Weak supervision:</div>
+                                    <div class="similarity-score-display" data-topic="weak_supervision">
                                         
                                         <div class="similarity-bar">
-                                            <div class="similarity-bar-fill" style="width: 39.1%"></div>
+                                            <div class="similarity-bar-fill" style="width: 39.0%"></div>
                                         </div>
                                         <span class="similarity-value" 
-                                              data-raw-score="0.391" 
-                                              data-topic="weak_supervision">0.391</span>
+                                              data-raw-score="0.390" 
+                                              data-topic="weak_supervision">0.390</span>
                                         
                                     </div>
                                     
                                     <!-- Diffusion Reasoning Row -->
-                                    <div class="similarity-topic-label">Diffusion reasoning:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="diffusion_reasoning">Diffusion reasoning:</div>
+                                    <div class="similarity-score-display" data-topic="diffusion_reasoning">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 33.2%"></div>
@@ -2489,8 +2577,8 @@ AgeDB-30, but also shows great benefit for practical use.
                                     </div>
                                     
                                     <!-- Distributed Training Row -->
-                                    <div class="similarity-topic-label">Distributed training:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="distributed_training">Distributed training:</div>
+                                    <div class="similarity-score-display" data-topic="distributed_training">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 42.1%"></div>
@@ -2502,13 +2590,15 @@ AgeDB-30, but also shows great benefit for practical use.
                                     </div>
                                     
                                     <!-- Datasets Row -->
-                                    <div class="similarity-topic-label">Datasets:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="datasets">Datasets:</div>
+                                    <div class="similarity-score-display" data-topic="datasets">
                                         
                                         <div class="similarity-bar">
-                                            <div class="similarity-bar-fill" style="width: 0%"></div>
+                                            <div class="similarity-bar-fill" style="width: 49.4%"></div>
                                         </div>
-                                        <span class="similarity-error">Error</span>
+                                        <span class="similarity-value" 
+                                              data-raw-score="0.494" 
+                                              data-topic="datasets">0.494</span>
                                         
                                     </div>
                                 </div>
@@ -2532,8 +2622,8 @@ AgeDB-30, but also shows great benefit for practical use.
                                 <!-- LLM Validation Grid -->
                                 <div class="llm-validation-grid">
                                     <!-- RLHF Row -->
-                                    <div class="llm-validation-topic-label">RLHF:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="rlhf">RLHF:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="rlhf">
                                         
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -2543,8 +2633,8 @@ AgeDB-30, but also shows great benefit for practical use.
                                     </div>
                                     
                                     <!-- Weak Supervision Row -->
-                                    <div class="llm-validation-topic-label">Weak supervision:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="weak_supervision">Weak supervision:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="weak_supervision">
                                         
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -2554,8 +2644,8 @@ AgeDB-30, but also shows great benefit for practical use.
                                     </div>
                                     
                                     <!-- Diffusion Reasoning Row -->
-                                    <div class="llm-validation-topic-label">Diffusion reasoning:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="diffusion_reasoning">Diffusion reasoning:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="diffusion_reasoning">
                                         
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -2565,21 +2655,18 @@ AgeDB-30, but also shows great benefit for practical use.
                                     </div>
                                     
                                     <!-- Distributed Training Row -->
-                                    <div class="llm-validation-topic-label">Distributed training:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="distributed_training">Distributed training:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="distributed_training">
                                         
                                         <span class="llm-validation-value not-relevant">Not Relevant</span>
                                         
                                     </div>
                                     
                                     <!-- Datasets Row -->
-                                    <div class="llm-validation-topic-label">Datasets:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="datasets">Datasets:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="datasets">
                                         
-                                        <div class="llm-validation-tooltip-wrapper">
-                                            <span class="llm-validation-value not-relevant">Not Relevant*</span>
-                                            <div class="llm-validation-tooltip">Topic similarity score below 0.4, hence deemed not relevant</div>
-                                        </div>
+                                        <span class="llm-validation-value moderately-relevant">Moderately Relevant</span>
                                         
                                     </div>
                                 </div>
@@ -2604,10 +2691,17 @@ AgeDB-30, but also shows great benefit for practical use.
                                         <div class="llm-validation-justification-item">
                                             <span class="llm-validation-justification-topic">Distributed Training:</span>
                                             
-                                            The paper focuses on a dataset-aware loss function and domain adaptation techniques for face recognition, specifically addressing identity overlapping and domain invariance when combining datasets. It does not discuss distributed training, parallel computing, multi-node setups, or strategies for partitioning data or computation across processors.
+                                            The paper focuses on a dataset-aware loss function and domain adaptation techniques for face recognition, specifically addressing identity overlapping and domain variations in combined datasets. It does not involve distributed training, parallel computing, multi-node setups, or strategies for partitioning data or computation across processors.
                                             
                                         </div>
                                         
+                                        
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Datasets:</span>
+                                            
+                                            The paper discusses challenges in combining multiple datasets for face recognition, such as identity overlapping and domain differences, and proposes methods to handle these without manual curation. This relates to dataset analysis and adaptation, but it primarily focuses on improving model training rather than creating, benchmarking, or evaluating datasets as standalone contributions.
+                                            
+                                        </div>
                                         
                                     </div>
                                 </div>
@@ -2641,7 +2735,7 @@ AgeDB-30, but also shows great benefit for practical use.
     <script>
         function toggleSimilarityMode(containerId) {
             const container = document.getElementById(containerId);
-            const button = container.parentElement.querySelector('.llm-justification-toggle');
+            const button = container.parentElement.querySelector('.llm-justification-toggle:not([data-toggle-type])');
             const textSpan = button.querySelector('span:first-child');
             const iconSpan = button.querySelector('.toggle-icon');
             const bars = container.querySelectorAll('.similarity-bar-fill');
@@ -2652,9 +2746,14 @@ AgeDB-30, but also shows great benefit for practical use.
                 textSpan.textContent = 'Show Raw Scores';
                 iconSpan.textContent = '⇄';
                 
-                // Calculate total from all valid scores
+                // Calculate total from only VISIBLE scores
+                const visibleValues = Array.from(values).filter(value => {
+                    const label = value.closest('.similarity-score-display').previousElementSibling;
+                    return label && label.style.display !== 'none';
+                });
+                
                 const rawScores = [];
-                values.forEach(value => {
+                visibleValues.forEach(value => {
                     const score = parseFloat(value.getAttribute('data-raw-score'));
                     if (!isNaN(score)) {
                         rawScores.push(score);
@@ -2664,15 +2763,16 @@ AgeDB-30, but also shows great benefit for practical use.
                 const total = rawScores.reduce((sum, score) => sum + score, 0);
                 
                 if (total > 0) {
-                    let scoreIndex = 0;
                     values.forEach((value, index) => {
-                        const score = parseFloat(value.getAttribute('data-raw-score'));
-                        if (!isNaN(score)) {
-                            const normalized = (score / total * 100).toFixed(1);
-                            value.textContent = `${normalized}%`;
-                            bars[index].style.width = `${normalized}%`;
-                            bars[index].classList.add('normalized');
-                            scoreIndex++;
+                        const label = value.closest('.similarity-score-display').previousElementSibling;
+                        if (label && label.style.display !== 'none') {
+                            const score = parseFloat(value.getAttribute('data-raw-score'));
+                            if (!isNaN(score)) {
+                                const normalized = (score / total * 100).toFixed(1);
+                                value.textContent = `${normalized}%`;
+                                bars[index].style.width = `${normalized}%`;
+                                bars[index].classList.add('normalized');
+                            }
                         }
                     });
                 }
@@ -2748,7 +2848,16 @@ AgeDB-30, but also shows great benefit for practical use.
         }
         
         // Paper data for sorting and filtering
-        window.paperData = [{"abstract": "Fine-tuning large language models (LLMs) to align with user preferences is\nchallenging due to the high cost of quality human annotations in Reinforcement\nLearning from Human Feedback (RLHF) and the generalizability limitations of AI\nFeedback. To address these challenges, we propose RLTHF, a human-AI hybrid\nframework that combines LLM-based initial alignment with selective human\nannotations to achieve full-human annotation alignment with minimal effort.\nRLTHF identifies hard-to-annotate samples mislabeled by LLMs using a reward\nmodel\u0027s reward distribution and iteratively enhances alignment by integrating\nstrategic human corrections while leveraging LLM\u0027s correctly labeled samples.\nEvaluations on HH-RLHF and TL;DR datasets show that RLTHF reaches full-human\nannotation-level alignment with only 6-7% of the human annotation effort.\nFurthermore, models trained on RLTHF\u0027s curated datasets for downstream tasks\noutperform those trained on fully human-annotated datasets, underscoring the\neffectiveness of RLTHF\u0027s strategic data curation.", "authors": ["Yifei Xu", "Tusher Chakraborty", "Emre K\u0131c\u0131man", "Bibek Aryal", "Eduardo Rodrigues", "Srinagesh Sharma", "Roberto Estevao", "Maria Angels de Luis Balaguer", "Jessica Wolk", "Rafael Padilha", "Leonardo Nunes", "Shobana Balakrishnan", "Songwu Lu", "Ranveer Chandra"], "categories": ["cs.CL", "cs.AI", "cs.LG"], "datasets_score": null, "diffusion_reasoning_score": 0.409, "distributed_training_score": 0.411, "embedding_status": "completed", "h_index_status": "completed", "highest_h_index": 7, "highest_score": 0.717, "highest_similarity_topic": "RLHF", "id": "2502.13417", "impact_score": "Moderate", "intro_status": "intro_successful", "llm_score_status": "completed", "llm_validation_status": "completed", "novelty_score": "Moderate", "published_date": "2025-02-19T04:25:11+00:00", "recommendation_score": "Should Read", "rlhf_score": 0.717, "scraper_status": "successfully_scraped", "summary": "The paper introduces RLTHF, a hybrid framework designed to align large language models (LLMs) with user preferences by combining initial LLM-based labeling with targeted human feedback on hard-to-annotate samples, thereby minimizing the cost and effort of human annotations. The methodology involves using a reward model\u0027s distribution to identify mislabeled instances, iteratively refining the dataset through strategic human corrections, and evaluating on datasets like HH-RLHF and TL;DR, where RLTHF achieves full-human annotation quality with only 6-7% of the effort and enables models to outperform those trained on fully human-annotated data.", "title": "RLTHF: Targeted Human Feedback for LLM Alignment", "weak_supervision_score": 0.47}, {"abstract": "Reinforcement Learning from Human Feedback (RLHF) is increasingly used to\nalign large language models (LLMs) with human preferences. However, the\neffectiveness of RLHF in addressing underlying biases remains unclear. This\nstudy investigates the relationship between RLHF and both covert and overt\nbiases in LLMs, particularly focusing on biases against African Americans. We\napplied various RLHF techniques (DPO, ORPO, and RLOO) to Llama 3 8B and\nevaluated the covert and overt biases of the resulting models using\nmatched-guise probing and explicit bias testing. We performed additional tests\nwith DPO on different base models and datasets; among several implications, we\nfound that SFT before RLHF calcifies model biases. Additionally, we extend the\ntools for measuring biases to multi-modal models. Through our experiments we\ncollect evidence that indicates that current alignment techniques are\ninadequate for nebulous tasks such as mitigating covert biases, highlighting\nthe need for capable datasets, data curating techniques, or alignment tools.", "authors": ["Logan Barnhart", "Reza Akbarian Bafghi", "Stephen Becker", "Maziar Raissi"], "categories": ["cs.CL"], "datasets_score": null, "diffusion_reasoning_score": 0.374, "distributed_training_score": 0.366, "embedding_status": "completed", "h_index_status": "completed", "highest_h_index": 3, "highest_score": 0.626, "highest_similarity_topic": "RLHF", "id": "2503.09025", "impact_score": "Moderate", "intro_status": "intro_successful", "llm_score_status": "completed", "llm_validation_status": "completed", "novelty_score": "Moderate", "published_date": "2025-03-12T03:24:44+00:00", "recommendation_score": "Should Read", "rlhf_score": 0.626, "scraper_status": "successfully_scraped", "summary": "This paper investigates the limitations of Reinforcement Learning from Human Feedback (RLHF) in aligning large language models (LLMs) with human preferences, particularly in mitigating covert and overt biases against African Americans. The authors apply RLHF techniques such as DPO, ORPO, and RLOO to models like Llama 3 8B, evaluate biases using matched-guise probing and explicit testing, and extend bias measurement to multi-modal models, finding that RLHF fails to meaningfully reduce biases and may even calcify them through supervised fine-tuning, highlighting the need for better datasets and alignment tools.", "title": "Aligning to What? Limits to RLHF Based Alignment", "weak_supervision_score": 0.39}, {"abstract": "Significant progress has been achieved in Computer Vision by leveraging\nlarge-scale image datasets. However, large-scale datasets for complex Computer\nVision tasks beyond classification are still limited. This paper proposed a\nlarge-scale dataset named AIC (AI Challenger) with three sub-datasets, human\nkeypoint detection (HKD), large-scale attribute dataset (LAD) and image Chinese\ncaptioning (ICC). In this dataset, we annotate class labels (LAD), keypoint\ncoordinate (HKD), bounding box (HKD and LAD), attribute (LAD) and caption\n(ICC). These rich annotations bridge the semantic gap between low-level images\nand high-level concepts. The proposed dataset is an effective benchmark to\nevaluate and improve different computational methods. In addition, for related\ntasks, others can also use our dataset as a new resource to pre-train their\nmodels.", "authors": ["Jiahong Wu", "He Zheng", "Bo Zhao", "Yixin Li", "Baoming Yan", "Rui Liang", "Wenjia Wang", "Shipei Zhou", "Guosen Lin", "Yanwei Fu", "Yizhou Wang", "Yonggang Wang"], "categories": ["cs.CV"], "datasets_score": null, "diffusion_reasoning_score": 0.329, "distributed_training_score": 0.357, "embedding_status": "completed", "h_index_status": "completed", "highest_h_index": 52, "highest_score": 0.391, "highest_similarity_topic": "Weak_supervision", "id": "1711.06475", "impact_score": "High", "intro_status": "intro_successful", "llm_score_status": "completed", "llm_validation_status": "completed", "novelty_score": "High", "published_date": "2017-11-17T09:58:20+00:00", "recommendation_score": "Should Read", "rlhf_score": 0.351, "scraper_status": "successfully_scraped", "summary": "The AI Challenger paper introduces a large-scale dataset comprising three sub-datasets for advancing image understanding: human keypoint detection (HKD) with 300,000 annotated images, large-scale attribute dataset (LAD) with 81,658 images for zero-shot recognition, and image Chinese captioning (ICC) with 300,000 images each annotated with five captions. The methodology involves crawling images from the internet, filtering them into categories, and enriching them with annotations like keypoints, bounding boxes, attributes, and captions to bridge semantic gaps, serving as a new benchmark for evaluating and pre-training models in these computer vision tasks.", "title": "AI Challenger : A Large-scale Dataset for Going Deeper in Image\n  Understanding", "weak_supervision_score": 0.391}, {"abstract": "To achieve good performance in face recognition, a large scale training\ndataset is usually required. A simple yet effective way to improve recognition\nperformance is to use a dataset as large as possible by combining multiple\ndatasets in the training. However, it is problematic and troublesome to naively\ncombine different datasets due to two major issues. First, the same person can\npossibly appear in different datasets, leading to an identity overlapping issue\nbetween different datasets. Naively treating the same person as different\nclasses in different datasets during training will affect back-propagation and\ngenerate non-representative embeddings. On the other hand, manually cleaning\nlabels may take formidable human efforts, especially when there are millions of\nimages and thousands of identities. Second, different datasets are collected in\ndifferent situations and thus will lead to different domain distributions.\nNaively combining datasets will make it difficult to learn domain invariant\nembeddings across different datasets. In this paper, we propose DAIL:\nDataset-Aware and Invariant Learning to resolve the above-mentioned issues. To\nsolve the first issue of identity overlapping, we propose a dataset-aware loss\nfor multi-dataset training by reducing the penalty when the same person appears\nin multiple datasets. This can be readily achieved with a modified softmax loss\nwith a dataset-aware term. To solve the second issue, domain adaptation with\ngradient reversal layers is employed for dataset invariant learning. The\nproposed approach not only achieves state-of-the-art results on several\ncommonly used face recognition validation sets, including LFW, CFP-FP, and\nAgeDB-30, but also shows great benefit for practical use.", "authors": ["Gaoang Wang", "Lin Chen", "Tianqiang Liu", "Mingwei He", "Jiebo Luo"], "categories": ["cs.CV"], "datasets_score": null, "diffusion_reasoning_score": 0.332, "distributed_training_score": 0.421, "embedding_status": "completed", "h_index_status": "not_fetched", "highest_h_index": null, "highest_score": 0.421, "highest_similarity_topic": "Distributed_training", "id": "2101.05419", "impact_score": null, "intro_status": "intro_successful", "llm_score_status": "not_relevant_enough", "llm_validation_status": "completed", "novelty_score": null, "published_date": "2021-01-14T01:59:52+00:00", "recommendation_score": null, "rlhf_score": 0.359, "scraper_status": "successfully_scraped", "summary": null, "title": "DAIL: Dataset-Aware and Invariant Learning for Face Recognition", "weak_supervision_score": 0.391}];
+        window.paperData = [{"abstract": "Fine-tuning large language models (LLMs) to align with user preferences is\nchallenging due to the high cost of quality human annotations in Reinforcement\nLearning from Human Feedback (RLHF) and the generalizability limitations of AI\nFeedback. To address these challenges, we propose RLTHF, a human-AI hybrid\nframework that combines LLM-based initial alignment with selective human\nannotations to achieve full-human annotation alignment with minimal effort.\nRLTHF identifies hard-to-annotate samples mislabeled by LLMs using a reward\nmodel\u0027s reward distribution and iteratively enhances alignment by integrating\nstrategic human corrections while leveraging LLM\u0027s correctly labeled samples.\nEvaluations on HH-RLHF and TL;DR datasets show that RLTHF reaches full-human\nannotation-level alignment with only 6-7% of the human annotation effort.\nFurthermore, models trained on RLTHF\u0027s curated datasets for downstream tasks\noutperform those trained on fully human-annotated datasets, underscoring the\neffectiveness of RLTHF\u0027s strategic data curation.", "authors": ["Yifei Xu", "Tusher Chakraborty", "Emre K\u0131c\u0131man", "Bibek Aryal", "Eduardo Rodrigues", "Srinagesh Sharma", "Roberto Estevao", "Maria Angels de Luis Balaguer", "Jessica Wolk", "Rafael Padilha", "Leonardo Nunes", "Shobana Balakrishnan", "Songwu Lu", "Ranveer Chandra"], "categories": ["cs.CL", "cs.AI", "cs.LG"], "datasets_score": 0.387, "diffusion_reasoning_score": 0.409, "distributed_training_score": 0.411, "embedding_status": "completed", "h_index_status": "completed", "highest_h_index": 7, "highest_score": 0.718, "highest_similarity_topic": "RLHF", "id": "2502.13417", "impact_score": "Moderate", "intro_status": "intro_successful", "llm_score_status": "completed", "llm_validation_status": "completed", "novelty_score": "Moderate", "published_date": "2025-02-19T04:25:11+00:00", "recommendation_score": "Should Read", "rlhf_score": 0.718, "scraper_status": "successfully_scraped", "summary": "The paper introduces RLTHF, a hybrid human-AI framework designed to align large language models (LLMs) with user preferences by combining initial LLM-based annotations with targeted human feedback. It uses a reward model\u0027s distribution to identify and correct hard-to-annotate samples iteratively, achieving alignment quality comparable to full human annotations with only 6-7% of the effort, and demonstrates that models trained on RLTHF-curated datasets outperform those on fully human-annotated ones in downstream tasks.", "title": "RLTHF: Targeted Human Feedback for LLM Alignment", "weak_supervision_score": 0.469}, {"abstract": "Reinforcement Learning from Human Feedback (RLHF) is increasingly used to\nalign large language models (LLMs) with human preferences. However, the\neffectiveness of RLHF in addressing underlying biases remains unclear. This\nstudy investigates the relationship between RLHF and both covert and overt\nbiases in LLMs, particularly focusing on biases against African Americans. We\napplied various RLHF techniques (DPO, ORPO, and RLOO) to Llama 3 8B and\nevaluated the covert and overt biases of the resulting models using\nmatched-guise probing and explicit bias testing. We performed additional tests\nwith DPO on different base models and datasets; among several implications, we\nfound that SFT before RLHF calcifies model biases. Additionally, we extend the\ntools for measuring biases to multi-modal models. Through our experiments we\ncollect evidence that indicates that current alignment techniques are\ninadequate for nebulous tasks such as mitigating covert biases, highlighting\nthe need for capable datasets, data curating techniques, or alignment tools.", "authors": ["Logan Barnhart", "Reza Akbarian Bafghi", "Stephen Becker", "Maziar Raissi"], "categories": ["cs.CL"], "datasets_score": 0.326, "diffusion_reasoning_score": 0.374, "distributed_training_score": 0.366, "embedding_status": "completed", "h_index_status": "completed", "highest_h_index": 3, "highest_score": 0.626, "highest_similarity_topic": "RLHF", "id": "2503.09025", "impact_score": "Moderate", "intro_status": "intro_successful", "llm_score_status": "completed", "llm_validation_status": "completed", "novelty_score": "Moderate", "published_date": "2025-03-12T03:24:44+00:00", "recommendation_score": "Should Read", "rlhf_score": 0.626, "scraper_status": "successfully_scraped", "summary": "This paper examines the limitations of Reinforcement Learning from Human Feedback (RLHF) in aligning large language models (LLMs) with human preferences by investigating its impact on covert and overt biases, particularly against African Americans. Using techniques such as DPO, ORPO, and RLOO on models like Llama 3 8B, the authors evaluate biases through matched-guise probing and explicit testing, finding that RLHF fails to meaningfully reduce these biases and that supervised fine-tuning prior to RLHF exacerbates them; they also extend bias measurement to multi-modal models and conclude that current alignment methods are inadequate for addressing subtle biases, highlighting the need for improved datasets and techniques.", "title": "Aligning to What? Limits to RLHF Based Alignment", "weak_supervision_score": 0.39}, {"abstract": "Significant progress has been achieved in Computer Vision by leveraging\nlarge-scale image datasets. However, large-scale datasets for complex Computer\nVision tasks beyond classification are still limited. This paper proposed a\nlarge-scale dataset named AIC (AI Challenger) with three sub-datasets, human\nkeypoint detection (HKD), large-scale attribute dataset (LAD) and image Chinese\ncaptioning (ICC). In this dataset, we annotate class labels (LAD), keypoint\ncoordinate (HKD), bounding box (HKD and LAD), attribute (LAD) and caption\n(ICC). These rich annotations bridge the semantic gap between low-level images\nand high-level concepts. The proposed dataset is an effective benchmark to\nevaluate and improve different computational methods. In addition, for related\ntasks, others can also use our dataset as a new resource to pre-train their\nmodels.", "authors": ["Jiahong Wu", "He Zheng", "Bo Zhao", "Yixin Li", "Baoming Yan", "Rui Liang", "Wenjia Wang", "Shipei Zhou", "Guosen Lin", "Yanwei Fu", "Yizhou Wang", "Yonggang Wang"], "categories": ["cs.CV"], "datasets_score": 0.525, "diffusion_reasoning_score": 0.33, "distributed_training_score": 0.358, "embedding_status": "completed", "h_index_status": "completed", "highest_h_index": 52, "highest_score": 0.525, "highest_similarity_topic": "Datasets", "id": "1711.06475", "impact_score": "Moderate", "intro_status": "intro_successful", "llm_score_status": "completed", "llm_validation_status": "completed", "novelty_score": "Moderate", "published_date": "2017-11-17T09:58:20+00:00", "recommendation_score": "Should Read", "rlhf_score": 0.35, "scraper_status": "successfully_scraped", "summary": "The AI Challenger dataset paper introduces a large-scale resource comprising three sub-datasets for advanced computer vision tasks: human keypoint detection (HKD), large-scale attribute dataset (LAD) for zero-shot recognition, and image Chinese captioning (ICC). By annotating over 300,000 images with keypoints, bounding boxes, attributes, and Chinese captions, the authors aim to bridge the semantic gap between low-level image features and high-level concepts, providing a new benchmark for evaluating and pre-training models in these areas, while highlighting the dataset\u0027s scale as a notable improvement over existing resources.", "title": "AI Challenger : A Large-scale Dataset for Going Deeper in Image\n  Understanding", "weak_supervision_score": 0.391}, {"abstract": "To achieve good performance in face recognition, a large scale training\ndataset is usually required. A simple yet effective way to improve recognition\nperformance is to use a dataset as large as possible by combining multiple\ndatasets in the training. However, it is problematic and troublesome to naively\ncombine different datasets due to two major issues. First, the same person can\npossibly appear in different datasets, leading to an identity overlapping issue\nbetween different datasets. Naively treating the same person as different\nclasses in different datasets during training will affect back-propagation and\ngenerate non-representative embeddings. On the other hand, manually cleaning\nlabels may take formidable human efforts, especially when there are millions of\nimages and thousands of identities. Second, different datasets are collected in\ndifferent situations and thus will lead to different domain distributions.\nNaively combining datasets will make it difficult to learn domain invariant\nembeddings across different datasets. In this paper, we propose DAIL:\nDataset-Aware and Invariant Learning to resolve the above-mentioned issues. To\nsolve the first issue of identity overlapping, we propose a dataset-aware loss\nfor multi-dataset training by reducing the penalty when the same person appears\nin multiple datasets. This can be readily achieved with a modified softmax loss\nwith a dataset-aware term. To solve the second issue, domain adaptation with\ngradient reversal layers is employed for dataset invariant learning. The\nproposed approach not only achieves state-of-the-art results on several\ncommonly used face recognition validation sets, including LFW, CFP-FP, and\nAgeDB-30, but also shows great benefit for practical use.", "authors": ["Gaoang Wang", "Lin Chen", "Tianqiang Liu", "Mingwei He", "Jiebo Luo"], "categories": ["cs.CV"], "datasets_score": 0.494, "diffusion_reasoning_score": 0.332, "distributed_training_score": 0.421, "embedding_status": "completed", "h_index_status": "not_fetched", "highest_h_index": null, "highest_score": 0.494, "highest_similarity_topic": "Datasets", "id": "2101.05419", "impact_score": null, "intro_status": "intro_successful", "llm_score_status": "not_relevant_enough", "llm_validation_status": "completed", "novelty_score": null, "published_date": "2021-01-14T01:59:52+00:00", "recommendation_score": null, "rlhf_score": 0.359, "scraper_status": "successfully_scraped", "summary": null, "title": "DAIL: Dataset-Aware and Invariant Learning for Face Recognition", "weak_supervision_score": 0.39}];
+        
+        // Define topic configuration
+        const TOPIC_CONFIG = [
+            { key: 'rlhf', label: 'RLHF', scoreField: 'rlhf_score', relevanceField: 'rlhf_relevance', justificationField: 'rlhf_justification' },
+            { key: 'weak_supervision', label: 'Weak supervision', scoreField: 'weak_supervision_score', relevanceField: 'weak_supervision_relevance', justificationField: 'weak_supervision_justification' },
+            { key: 'diffusion_reasoning', label: 'Diffusion reasoning', scoreField: 'diffusion_reasoning_score', relevanceField: 'diffusion_reasoning_relevance', justificationField: 'diffusion_reasoning_justification' },
+            { key: 'distributed_training', label: 'Distributed training', scoreField: 'distributed_training_score', relevanceField: 'distributed_training_relevance', justificationField: 'distributed_training_justification' },
+            { key: 'datasets', label: 'Datasets', scoreField: 'datasets_score', relevanceField: 'datasets_relevance', justificationField: 'datasets_justification' }
+        ];
         
         // Sorting and filtering functionality
         class PaperManager {
@@ -2762,10 +2871,22 @@ AgeDB-30, but also shows great benefit for practical use.
                     not_relevant_enough: true,
                     not_scored: true
                 };
+                this.currentTopicFilters = {
+                    rlhf: true,
+                    weak_supervision: true,
+                    diffusion_reasoning: true,
+                    distributed_training: true,
+                    datasets: true
+                };
+                
+                // Pending state for deferred filtering
+                this.pendingFilters = { ...this.currentFilters };
+                this.pendingTopicFilters = { ...this.currentTopicFilters };
                 
                 this.initializeEventListeners();
-                this.loadUserPreferences();
+                this.initializeUIState();
                 this.applyFiltersAndSort();
+                this.updateTopicVisibility();
             }
             
             initializeEventListeners() {
@@ -2785,7 +2906,6 @@ AgeDB-30, but also shows great benefit for practical use.
                         e.target.classList.add('active');
                         
                         this.currentSort = value;
-                        this.saveUserPreferences();
                         this.applyFiltersAndSort();
                         
                         // Close the dropdown
@@ -2794,27 +2914,169 @@ AgeDB-30, but also shows great benefit for practical use.
                     });
                 });
                 
-                // Filter checkboxes
+                // Filter checkboxes - Update pending state only
                 const filterCheckboxes = ['filter-completed', 'filter-failed', 'filter-not-relevant', 'filter-not-scored'];
                 filterCheckboxes.forEach(id => {
                     document.getElementById(id).addEventListener('change', () => {
-                        this.updateFilters();
-                        this.updateDropdownLabel();
-                        this.saveUserPreferences();
-                        this.applyFiltersAndSort();
+                        this.updatePendingFilters();
+                        this.updateFilterDropdownLabel();
                     });
                 });
                 
-                // Prevent filter dropdown from closing when clicking on checkboxes
-                document.querySelectorAll('#filter-dropdown + .dropdown-menu .dropdown-item').forEach(item => {
+                // Apply Filter button for LLM Score Status
+                document.getElementById('filter-apply-button').addEventListener('click', () => {
+                    this.applyPendingFilters();
+                    this.closeDropdown('filter-dropdown');
+                });
+                
+                // Prevent filter dropdown from closing when clicking on checkboxes or buttons
+                document.querySelectorAll('#filter-dropdown + .dropdown-menu .dropdown-item, #filter-dropdown + .dropdown-menu .dropdown-apply-section').forEach(item => {
                     item.addEventListener('click', (e) => {
-                        // Only stop propagation for checkbox clicks, not the entire item
+                        // Only stop propagation for checkbox clicks and buttons, not the entire item
                         const checkbox = e.target.closest('input[type="checkbox"]');
-                        if (checkbox) {
+                        const button = e.target.closest('button');
+                        if (checkbox || button) {
                             e.stopPropagation();
                         }
                     });
                 });
+                
+                // Topic checkboxes - Update pending state only
+                const topicCheckboxes = ['topic-rlhf', 'topic-weak-supervision', 'topic-diffusion-reasoning', 'topic-distributed-training', 'topic-datasets'];
+                topicCheckboxes.forEach(id => {
+                    document.getElementById(id).addEventListener('change', () => {
+                        this.updatePendingTopicFilters();
+                        this.updateTopicsDropdownLabel();
+                    });
+                });
+                
+                // Apply Filter button for Topics
+                document.getElementById('topics-apply-button').addEventListener('click', () => {
+                    this.applyPendingTopicFilters();
+                    this.closeDropdown('topics-dropdown');
+                });
+                
+                // Prevent topics dropdown from closing when clicking on checkboxes or buttons
+                document.querySelectorAll('#topics-dropdown + .dropdown-menu .dropdown-item, #topics-dropdown + .dropdown-menu .dropdown-apply-section').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        // Only stop propagation for checkbox clicks and buttons, not the entire item
+                        const checkbox = e.target.closest('input[type="checkbox"]');
+                        const button = e.target.closest('button');
+                        if (checkbox || button) {
+                            e.stopPropagation();
+                        }
+                    });
+                });
+            }
+            
+            initializeUIState() {
+                // Set initial sort dropdown state
+                const sortText = {
+                    'recommendation-best': 'Recommendation (Best first)',
+                    'recommendation-worst': 'Recommendation (Worst first)',
+                    'arxiv-desc': 'arXiv ID (Descending)',
+                    'arxiv-asc': 'arXiv ID (Ascending)',
+                    'title-az': 'Title (A-Z)',
+                    'title-za': 'Title (Z-A)'
+                };
+                document.getElementById('sort-selected').textContent = sortText[this.currentSort];
+                
+                // Update active state for sort dropdown
+                document.querySelectorAll('#sort-dropdown + .dropdown-menu .dropdown-item').forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('data-value') === this.currentSort) {
+                        item.classList.add('active');
+                    }
+                });
+                
+                // Ensure all filter checkboxes are checked (all selected by default)
+                document.getElementById('filter-completed').checked = this.currentFilters.completed;
+                document.getElementById('filter-failed').checked = this.currentFilters.failed;
+                document.getElementById('filter-not-relevant').checked = this.currentFilters.not_relevant_enough;
+                document.getElementById('filter-not-scored').checked = this.currentFilters.not_scored;
+                
+                // Sync pending state with current state
+                this.pendingFilters = { ...this.currentFilters };
+                this.updateFilterDropdownLabel();
+                
+                // Ensure all topic checkboxes are checked (all selected by default)
+                document.getElementById('topic-rlhf').checked = this.currentTopicFilters.rlhf;
+                document.getElementById('topic-weak-supervision').checked = this.currentTopicFilters.weak_supervision;
+                document.getElementById('topic-diffusion-reasoning').checked = this.currentTopicFilters.diffusion_reasoning;
+                document.getElementById('topic-distributed-training').checked = this.currentTopicFilters.distributed_training;
+                document.getElementById('topic-datasets').checked = this.currentTopicFilters.datasets;
+                
+                // Sync pending state with current state
+                this.pendingTopicFilters = { ...this.currentTopicFilters };
+                this.updateTopicsDropdownLabel();
+            }
+            
+            // Methods for handling pending state (before Apply Filter is clicked)
+            updatePendingFilters() {
+                this.pendingFilters = {
+                    completed: document.getElementById('filter-completed').checked,
+                    failed: document.getElementById('filter-failed').checked,
+                    not_relevant_enough: document.getElementById('filter-not-relevant').checked,
+                    not_scored: document.getElementById('filter-not-scored').checked
+                };
+            }
+            
+            updateFilterDropdownLabel() {
+                const checkedCount = Object.values(this.pendingFilters).filter(v => v).length;
+                const totalCount = Object.keys(this.pendingFilters).length;
+                const selectedSpan = document.getElementById('filter-selected');
+                
+                if (checkedCount === totalCount) {
+                    selectedSpan.textContent = 'All selected';
+                } else if (checkedCount === 0) {
+                    selectedSpan.textContent = 'None selected';
+                } else {
+                    selectedSpan.textContent = `${checkedCount} selected`;
+                }
+            }
+            
+            updatePendingTopicFilters() {
+                this.pendingTopicFilters = {
+                    rlhf: document.getElementById('topic-rlhf').checked,
+                    weak_supervision: document.getElementById('topic-weak-supervision').checked,
+                    diffusion_reasoning: document.getElementById('topic-diffusion-reasoning').checked,
+                    distributed_training: document.getElementById('topic-distributed-training').checked,
+                    datasets: document.getElementById('topic-datasets').checked
+                };
+            }
+            
+            updateTopicsDropdownLabel() {
+                const checkedCount = Object.values(this.pendingTopicFilters).filter(v => v).length;
+                const totalCount = Object.keys(this.pendingTopicFilters).length;
+                const selectedSpan = document.getElementById('topics-selected');
+                
+                if (checkedCount === totalCount) {
+                    selectedSpan.textContent = 'All selected';
+                } else if (checkedCount === 0) {
+                    selectedSpan.textContent = 'None selected';
+                } else {
+                    selectedSpan.textContent = `${checkedCount} selected`;
+                }
+            }
+            
+            // Methods for applying pending state (when Apply Filter is clicked)
+            applyPendingFilters() {
+                this.currentFilters = { ...this.pendingFilters };
+                this.applyFiltersAndSort();
+            }
+            
+            applyPendingTopicFilters() {
+                this.currentTopicFilters = { ...this.pendingTopicFilters };
+                this.applyFiltersAndSort();
+                this.updateTopicVisibility();
+            }
+            
+            // Utility method to close dropdowns programmatically
+            closeDropdown(dropdownId) {
+                const dropdown = bootstrap.Dropdown.getInstance(document.getElementById(dropdownId));
+                if (dropdown) {
+                    dropdown.hide();
+                }
             }
             
             updateFilters() {
@@ -2830,6 +3092,30 @@ AgeDB-30, but also shows great benefit for practical use.
                 const checkedCount = Object.values(this.currentFilters).filter(v => v).length;
                 const totalCount = Object.keys(this.currentFilters).length;
                 const selectedSpan = document.getElementById('filter-selected');
+                
+                if (checkedCount === totalCount) {
+                    selectedSpan.textContent = 'All selected';
+                } else if (checkedCount === 0) {
+                    selectedSpan.textContent = 'None selected';
+                } else {
+                    selectedSpan.textContent = `${checkedCount} selected`;
+                }
+            }
+            
+            updateTopicFilters() {
+                this.currentTopicFilters = {
+                    rlhf: document.getElementById('topic-rlhf').checked,
+                    weak_supervision: document.getElementById('topic-weak-supervision').checked,
+                    diffusion_reasoning: document.getElementById('topic-diffusion-reasoning').checked,
+                    distributed_training: document.getElementById('topic-distributed-training').checked,
+                    datasets: document.getElementById('topic-datasets').checked
+                };
+            }
+            
+            updateTopicDropdownLabel() {
+                const checkedCount = Object.values(this.currentTopicFilters).filter(v => v).length;
+                const totalCount = Object.keys(this.currentTopicFilters).length;
+                const selectedSpan = document.getElementById('topics-selected');
                 
                 if (checkedCount === totalCount) {
                     selectedSpan.textContent = 'All selected';
@@ -2946,46 +3232,234 @@ AgeDB-30, but also shows great benefit for practical use.
                 document.getElementById('total-count').textContent = this.allPapers.length;
             }
             
-            saveUserPreferences() {
-                const preferences = {
-                    sort: this.currentSort,
-                    filters: this.currentFilters
-                };
-                localStorage.setItem('paperPreferences', JSON.stringify(preferences));
+            updateTopicVisibility() {
+                // Get all paper cards
+                const paperCards = document.querySelectorAll('.paper-card');
+                
+                paperCards.forEach((card, paperIndex) => {
+                    this.updateSimilarityModule(card, paperIndex);
+                    this.updateLlmValidationModule(card, paperIndex);
+                });
             }
             
-            loadUserPreferences() {
-                const saved = localStorage.getItem('paperPreferences');
-                if (saved) {
-                    const preferences = JSON.parse(saved);
-                    this.currentSort = preferences.sort || 'recommendation-best';
-                    this.currentFilters = preferences.filters || this.currentFilters;
+            updateSimilarityModule(paperCard, paperIndex) {
+                const similarityGrid = paperCard.querySelector(`#similarity-grid-${paperIndex}`);
+                if (!similarityGrid) return;
+                
+                const topicRows = [];
+                
+                // Collect all topic rows in order, preserving the paired structure
+                TOPIC_CONFIG.forEach(topic => {
+                    const labelElement = similarityGrid.querySelector(`[data-topic="${topic.key}"].similarity-topic-label`);
+                    const scoreElement = similarityGrid.querySelector(`[data-topic="${topic.key}"].similarity-score-display`);
                     
-                    // Update UI for sort dropdown
-                    const sortText = {
-                        'recommendation-best': 'Recommendation (Best first)',
-                        'recommendation-worst': 'Recommendation (Worst first)',
-                        'arxiv-desc': 'arXiv ID (Descending)',
-                        'arxiv-asc': 'arXiv ID (Ascending)',
-                        'title-az': 'Title (A-Z)',
-                        'title-za': 'Title (Z-A)'
-                    };
-                    document.getElementById('sort-selected').textContent = sortText[this.currentSort];
+                    if (labelElement && scoreElement) {
+                        // Clone elements to avoid reference issues during reordering
+                        const clonedLabel = labelElement.cloneNode(true);
+                        const clonedScore = scoreElement.cloneNode(true);
+                        
+                        topicRows.push({
+                            topic: topic.key,
+                            label: topic.label,
+                            labelElement: clonedLabel,
+                            scoreElement: clonedScore,
+                            isVisible: this.currentTopicFilters[topic.key]
+                        });
+                    }
+                });
+                
+                // Clear the grid completely
+                similarityGrid.innerHTML = '';
+                
+                const visibleTopics = topicRows.filter(row => row.isVisible);
+                const hiddenTopics = topicRows.filter(row => !row.isVisible);
+                
+                // Add visible topics first - ensure proper grid pairing
+                visibleTopics.forEach(row => {
+                    // Ensure proper CSS classes and display properties
+                    row.labelElement.style.display = 'block';
+                    row.scoreElement.style.display = 'flex'; // Maintain flex for proper bar+value layout
+                    row.labelElement.removeAttribute('data-hidden');
+                    row.scoreElement.removeAttribute('data-hidden');
                     
-                    // Update active state for sort dropdown
-                    document.querySelectorAll('#sort-dropdown + .dropdown-menu .dropdown-item').forEach(item => {
-                        item.classList.remove('active');
-                        if (item.getAttribute('data-value') === this.currentSort) {
-                            item.classList.add('active');
-                        }
+                    similarityGrid.appendChild(row.labelElement);
+                    similarityGrid.appendChild(row.scoreElement);
+                });
+                
+                // Add separator and hidden topics if there are any hidden
+                if (hiddenTopics.length > 0) {
+                    // Create separator
+                    const separator = document.createElement('div');
+                    separator.className = 'topic-separator';
+                    separator.style.cssText = 'grid-column: 1 / -1; border-bottom: 1px solid rgba(255,255,255,0.1); margin: 0.5rem 0; display: none;';
+                    separator.setAttribute('data-separator', 'similarity');
+                    similarityGrid.appendChild(separator);
+                    
+                    // Add hidden topics with proper pairing
+                    hiddenTopics.forEach(row => {
+                        row.labelElement.style.display = 'none';
+                        row.scoreElement.style.display = 'none';
+                        row.labelElement.setAttribute('data-hidden', 'true');
+                        row.scoreElement.setAttribute('data-hidden', 'true');
+                        
+                        similarityGrid.appendChild(row.labelElement);
+                        similarityGrid.appendChild(row.scoreElement);
                     });
                     
-                    // Update filter checkboxes
-                    document.getElementById('filter-completed').checked = this.currentFilters.completed;
-                    document.getElementById('filter-failed').checked = this.currentFilters.failed;
-                    document.getElementById('filter-not-relevant').checked = this.currentFilters.not_relevant_enough;
-                    document.getElementById('filter-not-scored').checked = this.currentFilters.not_scored;
-                    this.updateDropdownLabel();
+                    // Add or update toggle button
+                    this.addOrUpdateToggleButton(paperCard.querySelector('.similarity-controls-section'), 'similarity', paperIndex);
+                } else {
+                    // Remove toggle button if all topics are visible
+                    this.removeToggleButton(paperCard.querySelector('.similarity-controls-section'), 'similarity');
+                }
+            }
+            
+            updateLlmValidationModule(paperCard, paperIndex) {
+                const validationGrid = paperCard.querySelector('.llm-validation-grid');
+                if (!validationGrid) return;
+                
+                const topicRows = [];
+                
+                // Collect all topic rows in order, preserving the paired structure
+                TOPIC_CONFIG.forEach(topic => {
+                    const labelElement = validationGrid.querySelector(`[data-topic="${topic.key}"].llm-validation-topic-label`);
+                    const valueElement = validationGrid.querySelector(`[data-topic="${topic.key}"].llm-validation-value-wrapper`);
+                    
+                    if (labelElement && valueElement) {
+                        // Clone elements to avoid reference issues during reordering
+                        const clonedLabel = labelElement.cloneNode(true);
+                        const clonedValue = valueElement.cloneNode(true);
+                        
+                        topicRows.push({
+                            topic: topic.key,
+                            label: topic.label,
+                            labelElement: clonedLabel,
+                            valueElement: clonedValue,
+                            isVisible: this.currentTopicFilters[topic.key]
+                        });
+                    }
+                });
+                
+                // Clear the grid completely
+                validationGrid.innerHTML = '';
+                
+                const visibleTopics = topicRows.filter(row => row.isVisible);
+                const hiddenTopics = topicRows.filter(row => !row.isVisible);
+                
+                // Add visible topics first - ensure proper grid pairing
+                visibleTopics.forEach(row => {
+                    // Ensure proper display properties
+                    row.labelElement.style.display = 'block';
+                    row.valueElement.style.display = 'block';
+                    row.labelElement.removeAttribute('data-hidden');
+                    row.valueElement.removeAttribute('data-hidden');
+                    
+                    validationGrid.appendChild(row.labelElement);
+                    validationGrid.appendChild(row.valueElement);
+                });
+                
+                // Add separator and hidden topics if there are any hidden
+                if (hiddenTopics.length > 0) {
+                    // Create separator
+                    const separator = document.createElement('div');
+                    separator.className = 'topic-separator';
+                    separator.style.cssText = 'grid-column: 1 / -1; border-bottom: 1px solid rgba(255,255,255,0.1); margin: 0.5rem 0; display: none;';
+                    separator.setAttribute('data-separator', 'validation');
+                    validationGrid.appendChild(separator);
+                    
+                    // Add hidden topics with proper pairing
+                    hiddenTopics.forEach(row => {
+                        row.labelElement.style.display = 'none';
+                        row.valueElement.style.display = 'none';
+                        row.labelElement.setAttribute('data-hidden', 'true');
+                        row.valueElement.setAttribute('data-hidden', 'true');
+                        
+                        validationGrid.appendChild(row.labelElement);
+                        validationGrid.appendChild(row.valueElement);
+                    });
+                    
+                    // Add or update toggle button
+                    this.addOrUpdateToggleButton(paperCard.querySelector('.llm-validation-controls-section'), 'validation', paperIndex);
+                } else {
+                    // Remove toggle button if all topics are visible
+                    this.removeToggleButton(paperCard.querySelector('.llm-validation-controls-section'), 'validation');
+                }
+            }
+            
+            addOrUpdateToggleButton(controlsSection, moduleType, paperIndex) {
+                if (!controlsSection) return;
+                
+                let toggleButton = controlsSection.querySelector(`[data-toggle-type="${moduleType}"]`);
+                
+                if (!toggleButton) {
+                    toggleButton = document.createElement('button');
+                    toggleButton.className = 'llm-justification-toggle';
+                    toggleButton.setAttribute('data-toggle-type', moduleType);
+                    toggleButton.setAttribute('data-paper-index', paperIndex);
+                    toggleButton.innerHTML = '<span>Show other topics</span><span class="toggle-icon">▼</span>';
+                    
+                    // Insert before existing buttons
+                    const existingButton = controlsSection.querySelector('.llm-justification-toggle:not([data-toggle-type])');
+                    if (existingButton) {
+                        controlsSection.insertBefore(toggleButton, existingButton);
+                    } else {
+                        controlsSection.appendChild(toggleButton);
+                    }
+                    
+                    // Add click handler
+                    toggleButton.addEventListener('click', () => {
+                        this.toggleHiddenTopics(moduleType, paperIndex);
+                    });
+                }
+            }
+            
+            removeToggleButton(controlsSection, moduleType) {
+                if (!controlsSection) return;
+                
+                const toggleButton = controlsSection.querySelector(`[data-toggle-type="${moduleType}"]`);
+                if (toggleButton) {
+                    toggleButton.remove();
+                }
+            }
+            
+            toggleHiddenTopics(moduleType, paperIndex) {
+                const paperCard = document.querySelectorAll('.paper-card')[paperIndex];
+                if (!paperCard) return;
+                
+                const gridSelector = moduleType === 'similarity' ? `#similarity-grid-${paperIndex}` : '.llm-validation-grid';
+                const grid = paperCard.querySelector(gridSelector);
+                const separator = grid.querySelector(`[data-separator="${moduleType}"]`);
+                const hiddenElements = grid.querySelectorAll('[data-hidden="true"]');
+                const toggleButton = paperCard.querySelector(`[data-toggle-type="${moduleType}"]`);
+                
+                if (!toggleButton) return;
+                
+                const textSpan = toggleButton.querySelector('span:first-child');
+                const iconSpan = toggleButton.querySelector('.toggle-icon');
+                
+                if (separator.style.display === 'none') {
+                    // Show hidden topics
+                    separator.style.display = 'block';
+                    hiddenElements.forEach(el => {
+                        // Restore proper display types based on element class
+                        if (el.classList.contains('similarity-score-display')) {
+                            el.style.display = 'flex'; // Similarity score displays need flex
+                        } else if (el.classList.contains('similarity-topic-label') || 
+                                   el.classList.contains('llm-validation-topic-label') || 
+                                   el.classList.contains('llm-validation-value-wrapper')) {
+                            el.style.display = 'block'; // Labels and value wrappers use block
+                        } else {
+                            el.style.display = 'block'; // Default fallback
+                        }
+                    });
+                    textSpan.textContent = 'Hide other topics';
+                    iconSpan.textContent = '▲';
+                } else {
+                    // Hide topics
+                    separator.style.display = 'none';
+                    hiddenElements.forEach(el => el.style.display = 'none');
+                    textSpan.textContent = 'Show other topics';
+                    iconSpan.textContent = '▼';
                 }
             }
         }

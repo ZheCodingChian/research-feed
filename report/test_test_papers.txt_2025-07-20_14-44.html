@@ -117,6 +117,35 @@
             color: #ffffff;
         }
         
+        /* Apply Filter Button Styles */
+        .dropdown-apply-button {
+            background-color: #667eea;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            padding: 0.5rem 1rem;
+            width: 100%;
+            margin-top: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        .dropdown-apply-button:hover {
+            background-color: #5a6fd8;
+        }
+        
+        .dropdown-apply-button:focus {
+            outline: 2px solid #667eea;
+            outline-offset: 2px;
+        }
+        
+        .dropdown-apply-section {
+            padding: 0.5rem 1rem;
+            border-top: 1px solid #404040;
+            background-color: #242729;
+        }
+        
         .paper-count-display {
             color: rgba(255,255,255,0.9);
             font-weight: 500;
@@ -865,6 +894,11 @@
                                         Not scored
                                     </label>
                                 </li>
+                                <li class="dropdown-apply-section">
+                                    <button type="button" class="dropdown-apply-button" id="filter-apply-button">
+                                        Apply Filter
+                                    </button>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -903,6 +937,11 @@
                                         <input type="checkbox" class="form-check-input me-2" id="topic-datasets" checked>
                                         Datasets
                                     </label>
+                                </li>
+                                <li class="dropdown-apply-section">
+                                    <button type="button" class="dropdown-apply-button" id="topics-apply-button">
+                                        Apply Filter
+                                    </button>
                                 </li>
                             </ul>
                         </div>
@@ -1136,8 +1175,8 @@ effectiveness of RLTHF's strategic data curation.
                                 <!-- Similarity Scores Grid -->
                                 <div class="similarity-scores-grid" id="similarity-grid-0">
                                     <!-- RLHF Row -->
-                                    <div class="similarity-topic-label">RLHF:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="rlhf">RLHF:</div>
+                                    <div class="similarity-score-display" data-topic="rlhf">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 71.8%"></div>
@@ -1149,8 +1188,8 @@ effectiveness of RLTHF's strategic data curation.
                                     </div>
                                     
                                     <!-- Weak Supervision Row -->
-                                    <div class="similarity-topic-label">Weak supervision:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="weak_supervision">Weak supervision:</div>
+                                    <div class="similarity-score-display" data-topic="weak_supervision">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 46.9%"></div>
@@ -1162,8 +1201,8 @@ effectiveness of RLTHF's strategic data curation.
                                     </div>
                                     
                                     <!-- Diffusion Reasoning Row -->
-                                    <div class="similarity-topic-label">Diffusion reasoning:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="diffusion_reasoning">Diffusion reasoning:</div>
+                                    <div class="similarity-score-display" data-topic="diffusion_reasoning">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 40.9%"></div>
@@ -1175,8 +1214,8 @@ effectiveness of RLTHF's strategic data curation.
                                     </div>
                                     
                                     <!-- Distributed Training Row -->
-                                    <div class="similarity-topic-label">Distributed training:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="distributed_training">Distributed training:</div>
+                                    <div class="similarity-score-display" data-topic="distributed_training">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 41.1%"></div>
@@ -1188,8 +1227,8 @@ effectiveness of RLTHF's strategic data curation.
                                     </div>
                                     
                                     <!-- Datasets Row -->
-                                    <div class="similarity-topic-label">Datasets:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="datasets">Datasets:</div>
+                                    <div class="similarity-score-display" data-topic="datasets">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 38.7%"></div>
@@ -1220,40 +1259,40 @@ effectiveness of RLTHF's strategic data curation.
                                 <!-- LLM Validation Grid -->
                                 <div class="llm-validation-grid">
                                     <!-- RLHF Row -->
-                                    <div class="llm-validation-topic-label">RLHF:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="rlhf">RLHF:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="rlhf">
                                         
                                         <span class="llm-validation-value highly-relevant">Highly Relevant</span>
                                         
                                     </div>
                                     
                                     <!-- Weak Supervision Row -->
-                                    <div class="llm-validation-topic-label">Weak supervision:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="weak_supervision">Weak supervision:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="weak_supervision">
                                         
                                         <span class="llm-validation-value moderately-relevant">Moderately Relevant</span>
                                         
                                     </div>
                                     
                                     <!-- Diffusion Reasoning Row -->
-                                    <div class="llm-validation-topic-label">Diffusion reasoning:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="diffusion_reasoning">Diffusion reasoning:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="diffusion_reasoning">
                                         
                                         <span class="llm-validation-value not-relevant">Not Relevant</span>
                                         
                                     </div>
                                     
                                     <!-- Distributed Training Row -->
-                                    <div class="llm-validation-topic-label">Distributed training:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="distributed_training">Distributed training:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="distributed_training">
                                         
                                         <span class="llm-validation-value not-relevant">Not Relevant</span>
                                         
                                     </div>
                                     
                                     <!-- Datasets Row -->
-                                    <div class="llm-validation-topic-label">Datasets:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="datasets">Datasets:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="datasets">
                                         
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -1632,8 +1671,8 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                 <!-- Similarity Scores Grid -->
                                 <div class="similarity-scores-grid" id="similarity-grid-1">
                                     <!-- RLHF Row -->
-                                    <div class="similarity-topic-label">RLHF:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="rlhf">RLHF:</div>
+                                    <div class="similarity-score-display" data-topic="rlhf">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 62.6%"></div>
@@ -1645,8 +1684,8 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                     </div>
                                     
                                     <!-- Weak Supervision Row -->
-                                    <div class="similarity-topic-label">Weak supervision:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="weak_supervision">Weak supervision:</div>
+                                    <div class="similarity-score-display" data-topic="weak_supervision">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 39.0%"></div>
@@ -1658,8 +1697,8 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                     </div>
                                     
                                     <!-- Diffusion Reasoning Row -->
-                                    <div class="similarity-topic-label">Diffusion reasoning:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="diffusion_reasoning">Diffusion reasoning:</div>
+                                    <div class="similarity-score-display" data-topic="diffusion_reasoning">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 37.4%"></div>
@@ -1671,8 +1710,8 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                     </div>
                                     
                                     <!-- Distributed Training Row -->
-                                    <div class="similarity-topic-label">Distributed training:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="distributed_training">Distributed training:</div>
+                                    <div class="similarity-score-display" data-topic="distributed_training">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 36.6%"></div>
@@ -1684,8 +1723,8 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                     </div>
                                     
                                     <!-- Datasets Row -->
-                                    <div class="similarity-topic-label">Datasets:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="datasets">Datasets:</div>
+                                    <div class="similarity-score-display" data-topic="datasets">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 32.6%"></div>
@@ -1716,16 +1755,16 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                 <!-- LLM Validation Grid -->
                                 <div class="llm-validation-grid">
                                     <!-- RLHF Row -->
-                                    <div class="llm-validation-topic-label">RLHF:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="rlhf">RLHF:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="rlhf">
                                         
                                         <span class="llm-validation-value highly-relevant">Highly Relevant</span>
                                         
                                     </div>
                                     
                                     <!-- Weak Supervision Row -->
-                                    <div class="llm-validation-topic-label">Weak supervision:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="weak_supervision">Weak supervision:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="weak_supervision">
                                         
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -1735,8 +1774,8 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                     </div>
                                     
                                     <!-- Diffusion Reasoning Row -->
-                                    <div class="llm-validation-topic-label">Diffusion reasoning:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="diffusion_reasoning">Diffusion reasoning:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="diffusion_reasoning">
                                         
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -1746,8 +1785,8 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                     </div>
                                     
                                     <!-- Distributed Training Row -->
-                                    <div class="llm-validation-topic-label">Distributed training:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="distributed_training">Distributed training:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="distributed_training">
                                         
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -1757,8 +1796,8 @@ the need for capable datasets, data curating techniques, or alignment tools.
                                     </div>
                                     
                                     <!-- Datasets Row -->
-                                    <div class="llm-validation-topic-label">Datasets:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="datasets">Datasets:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="datasets">
                                         
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -2085,8 +2124,8 @@ models.
                                 <!-- Similarity Scores Grid -->
                                 <div class="similarity-scores-grid" id="similarity-grid-2">
                                     <!-- RLHF Row -->
-                                    <div class="similarity-topic-label">RLHF:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="rlhf">RLHF:</div>
+                                    <div class="similarity-score-display" data-topic="rlhf">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 35.0%"></div>
@@ -2098,8 +2137,8 @@ models.
                                     </div>
                                     
                                     <!-- Weak Supervision Row -->
-                                    <div class="similarity-topic-label">Weak supervision:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="weak_supervision">Weak supervision:</div>
+                                    <div class="similarity-score-display" data-topic="weak_supervision">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 39.1%"></div>
@@ -2111,8 +2150,8 @@ models.
                                     </div>
                                     
                                     <!-- Diffusion Reasoning Row -->
-                                    <div class="similarity-topic-label">Diffusion reasoning:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="diffusion_reasoning">Diffusion reasoning:</div>
+                                    <div class="similarity-score-display" data-topic="diffusion_reasoning">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 33.0%"></div>
@@ -2124,8 +2163,8 @@ models.
                                     </div>
                                     
                                     <!-- Distributed Training Row -->
-                                    <div class="similarity-topic-label">Distributed training:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="distributed_training">Distributed training:</div>
+                                    <div class="similarity-score-display" data-topic="distributed_training">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 35.8%"></div>
@@ -2137,8 +2176,8 @@ models.
                                     </div>
                                     
                                     <!-- Datasets Row -->
-                                    <div class="similarity-topic-label">Datasets:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="datasets">Datasets:</div>
+                                    <div class="similarity-score-display" data-topic="datasets">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 52.5%"></div>
@@ -2169,8 +2208,8 @@ models.
                                 <!-- LLM Validation Grid -->
                                 <div class="llm-validation-grid">
                                     <!-- RLHF Row -->
-                                    <div class="llm-validation-topic-label">RLHF:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="rlhf">RLHF:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="rlhf">
                                         
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -2180,8 +2219,8 @@ models.
                                     </div>
                                     
                                     <!-- Weak Supervision Row -->
-                                    <div class="llm-validation-topic-label">Weak supervision:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="weak_supervision">Weak supervision:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="weak_supervision">
                                         
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -2191,8 +2230,8 @@ models.
                                     </div>
                                     
                                     <!-- Diffusion Reasoning Row -->
-                                    <div class="llm-validation-topic-label">Diffusion reasoning:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="diffusion_reasoning">Diffusion reasoning:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="diffusion_reasoning">
                                         
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -2202,8 +2241,8 @@ models.
                                     </div>
                                     
                                     <!-- Distributed Training Row -->
-                                    <div class="llm-validation-topic-label">Distributed training:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="distributed_training">Distributed training:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="distributed_training">
                                         
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -2213,8 +2252,8 @@ models.
                                     </div>
                                     
                                     <!-- Datasets Row -->
-                                    <div class="llm-validation-topic-label">Datasets:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="datasets">Datasets:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="datasets">
                                         
                                         <span class="llm-validation-value highly-relevant">Highly Relevant</span>
                                         
@@ -2499,8 +2538,8 @@ AgeDB-30, but also shows great benefit for practical use.
                                 <!-- Similarity Scores Grid -->
                                 <div class="similarity-scores-grid" id="similarity-grid-3">
                                     <!-- RLHF Row -->
-                                    <div class="similarity-topic-label">RLHF:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="rlhf">RLHF:</div>
+                                    <div class="similarity-score-display" data-topic="rlhf">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 35.9%"></div>
@@ -2512,8 +2551,8 @@ AgeDB-30, but also shows great benefit for practical use.
                                     </div>
                                     
                                     <!-- Weak Supervision Row -->
-                                    <div class="similarity-topic-label">Weak supervision:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="weak_supervision">Weak supervision:</div>
+                                    <div class="similarity-score-display" data-topic="weak_supervision">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 39.0%"></div>
@@ -2525,8 +2564,8 @@ AgeDB-30, but also shows great benefit for practical use.
                                     </div>
                                     
                                     <!-- Diffusion Reasoning Row -->
-                                    <div class="similarity-topic-label">Diffusion reasoning:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="diffusion_reasoning">Diffusion reasoning:</div>
+                                    <div class="similarity-score-display" data-topic="diffusion_reasoning">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 33.2%"></div>
@@ -2538,8 +2577,8 @@ AgeDB-30, but also shows great benefit for practical use.
                                     </div>
                                     
                                     <!-- Distributed Training Row -->
-                                    <div class="similarity-topic-label">Distributed training:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="distributed_training">Distributed training:</div>
+                                    <div class="similarity-score-display" data-topic="distributed_training">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 42.1%"></div>
@@ -2551,8 +2590,8 @@ AgeDB-30, but also shows great benefit for practical use.
                                     </div>
                                     
                                     <!-- Datasets Row -->
-                                    <div class="similarity-topic-label">Datasets:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="datasets">Datasets:</div>
+                                    <div class="similarity-score-display" data-topic="datasets">
                                         
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: 49.4%"></div>
@@ -2583,8 +2622,8 @@ AgeDB-30, but also shows great benefit for practical use.
                                 <!-- LLM Validation Grid -->
                                 <div class="llm-validation-grid">
                                     <!-- RLHF Row -->
-                                    <div class="llm-validation-topic-label">RLHF:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="rlhf">RLHF:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="rlhf">
                                         
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -2594,8 +2633,8 @@ AgeDB-30, but also shows great benefit for practical use.
                                     </div>
                                     
                                     <!-- Weak Supervision Row -->
-                                    <div class="llm-validation-topic-label">Weak supervision:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="weak_supervision">Weak supervision:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="weak_supervision">
                                         
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -2605,8 +2644,8 @@ AgeDB-30, but also shows great benefit for practical use.
                                     </div>
                                     
                                     <!-- Diffusion Reasoning Row -->
-                                    <div class="llm-validation-topic-label">Diffusion reasoning:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="diffusion_reasoning">Diffusion reasoning:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="diffusion_reasoning">
                                         
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -2616,16 +2655,16 @@ AgeDB-30, but also shows great benefit for practical use.
                                     </div>
                                     
                                     <!-- Distributed Training Row -->
-                                    <div class="llm-validation-topic-label">Distributed training:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="distributed_training">Distributed training:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="distributed_training">
                                         
                                         <span class="llm-validation-value not-relevant">Not Relevant</span>
                                         
                                     </div>
                                     
                                     <!-- Datasets Row -->
-                                    <div class="llm-validation-topic-label">Datasets:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="datasets">Datasets:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="datasets">
                                         
                                         <span class="llm-validation-value moderately-relevant">Moderately Relevant</span>
                                         
@@ -2840,8 +2879,12 @@ AgeDB-30, but also shows great benefit for practical use.
                     datasets: true
                 };
                 
+                // Pending state for deferred filtering
+                this.pendingFilters = { ...this.currentFilters };
+                this.pendingTopicFilters = { ...this.currentTopicFilters };
+                
                 this.initializeEventListeners();
-                this.loadUserPreferences();
+                this.initializeUIState();
                 this.applyFiltersAndSort();
                 this.updateTopicVisibility();
             }
@@ -2863,7 +2906,6 @@ AgeDB-30, but also shows great benefit for practical use.
                         e.target.classList.add('active');
                         
                         this.currentSort = value;
-                        this.saveUserPreferences();
                         this.applyFiltersAndSort();
                         
                         // Close the dropdown
@@ -2872,49 +2914,194 @@ AgeDB-30, but also shows great benefit for practical use.
                     });
                 });
                 
-                // Filter checkboxes
+                // Filter checkboxes - Update pending state only
                 const filterCheckboxes = ['filter-completed', 'filter-failed', 'filter-not-relevant', 'filter-not-scored'];
                 filterCheckboxes.forEach(id => {
                     document.getElementById(id).addEventListener('change', () => {
-                        this.updateFilters();
-                        this.updateDropdownLabel();
-                        this.saveUserPreferences();
-                        this.applyFiltersAndSort();
+                        this.updatePendingFilters();
+                        this.updateFilterDropdownLabel();
                     });
                 });
                 
-                // Prevent filter dropdown from closing when clicking on checkboxes
-                document.querySelectorAll('#filter-dropdown + .dropdown-menu .dropdown-item').forEach(item => {
+                // Apply Filter button for LLM Score Status
+                document.getElementById('filter-apply-button').addEventListener('click', () => {
+                    this.applyPendingFilters();
+                    this.closeDropdown('filter-dropdown');
+                });
+                
+                // Prevent filter dropdown from closing when clicking on checkboxes or buttons
+                document.querySelectorAll('ul[aria-labelledby="filter-dropdown"] .dropdown-item, ul[aria-labelledby="filter-dropdown"] .dropdown-apply-section').forEach(item => {
                     item.addEventListener('click', (e) => {
-                        // Only stop propagation for checkbox clicks, not the entire item
-                        const checkbox = e.target.closest('input[type="checkbox"]');
-                        if (checkbox) {
-                            e.stopPropagation();
+                        // Stop all propagation to prevent dropdown from closing
+                        e.stopPropagation();
+                        e.preventDefault();
+                        
+                        // Handle checkbox clicks manually
+                        const checkbox = item.querySelector('input[type="checkbox"]');
+                        if (checkbox && e.target !== checkbox) {
+                            checkbox.checked = !checkbox.checked;
+                            // Trigger change event manually
+                            checkbox.dispatchEvent(new Event('change'));
                         }
                     });
                 });
                 
-                // Topic checkboxes
+                // Add event handlers to checkboxes to prevent dropdown closing
+                const allFilterCheckboxes = document.querySelectorAll('ul[aria-labelledby="filter-dropdown"] input[type="checkbox"]');
+                allFilterCheckboxes.forEach(checkbox => {
+                    checkbox.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+                });
+                
+                const allTopicCheckboxes = document.querySelectorAll('ul[aria-labelledby="topics-dropdown"] input[type="checkbox"]');
+                allTopicCheckboxes.forEach(checkbox => {
+                    checkbox.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+                });
+                
+                // Topic checkboxes - Update pending state only
                 const topicCheckboxes = ['topic-rlhf', 'topic-weak-supervision', 'topic-diffusion-reasoning', 'topic-distributed-training', 'topic-datasets'];
                 topicCheckboxes.forEach(id => {
                     document.getElementById(id).addEventListener('change', () => {
-                        this.updateTopicFilters();
-                        this.updateTopicDropdownLabel();
-                        this.saveUserPreferences();
-                        this.updateTopicVisibility();
+                        this.updatePendingTopicFilters();
+                        this.updateTopicsDropdownLabel();
                     });
                 });
                 
-                // Prevent topics dropdown from closing when clicking on checkboxes
-                document.querySelectorAll('#topics-dropdown + .dropdown-menu .dropdown-item').forEach(item => {
+                // Apply Filter button for Topics
+                document.getElementById('topics-apply-button').addEventListener('click', () => {
+                    this.applyPendingTopicFilters();
+                    this.closeDropdown('topics-dropdown');
+                });
+                
+                // Prevent topics dropdown from closing when clicking on checkboxes or buttons
+                document.querySelectorAll('ul[aria-labelledby="topics-dropdown"] .dropdown-item, ul[aria-labelledby="topics-dropdown"] .dropdown-apply-section').forEach(item => {
                     item.addEventListener('click', (e) => {
-                        // Only stop propagation for checkbox clicks, not the entire item
-                        const checkbox = e.target.closest('input[type="checkbox"]');
-                        if (checkbox) {
-                            e.stopPropagation();
+                        // Stop all propagation to prevent dropdown from closing
+                        e.stopPropagation();
+                        e.preventDefault();
+                        
+                        // Handle checkbox clicks manually
+                        const checkbox = item.querySelector('input[type="checkbox"]');
+                        if (checkbox && e.target !== checkbox) {
+                            checkbox.checked = !checkbox.checked;
+                            // Trigger change event manually
+                            checkbox.dispatchEvent(new Event('change'));
                         }
                     });
                 });
+            }
+            
+            initializeUIState() {
+                // Set initial sort dropdown state
+                const sortText = {
+                    'recommendation-best': 'Recommendation (Best first)',
+                    'recommendation-worst': 'Recommendation (Worst first)',
+                    'arxiv-desc': 'arXiv ID (Descending)',
+                    'arxiv-asc': 'arXiv ID (Ascending)',
+                    'title-az': 'Title (A-Z)',
+                    'title-za': 'Title (Z-A)'
+                };
+                document.getElementById('sort-selected').textContent = sortText[this.currentSort];
+                
+                // Update active state for sort dropdown
+                document.querySelectorAll('#sort-dropdown + .dropdown-menu .dropdown-item').forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('data-value') === this.currentSort) {
+                        item.classList.add('active');
+                    }
+                });
+                
+                // Ensure all filter checkboxes are checked (all selected by default)
+                document.getElementById('filter-completed').checked = this.currentFilters.completed;
+                document.getElementById('filter-failed').checked = this.currentFilters.failed;
+                document.getElementById('filter-not-relevant').checked = this.currentFilters.not_relevant_enough;
+                document.getElementById('filter-not-scored').checked = this.currentFilters.not_scored;
+                
+                // Sync pending state with current state
+                this.pendingFilters = { ...this.currentFilters };
+                this.updateFilterDropdownLabel();
+                
+                // Ensure all topic checkboxes are checked (all selected by default)
+                document.getElementById('topic-rlhf').checked = this.currentTopicFilters.rlhf;
+                document.getElementById('topic-weak-supervision').checked = this.currentTopicFilters.weak_supervision;
+                document.getElementById('topic-diffusion-reasoning').checked = this.currentTopicFilters.diffusion_reasoning;
+                document.getElementById('topic-distributed-training').checked = this.currentTopicFilters.distributed_training;
+                document.getElementById('topic-datasets').checked = this.currentTopicFilters.datasets;
+                
+                // Sync pending state with current state
+                this.pendingTopicFilters = { ...this.currentTopicFilters };
+                this.updateTopicsDropdownLabel();
+            }
+            
+            // Methods for handling pending state (before Apply Filter is clicked)
+            updatePendingFilters() {
+                this.pendingFilters = {
+                    completed: document.getElementById('filter-completed').checked,
+                    failed: document.getElementById('filter-failed').checked,
+                    not_relevant_enough: document.getElementById('filter-not-relevant').checked,
+                    not_scored: document.getElementById('filter-not-scored').checked
+                };
+            }
+            
+            updateFilterDropdownLabel() {
+                const checkedCount = Object.values(this.pendingFilters).filter(v => v).length;
+                const totalCount = Object.keys(this.pendingFilters).length;
+                const selectedSpan = document.getElementById('filter-selected');
+                
+                if (checkedCount === totalCount) {
+                    selectedSpan.textContent = 'All selected';
+                } else if (checkedCount === 0) {
+                    selectedSpan.textContent = 'None selected';
+                } else {
+                    selectedSpan.textContent = `${checkedCount} selected`;
+                }
+            }
+            
+            updatePendingTopicFilters() {
+                this.pendingTopicFilters = {
+                    rlhf: document.getElementById('topic-rlhf').checked,
+                    weak_supervision: document.getElementById('topic-weak-supervision').checked,
+                    diffusion_reasoning: document.getElementById('topic-diffusion-reasoning').checked,
+                    distributed_training: document.getElementById('topic-distributed-training').checked,
+                    datasets: document.getElementById('topic-datasets').checked
+                };
+            }
+            
+            updateTopicsDropdownLabel() {
+                const checkedCount = Object.values(this.pendingTopicFilters).filter(v => v).length;
+                const totalCount = Object.keys(this.pendingTopicFilters).length;
+                const selectedSpan = document.getElementById('topics-selected');
+                
+                if (checkedCount === totalCount) {
+                    selectedSpan.textContent = 'All selected';
+                } else if (checkedCount === 0) {
+                    selectedSpan.textContent = 'None selected';
+                } else {
+                    selectedSpan.textContent = `${checkedCount} selected`;
+                }
+            }
+            
+            // Methods for applying pending state (when Apply Filter is clicked)
+            applyPendingFilters() {
+                this.currentFilters = { ...this.pendingFilters };
+                this.applyFiltersAndSort();
+            }
+            
+            applyPendingTopicFilters() {
+                this.currentTopicFilters = { ...this.pendingTopicFilters };
+                this.applyFiltersAndSort();
+                this.updateTopicVisibility();
+            }
+            
+            // Utility method to close dropdowns programmatically
+            closeDropdown(dropdownId) {
+                const dropdown = bootstrap.Dropdown.getInstance(document.getElementById(dropdownId));
+                if (dropdown) {
+                    dropdown.hide();
+                }
             }
             
             updateFilters() {
@@ -3086,33 +3273,40 @@ AgeDB-30, but also shows great benefit for practical use.
                 
                 const topicRows = [];
                 
-                // Collect all topic rows in order
+                // Collect all topic rows in order, preserving the paired structure
                 TOPIC_CONFIG.forEach(topic => {
-                    const labelElement = Array.from(similarityGrid.children).find(el => 
-                        el.classList.contains('similarity-topic-label') && 
-                        el.textContent.trim() === `${topic.label}:`
-                    );
+                    const labelElement = similarityGrid.querySelector(`[data-topic="${topic.key}"].similarity-topic-label`);
+                    const scoreElement = similarityGrid.querySelector(`[data-topic="${topic.key}"].similarity-score-display`);
                     
-                    if (labelElement) {
-                        const scoreElement = labelElement.nextElementSibling;
+                    if (labelElement && scoreElement) {
+                        // Clone elements to avoid reference issues during reordering
+                        const clonedLabel = labelElement.cloneNode(true);
+                        const clonedScore = scoreElement.cloneNode(true);
+                        
                         topicRows.push({
                             topic: topic.key,
                             label: topic.label,
-                            labelElement,
-                            scoreElement,
+                            labelElement: clonedLabel,
+                            scoreElement: clonedScore,
                             isVisible: this.currentTopicFilters[topic.key]
                         });
                     }
                 });
                 
-                // Clear the grid
+                // Clear the grid completely
                 similarityGrid.innerHTML = '';
                 
                 const visibleTopics = topicRows.filter(row => row.isVisible);
                 const hiddenTopics = topicRows.filter(row => !row.isVisible);
                 
-                // Add visible topics first
+                // Add visible topics first - ensure proper grid pairing
                 visibleTopics.forEach(row => {
+                    // Ensure proper CSS classes and display properties
+                    row.labelElement.style.display = 'block';
+                    row.scoreElement.style.display = 'flex'; // Maintain flex for proper bar+value layout
+                    row.labelElement.removeAttribute('data-hidden');
+                    row.scoreElement.removeAttribute('data-hidden');
+                    
                     similarityGrid.appendChild(row.labelElement);
                     similarityGrid.appendChild(row.scoreElement);
                 });
@@ -3126,12 +3320,13 @@ AgeDB-30, but also shows great benefit for practical use.
                     separator.setAttribute('data-separator', 'similarity');
                     similarityGrid.appendChild(separator);
                     
-                    // Add hidden topics
+                    // Add hidden topics with proper pairing
                     hiddenTopics.forEach(row => {
                         row.labelElement.style.display = 'none';
                         row.scoreElement.style.display = 'none';
                         row.labelElement.setAttribute('data-hidden', 'true');
                         row.scoreElement.setAttribute('data-hidden', 'true');
+                        
                         similarityGrid.appendChild(row.labelElement);
                         similarityGrid.appendChild(row.scoreElement);
                     });
@@ -3150,33 +3345,40 @@ AgeDB-30, but also shows great benefit for practical use.
                 
                 const topicRows = [];
                 
-                // Collect all topic rows in order
+                // Collect all topic rows in order, preserving the paired structure
                 TOPIC_CONFIG.forEach(topic => {
-                    const labelElement = Array.from(validationGrid.children).find(el => 
-                        el.classList.contains('llm-validation-topic-label') && 
-                        el.textContent.trim() === `${topic.label}:`
-                    );
+                    const labelElement = validationGrid.querySelector(`[data-topic="${topic.key}"].llm-validation-topic-label`);
+                    const valueElement = validationGrid.querySelector(`[data-topic="${topic.key}"].llm-validation-value-wrapper`);
                     
-                    if (labelElement) {
-                        const valueElement = labelElement.nextElementSibling;
+                    if (labelElement && valueElement) {
+                        // Clone elements to avoid reference issues during reordering
+                        const clonedLabel = labelElement.cloneNode(true);
+                        const clonedValue = valueElement.cloneNode(true);
+                        
                         topicRows.push({
                             topic: topic.key,
                             label: topic.label,
-                            labelElement,
-                            valueElement,
+                            labelElement: clonedLabel,
+                            valueElement: clonedValue,
                             isVisible: this.currentTopicFilters[topic.key]
                         });
                     }
                 });
                 
-                // Clear the grid
+                // Clear the grid completely
                 validationGrid.innerHTML = '';
                 
                 const visibleTopics = topicRows.filter(row => row.isVisible);
                 const hiddenTopics = topicRows.filter(row => !row.isVisible);
                 
-                // Add visible topics first
+                // Add visible topics first - ensure proper grid pairing
                 visibleTopics.forEach(row => {
+                    // Ensure proper display properties
+                    row.labelElement.style.display = 'block';
+                    row.valueElement.style.display = 'block';
+                    row.labelElement.removeAttribute('data-hidden');
+                    row.valueElement.removeAttribute('data-hidden');
+                    
                     validationGrid.appendChild(row.labelElement);
                     validationGrid.appendChild(row.valueElement);
                 });
@@ -3190,12 +3392,13 @@ AgeDB-30, but also shows great benefit for practical use.
                     separator.setAttribute('data-separator', 'validation');
                     validationGrid.appendChild(separator);
                     
-                    // Add hidden topics
+                    // Add hidden topics with proper pairing
                     hiddenTopics.forEach(row => {
                         row.labelElement.style.display = 'none';
                         row.valueElement.style.display = 'none';
                         row.labelElement.setAttribute('data-hidden', 'true');
                         row.valueElement.setAttribute('data-hidden', 'true');
+                        
                         validationGrid.appendChild(row.labelElement);
                         validationGrid.appendChild(row.valueElement);
                     });
@@ -3262,7 +3465,18 @@ AgeDB-30, but also shows great benefit for practical use.
                 if (separator.style.display === 'none') {
                     // Show hidden topics
                     separator.style.display = 'block';
-                    hiddenElements.forEach(el => el.style.display = 'block');
+                    hiddenElements.forEach(el => {
+                        // Restore proper display types based on element class
+                        if (el.classList.contains('similarity-score-display')) {
+                            el.style.display = 'flex'; // Similarity score displays need flex
+                        } else if (el.classList.contains('similarity-topic-label') || 
+                                   el.classList.contains('llm-validation-topic-label') || 
+                                   el.classList.contains('llm-validation-value-wrapper')) {
+                            el.style.display = 'block'; // Labels and value wrappers use block
+                        } else {
+                            el.style.display = 'block'; // Default fallback
+                        }
+                    });
                     textSpan.textContent = 'Hide other topics';
                     iconSpan.textContent = '▲';
                 } else {
@@ -3271,59 +3485,6 @@ AgeDB-30, but also shows great benefit for practical use.
                     hiddenElements.forEach(el => el.style.display = 'none');
                     textSpan.textContent = 'Show other topics';
                     iconSpan.textContent = '▼';
-                }
-            }
-            
-            saveUserPreferences() {
-                const preferences = {
-                    sort: this.currentSort,
-                    filters: this.currentFilters,
-                    topicFilters: this.currentTopicFilters
-                };
-                localStorage.setItem('paperPreferences', JSON.stringify(preferences));
-            }
-            
-            loadUserPreferences() {
-                const saved = localStorage.getItem('paperPreferences');
-                if (saved) {
-                    const preferences = JSON.parse(saved);
-                    this.currentSort = preferences.sort || 'recommendation-best';
-                    this.currentFilters = preferences.filters || this.currentFilters;
-                    this.currentTopicFilters = preferences.topicFilters || this.currentTopicFilters;
-                    
-                    // Update UI for sort dropdown
-                    const sortText = {
-                        'recommendation-best': 'Recommendation (Best first)',
-                        'recommendation-worst': 'Recommendation (Worst first)',
-                        'arxiv-desc': 'arXiv ID (Descending)',
-                        'arxiv-asc': 'arXiv ID (Ascending)',
-                        'title-az': 'Title (A-Z)',
-                        'title-za': 'Title (Z-A)'
-                    };
-                    document.getElementById('sort-selected').textContent = sortText[this.currentSort];
-                    
-                    // Update active state for sort dropdown
-                    document.querySelectorAll('#sort-dropdown + .dropdown-menu .dropdown-item').forEach(item => {
-                        item.classList.remove('active');
-                        if (item.getAttribute('data-value') === this.currentSort) {
-                            item.classList.add('active');
-                        }
-                    });
-                    
-                    // Update filter checkboxes
-                    document.getElementById('filter-completed').checked = this.currentFilters.completed;
-                    document.getElementById('filter-failed').checked = this.currentFilters.failed;
-                    document.getElementById('filter-not-relevant').checked = this.currentFilters.not_relevant_enough;
-                    document.getElementById('filter-not-scored').checked = this.currentFilters.not_scored;
-                    this.updateDropdownLabel();
-                    
-                    // Update topic checkboxes
-                    document.getElementById('topic-rlhf').checked = this.currentTopicFilters.rlhf;
-                    document.getElementById('topic-weak-supervision').checked = this.currentTopicFilters.weak_supervision;
-                    document.getElementById('topic-diffusion-reasoning').checked = this.currentTopicFilters.diffusion_reasoning;
-                    document.getElementById('topic-distributed-training').checked = this.currentTopicFilters.distributed_training;
-                    document.getElementById('topic-datasets').checked = this.currentTopicFilters.datasets;
-                    this.updateTopicDropdownLabel();
                 }
             }
         }
