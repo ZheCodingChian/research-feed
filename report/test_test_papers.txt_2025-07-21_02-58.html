@@ -65,7 +65,7 @@
         .filter-section {
             background: rgba(0,0,0,0.2);
             border-top: 1px solid rgba(255,255,255,0.1);
-            padding: 1rem 0;
+            padding: 1rem 0 0 0;
             margin-top: 0;
         }
         
@@ -340,7 +340,7 @@
         
         /* AI Summary */
         .ai-summary {
-            background: rgba(255,255,255,0.05);
+            background: linear-gradient(130deg, #00376E 0%, #001D39 100%);
             padding: 1rem;
             margin-bottom: 1.5rem;
             color: #ffffff;
@@ -1245,6 +1245,12 @@
                             <ul class="dropdown-menu w-100" aria-labelledby="sort-dropdown">
                                 <li><a class="dropdown-item" href="#" data-value="recommendation-best">Recommendation (Best first)</a></li>
                                 <li><a class="dropdown-item" href="#" data-value="recommendation-worst">Recommendation (Worst first)</a></li>
+                                <li><a class="dropdown-item" href="#" data-value="relevance-desc">LLM Validated Relevance (Descending)</a></li>
+                                <li><a class="dropdown-item" href="#" data-value="relevance-asc">LLM Validated Relevance (Ascending)</a></li>
+                                <li><a class="dropdown-item" href="#" data-value="h-index-highest-desc">Highest H-Index (Descending)</a></li>
+                                <li><a class="dropdown-item" href="#" data-value="h-index-highest-asc">Highest H-Index (Ascending)</a></li>
+                                <li><a class="dropdown-item" href="#" data-value="h-index-average-desc">Average H-Index (Descending)</a></li>
+                                <li><a class="dropdown-item" href="#" data-value="h-index-average-asc">Average H-Index (Ascending)</a></li>
                                 <li><a class="dropdown-item" href="#" data-value="arxiv-desc">arXiv ID (Descending)</a></li>
                                 <li><a class="dropdown-item" href="#" data-value="arxiv-asc">arXiv ID (Ascending)</a></li>
                                 <li><a class="dropdown-item" href="#" data-value="title-az">Title (A-Z)</a></li>
@@ -4227,6 +4233,70 @@ AgeDB-30, but also shows great benefit for practical use.
                 return true;
             }
             
+            // Helper method to calculate LLM validated relevance score
+            calculateRelevanceScore(paper) {
+                // Define relevance weights: Highly relevant = 4, Moderately = 3, Tangentially = 2, Not relevant = 1
+                const relevanceWeights = {
+                    'highly relevant': 4,
+                    'moderately relevant': 3, 
+                    'tangentially relevant': 2,
+                    'not relevant': 1
+                };
+                
+                let totalScore = 0;
+                
+                // Only consider topics that are currently enabled in the topic filters
+                const enabledTopics = Object.keys(this.currentTopicFilters)
+                    .filter(topic => this.currentTopicFilters[topic]);
+                
+                enabledTopics.forEach(topic => {
+                    const relevanceField = `${topic}_relevance`;
+                    const relevance = paper[relevanceField];
+                    
+                    if (relevance && relevanceWeights[relevance.toLowerCase()]) {
+                        const weight = relevanceWeights[relevance.toLowerCase()];
+                        totalScore += weight * weight; // Square the weight as requested
+                    }
+                });
+                
+                return totalScore;
+            }
+            
+            // Helper method to get highest H-Index
+            getHighestHIndex(paper) {
+                if (paper.h_index_status !== 'completed' || !paper.author_h_indexes || paper.author_h_indexes.length === 0) {
+                    return -1; // Use -1 to indicate no H-index available
+                }
+                
+                let highest = -1;
+                paper.author_h_indexes.forEach(author => {
+                    if (author.h_index && author.h_index > highest) {
+                        highest = author.h_index;
+                    }
+                });
+                
+                return highest;
+            }
+            
+            // Helper method to get average H-Index
+            getAverageHIndex(paper) {
+                if (paper.h_index_status !== 'completed' || !paper.author_h_indexes || paper.author_h_indexes.length === 0) {
+                    return -1; // Use -1 to indicate no H-index available
+                }
+                
+                let total = 0;
+                let count = 0;
+                
+                paper.author_h_indexes.forEach(author => {
+                    if (author.h_index !== null && author.h_index !== undefined) {
+                        total += author.h_index;
+                        count++;
+                    }
+                });
+                
+                return count > 0 ? total / count : -1;
+            }
+            
             sortPapers(papers) {
                 const sorted = [...papers];
                 
@@ -4245,6 +4315,98 @@ AgeDB-30, but also shows great benefit for practical use.
                             const bPriority = priorityMap[b.recommendation_score] || 0;
                             return aPriority - bPriority;
                         });
+                    
+                    case 'relevance-desc':
+                        return sorted.sort((a, b) => {
+                            const aScore = this.calculateRelevanceScore(a);
+                            const bScore = this.calculateRelevanceScore(b);
+                            return bScore - aScore; // Descending: highest relevance first
+                        });
+                    case 'relevance-asc':
+                        return sorted.sort((a, b) => {
+                            const aScore = this.calculateRelevanceScore(a);
+                            const bScore = this.calculateRelevanceScore(b);
+                            return aScore - bScore; // Ascending: lowest relevance first
+                        });
+                    
+                    case 'h-index-highest-desc':
+                        return sorted.sort((a, b) => {
+                            const aHIndex = this.getHighestHIndex(a);
+                            const bHIndex = this.getHighestHIndex(b);
+                            
+                            // If both have no H-index, sort by recommendation as secondary
+                            if (aHIndex === -1 && bHIndex === -1) {
+                                const priorityMap = {'Must Read': 4, 'Should Read': 3, 'Can Skip': 2, 'Ignore': 1};
+                                const aPriority = priorityMap[a.recommendation_score] || 0;
+                                const bPriority = priorityMap[b.recommendation_score] || 0;
+                                return bPriority - aPriority;
+                            }
+                            
+                            // Papers with no H-index go to bottom (descending)
+                            if (aHIndex === -1) return 1;
+                            if (bHIndex === -1) return -1;
+                            
+                            return bHIndex - aHIndex; // Descending: highest H-index first
+                        });
+                    case 'h-index-highest-asc':
+                        return sorted.sort((a, b) => {
+                            const aHIndex = this.getHighestHIndex(a);
+                            const bHIndex = this.getHighestHIndex(b);
+                            
+                            // If both have no H-index, sort by recommendation as secondary
+                            if (aHIndex === -1 && bHIndex === -1) {
+                                const priorityMap = {'Must Read': 4, 'Should Read': 3, 'Can Skip': 2, 'Ignore': 1};
+                                const aPriority = priorityMap[a.recommendation_score] || 0;
+                                const bPriority = priorityMap[b.recommendation_score] || 0;
+                                return bPriority - aPriority;
+                            }
+                            
+                            // Papers with no H-index go to bottom (ascending - still at bottom)
+                            if (aHIndex === -1) return 1;
+                            if (bHIndex === -1) return -1;
+                            
+                            return aHIndex - bHIndex; // Ascending: lowest H-index first
+                        });
+                    
+                    case 'h-index-average-desc':
+                        return sorted.sort((a, b) => {
+                            const aAvgHIndex = this.getAverageHIndex(a);
+                            const bAvgHIndex = this.getAverageHIndex(b);
+                            
+                            // If both have no H-index, sort by recommendation as secondary
+                            if (aAvgHIndex === -1 && bAvgHIndex === -1) {
+                                const priorityMap = {'Must Read': 4, 'Should Read': 3, 'Can Skip': 2, 'Ignore': 1};
+                                const aPriority = priorityMap[a.recommendation_score] || 0;
+                                const bPriority = priorityMap[b.recommendation_score] || 0;
+                                return bPriority - aPriority;
+                            }
+                            
+                            // Papers with no H-index go to bottom (descending)
+                            if (aAvgHIndex === -1) return 1;
+                            if (bAvgHIndex === -1) return -1;
+                            
+                            return bAvgHIndex - aAvgHIndex; // Descending: highest average H-index first
+                        });
+                    case 'h-index-average-asc':
+                        return sorted.sort((a, b) => {
+                            const aAvgHIndex = this.getAverageHIndex(a);
+                            const bAvgHIndex = this.getAverageHIndex(b);
+                            
+                            // If both have no H-index, sort by recommendation as secondary
+                            if (aAvgHIndex === -1 && bAvgHIndex === -1) {
+                                const priorityMap = {'Must Read': 4, 'Should Read': 3, 'Can Skip': 2, 'Ignore': 1};
+                                const aPriority = priorityMap[a.recommendation_score] || 0;
+                                const bPriority = priorityMap[b.recommendation_score] || 0;
+                                return bPriority - aPriority;
+                            }
+                            
+                            // Papers with no H-index go to bottom (ascending - still at bottom)
+                            if (aAvgHIndex === -1) return 1;
+                            if (bAvgHIndex === -1) return -1;
+                            
+                            return aAvgHIndex - bAvgHIndex; // Ascending: lowest average H-index first
+                        });
+                    
                     case 'arxiv-desc':
                         return sorted.sort((a, b) => {
                             const aMatch = a.id.match(/(\d{4})\.(\d+)/);

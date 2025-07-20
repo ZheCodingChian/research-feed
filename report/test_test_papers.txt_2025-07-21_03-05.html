@@ -18,7 +18,7 @@
         .title-section {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 2rem 0;
+            padding: 2rem 0 0 0;
             margin-bottom: 2rem;
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
             position: relative;
@@ -65,7 +65,7 @@
         .filter-section {
             background: rgba(0,0,0,0.2);
             border-top: 1px solid rgba(255,255,255,0.1);
-            padding: 1rem 0;
+            padding: 1rem 0 1rem 0;
             margin-top: 0;
         }
         
@@ -196,6 +196,25 @@
             z-index: 1;
         }
         
+        /* LLM Score Filter Disabled States */
+        .dropdown.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        
+        .dropdown.disabled .dropdown-toggle {
+            cursor: not-allowed !important;
+        }
+        
+        .dropdown.disabled .dropdown-menu {
+            pointer-events: none;
+        }
+        
+        .dropdown.disabled label {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
         /* Apply Filter Button Styles */
         .dropdown-apply-button {
             background-color: #667eea;
@@ -321,7 +340,7 @@
         
         /* AI Summary */
         .ai-summary {
-            background: rgba(255,255,255,0.05);
+            background: linear-gradient(deg, #00376E 0%, #004A94 100%);
             padding: 1rem;
             margin-bottom: 1.5rem;
             color: #ffffff;
@@ -951,12 +970,6 @@
                                         Not relevant enough
                                     </label>
                                 </li>
-                                <li>
-                                    <label class="dropdown-item">
-                                        <input type="checkbox" class="form-check-input me-2" id="status-not-scored" checked>
-                                        Not scored
-                                    </label>
-                                </li>
                                 <li class="dropdown-apply-section">
                                     <button type="button" class="dropdown-apply-button" id="status-apply-button">
                                         Apply Filter
@@ -968,14 +981,38 @@
                     <div class="col-md-6">
                         <div class="dropdown">
                             <button class="btn btn-outline-secondary dropdown-toggle w-100 text-start" type="button" id="recommendation-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="dropdown-label">Recommendation:</span> <span id="recommendation-selected">All</span>
+                                <span class="dropdown-label">Recommendation:</span> <span id="recommendation-selected">All selected</span>
                             </button>
                             <ul class="dropdown-menu w-100" aria-labelledby="recommendation-dropdown">
-                                <li><a class="dropdown-item" href="#">Must Read</a></li>
-                                <li><a class="dropdown-item" href="#">Should Read</a></li>
-                                <li><a class="dropdown-item" href="#">Can Skip</a></li>
-                                <li><a class="dropdown-item" href="#">Ignore</a></li>
-                                <li><a class="dropdown-item" href="#">All</a></li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="recommendation-must-read" checked>
+                                        Must read
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="recommendation-should-read" checked>
+                                        Should read
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="recommendation-can-skip" checked>
+                                        Can skip
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="recommendation-ignore" checked>
+                                        Ignore
+                                    </label>
+                                </li>
+                                <li class="dropdown-apply-section">
+                                    <button type="button" class="dropdown-apply-button" id="recommendation-apply-button">
+                                        Apply Filter
+                                    </button>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -986,28 +1023,76 @@
                     <div class="col-md-6">
                         <div class="dropdown">
                             <button class="btn btn-outline-secondary dropdown-toggle w-100 text-start" type="button" id="novelty-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="dropdown-label">Novelty:</span> <span id="novelty-selected">All</span>
+                                <span class="dropdown-label">Novelty:</span> <span id="novelty-selected">All selected</span>
                             </button>
                             <ul class="dropdown-menu w-100" aria-labelledby="novelty-dropdown">
-                                <li><a class="dropdown-item" href="#">High</a></li>
-                                <li><a class="dropdown-item" href="#">Moderate</a></li>
-                                <li><a class="dropdown-item" href="#">Low</a></li>
-                                <li><a class="dropdown-item" href="#">None</a></li>
-                                <li><a class="dropdown-item" href="#">All</a></li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="novelty-high" checked>
+                                        High
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="novelty-moderate" checked>
+                                        Moderate
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="novelty-low" checked>
+                                        Low
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="novelty-none" checked>
+                                        None
+                                    </label>
+                                </li>
+                                <li class="dropdown-apply-section">
+                                    <button type="button" class="dropdown-apply-button" id="novelty-apply-button">
+                                        Apply Filter
+                                    </button>
+                                </li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="dropdown">
                             <button class="btn btn-outline-secondary dropdown-toggle w-100 text-start" type="button" id="impact-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="dropdown-label">Potential Impact:</span> <span id="impact-selected">All</span>
+                                <span class="dropdown-label">Potential Impact:</span> <span id="impact-selected">All selected</span>
                             </button>
                             <ul class="dropdown-menu w-100" aria-labelledby="impact-dropdown">
-                                <li><a class="dropdown-item" href="#">High</a></li>
-                                <li><a class="dropdown-item" href="#">Moderate</a></li>
-                                <li><a class="dropdown-item" href="#">Low</a></li>
-                                <li><a class="dropdown-item" href="#">Negligible</a></li>
-                                <li><a class="dropdown-item" href="#">All</a></li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="impact-high" checked>
+                                        High
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="impact-moderate" checked>
+                                        Moderate
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="impact-low" checked>
+                                        Low
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="impact-negligible" checked>
+                                        Negligible
+                                    </label>
+                                </li>
+                                <li class="dropdown-apply-section">
+                                    <button type="button" class="dropdown-apply-button" id="impact-apply-button">
+                                        Apply Filter
+                                    </button>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -1160,6 +1245,12 @@
                             <ul class="dropdown-menu w-100" aria-labelledby="sort-dropdown">
                                 <li><a class="dropdown-item" href="#" data-value="recommendation-best">Recommendation (Best first)</a></li>
                                 <li><a class="dropdown-item" href="#" data-value="recommendation-worst">Recommendation (Worst first)</a></li>
+                                <li><a class="dropdown-item" href="#" data-value="relevance-desc">LLM Validated Relevance (Descending)</a></li>
+                                <li><a class="dropdown-item" href="#" data-value="relevance-asc">LLM Validated Relevance (Ascending)</a></li>
+                                <li><a class="dropdown-item" href="#" data-value="h-index-highest-desc">Highest H-Index (Descending)</a></li>
+                                <li><a class="dropdown-item" href="#" data-value="h-index-highest-asc">Highest H-Index (Ascending)</a></li>
+                                <li><a class="dropdown-item" href="#" data-value="h-index-average-desc">Average H-Index (Descending)</a></li>
+                                <li><a class="dropdown-item" href="#" data-value="h-index-average-asc">Average H-Index (Ascending)</a></li>
                                 <li><a class="dropdown-item" href="#" data-value="arxiv-desc">arXiv ID (Descending)</a></li>
                                 <li><a class="dropdown-item" href="#" data-value="arxiv-asc">arXiv ID (Ascending)</a></li>
                                 <li><a class="dropdown-item" href="#" data-value="title-az">Title (A-Z)</a></li>
@@ -3093,8 +3184,25 @@ AgeDB-30, but also shows great benefit for practical use.
                 this.currentFilters = {
                     completed: true,
                     failed: true,
-                    not_relevant_enough: true,
-                    not_scored: true
+                    not_relevant_enough: true
+                };
+                this.currentRecommendationFilters = {
+                    must_read: true,
+                    should_read: true,
+                    can_skip: true,
+                    ignore: true
+                };
+                this.currentNoveltyFilters = {
+                    high: true,
+                    moderate: true,
+                    low: true,
+                    none: true
+                };
+                this.currentImpactFilters = {
+                    high: true,
+                    moderate: true,
+                    low: true,
+                    negligible: true
                 };
                 this.currentTopicFilters = {
                     rlhf: true,
@@ -3120,6 +3228,9 @@ AgeDB-30, but also shows great benefit for practical use.
                 
                 // Pending state for deferred filtering
                 this.pendingFilters = { ...this.currentFilters };
+                this.pendingRecommendationFilters = { ...this.currentRecommendationFilters };
+                this.pendingNoveltyFilters = { ...this.currentNoveltyFilters };
+                this.pendingImpactFilters = { ...this.currentImpactFilters };
                 this.pendingTopicFilters = { ...this.currentTopicFilters };
                 this.pendingRelevanceFilters = { ...this.currentRelevanceFilters };
                 this.pendingHIndexFilters = { ...this.currentHIndexFilters };
@@ -3156,7 +3267,7 @@ AgeDB-30, but also shows great benefit for practical use.
                 });
                 
                 // Filter checkboxes - Update pending state only
-                const filterCheckboxes = ['status-completed', 'status-failed', 'status-not-relevant', 'status-not-scored'];
+                const filterCheckboxes = ['status-completed', 'status-failed', 'status-not-relevant'];
                 filterCheckboxes.forEach(id => {
                     document.getElementById(id).addEventListener('change', () => {
                         this.updatePendingFilters();
@@ -3168,6 +3279,48 @@ AgeDB-30, but also shows great benefit for practical use.
                 document.getElementById('status-apply-button').addEventListener('click', () => {
                     this.applyPendingFilters();
                     this.closeDropdown('status-dropdown');
+                });
+                
+                // Recommendation checkboxes - Update pending state only
+                const recommendationCheckboxes = ['recommendation-must-read', 'recommendation-should-read', 'recommendation-can-skip', 'recommendation-ignore'];
+                recommendationCheckboxes.forEach(id => {
+                    document.getElementById(id).addEventListener('change', () => {
+                        this.updatePendingRecommendationFilters();
+                    });
+                });
+                
+                // Apply Filter button for Recommendation
+                document.getElementById('recommendation-apply-button').addEventListener('click', () => {
+                    this.applyPendingRecommendationFilters();
+                    this.closeDropdown('recommendation-dropdown');
+                });
+                
+                // Novelty checkboxes - Update pending state only
+                const noveltyCheckboxes = ['novelty-high', 'novelty-moderate', 'novelty-low', 'novelty-none'];
+                noveltyCheckboxes.forEach(id => {
+                    document.getElementById(id).addEventListener('change', () => {
+                        this.updatePendingNoveltyFilters();
+                    });
+                });
+                
+                // Apply Filter button for Novelty
+                document.getElementById('novelty-apply-button').addEventListener('click', () => {
+                    this.applyPendingNoveltyFilters();
+                    this.closeDropdown('novelty-dropdown');
+                });
+                
+                // Impact checkboxes - Update pending state only
+                const impactCheckboxes = ['impact-high', 'impact-moderate', 'impact-low', 'impact-negligible'];
+                impactCheckboxes.forEach(id => {
+                    document.getElementById(id).addEventListener('change', () => {
+                        this.updatePendingImpactFilters();
+                    });
+                });
+                
+                // Apply Filter button for Impact
+                document.getElementById('impact-apply-button').addEventListener('click', () => {
+                    this.applyPendingImpactFilters();
+                    this.closeDropdown('impact-dropdown');
                 });
                 
                 // Prevent filter dropdown from closing when clicking on checkboxes or buttons
@@ -3192,6 +3345,69 @@ AgeDB-30, but also shows great benefit for practical use.
                 // Add event handlers to checkboxes to prevent dropdown closing
                 const allFilterCheckboxes = document.querySelectorAll('ul[aria-labelledby="status-dropdown"] input[type="checkbox"]');
                 allFilterCheckboxes.forEach(checkbox => {
+                    checkbox.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+                });
+                
+                // Prevent recommendation dropdown from closing
+                document.querySelectorAll('ul[aria-labelledby="recommendation-dropdown"] .dropdown-item, ul[aria-labelledby="recommendation-dropdown"] .dropdown-apply-section').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        if (item.tagName === 'LABEL') {
+                            const checkbox = item.querySelector('input[type="checkbox"]');
+                            if (checkbox) {
+                                checkbox.checked = !checkbox.checked;
+                                checkbox.dispatchEvent(new Event('change'));
+                            }
+                        }
+                    });
+                });
+                
+                document.querySelectorAll('ul[aria-labelledby="recommendation-dropdown"] input[type="checkbox"]').forEach(checkbox => {
+                    checkbox.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+                });
+                
+                // Prevent novelty dropdown from closing
+                document.querySelectorAll('ul[aria-labelledby="novelty-dropdown"] .dropdown-item, ul[aria-labelledby="novelty-dropdown"] .dropdown-apply-section').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        if (item.tagName === 'LABEL') {
+                            const checkbox = item.querySelector('input[type="checkbox"]');
+                            if (checkbox) {
+                                checkbox.checked = !checkbox.checked;
+                                checkbox.dispatchEvent(new Event('change'));
+                            }
+                        }
+                    });
+                });
+                
+                document.querySelectorAll('ul[aria-labelledby="novelty-dropdown"] input[type="checkbox"]').forEach(checkbox => {
+                    checkbox.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+                });
+                
+                // Prevent impact dropdown from closing
+                document.querySelectorAll('ul[aria-labelledby="impact-dropdown"] .dropdown-item, ul[aria-labelledby="impact-dropdown"] .dropdown-apply-section').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        if (item.tagName === 'LABEL') {
+                            const checkbox = item.querySelector('input[type="checkbox"]');
+                            if (checkbox) {
+                                checkbox.checked = !checkbox.checked;
+                                checkbox.dispatchEvent(new Event('change'));
+                            }
+                        }
+                    });
+                });
+                
+                document.querySelectorAll('ul[aria-labelledby="impact-dropdown"] input[type="checkbox"]').forEach(checkbox => {
                     checkbox.addEventListener('click', (e) => {
                         e.stopPropagation();
                     });
@@ -3274,6 +3490,18 @@ AgeDB-30, but also shows great benefit for practical use.
                 // Reset pending state when dropdowns are closed without applying
                 document.getElementById('status-dropdown').addEventListener('hidden.bs.dropdown', () => {
                     this.resetPendingFilters();
+                });
+                
+                document.getElementById('recommendation-dropdown').addEventListener('hidden.bs.dropdown', () => {
+                    this.resetPendingRecommendationFilters();
+                });
+                
+                document.getElementById('novelty-dropdown').addEventListener('hidden.bs.dropdown', () => {
+                    this.resetPendingNoveltyFilters();
+                });
+                
+                document.getElementById('impact-dropdown').addEventListener('hidden.bs.dropdown', () => {
+                    this.resetPendingImpactFilters();
                 });
                 
                 document.getElementById('topics-dropdown').addEventListener('hidden.bs.dropdown', () => {
@@ -3369,11 +3597,35 @@ AgeDB-30, but also shows great benefit for practical use.
                 document.getElementById('status-completed').checked = this.currentFilters.completed;
                 document.getElementById('status-failed').checked = this.currentFilters.failed;
                 document.getElementById('status-not-relevant').checked = this.currentFilters.not_relevant_enough;
-                document.getElementById('status-not-scored').checked = this.currentFilters.not_scored;
+                
+                // Initialize recommendation filter checkboxes
+                document.getElementById('recommendation-must-read').checked = this.currentRecommendationFilters.must_read;
+                document.getElementById('recommendation-should-read').checked = this.currentRecommendationFilters.should_read;
+                document.getElementById('recommendation-can-skip').checked = this.currentRecommendationFilters.can_skip;
+                document.getElementById('recommendation-ignore').checked = this.currentRecommendationFilters.ignore;
+                
+                // Initialize novelty filter checkboxes
+                document.getElementById('novelty-high').checked = this.currentNoveltyFilters.high;
+                document.getElementById('novelty-moderate').checked = this.currentNoveltyFilters.moderate;
+                document.getElementById('novelty-low').checked = this.currentNoveltyFilters.low;
+                document.getElementById('novelty-none').checked = this.currentNoveltyFilters.none;
+                
+                // Initialize impact filter checkboxes
+                document.getElementById('impact-high').checked = this.currentImpactFilters.high;
+                document.getElementById('impact-moderate').checked = this.currentImpactFilters.moderate;
+                document.getElementById('impact-low').checked = this.currentImpactFilters.low;
+                document.getElementById('impact-negligible').checked = this.currentImpactFilters.negligible;
                 
                 // Sync pending state with current state
                 this.pendingFilters = { ...this.currentFilters };
+                this.pendingRecommendationFilters = { ...this.currentRecommendationFilters };
+                this.pendingNoveltyFilters = { ...this.currentNoveltyFilters };
+                this.pendingImpactFilters = { ...this.currentImpactFilters };
                 this.updateFilterDropdownLabel();
+                this.updateRecommendationDropdownLabel();
+                this.updateNoveltyDropdownLabel();
+                this.updateImpactDropdownLabel();
+                this.updateLLMFilterDisabledState();
                 
                 // Ensure all topic checkboxes are checked (all selected by default)
                 document.getElementById('topic-rlhf').checked = this.currentTopicFilters.rlhf;
@@ -3414,8 +3666,7 @@ AgeDB-30, but also shows great benefit for practical use.
                 this.pendingFilters = {
                     completed: document.getElementById('status-completed').checked,
                     failed: document.getElementById('status-failed').checked,
-                    not_relevant_enough: document.getElementById('status-not-relevant').checked,
-                    not_scored: document.getElementById('status-not-scored').checked
+                    not_relevant_enough: document.getElementById('status-not-relevant').checked
                 };
             }
             
@@ -3545,6 +3796,7 @@ AgeDB-30, but also shows great benefit for practical use.
             applyPendingFilters() {
                 this.currentFilters = { ...this.pendingFilters };
                 this.updateFilterDropdownLabel();
+                this.updateLLMFilterDisabledState(); // Update disabled state when filters change
                 this.applyFiltersAndSort();
             }
             
@@ -3582,7 +3834,145 @@ AgeDB-30, but also shows great benefit for practical use.
                 document.getElementById('status-completed').checked = this.currentFilters.completed;
                 document.getElementById('status-failed').checked = this.currentFilters.failed;
                 document.getElementById('status-not-relevant').checked = this.currentFilters.not_relevant_enough;
-                document.getElementById('status-not-scored').checked = this.currentFilters.not_scored;
+            }
+            
+            // Recommendation filter methods
+            updatePendingRecommendationFilters() {
+                this.pendingRecommendationFilters = {
+                    must_read: document.getElementById('recommendation-must-read').checked,
+                    should_read: document.getElementById('recommendation-should-read').checked,
+                    can_skip: document.getElementById('recommendation-can-skip').checked,
+                    ignore: document.getElementById('recommendation-ignore').checked
+                };
+            }
+            
+            updateRecommendationDropdownLabel() {
+                const checkedCount = Object.values(this.pendingRecommendationFilters).filter(v => v).length;
+                const totalCount = Object.keys(this.pendingRecommendationFilters).length;
+                const selectedSpan = document.getElementById('recommendation-selected');
+                
+                if (checkedCount === totalCount) {
+                    selectedSpan.textContent = 'All selected';
+                } else if (checkedCount === 0) {
+                    selectedSpan.textContent = 'None selected';
+                } else {
+                    selectedSpan.textContent = `${checkedCount} selected`;
+                }
+            }
+            
+            applyPendingRecommendationFilters() {
+                this.currentRecommendationFilters = { ...this.pendingRecommendationFilters };
+                this.updateRecommendationDropdownLabel();
+                this.applyFiltersAndSort();
+            }
+            
+            resetPendingRecommendationFilters() {
+                this.pendingRecommendationFilters = { ...this.currentRecommendationFilters };
+                // Sync checkboxes with current state
+                document.getElementById('recommendation-must-read').checked = this.currentRecommendationFilters.must_read;
+                document.getElementById('recommendation-should-read').checked = this.currentRecommendationFilters.should_read;
+                document.getElementById('recommendation-can-skip').checked = this.currentRecommendationFilters.can_skip;
+                document.getElementById('recommendation-ignore').checked = this.currentRecommendationFilters.ignore;
+            }
+            
+            // Novelty filter methods
+            updatePendingNoveltyFilters() {
+                this.pendingNoveltyFilters = {
+                    high: document.getElementById('novelty-high').checked,
+                    moderate: document.getElementById('novelty-moderate').checked,
+                    low: document.getElementById('novelty-low').checked,
+                    none: document.getElementById('novelty-none').checked
+                };
+            }
+            
+            updateNoveltyDropdownLabel() {
+                const checkedCount = Object.values(this.pendingNoveltyFilters).filter(v => v).length;
+                const totalCount = Object.keys(this.pendingNoveltyFilters).length;
+                const selectedSpan = document.getElementById('novelty-selected');
+                
+                if (checkedCount === totalCount) {
+                    selectedSpan.textContent = 'All selected';
+                } else if (checkedCount === 0) {
+                    selectedSpan.textContent = 'None selected';
+                } else {
+                    selectedSpan.textContent = `${checkedCount} selected`;
+                }
+            }
+            
+            applyPendingNoveltyFilters() {
+                this.currentNoveltyFilters = { ...this.pendingNoveltyFilters };
+                this.updateNoveltyDropdownLabel();
+                this.applyFiltersAndSort();
+            }
+            
+            resetPendingNoveltyFilters() {
+                this.pendingNoveltyFilters = { ...this.currentNoveltyFilters };
+                // Sync checkboxes with current state
+                document.getElementById('novelty-high').checked = this.currentNoveltyFilters.high;
+                document.getElementById('novelty-moderate').checked = this.currentNoveltyFilters.moderate;
+                document.getElementById('novelty-low').checked = this.currentNoveltyFilters.low;
+                document.getElementById('novelty-none').checked = this.currentNoveltyFilters.none;
+            }
+            
+            // Impact filter methods
+            updatePendingImpactFilters() {
+                this.pendingImpactFilters = {
+                    high: document.getElementById('impact-high').checked,
+                    moderate: document.getElementById('impact-moderate').checked,
+                    low: document.getElementById('impact-low').checked,
+                    negligible: document.getElementById('impact-negligible').checked
+                };
+            }
+            
+            updateImpactDropdownLabel() {
+                const checkedCount = Object.values(this.pendingImpactFilters).filter(v => v).length;
+                const totalCount = Object.keys(this.pendingImpactFilters).length;
+                const selectedSpan = document.getElementById('impact-selected');
+                
+                if (checkedCount === totalCount) {
+                    selectedSpan.textContent = 'All selected';
+                } else if (checkedCount === 0) {
+                    selectedSpan.textContent = 'None selected';
+                } else {
+                    selectedSpan.textContent = `${checkedCount} selected`;
+                }
+            }
+            
+            applyPendingImpactFilters() {
+                this.currentImpactFilters = { ...this.pendingImpactFilters };
+                this.updateImpactDropdownLabel();
+                this.applyFiltersAndSort();
+            }
+            
+            resetPendingImpactFilters() {
+                this.pendingImpactFilters = { ...this.currentImpactFilters };
+                // Sync checkboxes with current state
+                document.getElementById('impact-high').checked = this.currentImpactFilters.high;
+                document.getElementById('impact-moderate').checked = this.currentImpactFilters.moderate;
+                document.getElementById('impact-low').checked = this.currentImpactFilters.low;
+                document.getElementById('impact-negligible').checked = this.currentImpactFilters.negligible;
+            }
+            
+            // Update disabled state for LLM score-dependent filters
+            updateLLMFilterDisabledState() {
+                // Use the APPLIED state, not the pending checkbox state
+                const completedApplied = this.currentFilters.completed;
+                
+                const recommendationDropdown = document.querySelector('#recommendation-dropdown').closest('.dropdown');
+                const noveltyDropdown = document.querySelector('#novelty-dropdown').closest('.dropdown');
+                const impactDropdown = document.querySelector('#impact-dropdown').closest('.dropdown');
+                
+                if (completedApplied) {
+                    // Enable the filters
+                    recommendationDropdown.classList.remove('disabled');
+                    noveltyDropdown.classList.remove('disabled');
+                    impactDropdown.classList.remove('disabled');
+                } else {
+                    // Disable the filters
+                    recommendationDropdown.classList.add('disabled');
+                    noveltyDropdown.classList.add('disabled');
+                    impactDropdown.classList.add('disabled');
+                }
             }
             
             // Reset pending topic filters to current applied state  
@@ -3629,12 +4019,27 @@ AgeDB-30, but also shows great benefit for practical use.
                     return false;
                 }
                 
-                // Gatekeeper 2: Topic & Relevance Filter (the sophisticated one)
+                // Gatekeeper 2: LLM Scoring Filters (only apply if status is completed)
+                if (paper.llm_score_status === 'completed') {
+                    if (!this.passesRecommendationFilter(paper)) {
+                        return false;
+                    }
+                    
+                    if (!this.passesNoveltyFilter(paper)) {
+                        return false;
+                    }
+                    
+                    if (!this.passesImpactFilter(paper)) {
+                        return false;
+                    }
+                }
+                
+                // Gatekeeper 3: Topic & Relevance Filter (the sophisticated one)
                 if (!this.passesTopicAndRelevanceFilter(paper)) {
                     return false;
                 }
                 
-                // Gatekeeper 3: H-Index Filter
+                // Gatekeeper 4: H-Index Filter
                 if (!this.passesHIndexFilter(paper)) {
                     return false;
                 }
@@ -3652,10 +4057,63 @@ AgeDB-30, but also shows great benefit for practical use.
                         return this.currentFilters.failed;
                     case 'not_relevant_enough':
                         return this.currentFilters.not_relevant_enough;
-                    case 'not_scored':
-                        return this.currentFilters.not_scored;
                     default:
-                        return this.currentFilters.not_scored; // Default to not_scored for unknown statuses
+                        // Handle any unknown statuses - assume they should be treated like failed
+                        return this.currentFilters.failed;
+                }
+            }
+            
+            // Check if paper passes the Recommendation filter
+            passesRecommendationFilter(paper) {
+                const recommendation = paper.recommendation_score;
+                switch(recommendation) {
+                    case 'Must Read':
+                        return this.currentRecommendationFilters.must_read;
+                    case 'Should Read':
+                        return this.currentRecommendationFilters.should_read;
+                    case 'Can Skip':
+                        return this.currentRecommendationFilters.can_skip;
+                    case 'Ignore':
+                        return this.currentRecommendationFilters.ignore;
+                    default:
+                        // If no recommendation score, show it if any filter is active
+                        return Object.values(this.currentRecommendationFilters).some(v => v);
+                }
+            }
+            
+            // Check if paper passes the Novelty filter
+            passesNoveltyFilter(paper) {
+                const novelty = paper.novelty_score;
+                switch(novelty) {
+                    case 'High':
+                        return this.currentNoveltyFilters.high;
+                    case 'Moderate':
+                        return this.currentNoveltyFilters.moderate;
+                    case 'Low':
+                        return this.currentNoveltyFilters.low;
+                    case 'None':
+                        return this.currentNoveltyFilters.none;
+                    default:
+                        // If no novelty score, show it if any filter is active
+                        return Object.values(this.currentNoveltyFilters).some(v => v);
+                }
+            }
+            
+            // Check if paper passes the Impact filter
+            passesImpactFilter(paper) {
+                const impact = paper.impact_score;
+                switch(impact) {
+                    case 'High':
+                        return this.currentImpactFilters.high;
+                    case 'Moderate':
+                        return this.currentImpactFilters.moderate;
+                    case 'Low':
+                        return this.currentImpactFilters.low;
+                    case 'Negligible':
+                        return this.currentImpactFilters.negligible;
+                    default:
+                        // If no impact score, show it if any filter is active
+                        return Object.values(this.currentImpactFilters).some(v => v);
                 }
             }
             
@@ -3775,6 +4233,70 @@ AgeDB-30, but also shows great benefit for practical use.
                 return true;
             }
             
+            // Helper method to calculate LLM validated relevance score
+            calculateRelevanceScore(paper) {
+                // Define relevance weights: Highly relevant = 4, Moderately = 3, Tangentially = 2, Not relevant = 1
+                const relevanceWeights = {
+                    'highly relevant': 4,
+                    'moderately relevant': 3, 
+                    'tangentially relevant': 2,
+                    'not relevant': 1
+                };
+                
+                let totalScore = 0;
+                
+                // Only consider topics that are currently enabled in the topic filters
+                const enabledTopics = Object.keys(this.currentTopicFilters)
+                    .filter(topic => this.currentTopicFilters[topic]);
+                
+                enabledTopics.forEach(topic => {
+                    const relevanceField = `${topic}_relevance`;
+                    const relevance = paper[relevanceField];
+                    
+                    if (relevance && relevanceWeights[relevance.toLowerCase()]) {
+                        const weight = relevanceWeights[relevance.toLowerCase()];
+                        totalScore += weight * weight; // Square the weight as requested
+                    }
+                });
+                
+                return totalScore;
+            }
+            
+            // Helper method to get highest H-Index
+            getHighestHIndex(paper) {
+                if (paper.h_index_status !== 'completed' || !paper.author_h_indexes || paper.author_h_indexes.length === 0) {
+                    return -1; // Use -1 to indicate no H-index available
+                }
+                
+                let highest = -1;
+                paper.author_h_indexes.forEach(author => {
+                    if (author.h_index && author.h_index > highest) {
+                        highest = author.h_index;
+                    }
+                });
+                
+                return highest;
+            }
+            
+            // Helper method to get average H-Index
+            getAverageHIndex(paper) {
+                if (paper.h_index_status !== 'completed' || !paper.author_h_indexes || paper.author_h_indexes.length === 0) {
+                    return -1; // Use -1 to indicate no H-index available
+                }
+                
+                let total = 0;
+                let count = 0;
+                
+                paper.author_h_indexes.forEach(author => {
+                    if (author.h_index !== null && author.h_index !== undefined) {
+                        total += author.h_index;
+                        count++;
+                    }
+                });
+                
+                return count > 0 ? total / count : -1;
+            }
+            
             sortPapers(papers) {
                 const sorted = [...papers];
                 
@@ -3793,6 +4315,98 @@ AgeDB-30, but also shows great benefit for practical use.
                             const bPriority = priorityMap[b.recommendation_score] || 0;
                             return aPriority - bPriority;
                         });
+                    
+                    case 'relevance-desc':
+                        return sorted.sort((a, b) => {
+                            const aScore = this.calculateRelevanceScore(a);
+                            const bScore = this.calculateRelevanceScore(b);
+                            return bScore - aScore; // Descending: highest relevance first
+                        });
+                    case 'relevance-asc':
+                        return sorted.sort((a, b) => {
+                            const aScore = this.calculateRelevanceScore(a);
+                            const bScore = this.calculateRelevanceScore(b);
+                            return aScore - bScore; // Ascending: lowest relevance first
+                        });
+                    
+                    case 'h-index-highest-desc':
+                        return sorted.sort((a, b) => {
+                            const aHIndex = this.getHighestHIndex(a);
+                            const bHIndex = this.getHighestHIndex(b);
+                            
+                            // If both have no H-index, sort by recommendation as secondary
+                            if (aHIndex === -1 && bHIndex === -1) {
+                                const priorityMap = {'Must Read': 4, 'Should Read': 3, 'Can Skip': 2, 'Ignore': 1};
+                                const aPriority = priorityMap[a.recommendation_score] || 0;
+                                const bPriority = priorityMap[b.recommendation_score] || 0;
+                                return bPriority - aPriority;
+                            }
+                            
+                            // Papers with no H-index go to bottom (descending)
+                            if (aHIndex === -1) return 1;
+                            if (bHIndex === -1) return -1;
+                            
+                            return bHIndex - aHIndex; // Descending: highest H-index first
+                        });
+                    case 'h-index-highest-asc':
+                        return sorted.sort((a, b) => {
+                            const aHIndex = this.getHighestHIndex(a);
+                            const bHIndex = this.getHighestHIndex(b);
+                            
+                            // If both have no H-index, sort by recommendation as secondary
+                            if (aHIndex === -1 && bHIndex === -1) {
+                                const priorityMap = {'Must Read': 4, 'Should Read': 3, 'Can Skip': 2, 'Ignore': 1};
+                                const aPriority = priorityMap[a.recommendation_score] || 0;
+                                const bPriority = priorityMap[b.recommendation_score] || 0;
+                                return bPriority - aPriority;
+                            }
+                            
+                            // Papers with no H-index go to bottom (ascending - still at bottom)
+                            if (aHIndex === -1) return 1;
+                            if (bHIndex === -1) return -1;
+                            
+                            return aHIndex - bHIndex; // Ascending: lowest H-index first
+                        });
+                    
+                    case 'h-index-average-desc':
+                        return sorted.sort((a, b) => {
+                            const aAvgHIndex = this.getAverageHIndex(a);
+                            const bAvgHIndex = this.getAverageHIndex(b);
+                            
+                            // If both have no H-index, sort by recommendation as secondary
+                            if (aAvgHIndex === -1 && bAvgHIndex === -1) {
+                                const priorityMap = {'Must Read': 4, 'Should Read': 3, 'Can Skip': 2, 'Ignore': 1};
+                                const aPriority = priorityMap[a.recommendation_score] || 0;
+                                const bPriority = priorityMap[b.recommendation_score] || 0;
+                                return bPriority - aPriority;
+                            }
+                            
+                            // Papers with no H-index go to bottom (descending)
+                            if (aAvgHIndex === -1) return 1;
+                            if (bAvgHIndex === -1) return -1;
+                            
+                            return bAvgHIndex - aAvgHIndex; // Descending: highest average H-index first
+                        });
+                    case 'h-index-average-asc':
+                        return sorted.sort((a, b) => {
+                            const aAvgHIndex = this.getAverageHIndex(a);
+                            const bAvgHIndex = this.getAverageHIndex(b);
+                            
+                            // If both have no H-index, sort by recommendation as secondary
+                            if (aAvgHIndex === -1 && bAvgHIndex === -1) {
+                                const priorityMap = {'Must Read': 4, 'Should Read': 3, 'Can Skip': 2, 'Ignore': 1};
+                                const aPriority = priorityMap[a.recommendation_score] || 0;
+                                const bPriority = priorityMap[b.recommendation_score] || 0;
+                                return bPriority - aPriority;
+                            }
+                            
+                            // Papers with no H-index go to bottom (ascending - still at bottom)
+                            if (aAvgHIndex === -1) return 1;
+                            if (bAvgHIndex === -1) return -1;
+                            
+                            return aAvgHIndex - bAvgHIndex; // Ascending: lowest average H-index first
+                        });
+                    
                     case 'arxiv-desc':
                         return sorted.sort((a, b) => {
                             const aMatch = a.id.match(/(\d{4})\.(\d+)/);
