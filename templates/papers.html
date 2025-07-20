@@ -849,7 +849,7 @@
         <div class="filter-section">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="dropdown">
                             <button class="btn btn-outline-secondary dropdown-toggle w-100 text-start" type="button" id="sort-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="dropdown-label">Sort by:</span> <span id="sort-selected">Recommendation (Best first)</span>
@@ -864,7 +864,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                         <div class="dropdown">
                             <button class="btn btn-outline-secondary dropdown-toggle w-100 text-start" type="button" id="filter-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="dropdown-label">LLM Score Status:</span> <span id="filter-selected">All selected</span>
@@ -902,7 +902,9 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                </div>
+                <div class="row align-items-center mt-3">
+                    <div class="col-md-4">
                         <div class="dropdown">
                             <button class="btn btn-outline-secondary dropdown-toggle w-100 text-start" type="button" id="topics-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="dropdown-label">Topics:</span> <span id="topics-selected">All selected</span>
@@ -946,7 +948,45 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle w-100 text-start" type="button" id="relevance-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="dropdown-label">LLM Validation Relevance:</span> <span id="relevance-selected">All selected</span>
+                            </button>
+                            <ul class="dropdown-menu w-100" aria-labelledby="relevance-dropdown">
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="relevance-highly" checked>
+                                        Highly relevant
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="relevance-moderately" checked>
+                                        Moderately relevant
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="relevance-tangentially" checked>
+                                        Tangentially relevant
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="relevance-not" checked>
+                                        Not relevant
+                                    </label>
+                                </li>
+                                <li class="dropdown-apply-section">
+                                    <button type="button" class="dropdown-apply-button" id="relevance-apply-button">
+                                        Apply Filter
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="paper-count-display">
                             <span id="filtered-count">{{ paper_count }}</span>/<span id="total-count">{{ paper_count }}</span> papers
                         </div>
@@ -1637,10 +1677,17 @@
                     distributed_training: true,
                     datasets: true
                 };
+                this.currentRelevanceFilters = {
+                    highly: true,
+                    moderately: true,
+                    tangentially: true,
+                    not_relevant: true
+                };
                 
                 // Pending state for deferred filtering
                 this.pendingFilters = { ...this.currentFilters };
                 this.pendingTopicFilters = { ...this.currentTopicFilters };
+                this.pendingRelevanceFilters = { ...this.currentRelevanceFilters };
                 
                 this.initializeEventListeners();
                 this.initializeUIState();
@@ -1695,12 +1742,14 @@
                         e.stopPropagation();
                         e.preventDefault();
                         
-                        // Handle checkbox clicks manually
-                        const checkbox = item.querySelector('input[type="checkbox"]');
-                        if (checkbox && e.target !== checkbox) {
-                            checkbox.checked = !checkbox.checked;
-                            // Trigger change event manually
-                            checkbox.dispatchEvent(new Event('change'));
+                        // Handle label clicks manually to toggle checkboxes
+                        if (item.tagName === 'LABEL') {
+                            const checkbox = item.querySelector('input[type="checkbox"]');
+                            if (checkbox) {
+                                checkbox.checked = !checkbox.checked;
+                                // Trigger change event manually
+                                checkbox.dispatchEvent(new Event('change'));
+                            }
                         }
                     });
                 });
@@ -1735,6 +1784,21 @@
                     this.closeDropdown('topics-dropdown');
                 });
                 
+                // Relevance checkboxes - Update pending state only
+                const relevanceCheckboxes = ['relevance-highly', 'relevance-moderately', 'relevance-tangentially', 'relevance-not'];
+                relevanceCheckboxes.forEach(id => {
+                    document.getElementById(id).addEventListener('change', () => {
+                        this.updatePendingRelevanceFilters();
+                        // Don't update dropdown label until apply filter is clicked
+                    });
+                });
+                
+                // Apply Filter button for Relevance
+                document.getElementById('relevance-apply-button').addEventListener('click', () => {
+                    this.applyPendingRelevanceFilters();
+                    this.closeDropdown('relevance-dropdown');
+                });
+                
                 // Reset pending state when dropdowns are closed without applying
                 document.getElementById('filter-dropdown').addEventListener('hidden.bs.dropdown', () => {
                     this.resetPendingFilters();
@@ -1744,6 +1808,10 @@
                     this.resetPendingTopicFilters();
                 });
                 
+                document.getElementById('relevance-dropdown').addEventListener('hidden.bs.dropdown', () => {
+                    this.resetPendingRelevanceFilters();
+                });
+                
                 // Prevent topics dropdown from closing when clicking on checkboxes or buttons
                 document.querySelectorAll('ul[aria-labelledby="topics-dropdown"] .dropdown-item, ul[aria-labelledby="topics-dropdown"] .dropdown-apply-section').forEach(item => {
                     item.addEventListener('click', (e) => {
@@ -1751,13 +1819,56 @@
                         e.stopPropagation();
                         e.preventDefault();
                         
-                        // Handle checkbox clicks manually
-                        const checkbox = item.querySelector('input[type="checkbox"]');
-                        if (checkbox && e.target !== checkbox) {
-                            checkbox.checked = !checkbox.checked;
-                            // Trigger change event manually
-                            checkbox.dispatchEvent(new Event('change'));
+                        // Handle label clicks manually to toggle checkboxes
+                        if (item.tagName === 'LABEL') {
+                            const checkbox = item.querySelector('input[type="checkbox"]');
+                            if (checkbox) {
+                                checkbox.checked = !checkbox.checked;
+                                // Trigger change event manually
+                                checkbox.dispatchEvent(new Event('change'));
+                            }
                         }
+                    });
+                });
+                
+                // Prevent relevance dropdown from closing when clicking on checkboxes or buttons
+                document.querySelectorAll('ul[aria-labelledby="relevance-dropdown"] .dropdown-item, ul[aria-labelledby="relevance-dropdown"] .dropdown-apply-section').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        // Stop all propagation to prevent dropdown from closing
+                        e.stopPropagation();
+                        e.preventDefault();
+                        
+                        // Handle label clicks manually to toggle checkboxes
+                        if (item.tagName === 'LABEL') {
+                            const checkbox = item.querySelector('input[type="checkbox"]');
+                            if (checkbox) {
+                                checkbox.checked = !checkbox.checked;
+                                // Trigger change event manually
+                                checkbox.dispatchEvent(new Event('change'));
+                            }
+                        }
+                    });
+                });
+                
+                // Add event handlers to checkboxes to prevent dropdown closing
+                const filterCheckboxElements = document.querySelectorAll('ul[aria-labelledby="filter-dropdown"] input[type="checkbox"]');
+                filterCheckboxElements.forEach(checkbox => {
+                    checkbox.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+                });
+                
+                const topicCheckboxElements = document.querySelectorAll('ul[aria-labelledby="topics-dropdown"] input[type="checkbox"]');
+                topicCheckboxElements.forEach(checkbox => {
+                    checkbox.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+                });
+                
+                const allRelevanceCheckboxes = document.querySelectorAll('ul[aria-labelledby="relevance-dropdown"] input[type="checkbox"]');
+                allRelevanceCheckboxes.forEach(checkbox => {
+                    checkbox.addEventListener('click', (e) => {
+                        e.stopPropagation();
                     });
                 });
             }
@@ -1799,9 +1910,18 @@
                 document.getElementById('topic-distributed-training').checked = this.currentTopicFilters.distributed_training;
                 document.getElementById('topic-datasets').checked = this.currentTopicFilters.datasets;
                 
-                // Sync pending state with current state
-                this.pendingTopicFilters = { ...this.currentTopicFilters };
+                // Sync pending state with current state                this.pendingTopicFilters = { ...this.currentTopicFilters };
                 this.updateTopicsDropdownLabel();
+                
+                // Ensure all relevance checkboxes are checked (all selected by default)
+                document.getElementById('relevance-highly').checked = this.currentRelevanceFilters.highly;
+                document.getElementById('relevance-moderately').checked = this.currentRelevanceFilters.moderately;
+                document.getElementById('relevance-tangentially').checked = this.currentRelevanceFilters.tangentially;
+                document.getElementById('relevance-not').checked = this.currentRelevanceFilters.not_relevant;
+                
+                // Sync pending state with current state
+                this.pendingRelevanceFilters = { ...this.currentRelevanceFilters };
+                this.updateRelevanceDropdownLabel();
             }
             
             // Methods for handling pending state (before Apply Filter is clicked)
@@ -1852,6 +1972,29 @@
                 }
             }
             
+            updatePendingRelevanceFilters() {
+                this.pendingRelevanceFilters = {
+                    highly: document.getElementById('relevance-highly').checked,
+                    moderately: document.getElementById('relevance-moderately').checked,
+                    tangentially: document.getElementById('relevance-tangentially').checked,
+                    not_relevant: document.getElementById('relevance-not').checked
+                };
+            }
+            
+            updateRelevanceDropdownLabel() {
+                const checkedCount = Object.values(this.pendingRelevanceFilters).filter(v => v).length;
+                const totalCount = Object.keys(this.pendingRelevanceFilters).length;
+                const selectedSpan = document.getElementById('relevance-selected');
+                
+                if (checkedCount === totalCount) {
+                    selectedSpan.textContent = 'All selected';
+                } else if (checkedCount === 0) {
+                    selectedSpan.textContent = 'None selected';
+                } else {
+                    selectedSpan.textContent = `${checkedCount} selected`;
+                }
+            }
+            
             // Methods for applying pending state (when Apply Filter is clicked)
             applyPendingFilters() {
                 this.currentFilters = { ...this.pendingFilters };
@@ -1864,6 +2007,12 @@
                 this.updateTopicsDropdownLabel();
                 this.applyFiltersAndSort();
                 this.updateTopicVisibility();
+            }
+            
+            applyPendingRelevanceFilters() {
+                this.currentRelevanceFilters = { ...this.pendingRelevanceFilters };
+                this.updateRelevanceDropdownLabel();
+                this.applyFiltersAndSort();
             }
             
             // Utility method to close dropdowns programmatically
@@ -1893,6 +2042,16 @@
                 document.getElementById('topic-diffusion-reasoning').checked = this.currentTopicFilters.diffusion_reasoning;
                 document.getElementById('topic-distributed-training').checked = this.currentTopicFilters.distributed_training;
                 document.getElementById('topic-datasets').checked = this.currentTopicFilters.datasets;
+            }
+            
+            // Reset pending relevance filters to current applied state  
+            resetPendingRelevanceFilters() {
+                this.pendingRelevanceFilters = { ...this.currentRelevanceFilters };
+                // Sync checkboxes with current state
+                document.getElementById('relevance-highly').checked = this.currentRelevanceFilters.highly;
+                document.getElementById('relevance-moderately').checked = this.currentRelevanceFilters.moderately;
+                document.getElementById('relevance-tangentially').checked = this.currentRelevanceFilters.tangentially;
+                document.getElementById('relevance-not').checked = this.currentRelevanceFilters.not_relevant;
             }
             
             updateFilters() {
@@ -1943,21 +2102,112 @@
             }
             
             filterPapers() {
-                return this.allPapers.filter(paper => {
-                    const status = paper.llm_score_status;
-                    switch(status) {
-                        case 'completed':
-                            return this.currentFilters.completed;
-                        case 'failed':
-                            return this.currentFilters.failed;
-                        case 'not_relevant_enough':
-                            return this.currentFilters.not_relevant_enough;
-                        case 'not_scored':
-                            return this.currentFilters.not_scored;
-                        default:
-                            return this.currentFilters.not_scored; // Default to not_scored for unknown statuses
+                return this.allPapers.filter(paper => this.isPaperVisible(paper));
+            }
+            
+            // Master visibility checker - single source of truth
+            isPaperVisible(paper) {
+                // Gatekeeper 1: LLM Score Status Filter
+                if (!this.passesScoreStatusFilter(paper)) {
+                    return false;
+                }
+                
+                // Gatekeeper 2: Topic & Relevance Filter (the sophisticated one)
+                return this.passesTopicAndRelevanceFilter(paper);
+            }
+            
+            // Check if paper passes the LLM Score Status filter
+            passesScoreStatusFilter(paper) {
+                const status = paper.llm_score_status;
+                switch(status) {
+                    case 'completed':
+                        return this.currentFilters.completed;
+                    case 'failed':
+                        return this.currentFilters.failed;
+                    case 'not_relevant_enough':
+                        return this.currentFilters.not_relevant_enough;
+                    case 'not_scored':
+                        return this.currentFilters.not_scored;
+                    default:
+                        return this.currentFilters.not_scored; // Default to not_scored for unknown statuses
+                }
+            }
+            
+            // Check if paper has at least one topic that satisfies BOTH topic and relevance filters
+            passesTopicAndRelevanceFilter(paper) {
+                const topicMapping = {
+                    rlhf: { 
+                        filterKey: 'rlhf', 
+                        relevanceProperty: 'rlhf_relevance' 
+                    },
+                    weak_supervision: { 
+                        filterKey: 'weak_supervision', 
+                        relevanceProperty: 'weak_supervision_relevance' 
+                    },
+                    diffusion_reasoning: { 
+                        filterKey: 'diffusion_reasoning', 
+                        relevanceProperty: 'diffusion_reasoning_relevance' 
+                    },
+                    distributed_training: { 
+                        filterKey: 'distributed_training', 
+                        relevanceProperty: 'distributed_training_relevance' 
+                    },
+                    datasets: { 
+                        filterKey: 'datasets', 
+                        relevanceProperty: 'datasets_relevance' 
                     }
-                });
+                };
+                
+                // Check each topic to see if it satisfies BOTH conditions
+                for (const [topicKey, topicConfig] of Object.entries(topicMapping)) {
+                    // Condition 1: Is this topic checked in the Topics filter?
+                    const isTopicActive = this.currentTopicFilters[topicConfig.filterKey];
+                    
+                    if (isTopicActive) {
+                        // Condition 2: Is this topic's relevance level checked in the Relevance filter?
+                        const paperRelevance = paper[topicConfig.relevanceProperty];
+                        const isRelevanceActive = this.isRelevanceLevelActive(paperRelevance);
+                        
+                        // If BOTH conditions are met, this topic is a "winner"
+                        if (isRelevanceActive) {
+                            return true; // Found at least one winning topic - show the paper
+                        }
+                    }
+                }
+                
+                // No winning topics found - hide the paper
+                return false;
+            }
+            
+            // Helper method to check if a relevance level is currently active in filters
+            isRelevanceLevelActive(paperRelevance) {
+                // Map paper relevance values to filter keys
+                let result = false;
+                switch (paperRelevance) {
+                    case 'Highly Relevant':
+                        result = this.currentRelevanceFilters.highly;
+                        break;
+                    case 'Moderately Relevant':
+                        result = this.currentRelevanceFilters.moderately;
+                        break;
+                    case 'Tangentially Relevant':
+                        result = this.currentRelevanceFilters.tangentially;
+                        break;
+                    case 'not_validated':
+                    case 'Not Relevant':
+                    case 'Not relevant':
+                        result = this.currentRelevanceFilters.not_relevant;
+                        break;
+                    default:
+                        // Handle any other "Not relevant" variations
+                        if (paperRelevance && paperRelevance.toLowerCase().includes('not relevant')) {
+                            result = this.currentRelevanceFilters.not_relevant;
+                        } else {
+                            result = this.currentRelevanceFilters.not_relevant; // Default to "Not relevant" for unknown values
+                        }
+                }
+                
+                return result;
             }
             
             sortPapers(papers) {

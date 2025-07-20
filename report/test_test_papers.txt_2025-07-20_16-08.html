@@ -849,7 +849,7 @@
         <div class="filter-section">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="dropdown">
                             <button class="btn btn-outline-secondary dropdown-toggle w-100 text-start" type="button" id="sort-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="dropdown-label">Sort by:</span> <span id="sort-selected">Recommendation (Best first)</span>
@@ -864,7 +864,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                         <div class="dropdown">
                             <button class="btn btn-outline-secondary dropdown-toggle w-100 text-start" type="button" id="filter-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="dropdown-label">LLM Score Status:</span> <span id="filter-selected">All selected</span>
@@ -902,7 +902,9 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                </div>
+                <div class="row align-items-center mt-3">
+                    <div class="col-md-4">
                         <div class="dropdown">
                             <button class="btn btn-outline-secondary dropdown-toggle w-100 text-start" type="button" id="topics-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="dropdown-label">Topics:</span> <span id="topics-selected">All selected</span>
@@ -946,7 +948,45 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle w-100 text-start" type="button" id="relevance-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="dropdown-label">LLM Validation Relevance:</span> <span id="relevance-selected">All selected</span>
+                            </button>
+                            <ul class="dropdown-menu w-100" aria-labelledby="relevance-dropdown">
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="relevance-highly" checked>
+                                        Highly relevant
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="relevance-moderately" checked>
+                                        Moderately relevant
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="relevance-tangentially" checked>
+                                        Tangentially relevant
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="relevance-not" checked>
+                                        Not relevant
+                                    </label>
+                                </li>
+                                <li class="dropdown-apply-section">
+                                    <button type="button" class="dropdown-apply-button" id="relevance-apply-button">
+                                        Apply Filter
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="paper-count-display">
                             <span id="filtered-count">4</span>/<span id="total-count">4</span> papers
                         </div>
@@ -2848,7 +2888,7 @@ AgeDB-30, but also shows great benefit for practical use.
         }
         
         // Paper data for sorting and filtering
-        window.paperData = [{"abstract": "Fine-tuning large language models (LLMs) to align with user preferences is\nchallenging due to the high cost of quality human annotations in Reinforcement\nLearning from Human Feedback (RLHF) and the generalizability limitations of AI\nFeedback. To address these challenges, we propose RLTHF, a human-AI hybrid\nframework that combines LLM-based initial alignment with selective human\nannotations to achieve full-human annotation alignment with minimal effort.\nRLTHF identifies hard-to-annotate samples mislabeled by LLMs using a reward\nmodel\u0027s reward distribution and iteratively enhances alignment by integrating\nstrategic human corrections while leveraging LLM\u0027s correctly labeled samples.\nEvaluations on HH-RLHF and TL;DR datasets show that RLTHF reaches full-human\nannotation-level alignment with only 6-7% of the human annotation effort.\nFurthermore, models trained on RLTHF\u0027s curated datasets for downstream tasks\noutperform those trained on fully human-annotated datasets, underscoring the\neffectiveness of RLTHF\u0027s strategic data curation.", "authors": ["Yifei Xu", "Tusher Chakraborty", "Emre K\u0131c\u0131man", "Bibek Aryal", "Eduardo Rodrigues", "Srinagesh Sharma", "Roberto Estevao", "Maria Angels de Luis Balaguer", "Jessica Wolk", "Rafael Padilha", "Leonardo Nunes", "Shobana Balakrishnan", "Songwu Lu", "Ranveer Chandra"], "categories": ["cs.CL", "cs.AI", "cs.LG"], "datasets_score": 0.387, "diffusion_reasoning_score": 0.409, "distributed_training_score": 0.411, "embedding_status": "completed", "h_index_status": "completed", "highest_h_index": 7, "highest_score": 0.718, "highest_similarity_topic": "RLHF", "id": "2502.13417", "impact_score": "Moderate", "intro_status": "intro_successful", "llm_score_status": "completed", "llm_validation_status": "completed", "novelty_score": "Moderate", "published_date": "2025-02-19T04:25:11+00:00", "recommendation_score": "Should Read", "rlhf_score": 0.718, "scraper_status": "successfully_scraped", "summary": "The paper introduces RLTHF, a hybrid human-AI framework designed to align large language models (LLMs) with user preferences by combining initial LLM-based annotations with targeted human feedback. It uses a reward model\u0027s distribution to identify and correct hard-to-annotate samples iteratively, achieving alignment quality comparable to full human annotations with only 6-7% of the effort, and demonstrates that models trained on RLTHF-curated datasets outperform those on fully human-annotated ones in downstream tasks.", "title": "RLTHF: Targeted Human Feedback for LLM Alignment", "weak_supervision_score": 0.469}, {"abstract": "Reinforcement Learning from Human Feedback (RLHF) is increasingly used to\nalign large language models (LLMs) with human preferences. However, the\neffectiveness of RLHF in addressing underlying biases remains unclear. This\nstudy investigates the relationship between RLHF and both covert and overt\nbiases in LLMs, particularly focusing on biases against African Americans. We\napplied various RLHF techniques (DPO, ORPO, and RLOO) to Llama 3 8B and\nevaluated the covert and overt biases of the resulting models using\nmatched-guise probing and explicit bias testing. We performed additional tests\nwith DPO on different base models and datasets; among several implications, we\nfound that SFT before RLHF calcifies model biases. Additionally, we extend the\ntools for measuring biases to multi-modal models. Through our experiments we\ncollect evidence that indicates that current alignment techniques are\ninadequate for nebulous tasks such as mitigating covert biases, highlighting\nthe need for capable datasets, data curating techniques, or alignment tools.", "authors": ["Logan Barnhart", "Reza Akbarian Bafghi", "Stephen Becker", "Maziar Raissi"], "categories": ["cs.CL"], "datasets_score": 0.326, "diffusion_reasoning_score": 0.374, "distributed_training_score": 0.366, "embedding_status": "completed", "h_index_status": "completed", "highest_h_index": 3, "highest_score": 0.626, "highest_similarity_topic": "RLHF", "id": "2503.09025", "impact_score": "Moderate", "intro_status": "intro_successful", "llm_score_status": "completed", "llm_validation_status": "completed", "novelty_score": "Moderate", "published_date": "2025-03-12T03:24:44+00:00", "recommendation_score": "Should Read", "rlhf_score": 0.626, "scraper_status": "successfully_scraped", "summary": "This paper examines the limitations of Reinforcement Learning from Human Feedback (RLHF) in aligning large language models (LLMs) with human preferences by investigating its impact on covert and overt biases, particularly against African Americans. Using techniques such as DPO, ORPO, and RLOO on models like Llama 3 8B, the authors evaluate biases through matched-guise probing and explicit testing, finding that RLHF fails to meaningfully reduce these biases and that supervised fine-tuning prior to RLHF exacerbates them; they also extend bias measurement to multi-modal models and conclude that current alignment methods are inadequate for addressing subtle biases, highlighting the need for improved datasets and techniques.", "title": "Aligning to What? Limits to RLHF Based Alignment", "weak_supervision_score": 0.39}, {"abstract": "Significant progress has been achieved in Computer Vision by leveraging\nlarge-scale image datasets. However, large-scale datasets for complex Computer\nVision tasks beyond classification are still limited. This paper proposed a\nlarge-scale dataset named AIC (AI Challenger) with three sub-datasets, human\nkeypoint detection (HKD), large-scale attribute dataset (LAD) and image Chinese\ncaptioning (ICC). In this dataset, we annotate class labels (LAD), keypoint\ncoordinate (HKD), bounding box (HKD and LAD), attribute (LAD) and caption\n(ICC). These rich annotations bridge the semantic gap between low-level images\nand high-level concepts. The proposed dataset is an effective benchmark to\nevaluate and improve different computational methods. In addition, for related\ntasks, others can also use our dataset as a new resource to pre-train their\nmodels.", "authors": ["Jiahong Wu", "He Zheng", "Bo Zhao", "Yixin Li", "Baoming Yan", "Rui Liang", "Wenjia Wang", "Shipei Zhou", "Guosen Lin", "Yanwei Fu", "Yizhou Wang", "Yonggang Wang"], "categories": ["cs.CV"], "datasets_score": 0.525, "diffusion_reasoning_score": 0.33, "distributed_training_score": 0.358, "embedding_status": "completed", "h_index_status": "completed", "highest_h_index": 52, "highest_score": 0.525, "highest_similarity_topic": "Datasets", "id": "1711.06475", "impact_score": "Moderate", "intro_status": "intro_successful", "llm_score_status": "completed", "llm_validation_status": "completed", "novelty_score": "Moderate", "published_date": "2017-11-17T09:58:20+00:00", "recommendation_score": "Should Read", "rlhf_score": 0.35, "scraper_status": "successfully_scraped", "summary": "The AI Challenger dataset paper introduces a large-scale resource comprising three sub-datasets for advanced computer vision tasks: human keypoint detection (HKD), large-scale attribute dataset (LAD) for zero-shot recognition, and image Chinese captioning (ICC). By annotating over 300,000 images with keypoints, bounding boxes, attributes, and Chinese captions, the authors aim to bridge the semantic gap between low-level image features and high-level concepts, providing a new benchmark for evaluating and pre-training models in these areas, while highlighting the dataset\u0027s scale as a notable improvement over existing resources.", "title": "AI Challenger : A Large-scale Dataset for Going Deeper in Image\n  Understanding", "weak_supervision_score": 0.391}, {"abstract": "To achieve good performance in face recognition, a large scale training\ndataset is usually required. A simple yet effective way to improve recognition\nperformance is to use a dataset as large as possible by combining multiple\ndatasets in the training. However, it is problematic and troublesome to naively\ncombine different datasets due to two major issues. First, the same person can\npossibly appear in different datasets, leading to an identity overlapping issue\nbetween different datasets. Naively treating the same person as different\nclasses in different datasets during training will affect back-propagation and\ngenerate non-representative embeddings. On the other hand, manually cleaning\nlabels may take formidable human efforts, especially when there are millions of\nimages and thousands of identities. Second, different datasets are collected in\ndifferent situations and thus will lead to different domain distributions.\nNaively combining datasets will make it difficult to learn domain invariant\nembeddings across different datasets. In this paper, we propose DAIL:\nDataset-Aware and Invariant Learning to resolve the above-mentioned issues. To\nsolve the first issue of identity overlapping, we propose a dataset-aware loss\nfor multi-dataset training by reducing the penalty when the same person appears\nin multiple datasets. This can be readily achieved with a modified softmax loss\nwith a dataset-aware term. To solve the second issue, domain adaptation with\ngradient reversal layers is employed for dataset invariant learning. The\nproposed approach not only achieves state-of-the-art results on several\ncommonly used face recognition validation sets, including LFW, CFP-FP, and\nAgeDB-30, but also shows great benefit for practical use.", "authors": ["Gaoang Wang", "Lin Chen", "Tianqiang Liu", "Mingwei He", "Jiebo Luo"], "categories": ["cs.CV"], "datasets_score": 0.494, "diffusion_reasoning_score": 0.332, "distributed_training_score": 0.421, "embedding_status": "completed", "h_index_status": "not_fetched", "highest_h_index": null, "highest_score": 0.494, "highest_similarity_topic": "Datasets", "id": "2101.05419", "impact_score": null, "intro_status": "intro_successful", "llm_score_status": "not_relevant_enough", "llm_validation_status": "completed", "novelty_score": null, "published_date": "2021-01-14T01:59:52+00:00", "recommendation_score": null, "rlhf_score": 0.359, "scraper_status": "successfully_scraped", "summary": null, "title": "DAIL: Dataset-Aware and Invariant Learning for Face Recognition", "weak_supervision_score": 0.39}];
+        window.paperData = [{"abstract": "Fine-tuning large language models (LLMs) to align with user preferences is\nchallenging due to the high cost of quality human annotations in Reinforcement\nLearning from Human Feedback (RLHF) and the generalizability limitations of AI\nFeedback. To address these challenges, we propose RLTHF, a human-AI hybrid\nframework that combines LLM-based initial alignment with selective human\nannotations to achieve full-human annotation alignment with minimal effort.\nRLTHF identifies hard-to-annotate samples mislabeled by LLMs using a reward\nmodel\u0027s reward distribution and iteratively enhances alignment by integrating\nstrategic human corrections while leveraging LLM\u0027s correctly labeled samples.\nEvaluations on HH-RLHF and TL;DR datasets show that RLTHF reaches full-human\nannotation-level alignment with only 6-7% of the human annotation effort.\nFurthermore, models trained on RLTHF\u0027s curated datasets for downstream tasks\noutperform those trained on fully human-annotated datasets, underscoring the\neffectiveness of RLTHF\u0027s strategic data curation.", "authors": ["Yifei Xu", "Tusher Chakraborty", "Emre K\u0131c\u0131man", "Bibek Aryal", "Eduardo Rodrigues", "Srinagesh Sharma", "Roberto Estevao", "Maria Angels de Luis Balaguer", "Jessica Wolk", "Rafael Padilha", "Leonardo Nunes", "Shobana Balakrishnan", "Songwu Lu", "Ranveer Chandra"], "categories": ["cs.CL", "cs.AI", "cs.LG"], "datasets_relevance": "not_validated", "datasets_score": 0.387, "diffusion_reasoning_relevance": "Not Relevant", "diffusion_reasoning_score": 0.409, "distributed_training_relevance": "Not Relevant", "distributed_training_score": 0.411, "embedding_status": "completed", "h_index_status": "completed", "highest_h_index": 7, "highest_score": 0.718, "highest_similarity_topic": "RLHF", "id": "2502.13417", "impact_score": "Moderate", "intro_status": "intro_successful", "llm_score_status": "completed", "llm_validation_status": "completed", "novelty_score": "Moderate", "published_date": "2025-02-19T04:25:11+00:00", "recommendation_score": "Should Read", "rlhf_relevance": "Highly Relevant", "rlhf_score": 0.718, "scraper_status": "successfully_scraped", "summary": "The paper introduces RLTHF, a hybrid human-AI framework designed to align large language models (LLMs) with user preferences by combining initial LLM-based annotations with targeted human feedback. It uses a reward model\u0027s distribution to identify and correct hard-to-annotate samples iteratively, achieving alignment quality comparable to full human annotations with only 6-7% of the effort, and demonstrates that models trained on RLTHF-curated datasets outperform those on fully human-annotated ones in downstream tasks.", "title": "RLTHF: Targeted Human Feedback for LLM Alignment", "weak_supervision_relevance": "Moderately Relevant", "weak_supervision_score": 0.469}, {"abstract": "Reinforcement Learning from Human Feedback (RLHF) is increasingly used to\nalign large language models (LLMs) with human preferences. However, the\neffectiveness of RLHF in addressing underlying biases remains unclear. This\nstudy investigates the relationship between RLHF and both covert and overt\nbiases in LLMs, particularly focusing on biases against African Americans. We\napplied various RLHF techniques (DPO, ORPO, and RLOO) to Llama 3 8B and\nevaluated the covert and overt biases of the resulting models using\nmatched-guise probing and explicit bias testing. We performed additional tests\nwith DPO on different base models and datasets; among several implications, we\nfound that SFT before RLHF calcifies model biases. Additionally, we extend the\ntools for measuring biases to multi-modal models. Through our experiments we\ncollect evidence that indicates that current alignment techniques are\ninadequate for nebulous tasks such as mitigating covert biases, highlighting\nthe need for capable datasets, data curating techniques, or alignment tools.", "authors": ["Logan Barnhart", "Reza Akbarian Bafghi", "Stephen Becker", "Maziar Raissi"], "categories": ["cs.CL"], "datasets_relevance": "not_validated", "datasets_score": 0.326, "diffusion_reasoning_relevance": "not_validated", "diffusion_reasoning_score": 0.374, "distributed_training_relevance": "not_validated", "distributed_training_score": 0.366, "embedding_status": "completed", "h_index_status": "completed", "highest_h_index": 3, "highest_score": 0.626, "highest_similarity_topic": "RLHF", "id": "2503.09025", "impact_score": "Moderate", "intro_status": "intro_successful", "llm_score_status": "completed", "llm_validation_status": "completed", "novelty_score": "Moderate", "published_date": "2025-03-12T03:24:44+00:00", "recommendation_score": "Should Read", "rlhf_relevance": "Highly Relevant", "rlhf_score": 0.626, "scraper_status": "successfully_scraped", "summary": "This paper examines the limitations of Reinforcement Learning from Human Feedback (RLHF) in aligning large language models (LLMs) with human preferences by investigating its impact on covert and overt biases, particularly against African Americans. Using techniques such as DPO, ORPO, and RLOO on models like Llama 3 8B, the authors evaluate biases through matched-guise probing and explicit testing, finding that RLHF fails to meaningfully reduce these biases and that supervised fine-tuning prior to RLHF exacerbates them; they also extend bias measurement to multi-modal models and conclude that current alignment methods are inadequate for addressing subtle biases, highlighting the need for improved datasets and techniques.", "title": "Aligning to What? Limits to RLHF Based Alignment", "weak_supervision_relevance": "not_validated", "weak_supervision_score": 0.39}, {"abstract": "Significant progress has been achieved in Computer Vision by leveraging\nlarge-scale image datasets. However, large-scale datasets for complex Computer\nVision tasks beyond classification are still limited. This paper proposed a\nlarge-scale dataset named AIC (AI Challenger) with three sub-datasets, human\nkeypoint detection (HKD), large-scale attribute dataset (LAD) and image Chinese\ncaptioning (ICC). In this dataset, we annotate class labels (LAD), keypoint\ncoordinate (HKD), bounding box (HKD and LAD), attribute (LAD) and caption\n(ICC). These rich annotations bridge the semantic gap between low-level images\nand high-level concepts. The proposed dataset is an effective benchmark to\nevaluate and improve different computational methods. In addition, for related\ntasks, others can also use our dataset as a new resource to pre-train their\nmodels.", "authors": ["Jiahong Wu", "He Zheng", "Bo Zhao", "Yixin Li", "Baoming Yan", "Rui Liang", "Wenjia Wang", "Shipei Zhou", "Guosen Lin", "Yanwei Fu", "Yizhou Wang", "Yonggang Wang"], "categories": ["cs.CV"], "datasets_relevance": "Highly Relevant", "datasets_score": 0.525, "diffusion_reasoning_relevance": "not_validated", "diffusion_reasoning_score": 0.33, "distributed_training_relevance": "not_validated", "distributed_training_score": 0.358, "embedding_status": "completed", "h_index_status": "completed", "highest_h_index": 52, "highest_score": 0.525, "highest_similarity_topic": "Datasets", "id": "1711.06475", "impact_score": "Moderate", "intro_status": "intro_successful", "llm_score_status": "completed", "llm_validation_status": "completed", "novelty_score": "Moderate", "published_date": "2017-11-17T09:58:20+00:00", "recommendation_score": "Should Read", "rlhf_relevance": "not_validated", "rlhf_score": 0.35, "scraper_status": "successfully_scraped", "summary": "The AI Challenger dataset paper introduces a large-scale resource comprising three sub-datasets for advanced computer vision tasks: human keypoint detection (HKD), large-scale attribute dataset (LAD) for zero-shot recognition, and image Chinese captioning (ICC). By annotating over 300,000 images with keypoints, bounding boxes, attributes, and Chinese captions, the authors aim to bridge the semantic gap between low-level image features and high-level concepts, providing a new benchmark for evaluating and pre-training models in these areas, while highlighting the dataset\u0027s scale as a notable improvement over existing resources.", "title": "AI Challenger : A Large-scale Dataset for Going Deeper in Image\n  Understanding", "weak_supervision_relevance": "not_validated", "weak_supervision_score": 0.391}, {"abstract": "To achieve good performance in face recognition, a large scale training\ndataset is usually required. A simple yet effective way to improve recognition\nperformance is to use a dataset as large as possible by combining multiple\ndatasets in the training. However, it is problematic and troublesome to naively\ncombine different datasets due to two major issues. First, the same person can\npossibly appear in different datasets, leading to an identity overlapping issue\nbetween different datasets. Naively treating the same person as different\nclasses in different datasets during training will affect back-propagation and\ngenerate non-representative embeddings. On the other hand, manually cleaning\nlabels may take formidable human efforts, especially when there are millions of\nimages and thousands of identities. Second, different datasets are collected in\ndifferent situations and thus will lead to different domain distributions.\nNaively combining datasets will make it difficult to learn domain invariant\nembeddings across different datasets. In this paper, we propose DAIL:\nDataset-Aware and Invariant Learning to resolve the above-mentioned issues. To\nsolve the first issue of identity overlapping, we propose a dataset-aware loss\nfor multi-dataset training by reducing the penalty when the same person appears\nin multiple datasets. This can be readily achieved with a modified softmax loss\nwith a dataset-aware term. To solve the second issue, domain adaptation with\ngradient reversal layers is employed for dataset invariant learning. The\nproposed approach not only achieves state-of-the-art results on several\ncommonly used face recognition validation sets, including LFW, CFP-FP, and\nAgeDB-30, but also shows great benefit for practical use.", "authors": ["Gaoang Wang", "Lin Chen", "Tianqiang Liu", "Mingwei He", "Jiebo Luo"], "categories": ["cs.CV"], "datasets_relevance": "Moderately Relevant", "datasets_score": 0.494, "diffusion_reasoning_relevance": "not_validated", "diffusion_reasoning_score": 0.332, "distributed_training_relevance": "Not Relevant", "distributed_training_score": 0.421, "embedding_status": "completed", "h_index_status": "not_fetched", "highest_h_index": null, "highest_score": 0.494, "highest_similarity_topic": "Datasets", "id": "2101.05419", "impact_score": null, "intro_status": "intro_successful", "llm_score_status": "not_relevant_enough", "llm_validation_status": "completed", "novelty_score": null, "published_date": "2021-01-14T01:59:52+00:00", "recommendation_score": null, "rlhf_relevance": "not_validated", "rlhf_score": 0.359, "scraper_status": "successfully_scraped", "summary": null, "title": "DAIL: Dataset-Aware and Invariant Learning for Face Recognition", "weak_supervision_relevance": "not_validated", "weak_supervision_score": 0.39}];
         
         // Define topic configuration
         const TOPIC_CONFIG = [
@@ -2878,10 +2918,17 @@ AgeDB-30, but also shows great benefit for practical use.
                     distributed_training: true,
                     datasets: true
                 };
+                this.currentRelevanceFilters = {
+                    highly: true,
+                    moderately: true,
+                    tangentially: true,
+                    not_relevant: true
+                };
                 
                 // Pending state for deferred filtering
                 this.pendingFilters = { ...this.currentFilters };
                 this.pendingTopicFilters = { ...this.currentTopicFilters };
+                this.pendingRelevanceFilters = { ...this.currentRelevanceFilters };
                 
                 this.initializeEventListeners();
                 this.initializeUIState();
@@ -2919,7 +2966,7 @@ AgeDB-30, but also shows great benefit for practical use.
                 filterCheckboxes.forEach(id => {
                     document.getElementById(id).addEventListener('change', () => {
                         this.updatePendingFilters();
-                        this.updateFilterDropdownLabel();
+                        // Don't update dropdown label until apply filter is clicked
                     });
                 });
                 
@@ -2932,12 +2979,34 @@ AgeDB-30, but also shows great benefit for practical use.
                 // Prevent filter dropdown from closing when clicking on checkboxes or buttons
                 document.querySelectorAll('ul[aria-labelledby="filter-dropdown"] .dropdown-item, ul[aria-labelledby="filter-dropdown"] .dropdown-apply-section').forEach(item => {
                     item.addEventListener('click', (e) => {
-                        // Only stop propagation for checkbox clicks and buttons, not the entire item
-                        const checkbox = e.target.closest('input[type="checkbox"]');
-                        const button = e.target.closest('button');
-                        if (checkbox || button) {
-                            e.stopPropagation();
+                        // Stop all propagation to prevent dropdown from closing
+                        e.stopPropagation();
+                        e.preventDefault();
+                        
+                        // Handle label clicks manually to toggle checkboxes
+                        if (item.tagName === 'LABEL') {
+                            const checkbox = item.querySelector('input[type="checkbox"]');
+                            if (checkbox) {
+                                checkbox.checked = !checkbox.checked;
+                                // Trigger change event manually
+                                checkbox.dispatchEvent(new Event('change'));
+                            }
                         }
+                    });
+                });
+                
+                // Add event handlers to checkboxes to prevent dropdown closing
+                const allFilterCheckboxes = document.querySelectorAll('ul[aria-labelledby="filter-dropdown"] input[type="checkbox"]');
+                allFilterCheckboxes.forEach(checkbox => {
+                    checkbox.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+                });
+                
+                const allTopicCheckboxes = document.querySelectorAll('ul[aria-labelledby="topics-dropdown"] input[type="checkbox"]');
+                allTopicCheckboxes.forEach(checkbox => {
+                    checkbox.addEventListener('click', (e) => {
+                        e.stopPropagation();
                     });
                 });
                 
@@ -2946,7 +3015,7 @@ AgeDB-30, but also shows great benefit for practical use.
                 topicCheckboxes.forEach(id => {
                     document.getElementById(id).addEventListener('change', () => {
                         this.updatePendingTopicFilters();
-                        this.updateTopicsDropdownLabel();
+                        // Don't update dropdown label until apply filter is clicked
                     });
                 });
                 
@@ -2956,15 +3025,91 @@ AgeDB-30, but also shows great benefit for practical use.
                     this.closeDropdown('topics-dropdown');
                 });
                 
+                // Relevance checkboxes - Update pending state only
+                const relevanceCheckboxes = ['relevance-highly', 'relevance-moderately', 'relevance-tangentially', 'relevance-not'];
+                relevanceCheckboxes.forEach(id => {
+                    document.getElementById(id).addEventListener('change', () => {
+                        this.updatePendingRelevanceFilters();
+                        // Don't update dropdown label until apply filter is clicked
+                    });
+                });
+                
+                // Apply Filter button for Relevance
+                document.getElementById('relevance-apply-button').addEventListener('click', () => {
+                    this.applyPendingRelevanceFilters();
+                    this.closeDropdown('relevance-dropdown');
+                });
+                
+                // Reset pending state when dropdowns are closed without applying
+                document.getElementById('filter-dropdown').addEventListener('hidden.bs.dropdown', () => {
+                    this.resetPendingFilters();
+                });
+                
+                document.getElementById('topics-dropdown').addEventListener('hidden.bs.dropdown', () => {
+                    this.resetPendingTopicFilters();
+                });
+                
+                document.getElementById('relevance-dropdown').addEventListener('hidden.bs.dropdown', () => {
+                    this.resetPendingRelevanceFilters();
+                });
+                
                 // Prevent topics dropdown from closing when clicking on checkboxes or buttons
                 document.querySelectorAll('ul[aria-labelledby="topics-dropdown"] .dropdown-item, ul[aria-labelledby="topics-dropdown"] .dropdown-apply-section').forEach(item => {
                     item.addEventListener('click', (e) => {
-                        // Only stop propagation for checkbox clicks and buttons, not the entire item
-                        const checkbox = e.target.closest('input[type="checkbox"]');
-                        const button = e.target.closest('button');
-                        if (checkbox || button) {
-                            e.stopPropagation();
+                        // Stop all propagation to prevent dropdown from closing
+                        e.stopPropagation();
+                        e.preventDefault();
+                        
+                        // Handle label clicks manually to toggle checkboxes
+                        if (item.tagName === 'LABEL') {
+                            const checkbox = item.querySelector('input[type="checkbox"]');
+                            if (checkbox) {
+                                checkbox.checked = !checkbox.checked;
+                                // Trigger change event manually
+                                checkbox.dispatchEvent(new Event('change'));
+                            }
                         }
+                    });
+                });
+                
+                // Prevent relevance dropdown from closing when clicking on checkboxes or buttons
+                document.querySelectorAll('ul[aria-labelledby="relevance-dropdown"] .dropdown-item, ul[aria-labelledby="relevance-dropdown"] .dropdown-apply-section').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        // Stop all propagation to prevent dropdown from closing
+                        e.stopPropagation();
+                        e.preventDefault();
+                        
+                        // Handle label clicks manually to toggle checkboxes
+                        if (item.tagName === 'LABEL') {
+                            const checkbox = item.querySelector('input[type="checkbox"]');
+                            if (checkbox) {
+                                checkbox.checked = !checkbox.checked;
+                                // Trigger change event manually
+                                checkbox.dispatchEvent(new Event('change'));
+                            }
+                        }
+                    });
+                });
+                
+                // Add event handlers to checkboxes to prevent dropdown closing
+                const filterCheckboxElements = document.querySelectorAll('ul[aria-labelledby="filter-dropdown"] input[type="checkbox"]');
+                filterCheckboxElements.forEach(checkbox => {
+                    checkbox.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+                });
+                
+                const topicCheckboxElements = document.querySelectorAll('ul[aria-labelledby="topics-dropdown"] input[type="checkbox"]');
+                topicCheckboxElements.forEach(checkbox => {
+                    checkbox.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+                });
+                
+                const allRelevanceCheckboxes = document.querySelectorAll('ul[aria-labelledby="relevance-dropdown"] input[type="checkbox"]');
+                allRelevanceCheckboxes.forEach(checkbox => {
+                    checkbox.addEventListener('click', (e) => {
+                        e.stopPropagation();
                     });
                 });
             }
@@ -3006,9 +3151,18 @@ AgeDB-30, but also shows great benefit for practical use.
                 document.getElementById('topic-distributed-training').checked = this.currentTopicFilters.distributed_training;
                 document.getElementById('topic-datasets').checked = this.currentTopicFilters.datasets;
                 
-                // Sync pending state with current state
-                this.pendingTopicFilters = { ...this.currentTopicFilters };
+                // Sync pending state with current state                this.pendingTopicFilters = { ...this.currentTopicFilters };
                 this.updateTopicsDropdownLabel();
+                
+                // Ensure all relevance checkboxes are checked (all selected by default)
+                document.getElementById('relevance-highly').checked = this.currentRelevanceFilters.highly;
+                document.getElementById('relevance-moderately').checked = this.currentRelevanceFilters.moderately;
+                document.getElementById('relevance-tangentially').checked = this.currentRelevanceFilters.tangentially;
+                document.getElementById('relevance-not').checked = this.currentRelevanceFilters.not_relevant;
+                
+                // Sync pending state with current state
+                this.pendingRelevanceFilters = { ...this.currentRelevanceFilters };
+                this.updateRelevanceDropdownLabel();
             }
             
             // Methods for handling pending state (before Apply Filter is clicked)
@@ -3059,16 +3213,47 @@ AgeDB-30, but also shows great benefit for practical use.
                 }
             }
             
+            updatePendingRelevanceFilters() {
+                this.pendingRelevanceFilters = {
+                    highly: document.getElementById('relevance-highly').checked,
+                    moderately: document.getElementById('relevance-moderately').checked,
+                    tangentially: document.getElementById('relevance-tangentially').checked,
+                    not_relevant: document.getElementById('relevance-not').checked
+                };
+            }
+            
+            updateRelevanceDropdownLabel() {
+                const checkedCount = Object.values(this.pendingRelevanceFilters).filter(v => v).length;
+                const totalCount = Object.keys(this.pendingRelevanceFilters).length;
+                const selectedSpan = document.getElementById('relevance-selected');
+                
+                if (checkedCount === totalCount) {
+                    selectedSpan.textContent = 'All selected';
+                } else if (checkedCount === 0) {
+                    selectedSpan.textContent = 'None selected';
+                } else {
+                    selectedSpan.textContent = `${checkedCount} selected`;
+                }
+            }
+            
             // Methods for applying pending state (when Apply Filter is clicked)
             applyPendingFilters() {
                 this.currentFilters = { ...this.pendingFilters };
+                this.updateFilterDropdownLabel();
                 this.applyFiltersAndSort();
             }
             
             applyPendingTopicFilters() {
                 this.currentTopicFilters = { ...this.pendingTopicFilters };
+                this.updateTopicsDropdownLabel();
                 this.applyFiltersAndSort();
                 this.updateTopicVisibility();
+            }
+            
+            applyPendingRelevanceFilters() {
+                this.currentRelevanceFilters = { ...this.pendingRelevanceFilters };
+                this.updateRelevanceDropdownLabel();
+                this.applyFiltersAndSort();
             }
             
             // Utility method to close dropdowns programmatically
@@ -3077,6 +3262,37 @@ AgeDB-30, but also shows great benefit for practical use.
                 if (dropdown) {
                     dropdown.hide();
                 }
+            }
+            
+            // Reset pending filters to current applied state
+            resetPendingFilters() {
+                this.pendingFilters = { ...this.currentFilters };
+                // Sync checkboxes with current state
+                document.getElementById('filter-completed').checked = this.currentFilters.completed;
+                document.getElementById('filter-failed').checked = this.currentFilters.failed;
+                document.getElementById('filter-not-relevant').checked = this.currentFilters.not_relevant_enough;
+                document.getElementById('filter-not-scored').checked = this.currentFilters.not_scored;
+            }
+            
+            // Reset pending topic filters to current applied state  
+            resetPendingTopicFilters() {
+                this.pendingTopicFilters = { ...this.currentTopicFilters };
+                // Sync checkboxes with current state
+                document.getElementById('topic-rlhf').checked = this.currentTopicFilters.rlhf;
+                document.getElementById('topic-weak-supervision').checked = this.currentTopicFilters.weak_supervision;
+                document.getElementById('topic-diffusion-reasoning').checked = this.currentTopicFilters.diffusion_reasoning;
+                document.getElementById('topic-distributed-training').checked = this.currentTopicFilters.distributed_training;
+                document.getElementById('topic-datasets').checked = this.currentTopicFilters.datasets;
+            }
+            
+            // Reset pending relevance filters to current applied state  
+            resetPendingRelevanceFilters() {
+                this.pendingRelevanceFilters = { ...this.currentRelevanceFilters };
+                // Sync checkboxes with current state
+                document.getElementById('relevance-highly').checked = this.currentRelevanceFilters.highly;
+                document.getElementById('relevance-moderately').checked = this.currentRelevanceFilters.moderately;
+                document.getElementById('relevance-tangentially').checked = this.currentRelevanceFilters.tangentially;
+                document.getElementById('relevance-not').checked = this.currentRelevanceFilters.not_relevant;
             }
             
             updateFilters() {
@@ -3127,21 +3343,112 @@ AgeDB-30, but also shows great benefit for practical use.
             }
             
             filterPapers() {
-                return this.allPapers.filter(paper => {
-                    const status = paper.llm_score_status;
-                    switch(status) {
-                        case 'completed':
-                            return this.currentFilters.completed;
-                        case 'failed':
-                            return this.currentFilters.failed;
-                        case 'not_relevant_enough':
-                            return this.currentFilters.not_relevant_enough;
-                        case 'not_scored':
-                            return this.currentFilters.not_scored;
-                        default:
-                            return this.currentFilters.not_scored; // Default to not_scored for unknown statuses
+                return this.allPapers.filter(paper => this.isPaperVisible(paper));
+            }
+            
+            // Master visibility checker - single source of truth
+            isPaperVisible(paper) {
+                // Gatekeeper 1: LLM Score Status Filter
+                if (!this.passesScoreStatusFilter(paper)) {
+                    return false;
+                }
+                
+                // Gatekeeper 2: Topic & Relevance Filter (the sophisticated one)
+                return this.passesTopicAndRelevanceFilter(paper);
+            }
+            
+            // Check if paper passes the LLM Score Status filter
+            passesScoreStatusFilter(paper) {
+                const status = paper.llm_score_status;
+                switch(status) {
+                    case 'completed':
+                        return this.currentFilters.completed;
+                    case 'failed':
+                        return this.currentFilters.failed;
+                    case 'not_relevant_enough':
+                        return this.currentFilters.not_relevant_enough;
+                    case 'not_scored':
+                        return this.currentFilters.not_scored;
+                    default:
+                        return this.currentFilters.not_scored; // Default to not_scored for unknown statuses
+                }
+            }
+            
+            // Check if paper has at least one topic that satisfies BOTH topic and relevance filters
+            passesTopicAndRelevanceFilter(paper) {
+                const topicMapping = {
+                    rlhf: { 
+                        filterKey: 'rlhf', 
+                        relevanceProperty: 'rlhf_relevance' 
+                    },
+                    weak_supervision: { 
+                        filterKey: 'weak_supervision', 
+                        relevanceProperty: 'weak_supervision_relevance' 
+                    },
+                    diffusion_reasoning: { 
+                        filterKey: 'diffusion_reasoning', 
+                        relevanceProperty: 'diffusion_reasoning_relevance' 
+                    },
+                    distributed_training: { 
+                        filterKey: 'distributed_training', 
+                        relevanceProperty: 'distributed_training_relevance' 
+                    },
+                    datasets: { 
+                        filterKey: 'datasets', 
+                        relevanceProperty: 'datasets_relevance' 
                     }
-                });
+                };
+                
+                // Check each topic to see if it satisfies BOTH conditions
+                for (const [topicKey, topicConfig] of Object.entries(topicMapping)) {
+                    // Condition 1: Is this topic checked in the Topics filter?
+                    const isTopicActive = this.currentTopicFilters[topicConfig.filterKey];
+                    
+                    if (isTopicActive) {
+                        // Condition 2: Is this topic's relevance level checked in the Relevance filter?
+                        const paperRelevance = paper[topicConfig.relevanceProperty];
+                        const isRelevanceActive = this.isRelevanceLevelActive(paperRelevance);
+                        
+                        // If BOTH conditions are met, this topic is a "winner"
+                        if (isRelevanceActive) {
+                            return true; // Found at least one winning topic - show the paper
+                        }
+                    }
+                }
+                
+                // No winning topics found - hide the paper
+                return false;
+            }
+            
+            // Helper method to check if a relevance level is currently active in filters
+            isRelevanceLevelActive(paperRelevance) {
+                // Map paper relevance values to filter keys
+                let result = false;
+                switch (paperRelevance) {
+                    case 'Highly Relevant':
+                        result = this.currentRelevanceFilters.highly;
+                        break;
+                    case 'Moderately Relevant':
+                        result = this.currentRelevanceFilters.moderately;
+                        break;
+                    case 'Tangentially Relevant':
+                        result = this.currentRelevanceFilters.tangentially;
+                        break;
+                    case 'not_validated':
+                    case 'Not Relevant':
+                    case 'Not relevant':
+                        result = this.currentRelevanceFilters.not_relevant;
+                        break;
+                    default:
+                        // Handle any other "Not relevant" variations
+                        if (paperRelevance && paperRelevance.toLowerCase().includes('not relevant')) {
+                            result = this.currentRelevanceFilters.not_relevant;
+                        } else {
+                            result = this.currentRelevanceFilters.not_relevant; // Default to "Not relevant" for unknown values
+                        }
+                }
+                
+                return result;
             }
             
             sortPapers(papers) {
@@ -3440,10 +3747,22 @@ AgeDB-30, but also shows great benefit for practical use.
                 if (separator.style.display === 'none') {
                     // Show hidden topics
                     separator.style.display = 'block';
+                    
+                    // Check if we're in normalized view by looking at visible bars
+                    const isNormalized = moduleType === 'similarity' && 
+                        grid.querySelector('.similarity-bar-fill.normalized') !== null;
+                    
                     hiddenElements.forEach(el => {
                         // Restore proper display types based on element class
                         if (el.classList.contains('similarity-score-display')) {
                             el.style.display = 'flex'; // Similarity score displays need flex
+                            
+                            // If in normalized view, apply normalization to hidden topics
+                            if (isNormalized) {
+                                // When showing hidden topics in normalized view, we need to recalculate
+                                // all percentages to maintain consistency
+                                this.recalculateNormalizedScores(grid);
+                            }
                         } else if (el.classList.contains('similarity-topic-label') || 
                                    el.classList.contains('llm-validation-topic-label') || 
                                    el.classList.contains('llm-validation-value-wrapper')) {
@@ -3460,6 +3779,45 @@ AgeDB-30, but also shows great benefit for practical use.
                     hiddenElements.forEach(el => el.style.display = 'none');
                     textSpan.textContent = 'Show other topics';
                     iconSpan.textContent = '▼';
+                }
+            }
+            
+            // Helper method to recalculate all normalized scores when showing/hiding topics
+            recalculateNormalizedScores(grid) {
+                const allValueElements = Array.from(grid.querySelectorAll('.similarity-value[data-raw-score]'));
+                const allBarElements = Array.from(grid.querySelectorAll('.similarity-bar-fill'));
+                
+                // Get all currently visible values
+                const visibleValues = allValueElements.filter(value => {
+                    const display = value.closest('.similarity-score-display');
+                    return display && display.style.display !== 'none';
+                });
+                
+                // Calculate total from visible scores
+                const rawScores = visibleValues.map(value => {
+                    const score = parseFloat(value.getAttribute('data-raw-score'));
+                    return isNaN(score) ? 0 : score;
+                });
+                
+                const total = rawScores.reduce((sum, score) => sum + score, 0);
+                
+                if (total > 0) {
+                    // Apply normalized percentages to all visible elements
+                    visibleValues.forEach((value, index) => {
+                        const rawScore = parseFloat(value.getAttribute('data-raw-score'));
+                        if (!isNaN(rawScore)) {
+                            const normalized = (rawScore / total * 100).toFixed(1);
+                            value.textContent = `${normalized}%`;
+                            
+                            // Find corresponding bar element
+                            const display = value.closest('.similarity-score-display');
+                            const bar = display ? display.querySelector('.similarity-bar-fill') : null;
+                            if (bar) {
+                                bar.style.width = `${normalized}%`;
+                                bar.classList.add('normalized');
+                            }
+                        }
+                    });
                 }
             }
         }
