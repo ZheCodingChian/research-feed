@@ -835,7 +835,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="dropdown">
                             <button class="btn btn-outline-secondary dropdown-toggle w-100 text-start" type="button" id="filter-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="dropdown-label">LLM Score Status:</span> <span id="filter-selected">All selected</span>
@@ -868,7 +868,46 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle w-100 text-start" type="button" id="topics-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="dropdown-label">Topics:</span> <span id="topics-selected">All selected</span>
+                            </button>
+                            <ul class="dropdown-menu w-100" aria-labelledby="topics-dropdown">
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="topic-rlhf" checked>
+                                        RLHF
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="topic-weak-supervision" checked>
+                                        Weak supervision
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="topic-diffusion-reasoning" checked>
+                                        Diffusion reasoning
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="topic-distributed-training" checked>
+                                        Distributed training
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" class="form-check-input me-2" id="topic-datasets" checked>
+                                        Datasets
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
                         <div class="paper-count-display">
                             <span id="filtered-count">{{ paper_count }}</span>/<span id="total-count">{{ paper_count }}</span> papers
                         </div>
@@ -1040,8 +1079,8 @@
                                 <!-- Similarity Scores Grid -->
                                 <div class="similarity-scores-grid" id="similarity-grid-{{ loop.index0 }}">
                                     <!-- RLHF Row -->
-                                    <div class="similarity-topic-label">RLHF:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="rlhf">RLHF:</div>
+                                    <div class="similarity-score-display" data-topic="rlhf">
                                         {% if paper.rlhf_score is not none %}
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: {{ (paper.rlhf_score * 100)|round(1) }}%"></div>
@@ -1058,8 +1097,8 @@
                                     </div>
                                     
                                     <!-- Weak Supervision Row -->
-                                    <div class="similarity-topic-label">Weak supervision:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="weak_supervision">Weak supervision:</div>
+                                    <div class="similarity-score-display" data-topic="weak_supervision">
                                         {% if paper.weak_supervision_score is not none %}
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: {{ (paper.weak_supervision_score * 100)|round(1) }}%"></div>
@@ -1076,8 +1115,8 @@
                                     </div>
                                     
                                     <!-- Diffusion Reasoning Row -->
-                                    <div class="similarity-topic-label">Diffusion reasoning:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="diffusion_reasoning">Diffusion reasoning:</div>
+                                    <div class="similarity-score-display" data-topic="diffusion_reasoning">
                                         {% if paper.diffusion_reasoning_score is not none %}
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: {{ (paper.diffusion_reasoning_score * 100)|round(1) }}%"></div>
@@ -1094,8 +1133,8 @@
                                     </div>
                                     
                                     <!-- Distributed Training Row -->
-                                    <div class="similarity-topic-label">Distributed training:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="distributed_training">Distributed training:</div>
+                                    <div class="similarity-score-display" data-topic="distributed_training">
                                         {% if paper.distributed_training_score is not none %}
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: {{ (paper.distributed_training_score * 100)|round(1) }}%"></div>
@@ -1112,8 +1151,8 @@
                                     </div>
                                     
                                     <!-- Datasets Row -->
-                                    <div class="similarity-topic-label">Datasets:</div>
-                                    <div class="similarity-score-display">
+                                    <div class="similarity-topic-label" data-topic="datasets">Datasets:</div>
+                                    <div class="similarity-score-display" data-topic="datasets">
                                         {% if paper.datasets_score is not none %}
                                         <div class="similarity-bar">
                                             <div class="similarity-bar-fill" style="width: {{ (paper.datasets_score * 100)|round(1) }}%"></div>
@@ -1149,8 +1188,8 @@
                                 <!-- LLM Validation Grid -->
                                 <div class="llm-validation-grid">
                                     <!-- RLHF Row -->
-                                    <div class="llm-validation-topic-label">RLHF:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="rlhf">RLHF:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="rlhf">
                                         {% if paper.rlhf_relevance == 'not_validated' %}
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -1170,8 +1209,8 @@
                                     </div>
                                     
                                     <!-- Weak Supervision Row -->
-                                    <div class="llm-validation-topic-label">Weak supervision:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="weak_supervision">Weak supervision:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="weak_supervision">
                                         {% if paper.weak_supervision_relevance == 'not_validated' %}
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -1191,8 +1230,8 @@
                                     </div>
                                     
                                     <!-- Diffusion Reasoning Row -->
-                                    <div class="llm-validation-topic-label">Diffusion reasoning:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="diffusion_reasoning">Diffusion reasoning:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="diffusion_reasoning">
                                         {% if paper.diffusion_reasoning_relevance == 'not_validated' %}
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -1212,8 +1251,8 @@
                                     </div>
                                     
                                     <!-- Distributed Training Row -->
-                                    <div class="llm-validation-topic-label">Distributed training:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="distributed_training">Distributed training:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="distributed_training">
                                         {% if paper.distributed_training_relevance == 'not_validated' %}
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -1233,8 +1272,8 @@
                                     </div>
                                     
                                     <!-- Datasets Row -->
-                                    <div class="llm-validation-topic-label">Datasets:</div>
-                                    <div class="llm-validation-value-wrapper">
+                                    <div class="llm-validation-topic-label" data-topic="datasets">Datasets:</div>
+                                    <div class="llm-validation-value-wrapper" data-topic="datasets">
                                         {% if paper.datasets_relevance == 'not_validated' %}
                                         <div class="llm-validation-tooltip-wrapper">
                                             <span class="llm-validation-value not-relevant">Not Relevant*</span>
@@ -1416,7 +1455,7 @@
     <script>
         function toggleSimilarityMode(containerId) {
             const container = document.getElementById(containerId);
-            const button = container.parentElement.querySelector('.llm-justification-toggle');
+            const button = container.parentElement.querySelector('.llm-justification-toggle:not([data-toggle-type])');
             const textSpan = button.querySelector('span:first-child');
             const iconSpan = button.querySelector('.toggle-icon');
             const bars = container.querySelectorAll('.similarity-bar-fill');
@@ -1427,9 +1466,14 @@
                 textSpan.textContent = 'Show Raw Scores';
                 iconSpan.textContent = '⇄';
                 
-                // Calculate total from all valid scores
+                // Calculate total from only VISIBLE scores
+                const visibleValues = Array.from(values).filter(value => {
+                    const label = value.closest('.similarity-score-display').previousElementSibling;
+                    return label && label.style.display !== 'none';
+                });
+                
                 const rawScores = [];
-                values.forEach(value => {
+                visibleValues.forEach(value => {
                     const score = parseFloat(value.getAttribute('data-raw-score'));
                     if (!isNaN(score)) {
                         rawScores.push(score);
@@ -1439,15 +1483,16 @@
                 const total = rawScores.reduce((sum, score) => sum + score, 0);
                 
                 if (total > 0) {
-                    let scoreIndex = 0;
                     values.forEach((value, index) => {
-                        const score = parseFloat(value.getAttribute('data-raw-score'));
-                        if (!isNaN(score)) {
-                            const normalized = (score / total * 100).toFixed(1);
-                            value.textContent = `${normalized}%`;
-                            bars[index].style.width = `${normalized}%`;
-                            bars[index].classList.add('normalized');
-                            scoreIndex++;
+                        const label = value.closest('.similarity-score-display').previousElementSibling;
+                        if (label && label.style.display !== 'none') {
+                            const score = parseFloat(value.getAttribute('data-raw-score'));
+                            if (!isNaN(score)) {
+                                const normalized = (score / total * 100).toFixed(1);
+                                value.textContent = `${normalized}%`;
+                                bars[index].style.width = `${normalized}%`;
+                                bars[index].classList.add('normalized');
+                            }
                         }
                     });
                 }
@@ -1525,6 +1570,15 @@
         // Paper data for sorting and filtering
         window.paperData = {{ papers_json|tojson|safe }};
         
+        // Define topic configuration
+        const TOPIC_CONFIG = [
+            { key: 'rlhf', label: 'RLHF', scoreField: 'rlhf_score', relevanceField: 'rlhf_relevance', justificationField: 'rlhf_justification' },
+            { key: 'weak_supervision', label: 'Weak supervision', scoreField: 'weak_supervision_score', relevanceField: 'weak_supervision_relevance', justificationField: 'weak_supervision_justification' },
+            { key: 'diffusion_reasoning', label: 'Diffusion reasoning', scoreField: 'diffusion_reasoning_score', relevanceField: 'diffusion_reasoning_relevance', justificationField: 'diffusion_reasoning_justification' },
+            { key: 'distributed_training', label: 'Distributed training', scoreField: 'distributed_training_score', relevanceField: 'distributed_training_relevance', justificationField: 'distributed_training_justification' },
+            { key: 'datasets', label: 'Datasets', scoreField: 'datasets_score', relevanceField: 'datasets_relevance', justificationField: 'datasets_justification' }
+        ];
+        
         // Sorting and filtering functionality
         class PaperManager {
             constructor() {
@@ -1537,10 +1591,18 @@
                     not_relevant_enough: true,
                     not_scored: true
                 };
+                this.currentTopicFilters = {
+                    rlhf: true,
+                    weak_supervision: true,
+                    diffusion_reasoning: true,
+                    distributed_training: true,
+                    datasets: true
+                };
                 
                 this.initializeEventListeners();
                 this.loadUserPreferences();
                 this.applyFiltersAndSort();
+                this.updateTopicVisibility();
             }
             
             initializeEventListeners() {
@@ -1590,6 +1652,28 @@
                         }
                     });
                 });
+                
+                // Topic checkboxes
+                const topicCheckboxes = ['topic-rlhf', 'topic-weak-supervision', 'topic-diffusion-reasoning', 'topic-distributed-training', 'topic-datasets'];
+                topicCheckboxes.forEach(id => {
+                    document.getElementById(id).addEventListener('change', () => {
+                        this.updateTopicFilters();
+                        this.updateTopicDropdownLabel();
+                        this.saveUserPreferences();
+                        this.updateTopicVisibility();
+                    });
+                });
+                
+                // Prevent topics dropdown from closing when clicking on checkboxes
+                document.querySelectorAll('#topics-dropdown + .dropdown-menu .dropdown-item').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        // Only stop propagation for checkbox clicks, not the entire item
+                        const checkbox = e.target.closest('input[type="checkbox"]');
+                        if (checkbox) {
+                            e.stopPropagation();
+                        }
+                    });
+                });
             }
             
             updateFilters() {
@@ -1605,6 +1689,30 @@
                 const checkedCount = Object.values(this.currentFilters).filter(v => v).length;
                 const totalCount = Object.keys(this.currentFilters).length;
                 const selectedSpan = document.getElementById('filter-selected');
+                
+                if (checkedCount === totalCount) {
+                    selectedSpan.textContent = 'All selected';
+                } else if (checkedCount === 0) {
+                    selectedSpan.textContent = 'None selected';
+                } else {
+                    selectedSpan.textContent = `${checkedCount} selected`;
+                }
+            }
+            
+            updateTopicFilters() {
+                this.currentTopicFilters = {
+                    rlhf: document.getElementById('topic-rlhf').checked,
+                    weak_supervision: document.getElementById('topic-weak-supervision').checked,
+                    diffusion_reasoning: document.getElementById('topic-diffusion-reasoning').checked,
+                    distributed_training: document.getElementById('topic-distributed-training').checked,
+                    datasets: document.getElementById('topic-datasets').checked
+                };
+            }
+            
+            updateTopicDropdownLabel() {
+                const checkedCount = Object.values(this.currentTopicFilters).filter(v => v).length;
+                const totalCount = Object.keys(this.currentTopicFilters).length;
+                const selectedSpan = document.getElementById('topics-selected');
                 
                 if (checkedCount === totalCount) {
                     selectedSpan.textContent = 'All selected';
@@ -1721,10 +1829,209 @@
                 document.getElementById('total-count').textContent = this.allPapers.length;
             }
             
+            updateTopicVisibility() {
+                // Get all paper cards
+                const paperCards = document.querySelectorAll('.paper-card');
+                
+                paperCards.forEach((card, paperIndex) => {
+                    this.updateSimilarityModule(card, paperIndex);
+                    this.updateLlmValidationModule(card, paperIndex);
+                });
+            }
+            
+            updateSimilarityModule(paperCard, paperIndex) {
+                const similarityGrid = paperCard.querySelector(`#similarity-grid-${paperIndex}`);
+                if (!similarityGrid) return;
+                
+                const topicRows = [];
+                
+                // Collect all topic rows in order
+                TOPIC_CONFIG.forEach(topic => {
+                    const labelElement = similarityGrid.querySelector(`[data-topic="${topic.key}"].similarity-topic-label`);
+                    const scoreElement = similarityGrid.querySelector(`[data-topic="${topic.key}"].similarity-score-display`);
+                    
+                    if (labelElement && scoreElement) {
+                        topicRows.push({
+                            topic: topic.key,
+                            label: topic.label,
+                            labelElement,
+                            scoreElement,
+                            isVisible: this.currentTopicFilters[topic.key]
+                        });
+                    }
+                });
+                
+                // Clear the grid
+                similarityGrid.innerHTML = '';
+                
+                const visibleTopics = topicRows.filter(row => row.isVisible);
+                const hiddenTopics = topicRows.filter(row => !row.isVisible);
+                
+                // Add visible topics first
+                visibleTopics.forEach(row => {
+                    similarityGrid.appendChild(row.labelElement);
+                    similarityGrid.appendChild(row.scoreElement);
+                });
+                
+                // Add separator and hidden topics if there are any hidden
+                if (hiddenTopics.length > 0) {
+                    // Create separator
+                    const separator = document.createElement('div');
+                    separator.className = 'topic-separator';
+                    separator.style.cssText = 'grid-column: 1 / -1; border-bottom: 1px solid rgba(255,255,255,0.1); margin: 0.5rem 0; display: none;';
+                    separator.setAttribute('data-separator', 'similarity');
+                    similarityGrid.appendChild(separator);
+                    
+                    // Add hidden topics
+                    hiddenTopics.forEach(row => {
+                        row.labelElement.style.display = 'none';
+                        row.scoreElement.style.display = 'none';
+                        row.labelElement.setAttribute('data-hidden', 'true');
+                        row.scoreElement.setAttribute('data-hidden', 'true');
+                        similarityGrid.appendChild(row.labelElement);
+                        similarityGrid.appendChild(row.scoreElement);
+                    });
+                    
+                    // Add or update toggle button
+                    this.addOrUpdateToggleButton(paperCard.querySelector('.similarity-controls-section'), 'similarity', paperIndex);
+                } else {
+                    // Remove toggle button if all topics are visible
+                    this.removeToggleButton(paperCard.querySelector('.similarity-controls-section'), 'similarity');
+                }
+            }
+            
+            updateLlmValidationModule(paperCard, paperIndex) {
+                const validationGrid = paperCard.querySelector('.llm-validation-grid');
+                if (!validationGrid) return;
+                
+                const topicRows = [];
+                
+                // Collect all topic rows in order
+                TOPIC_CONFIG.forEach(topic => {
+                    const labelElement = validationGrid.querySelector(`[data-topic="${topic.key}"].llm-validation-topic-label`);
+                    const valueElement = validationGrid.querySelector(`[data-topic="${topic.key}"].llm-validation-value-wrapper`);
+                    
+                    if (labelElement && valueElement) {
+                        topicRows.push({
+                            topic: topic.key,
+                            label: topic.label,
+                            labelElement,
+                            valueElement,
+                            isVisible: this.currentTopicFilters[topic.key]
+                        });
+                    }
+                });
+                
+                // Clear the grid
+                validationGrid.innerHTML = '';
+                
+                const visibleTopics = topicRows.filter(row => row.isVisible);
+                const hiddenTopics = topicRows.filter(row => !row.isVisible);
+                
+                // Add visible topics first
+                visibleTopics.forEach(row => {
+                    validationGrid.appendChild(row.labelElement);
+                    validationGrid.appendChild(row.valueElement);
+                });
+                
+                // Add separator and hidden topics if there are any hidden
+                if (hiddenTopics.length > 0) {
+                    // Create separator
+                    const separator = document.createElement('div');
+                    separator.className = 'topic-separator';
+                    separator.style.cssText = 'grid-column: 1 / -1; border-bottom: 1px solid rgba(255,255,255,0.1); margin: 0.5rem 0; display: none;';
+                    separator.setAttribute('data-separator', 'validation');
+                    validationGrid.appendChild(separator);
+                    
+                    // Add hidden topics
+                    hiddenTopics.forEach(row => {
+                        row.labelElement.style.display = 'none';
+                        row.valueElement.style.display = 'none';
+                        row.labelElement.setAttribute('data-hidden', 'true');
+                        row.valueElement.setAttribute('data-hidden', 'true');
+                        validationGrid.appendChild(row.labelElement);
+                        validationGrid.appendChild(row.valueElement);
+                    });
+                    
+                    // Add or update toggle button
+                    this.addOrUpdateToggleButton(paperCard.querySelector('.llm-validation-controls-section'), 'validation', paperIndex);
+                } else {
+                    // Remove toggle button if all topics are visible
+                    this.removeToggleButton(paperCard.querySelector('.llm-validation-controls-section'), 'validation');
+                }
+            }
+            
+            addOrUpdateToggleButton(controlsSection, moduleType, paperIndex) {
+                if (!controlsSection) return;
+                
+                let toggleButton = controlsSection.querySelector(`[data-toggle-type="${moduleType}"]`);
+                
+                if (!toggleButton) {
+                    toggleButton = document.createElement('button');
+                    toggleButton.className = 'llm-justification-toggle';
+                    toggleButton.setAttribute('data-toggle-type', moduleType);
+                    toggleButton.setAttribute('data-paper-index', paperIndex);
+                    toggleButton.innerHTML = '<span>Show other topics</span><span class="toggle-icon">▼</span>';
+                    
+                    // Insert before existing buttons
+                    const existingButton = controlsSection.querySelector('.llm-justification-toggle:not([data-toggle-type])');
+                    if (existingButton) {
+                        controlsSection.insertBefore(toggleButton, existingButton);
+                    } else {
+                        controlsSection.appendChild(toggleButton);
+                    }
+                    
+                    // Add click handler
+                    toggleButton.addEventListener('click', () => {
+                        this.toggleHiddenTopics(moduleType, paperIndex);
+                    });
+                }
+            }
+            
+            removeToggleButton(controlsSection, moduleType) {
+                if (!controlsSection) return;
+                
+                const toggleButton = controlsSection.querySelector(`[data-toggle-type="${moduleType}"]`);
+                if (toggleButton) {
+                    toggleButton.remove();
+                }
+            }
+            
+            toggleHiddenTopics(moduleType, paperIndex) {
+                const paperCard = document.querySelectorAll('.paper-card')[paperIndex];
+                if (!paperCard) return;
+                
+                const gridSelector = moduleType === 'similarity' ? `#similarity-grid-${paperIndex}` : '.llm-validation-grid';
+                const grid = paperCard.querySelector(gridSelector);
+                const separator = grid.querySelector(`[data-separator="${moduleType}"]`);
+                const hiddenElements = grid.querySelectorAll('[data-hidden="true"]');
+                const toggleButton = paperCard.querySelector(`[data-toggle-type="${moduleType}"]`);
+                
+                if (!toggleButton) return;
+                
+                const textSpan = toggleButton.querySelector('span:first-child');
+                const iconSpan = toggleButton.querySelector('.toggle-icon');
+                
+                if (separator.style.display === 'none') {
+                    // Show hidden topics
+                    separator.style.display = 'block';
+                    hiddenElements.forEach(el => el.style.display = 'block');
+                    textSpan.textContent = 'Hide other topics';
+                    iconSpan.textContent = '▲';
+                } else {
+                    // Hide topics
+                    separator.style.display = 'none';
+                    hiddenElements.forEach(el => el.style.display = 'none');
+                    textSpan.textContent = 'Show other topics';
+                    iconSpan.textContent = '▼';
+                }
+            }
+            
             saveUserPreferences() {
                 const preferences = {
                     sort: this.currentSort,
-                    filters: this.currentFilters
+                    filters: this.currentFilters,
+                    topicFilters: this.currentTopicFilters
                 };
                 localStorage.setItem('paperPreferences', JSON.stringify(preferences));
             }
@@ -1735,6 +2042,7 @@
                     const preferences = JSON.parse(saved);
                     this.currentSort = preferences.sort || 'recommendation-best';
                     this.currentFilters = preferences.filters || this.currentFilters;
+                    this.currentTopicFilters = preferences.topicFilters || this.currentTopicFilters;
                     
                     // Update UI for sort dropdown
                     const sortText = {
@@ -1761,6 +2069,14 @@
                     document.getElementById('filter-not-relevant').checked = this.currentFilters.not_relevant_enough;
                     document.getElementById('filter-not-scored').checked = this.currentFilters.not_scored;
                     this.updateDropdownLabel();
+                    
+                    // Update topic checkboxes
+                    document.getElementById('topic-rlhf').checked = this.currentTopicFilters.rlhf;
+                    document.getElementById('topic-weak-supervision').checked = this.currentTopicFilters.weak_supervision;
+                    document.getElementById('topic-diffusion-reasoning').checked = this.currentTopicFilters.diffusion_reasoning;
+                    document.getElementById('topic-distributed-training').checked = this.currentTopicFilters.distributed_training;
+                    document.getElementById('topic-datasets').checked = this.currentTopicFilters.datasets;
+                    this.updateTopicDropdownLabel();
                 }
             }
         }
