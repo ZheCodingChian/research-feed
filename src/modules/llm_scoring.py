@@ -274,9 +274,9 @@ Potential Impact: The likely influence of the work.
 - Negligible: The work is unlikely to have any discernible impact.
 
 Final Recommendation: The action an informed reader should take.
-- Must Read: Essential reading for anyone in the broader field.
-- Should Read: A valuable paper for those working on this specific topic.
-- Can Skip: Interesting but not essential; can be reviewed if time permits.
+- Must Read: An exceptional paper. A work of such high quality, insight, or importance that it's considered essential.
+- Should Read: A high-quality, significant paper. It represents a strong, valuable contribution that you need to be aware of. Second to Must Read.
+- Can Skip: An interesting paper, but not essential. The contribution is incremental, niche, or a less impactful version of another idea.
 - Ignore: Not recommended for review; lacks substance, relevance, or is poorly presented.
 
 Paper Information:

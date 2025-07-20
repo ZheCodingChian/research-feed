@@ -49,10 +49,11 @@ class LLMValidation:
         
         # Topic descriptions for prompt building
         self.topic_descriptions = {
-            "RLHF": "Reinforcement Learning from Human Feedback - systems that aligns an AI model with human preferences by training a separate reward model on human-ranked data, which is then used to fine-tune the main model using reinforcement learning. If no human feedback is used, this is not RLHF.",
+            "RLHF": "Reinforcement Learning from Human Feedback - systems that aligns an AI model with human preferences by training a separate reward model on human-ranked data, which is then used to fine-tune the main model using reinforcement learning. If no human feedback is used, it is not RLHF.",
             "Weak_supervision": "Weak supervision - A machine learning approach that trains models by programmatically generating large quantities of training labels from high-level, noisy, or imprecise sources, rather than relying on perfectly hand-labeled data.",
             "Diffusion_reasoning": "Models that adapt the iterative refinement process of diffusion to solve complex logical tasks. Instead of generating a static output, they treat an entire 'Chain-of-Thought' as a single entity, allowing the reasoning path to be holistically corrected and improved over multiple steps. If there is no clear component for multi-step logical reasoning using a diffusion model, this is not diffusion reasoning.",
-            "Distributed_training": "Distributed training, parallel computing, and multi-node machine learning. Algorithms or systems designed to accelerate model training by strategically partitioning the data, the model's architecture, or the computation itself across multiple processors or nodes."
+            "Distributed_training": "Distributed training, parallel computing, and multi-node machine learning. Algorithms or systems designed to accelerate model training by strategically partitioning the data, the model's architecture, or the computation itself across multiple processors or nodes.",
+            "Datasets": "Research focused on creating, analyzing, benchmarking, or evaluating datasets for machine learning and AI applications. This includes new dataset introduction, dataset curation methodologies, benchmark evaluation, and dataset analysis."
         }
     
     def run(self, papers: Dict[str, Paper]) -> Dict[str, Paper]:
@@ -149,7 +150,8 @@ class LLMValidation:
                 'Reinforcement Learning from Human Feedback': paper.rlhf_score,
                 'Weak Supervision': paper.weak_supervision_score,
                 'Diffusion-based Reasoning': paper.diffusion_reasoning_score,
-                'Distributed Training': paper.distributed_training_score
+                'Distributed Training': paper.distributed_training_score,
+                'Datasets': paper.datasets_score
             }
             
             above_threshold_topics = [
@@ -197,6 +199,8 @@ class LLMValidation:
             paper.diffusion_reasoning_justification = below_threshold_justification
         if topic_scores['Distributed Training'] is None or topic_scores['Distributed Training'] < threshold:
             paper.distributed_training_justification = below_threshold_justification
+        if topic_scores['Datasets'] is None or topic_scores['Datasets'] < threshold:
+            paper.datasets_justification = below_threshold_justification
     
     def _set_all_below_threshold(self, paper: Paper) -> None:
         """Set all topic justifications to below_threshold."""
@@ -205,6 +209,7 @@ class LLMValidation:
         paper.weak_supervision_justification = below_threshold_justification
         paper.diffusion_reasoning_justification = below_threshold_justification
         paper.distributed_training_justification = below_threshold_justification
+        paper.datasets_justification = below_threshold_justification
     
     def _process_paper_with_retry_wrapper(self, paper: Paper, paper_index: int, total_papers: int) -> None:
         """
@@ -301,7 +306,8 @@ class LLMValidation:
             'Reinforcement Learning from Human Feedback': paper.rlhf_score,
             'Weak Supervision': paper.weak_supervision_score,
             'Diffusion-based Reasoning': paper.diffusion_reasoning_score,
-            'Distributed Training': paper.distributed_training_score
+            'Distributed Training': paper.distributed_training_score,
+            'Datasets': paper.datasets_score
         }
         
         for topic, score in topic_scores.items():
@@ -336,7 +342,8 @@ class LLMValidation:
             'Reinforcement Learning from Human Feedback': 'RLHF',
             'Weak Supervision': 'Weak_supervision', 
             'Diffusion-based Reasoning': 'Diffusion_reasoning',
-            'Distributed Training': 'Distributed_training'
+            'Distributed Training': 'Distributed_training',
+            'Datasets': 'Datasets'
         }
         
         topics_section = "Topics to evaluate:\n"
@@ -530,6 +537,9 @@ Important: Ensure you evaluate ALL {len(topics_to_validate)} topics listed and u
             elif topic_name == 'Distributed Training':
                 paper.distributed_training_relevance = conclusion
                 paper.distributed_training_justification = justification
+            elif topic_name == 'Datasets':
+                paper.datasets_relevance = conclusion
+                paper.datasets_justification = justification
 
 def run(papers: Dict[str, Paper], config: dict) -> Dict[str, Paper]:
     """

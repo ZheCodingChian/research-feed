@@ -49,6 +49,7 @@ class Paper:
     weak_supervision_score: Optional[float] = None  # Similarity score for weak supervision topic
     diffusion_reasoning_score: Optional[float] = None  # Similarity score for diffusion reasoning topic
     distributed_training_score: Optional[float] = None  # Similarity score for distributed training topic
+    datasets_score: Optional[float] = None  # Similarity score for datasets topic
     highest_similarity_topic: Optional[str] = None  # Topic with highest similarity score
     
     # LLM validation fields
@@ -57,10 +58,12 @@ class Paper:
     weak_supervision_relevance: str = "not_validated"  # LLM relevance assessment for weak supervision
     diffusion_reasoning_relevance: str = "not_validated"  # LLM relevance assessment for diffusion reasoning
     distributed_training_relevance: str = "not_validated"  # LLM relevance assessment for distributed training
+    datasets_relevance: str = "not_validated"  # LLM relevance assessment for datasets
     rlhf_justification: str = "no_justification"  # LLM justification for RLHF assessment
     weak_supervision_justification: str = "no_justification"  # LLM justification for weak supervision assessment
     diffusion_reasoning_justification: str = "no_justification"  # LLM justification for diffusion reasoning assessment
     distributed_training_justification: str = "no_justification"  # LLM justification for distributed training assessment
+    datasets_justification: str = "no_justification"  # LLM justification for datasets assessment
     
     # LLM scoring fields
     llm_score_status: str = "not_scored"  # Track LLM scoring state: not_scored, completed, failed, not_relevant_enough
@@ -159,7 +162,8 @@ class Paper:
             self.rlhf_relevance,
             self.weak_supervision_relevance,
             self.diffusion_reasoning_relevance,
-            self.distributed_training_relevance
+            self.distributed_training_relevance,
+            self.datasets_relevance
         ]
         return "Highly Relevant" in relevance_scores
     

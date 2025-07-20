@@ -58,7 +58,12 @@ Keywords: Diffusion model, denoising diffusion probabilistic models, DDPM, score
             'Distributed Training': """Distributed Training
 This field focuses on the algorithms, systems, and infrastructure required to train massive machine learning models that cannot fit on a single accelerator (GPU/TPU). It involves techniques for parallelizing the training process across multiple devices, which can be located within a single server or distributed across a cluster of nodes. Core strategies include data parallelism, where the dataset is split across devices; model parallelism, where the model itself is partitioned (including tensor and pipeline parallelism); and ZeRO (Zero Redundancy Optimizer), which shards optimizer states, gradients, and parameters. Research in this area develops new parallelization strategies, communication-efficient algorithms to reduce network bottlenecks (e.g., gradient compression, collective communication libraries like NCCL), and robust systems for managing training at scale. This includes work on fault tolerance, checkpointing, and hardware-software co-design to optimize for specific network topologies and interconnects like NVLink and InfiniBand.
 
-Keywords: Distributed training, large-scale training, model parallelism, data parallelism, pipeline parallelism, tensor parallelism, Zero Redundancy Optimizer, ZeRO, FSDP, DeepSpeed, Megatron-LM, multi-GPU, multi-node, gradient accumulation, collective communication, all-reduce, parameter server, gradient compression, HPC, High-Performance Computing."""
+Keywords: Distributed training, large-scale training, model parallelism, data parallelism, pipeline parallelism, tensor parallelism, Zero Redundancy Optimizer, ZeRO, FSDP, DeepSpeed, Megatron-LM, multi-GPU, multi-node, gradient accumulation, collective communication, all-reduce, parameter server, gradient compression, HPC, High-Performance Computing.""",
+            
+            'Datasets': """Datasets
+This research area focuses on the creation, curation, analysis, and evaluation of datasets that advance machine learning and artificial intelligence research. It encompasses papers that introduce new datasets for training or benchmarking AI models, develop methodologies for dataset construction and quality assessment, and analyze the properties and characteristics of existing datasets. This includes work on data collection strategies, annotation frameworks, dataset bias analysis, benchmark design, multi-modal dataset creation, large-scale dataset curation, and dataset versioning and maintenance. The field also covers influential datasets that have shaped AI research directions, dataset comparison and evaluation methodologies, and tools for dataset management and distribution.
+
+Keywords: Dataset creation, benchmark datasets, data curation, data collection, dataset analysis, annotation framework, dataset bias, benchmark evaluation, multi-modal datasets, large-scale datasets, dataset construction, data labeling, dataset versioning, influential datasets, dataset comparison, dataset evaluation, data quality assessment, dataset management."""
         }
     
     def run(self, papers: Dict[str, Paper]) -> Dict[str, Paper]:
@@ -262,6 +267,7 @@ Keywords: Distributed training, large-scale training, model parallelism, data pa
                     paper.weak_supervision_score = scores.get('Weak Supervision')
                     paper.diffusion_reasoning_score = scores.get('Diffusion-based Reasoning')
                     paper.distributed_training_score = scores.get('Distributed Training')
+                    paper.datasets_score = scores.get('Datasets')
                     
                     # Find highest scoring topic
                     highest_topic = max(scores, key=scores.get)
@@ -328,6 +334,7 @@ Keywords: Distributed training, large-scale training, model parallelism, data pa
                 paper.weak_supervision_score = self._round_to_3_sig_figs(paper.weak_supervision_score)
                 paper.diffusion_reasoning_score = self._round_to_3_sig_figs(paper.diffusion_reasoning_score)
                 paper.distributed_training_score = self._round_to_3_sig_figs(paper.distributed_training_score)
+                paper.datasets_score = self._round_to_3_sig_figs(paper.datasets_score)
 
     def _cosine_similarity(self, vec1: List[float], vec2: List[float]) -> float:
         """

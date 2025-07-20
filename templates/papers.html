@@ -1110,6 +1110,24 @@
                                         <span class="similarity-error">Error</span>
                                         {% endif %}
                                     </div>
+                                    
+                                    <!-- Datasets Row -->
+                                    <div class="similarity-topic-label">Datasets:</div>
+                                    <div class="similarity-score-display">
+                                        {% if paper.datasets_score is not none %}
+                                        <div class="similarity-bar">
+                                            <div class="similarity-bar-fill" style="width: {{ (paper.datasets_score * 100)|round(1) }}%"></div>
+                                        </div>
+                                        <span class="similarity-value" 
+                                              data-raw-score="{{ '%.3f'|format(paper.datasets_score) }}" 
+                                              data-topic="datasets">{{ '%.3f'|format(paper.datasets_score) }}</span>
+                                        {% else %}
+                                        <div class="similarity-bar">
+                                            <div class="similarity-bar-fill" style="width: 0%"></div>
+                                        </div>
+                                        <span class="similarity-error">Error</span>
+                                        {% endif %}
+                                    </div>
                                 </div>
                                 
                                 <!-- Controls Section -->
@@ -1213,6 +1231,27 @@
                                         <span class="llm-validation-value not-relevant">Error</span>
                                         {% endif %}
                                     </div>
+                                    
+                                    <!-- Datasets Row -->
+                                    <div class="llm-validation-topic-label">Datasets:</div>
+                                    <div class="llm-validation-value-wrapper">
+                                        {% if paper.datasets_relevance == 'not_validated' %}
+                                        <div class="llm-validation-tooltip-wrapper">
+                                            <span class="llm-validation-value not-relevant">Not Relevant*</span>
+                                            <div class="llm-validation-tooltip">Topic similarity score below 0.4, hence deemed not relevant</div>
+                                        </div>
+                                        {% elif paper.datasets_relevance == 'Highly Relevant' %}
+                                        <span class="llm-validation-value highly-relevant">Highly Relevant</span>
+                                        {% elif paper.datasets_relevance == 'Moderately Relevant' %}
+                                        <span class="llm-validation-value moderately-relevant">Moderately Relevant</span>
+                                        {% elif paper.datasets_relevance == 'Tangentially Relevant' %}
+                                        <span class="llm-validation-value tangentially-relevant">Tangentially Relevant</span>
+                                        {% elif paper.datasets_relevance == 'Not Relevant' %}
+                                        <span class="llm-validation-value not-relevant">Not Relevant</span>
+                                        {% else %}
+                                        <span class="llm-validation-value not-relevant">Error</span>
+                                        {% endif %}
+                                    </div>
                                 </div>
                                 
                                 <!-- Controls Section -->
@@ -1265,6 +1304,16 @@
                                             No AI generated justification available.
                                             {% else %}
                                             {{ paper.distributed_training_justification }}
+                                            {% endif %}
+                                        </div>
+                                        {% endif %}
+                                        {% if paper.datasets_relevance != 'not_validated' %}
+                                        <div class="llm-validation-justification-item">
+                                            <span class="llm-validation-justification-topic">Datasets:</span>
+                                            {% if paper.datasets_justification == 'no_justification' %}
+                                            No AI generated justification available.
+                                            {% else %}
+                                            {{ paper.datasets_justification }}
                                             {% endif %}
                                         </div>
                                         {% endif %}
