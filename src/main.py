@@ -189,6 +189,15 @@ def main() -> None:
         logger.info("Executing HTML generation module")
         from modules import html_generator
         html_generator.run(runtime_paper_dict, run_mode, run_value, config.HTML_GENERATION)
+        
+        # Step 8: Execute Slack notification module
+        logger.info("Executing Slack notification module")
+        try:
+            from modules import slack
+            slack.run(runtime_paper_dict, run_mode, run_value)
+        except Exception as e:
+            logger.warning(f"Slack notification failed: {e}")
+            logger.info("Pipeline will continue despite Slack notification failure")
 
         # Final summary
         total_papers = len(runtime_paper_dict)
