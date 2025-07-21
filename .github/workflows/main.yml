@@ -24,7 +24,7 @@ on:
 
 # This section grants the necessary permissions to the GITHUB_TOKEN for the jobs.
 permissions:
-  contents: read # Allows the workflow to read the repository content.
+  contents: write # Allows the workflow to read and write repository content.
   pages: write # Allows the workflow to write to GitHub Pages.
   id-token: write # Allows the workflow to use OIDC for authentication.
 
@@ -71,6 +71,17 @@ jobs:
           report_date=$(date -d "$DAYS_AGO days ago" +%Y-%m-%d)
           echo "Generating report for date: $report_date"
           python src/main.py --date=$report_date
+
+      - name: Create .nojekyll file
+        run: touch ./report/.nojekyll # Disables Jekyll processing for GitHub Pages
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add report/
+          git commit -m "Update newsletter report $(date +%Y-%m-%d)" || exit 0
+          git push
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3 # This action uploads the generated report as an artifact.
