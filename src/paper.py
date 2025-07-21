@@ -157,7 +157,7 @@ class Paper:
         return self.llm_score_status in ["completed", "failed", "not_relevant_enough"]
     
     def has_highly_relevant_topic(self) -> bool:
-        """Check if paper has at least one highly relevant topic."""
+        """Check if paper has at least one highly relevant or moderately relevant topic."""
         relevance_scores = [
             self.rlhf_relevance,
             self.weak_supervision_relevance,
@@ -165,7 +165,7 @@ class Paper:
             self.distributed_training_relevance,
             self.datasets_relevance
         ]
-        return "Highly Relevant" in relevance_scores
+        return "Highly Relevant" in relevance_scores or "Moderately Relevant" in relevance_scores
     
     def update_h_index_status(self, new_status: str) -> None:
         """Update the paper's H-index fetching status."""

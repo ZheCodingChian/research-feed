@@ -1,9 +1,9 @@
 """
 LLM Scoring Module
 
-This module scores papers that have passed LLM validation with at least one Highly Relevant topic.
-It provides detailed scoring across three dimensions: novelty, impact, and recommendation using
-Grok 3 Mini via OpenRouter API.
+This module scores papers that have passed LLM validation with at least one Highly Relevant 
+or Moderately Relevant topic. It provides detailed scoring across three dimensions: novelty, 
+impact, and recommendation using Grok 3 Mini via OpenRouter API.
 """
 
 import logging
@@ -28,8 +28,9 @@ class LLMScoring:
     """
     Handles LLM-based scoring of paper quality across multiple dimensions.
     
-    This class takes papers that have at least one Highly Relevant topic from LLM validation
-    and provides detailed scoring for novelty, impact, and recommendation using an LLM.
+    This class takes papers that have at least one Highly Relevant or Moderately Relevant 
+    topic from LLM validation and provides detailed scoring for novelty, impact, and 
+    recommendation using an LLM.
     """
     
     def __init__(self, config: dict):
@@ -48,7 +49,7 @@ class LLMScoring:
     
     def run(self, papers: Dict[str, Paper]) -> Dict[str, Paper]:
         """
-        Run LLM scoring on papers that have at least one Highly Relevant topic.
+        Run LLM scoring on papers that have at least one Highly Relevant or Moderately Relevant topic.
         
         Args:
             papers: Dictionary of paper_id -> Paper objects
@@ -108,7 +109,7 @@ class LLMScoring:
         # Counters for detailed logging
         no_llm_validation = 0
         already_scored = 0
-        no_highly_relevant = 0
+        no_highly_or_moderately_relevant = 0
         
         for paper in papers.values():
             # Check if LLM validation is completed
@@ -121,26 +122,26 @@ class LLMScoring:
                 already_scored += 1
                 continue
             
-            # Check if has at least one Highly Relevant topic
+            # Check if has at least one Highly Relevant or Moderately Relevant topic
             if paper.has_highly_relevant_topic():
                 papers_to_process.append(paper)
                 logger.debug(f"Paper {paper.id} needs scoring")
             else:
                 # Mark as not relevant enough
                 paper.update_llm_score_status("not_relevant_enough")
-                no_highly_relevant += 1
-                logger.debug(f"Paper {paper.id} has no Highly Relevant topics, marked as not_relevant_enough")
+                no_highly_or_moderately_relevant += 1
+                logger.debug(f"Paper {paper.id} has no Highly Relevant or Moderately Relevant topics, marked as not_relevant_enough")
         
         # Log detailed skip statistics
-        total_skipped = no_llm_validation + already_scored + no_highly_relevant
+        total_skipped = no_llm_validation + already_scored + no_highly_or_moderately_relevant
         if total_skipped > 0:
             skip_details = []
             if no_llm_validation > 0:
                 skip_details.append(f"{no_llm_validation} no LLM validation")
             if already_scored > 0:
                 skip_details.append(f"{already_scored} already scored")
-            if no_highly_relevant > 0:
-                skip_details.append(f"{no_highly_relevant} no Highly Relevant topics")
+            if no_highly_or_moderately_relevant > 0:
+                skip_details.append(f"{no_highly_or_moderately_relevant} no Highly/Moderately Relevant topics")
             
             logger.info(f"Skipping {total_skipped} papers: {', '.join(skip_details)}")
         
