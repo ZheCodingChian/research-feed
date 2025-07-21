@@ -1,7 +1,7 @@
 # This is a GitHub Actions workflow file that defines a set of automated tasks.
 # It's written in YAML, a human-readable data serialization language.
 
-name: Generate and Deploy Newsletter Report # The name of the workflow, which will be displayed on GitHub.
+name: action 1 # The name of the workflow, which will be displayed on GitHub.
 
 # This section defines when the workflow should be triggered.
 on:
