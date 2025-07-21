@@ -48,11 +48,21 @@ jobs:
 
       - name: Run script in test mode
         if: github.event.inputs.test_run == 'true'
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
         run: python src/main.py --test test_papers.txt
 
       - name: Run script to generate report
         if: github.event.inputs.test_run != 'true'
         env:
+          # API Keys and Configuration
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
           # For manual runs, use the user-provided 'days_ago' value.
           # For scheduled runs, default to 20 days.
           DAYS_AGO: ${{ github.event.inputs.days_ago || '20' }}
