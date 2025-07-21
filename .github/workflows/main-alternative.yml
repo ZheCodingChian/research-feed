@@ -1,0 +1,79 @@
+# Alternative deployment approach - deploy directly to gh-pages branch
+name: Generate and Deploy Newsletter Report (Alternative)
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_run:
+        description: 'Perform a test run using test_papers.txt'
+        required: true
+        default: false
+        type: boolean
+      days_ago:
+        description: 'Days to subtract from the current date for the report'
+        required: true
+        default: '20'
+        type: string
+  schedule:
+    - cron: '0 23 * * *'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run script in test mode
+        if: github.event.inputs.test_run == 'true'
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
+        run: python src/main.py --test test_papers.txt
+
+      - name: Run script to generate report
+        if: github.event.inputs.test_run != 'true'
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
+          DAYS_AGO: ${{ github.event.inputs.days_ago || '20' }}
+        run: |
+          report_date=$(date -d "$DAYS_AGO days ago" +%Y-%m-%d)
+          echo "Generating report for date: $report_date"
+          python src/main.py --date=$report_date
+
+      - name: Create .nojekyll file
+        run: touch ./report/.nojekyll
+
+      - name: Commit and push changes to main
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add report/ cache.db
+          git commit -m "Update newsletter report $(date +%Y-%m-%d)" || exit 0
+          git push
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./report
+          publish_branch: gh-pages
+          force_orphan: true
