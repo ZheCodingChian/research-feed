@@ -1985,6 +1985,9 @@
                     average_max: 1000
                 };
                 
+                // Initialize from URL parameters first
+                this.loadStateFromURL();
+                
                 // Pending state for deferred filtering
                 this.pendingFilters = { ...this.currentFilters };
                 this.pendingRecommendationFilters = { ...this.currentRecommendationFilters };
@@ -1998,6 +2001,172 @@
                 this.initializeUIState();
                 this.applyFiltersAndSort();
                 this.updateTopicVisibility();
+            }
+            
+            // URL State Management Methods
+            loadStateFromURL() {
+                const urlParams = new URLSearchParams(window.location.search);
+                
+                // Load sort
+                if (urlParams.has('sort')) {
+                    this.currentSort = urlParams.get('sort');
+                }
+                
+                // Load status filters
+                if (urlParams.has('status')) {
+                    const statusValues = urlParams.get('status').split(',');
+                    this.currentFilters = {
+                        completed: statusValues.includes('completed'),
+                        failed: statusValues.includes('failed'),
+                        not_relevant_enough: statusValues.includes('not_relevant_enough')
+                    };
+                }
+                
+                // Load recommendation filters
+                if (urlParams.has('recommendation')) {
+                    const recValues = urlParams.get('recommendation').split(',');
+                    this.currentRecommendationFilters = {
+                        must_read: recValues.includes('must_read'),
+                        should_read: recValues.includes('should_read'),
+                        can_skip: recValues.includes('can_skip'),
+                        ignore: recValues.includes('ignore')
+                    };
+                }
+                
+                // Load novelty filters
+                if (urlParams.has('novelty')) {
+                    const noveltyValues = urlParams.get('novelty').split(',');
+                    this.currentNoveltyFilters = {
+                        high: noveltyValues.includes('high'),
+                        moderate: noveltyValues.includes('moderate'),
+                        low: noveltyValues.includes('low'),
+                        none: noveltyValues.includes('none')
+                    };
+                }
+                
+                // Load impact filters
+                if (urlParams.has('impact')) {
+                    const impactValues = urlParams.get('impact').split(',');
+                    this.currentImpactFilters = {
+                        high: impactValues.includes('high'),
+                        moderate: impactValues.includes('moderate'),
+                        low: impactValues.includes('low'),
+                        negligible: impactValues.includes('negligible')
+                    };
+                }
+                
+                // Load topic filters
+                if (urlParams.has('topics')) {
+                    const topicValues = urlParams.get('topics').split(',');
+                    this.currentTopicFilters = {
+                        rlhf: topicValues.includes('rlhf'),
+                        weak_supervision: topicValues.includes('weak_supervision'),
+                        diffusion_reasoning: topicValues.includes('diffusion_reasoning'),
+                        distributed_training: topicValues.includes('distributed_training'),
+                        datasets: topicValues.includes('datasets')
+                    };
+                }
+                
+                // Load relevance filters
+                if (urlParams.has('relevance')) {
+                    const relevanceValues = urlParams.get('relevance').split(',');
+                    this.currentRelevanceFilters = {
+                        highly: relevanceValues.includes('highly'),
+                        moderately: relevanceValues.includes('moderately'),
+                        tangentially: relevanceValues.includes('tangentially'),
+                        not_relevant: relevanceValues.includes('not_relevant')
+                    };
+                }
+                
+                // Load h-index filters
+                if (urlParams.has('hindex')) {
+                    const hindexValues = urlParams.get('hindex').split(',');
+                    this.currentHIndexFilters.found = hindexValues.includes('found');
+                    this.currentHIndexFilters.not_found = hindexValues.includes('not_found');
+                }
+                if (urlParams.has('hindex_highest_min')) {
+                    this.currentHIndexFilters.highest_min = parseInt(urlParams.get('hindex_highest_min')) || 0;
+                }
+                if (urlParams.has('hindex_highest_max')) {
+                    this.currentHIndexFilters.highest_max = parseInt(urlParams.get('hindex_highest_max')) || 1000;
+                }
+                if (urlParams.has('hindex_average_min')) {
+                    this.currentHIndexFilters.average_min = parseFloat(urlParams.get('hindex_average_min')) || 0;
+                }
+                if (urlParams.has('hindex_average_max')) {
+                    this.currentHIndexFilters.average_max = parseFloat(urlParams.get('hindex_average_max')) || 1000;
+                }
+            }
+            
+            updateURL() {
+                const params = new URLSearchParams();
+                
+                // Add sort if not default
+                if (this.currentSort !== 'recommendation-best') {
+                    params.set('sort', this.currentSort);
+                }
+                
+                // Add status filters if not all selected
+                const statusSelected = Object.keys(this.currentFilters).filter(key => this.currentFilters[key]);
+                if (statusSelected.length > 0 && statusSelected.length < 3) {
+                    params.set('status', statusSelected.join(','));
+                }
+                
+                // Add recommendation filters if not all selected
+                const recSelected = Object.keys(this.currentRecommendationFilters).filter(key => this.currentRecommendationFilters[key]);
+                if (recSelected.length > 0 && recSelected.length < 4) {
+                    params.set('recommendation', recSelected.join(','));
+                }
+                
+                // Add novelty filters if not all selected
+                const noveltySelected = Object.keys(this.currentNoveltyFilters).filter(key => this.currentNoveltyFilters[key]);
+                if (noveltySelected.length > 0 && noveltySelected.length < 4) {
+                    params.set('novelty', noveltySelected.join(','));
+                }
+                
+                // Add impact filters if not all selected
+                const impactSelected = Object.keys(this.currentImpactFilters).filter(key => this.currentImpactFilters[key]);
+                if (impactSelected.length > 0 && impactSelected.length < 4) {
+                    params.set('impact', impactSelected.join(','));
+                }
+                
+                // Add topic filters if not all selected
+                const topicsSelected = Object.keys(this.currentTopicFilters).filter(key => this.currentTopicFilters[key]);
+                if (topicsSelected.length > 0 && topicsSelected.length < 5) {
+                    params.set('topics', topicsSelected.join(','));
+                }
+                
+                // Add relevance filters if not all selected
+                const relevanceSelected = Object.keys(this.currentRelevanceFilters).filter(key => this.currentRelevanceFilters[key]);
+                if (relevanceSelected.length > 0 && relevanceSelected.length < 4) {
+                    params.set('relevance', relevanceSelected.join(','));
+                }
+                
+                // Add h-index filters if not default
+                const hindexSelected = [];
+                if (this.currentHIndexFilters.found) hindexSelected.push('found');
+                if (this.currentHIndexFilters.not_found) hindexSelected.push('not_found');
+                if (hindexSelected.length > 0 && hindexSelected.length < 2) {
+                    params.set('hindex', hindexSelected.join(','));
+                }
+                
+                // Add h-index ranges if not default
+                if (this.currentHIndexFilters.highest_min !== 0) {
+                    params.set('hindex_highest_min', this.currentHIndexFilters.highest_min.toString());
+                }
+                if (this.currentHIndexFilters.highest_max !== 1000) {
+                    params.set('hindex_highest_max', this.currentHIndexFilters.highest_max.toString());
+                }
+                if (this.currentHIndexFilters.average_min !== 0) {
+                    params.set('hindex_average_min', this.currentHIndexFilters.average_min.toString());
+                }
+                if (this.currentHIndexFilters.average_max !== 1000) {
+                    params.set('hindex_average_max', this.currentHIndexFilters.average_max.toString());
+                }
+                
+                // Update URL without page reload
+                const newURL = params.toString() ? `${window.location.pathname}?${params.toString()}` : window.location.pathname;
+                window.history.replaceState({}, '', newURL);
             }
             
             initializeEventListeners() {
@@ -3204,6 +3373,7 @@
                 this.filteredPapers = this.sortPapers(this.filteredPapers);
                 this.updatePaperDisplay();
                 this.updatePaperCount();
+                this.updateURL();
             }
             
             updatePaperDisplay() {
