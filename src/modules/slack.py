@@ -22,6 +22,15 @@ TOPICS = {
     'Datasets': 'datasets_relevance'
 }
 
+# Topic URL parameters for filtering
+TOPIC_URL_PARAMS = {
+    'RLHF': 'topics=rlhf&relevance=highly%2Cmoderately%2Ctangentially',
+    'Weak supervision': 'topics=weak_supervision&relevance=highly%2Cmoderately%2Ctangentially',
+    'Diffusion Reasoning': 'topics=diffusion_reasoning&relevance=highly%2Cmoderately%2Ctangentially',
+    'Distributed Training': 'topics=distributed_training&relevance=highly%2Cmoderately%2Ctangentially',
+    'Datasets': 'topics=datasets&relevance=highly%2Cmoderately%2Ctangentially'
+}
+
 # Relevance levels to count
 RELEVANCE_LEVELS = ['Highly Relevant', 'Moderately Relevant', 'Tangentially Relevant']
 
@@ -108,6 +117,19 @@ def format_slack_message(runtime_paper_dict: Dict[str, Paper], run_mode: str, ru
             ]
         },
         {
+            "type": "actions",
+            "elements": [
+                {
+                    "type": "button",
+                    "text": {
+                        "type": "plain_text",
+                        "text": "View all papers"
+                    },
+                    "url": newsletter_url
+                }
+            ]
+        },
+        {
             "type": "divider"
         }
     ]
@@ -150,9 +172,9 @@ def format_slack_message(runtime_paper_dict: Dict[str, Paper], run_mode: str, ru
                     "type": "button",
                     "text": {
                         "type": "plain_text",
-                        "text": "Read Must Read papers"
+                        "text": "View papers"
                     },
-                    "url": newsletter_url
+                    "url": f"{newsletter_url}?status=completed&recommendation=must_read"
                 }
             ]
         },
@@ -177,9 +199,9 @@ def format_slack_message(runtime_paper_dict: Dict[str, Paper], run_mode: str, ru
                     "type": "button",
                     "text": {
                         "type": "plain_text",
-                        "text": "Read Should Read papers"
+                        "text": "View papers"
                     },
-                    "url": newsletter_url
+                    "url": f"{newsletter_url}?status=completed&recommendation=should_read"
                 }
             ]
         },
@@ -192,6 +214,10 @@ def format_slack_message(runtime_paper_dict: Dict[str, Paper], run_mode: str, ru
     for topic_name, topic_field in TOPICS.items():
         counts = count_papers_by_relevance(runtime_paper_dict, topic_field)
         total_topic_papers = sum(counts.values())
+        
+        # Get the URL parameters for this topic
+        topic_url_params = TOPIC_URL_PARAMS.get(topic_name, '')
+        topic_url = f"{newsletter_url}?{topic_url_params}" if topic_url_params else newsletter_url
         
         message_blocks.extend([
             {
@@ -217,9 +243,9 @@ def format_slack_message(runtime_paper_dict: Dict[str, Paper], run_mode: str, ru
                         "type": "button",
                         "text": {
                             "type": "plain_text",
-                            "text": f"Read {topic_name} papers"
+                            "text": "View papers"
                         },
-                        "url": newsletter_url
+                        "url": topic_url
                     }
                 ]
             },
