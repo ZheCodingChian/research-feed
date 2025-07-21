@@ -1,0 +1,80 @@
+# This is a GitHub Actions workflow file that defines a set of automated tasks.
+# It's written in YAML, a human-readable data serialization language.
+
+name: Generate and Deploy Newsletter Report # The name of the workflow, which will be displayed on GitHub.
+
+# This section defines when the workflow should be triggered.
+on:
+  # Allows the workflow to be run manually from the Actions tab in your GitHub repository.
+  workflow_dispatch:
+    inputs:
+      test_run:
+        description: 'Perform a test run using test_papers.txt'
+        required: true
+        default: false
+        type: boolean
+      days_ago:
+        description: 'Days to subtract from the current date for the report'
+        required: true
+        default: '20'
+        type: string
+  # Triggers the workflow on a schedule - daily at 7:00 AM SGT (which is 23:00 UTC the previous day)
+  schedule:
+    - cron: '0 23 * * *'
+
+# This section grants the necessary permissions to the GITHUB_TOKEN for the jobs.
+permissions:
+  contents: read # Allows the workflow to read the repository content.
+  pages: write # Allows the workflow to write to GitHub Pages.
+  id-token: write # Allows the workflow to use OIDC for authentication.
+
+# This section defines the jobs that will be executed as part of the workflow.
+jobs:
+  # The first job is named 'build'. Its purpose is to run your Python script and generate the report.
+  build:
+    runs-on: ubuntu-latest # Specifies that this job should run on the latest version of Ubuntu.
+    steps:
+      # The 'steps' are the individual tasks performed in this job.
+      - name: Checkout repository
+        uses: actions/checkout@v4 # This action checks out your repository's code into the runner.
+
+      - name: Set up Python
+        uses: actions/setup-python@v5 # This action sets up a Python environment.
+        with:
+          python-version: '3.11' # Specifies the Python version to use.
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt # This command installs the Python packages listed in requirements.txt.
+
+      - name: Run script in test mode
+        if: github.event.inputs.test_run == 'true'
+        run: python src/main.py --test test_papers.txt
+
+      - name: Run script to generate report
+        if: github.event.inputs.test_run != 'true'
+        env:
+          # For manual runs, use the user-provided 'days_ago' value.
+          # For scheduled runs, default to 20 days.
+          DAYS_AGO: ${{ github.event.inputs.days_ago || '20' }}
+        run: |
+          # Calculate the target date by subtracting DAYS_AGO from the current date.
+          report_date=$(date -d "$DAYS_AGO days ago" +%Y-%m-%d)
+          echo "Generating report for date: $report_date"
+          python src/main.py --date=$report_date
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3 # This action uploads the generated report as an artifact.
+        with:
+          path: ./report # Specifies that the 'report' directory should be uploaded.
+
+  # The second job is named 'deploy'. It depends on the 'build' job and handles the deployment to GitHub Pages.
+  deploy:
+    needs: build # Specifies that this job will only run after the 'build' job has completed successfully.
+    runs-on: ubuntu-latest # Specifies that this job should also run on the latest version of Ubuntu.
+    environment:
+      name: github-pages # Specifies the deployment environment.
+      url: ${{ steps.deployment.outputs.page_url }} # Sets the environment URL to the output of the deployment step.
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4 # This action handles the deployment of the artifact to GitHub Pages.
