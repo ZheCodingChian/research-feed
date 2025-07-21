@@ -75,11 +75,18 @@ jobs:
       - name: Create .nojekyll file
         run: touch ./report/.nojekyll # Disables Jekyll processing for GitHub Pages
 
+      - name: Check artifact size
+        run: |
+          echo "Checking report directory size:"
+          du -sh ./report
+          echo "Listing report contents:"
+          find ./report -type f -exec ls -lh {} \;
+
       - name: Commit and push changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add report/
+          git add report/ cache.db
           git commit -m "Update newsletter report $(date +%Y-%m-%d)" || exit 0
           git push
 
@@ -99,3 +106,17 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4 # This action handles the deployment of the artifact to GitHub Pages.
+        with:
+          timeout: 600000 # 10 minutes timeout
+          error_count: 10 # Allow up to 10 errors before failing
+          reporting_interval: 5000 # Report status every 5 seconds
+        continue-on-error: true
+      
+      - name: Retry deployment if failed
+        if: steps.deployment.outcome == 'failure'
+        id: deployment-retry
+        uses: actions/deploy-pages@v4
+        with:
+          timeout: 300000 # 5 minutes timeout for retry
+          error_count: 5
+          reporting_interval: 10000
