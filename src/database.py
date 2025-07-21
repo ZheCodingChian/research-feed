@@ -78,7 +78,8 @@ class PaperDatabase:
                     author_h_indexes TEXT,  -- JSON array of AuthorHIndex objects
                     errors TEXT,  -- JSON array
                     created_at TEXT,  -- ISO format
-                    updated_at TEXT   -- ISO format
+                    updated_at TEXT,  -- ISO format
+                    last_generated TEXT  -- YYYY-MM-DD format for cache cleanup
                 )
             """)
             
@@ -109,8 +110,8 @@ class PaperDatabase:
                     novelty_justification, impact_score, impact_justification, recommendation_score,
                     recommendation_justification, h_index_status, semantic_scholar_url, h_index_fetch_method,
                     total_authors, authors_found, highest_h_index, average_h_index, notable_authors_count,
-                    author_h_indexes, errors, created_at, updated_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    author_h_indexes, errors, created_at, updated_at, last_generated
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
                 paper.id,
                 paper.title,
@@ -167,7 +168,8 @@ class PaperDatabase:
                 } for auth in paper.author_h_indexes]),
                 json.dumps(paper.errors),
                 paper.created_at.isoformat(),
-                paper.updated_at.isoformat()
+                paper.updated_at.isoformat(),
+                paper.last_generated
             ))
     
     def load_paper(self, paper_id: str) -> Optional[Paper]:
@@ -238,7 +240,8 @@ class PaperDatabase:
                 ] if row['author_h_indexes'] else [],
                 errors=json.loads(row['errors']),
                 created_at=datetime.fromisoformat(row['created_at']),
-                updated_at=datetime.fromisoformat(row['updated_at'])
+                updated_at=datetime.fromisoformat(row['updated_at']),
+                last_generated=row['last_generated']
             )
     
     def save_papers(self, papers: Dict[str, Paper]) -> None:
@@ -260,8 +263,8 @@ class PaperDatabase:
                         novelty_justification, impact_score, impact_justification, recommendation_score,
                         recommendation_justification, h_index_status, semantic_scholar_url, h_index_fetch_method,
                         total_authors, authors_found, highest_h_index, average_h_index, notable_authors_count,
-                        author_h_indexes, errors, created_at, updated_at
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        author_h_indexes, errors, created_at, updated_at, last_generated
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, (
                     paper.id,
                     paper.title,
@@ -318,7 +321,8 @@ class PaperDatabase:
                     } for auth in paper.author_h_indexes]),
                     json.dumps(paper.errors),
                     paper.created_at.isoformat(),
-                    paper.updated_at.isoformat()
+                    paper.updated_at.isoformat(),
+                    paper.last_generated
                 ))
         
         logger.info(f"Successfully saved {len(papers)} papers to database")

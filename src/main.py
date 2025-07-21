@@ -190,7 +190,19 @@ def main() -> None:
         from modules import html_generator
         html_generator.run(runtime_paper_dict, run_mode, run_value, config.HTML_GENERATION)
         
-        # Step 8: Execute Slack notification module
+        # Step 8: Execute cache cleanup module
+        logger.info("Executing cache cleanup module")
+        try:
+            from modules import cache_cleanup
+            runtime_paper_dict = cache_cleanup.run(runtime_paper_dict, config.CACHE_CLEANUP)
+            
+            # Save Point: Persist cache cleanup results
+            save_to_cache(runtime_paper_dict)
+        except Exception as e:
+            logger.warning(f"Cache cleanup failed: {e}")
+            logger.info("Pipeline will continue despite cache cleanup failure")
+
+        # Step 9: Execute Slack notification module
         logger.info("Executing Slack notification module")
         try:
             from modules import slack

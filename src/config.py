@@ -128,3 +128,10 @@ HTML_GENERATION = {
         'test_title': 'Test Papers: {test_name}'
     }
 }
+
+# Cache Cleanup Parameters
+CACHE_CLEANUP = {
+    # Number of days to retain papers in the cache
+    # Papers older than this will be deleted from the database
+    'retention_days': 14
+}

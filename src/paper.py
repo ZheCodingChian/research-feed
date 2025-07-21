@@ -89,6 +89,7 @@ class Paper:
     # Metadata
     created_at: datetime = field(default_factory=datetime.now)
     updated_at: datetime = field(default_factory=datetime.now)
+    last_generated: Optional[str] = None  # YYYY-MM-DD format for cache cleanup
     
     def add_error(self, error_message: str) -> None:
         """Add an error message to the paper's error list."""
