@@ -25,8 +25,6 @@ on:
 # This section grants the necessary permissions to the GITHUB_TOKEN for the jobs.
 permissions:
   contents: write # Allows the workflow to read and write repository content.
-  pages: write # Allows the workflow to write to GitHub Pages.
-  id-token: write # Allows the workflow to use OIDC for authentication.
 
 # This section defines the jobs that will be executed as part of the workflow.
 jobs:
@@ -72,9 +70,6 @@ jobs:
           echo "Generating report for date: $report_date"
           python src/main.py --date=$report_date
 
-      - name: Create .nojekyll file
-        run: touch ./report/.nojekyll # Disables Jekyll processing for GitHub Pages
-
       - name: Check artifact size
         run: |
           echo "Checking report directory size:"
@@ -89,23 +84,3 @@ jobs:
           git add report/ cache.db
           git commit -m "Update newsletter report $(date +%Y-%m-%d)" || exit 0
           git push
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3 # This action uploads the generated report as an artifact.
-        with:
-          path: ./report # Specifies that the 'report' directory should be uploaded.
-
-  # The second job is named 'deploy'. It depends on the 'build' job and handles the deployment to GitHub Pages.
-  deploy:
-    needs: build # Specifies that this job will only run after the 'build' job has completed successfully.
-    runs-on: ubuntu-latest # Specifies that this job should also run on the latest version of Ubuntu.
-    environment:
-      name: github-pages # Specifies the deployment environment.
-      url: ${{ steps.deployment.outputs.page_url }} # Sets the environment URL to the output of the deployment step.
-    concurrency:
-      group: "pages"
-      cancel-in-progress: false
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4 # This action handles the deployment of the artifact to GitHub Pages.
