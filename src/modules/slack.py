@@ -47,9 +47,9 @@ def count_papers_by_relevance(runtime_paper_dict: Dict[str, Paper], topic_field:
     return counts
 
 
-def format_slack_message(runtime_paper_dict: Dict[str, Paper], run_mode: str, run_value: str) -> str:
+def format_slack_message(runtime_paper_dict: Dict[str, Paper], run_mode: str, run_value: str) -> List[Dict]:
     """
-    Format the Slack message with paper processing summary.
+    Format the Slack message with paper processing summary using Block Kit.
     
     Args:
         runtime_paper_dict: Dictionary of paper_id -> Paper objects
@@ -57,49 +57,186 @@ def format_slack_message(runtime_paper_dict: Dict[str, Paper], run_mode: str, ru
         run_value: The date string or test file name
     
     Returns:
-        Formatted Slack message string
+        List of Block Kit blocks for Slack message
     """
-    # Format the date/source line
-    if run_mode == 'date':
-        # Convert YYYY-MM-DD to DD-MM-YYYY format
-        try:
-            date_obj = datetime.strptime(run_value, '%Y-%m-%d')
-            formatted_date = date_obj.strftime('%d-%m-%Y')
-            source_line = f"Date papers are fetched from: {formatted_date}"
-        except ValueError:
-            source_line = f"Date papers are fetched from: {run_value}"
+    # Get the published date from papers (assume all papers have the same published date)
+    published_date = None
+    if runtime_paper_dict:
+        # Get published date from the first paper
+        first_paper = next(iter(runtime_paper_dict.values()))
+        published_date = first_paper.published_date
+        published_date_str = published_date.strftime('%Y-%m-%d')
+        formatted_published_date = published_date.strftime('%B %d, %Y')
+        
+        # Generate the newsletter URL based on published date
+        newsletter_url = f"https://zhecodingchian.github.io/arXiv-Newsletter-Papers/{published_date_str}.html"
     else:
-        source_line = f"Papers fetched from test file: {run_value}"
+        # Fallback if no papers
+        published_date_str = "2025-07-01"
+        formatted_published_date = "July 1, 2025"
+        newsletter_url = f"https://zhecodingchian.github.io/arXiv-Newsletter-Papers/{published_date_str}.html"
+    
+    # Format the header - run date is always the current date
+    current_date = datetime.now().strftime('%B %d, %Y')
+    if run_mode == 'date':
+        header_text = f"arXiv Daily Newsletter | Run date: {current_date}"
+    else:
+        header_text = f"arXiv Daily Newsletter | Test run: {current_date}"
     
     # Count total papers
     total_papers = len(runtime_paper_dict)
     
-    # Build the message
-    message_parts = [
-        source_line,
-        f"{total_papers} papers fetched",
-        ""  # Empty line for spacing
+    # Build the Block Kit message
+    message_blocks = [
+        {
+            "type": "divider"
+        },
+        {
+            "type": "header",
+            "text": {
+                "type": "plain_text",
+                "text": header_text
+            }
+        },
+        {
+            "type": "context",
+            "elements": [
+                {
+                    "type": "mrkdwn",
+                    "text": f"*{total_papers}* Papers Fetched   |   Published: *{formatted_published_date}*"
+                }
+            ]
+        },
+        {
+            "type": "divider"
+        }
     ]
     
-    # Add topic-specific relevance counts
+    # Count papers by overall relevance for Must Read and Should Read sections
+    must_read_count = 0
+    should_read_count = 0
+    
+    for paper in runtime_paper_dict.values():
+        # Count papers with "Highly Relevant" in any topic as Must Read
+        # Count papers with "Moderately Relevant" in any topic as Should Read
+        has_highly_relevant = False
+        has_moderately_relevant = False
+        
+        for topic_field in TOPICS.values():
+            relevance = getattr(paper, topic_field, "not_validated")
+            if relevance == 'Highly Relevant':
+                has_highly_relevant = True
+            elif relevance == 'Moderately Relevant':
+                has_moderately_relevant = True
+        
+        if has_highly_relevant:
+            must_read_count += 1
+        elif has_moderately_relevant:
+            should_read_count += 1
+    
+    # Add Must Read section
+    message_blocks.extend([
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f"*Must Read: {must_read_count} papers*"
+            }
+        },
+        {
+            "type": "actions",
+            "elements": [
+                {
+                    "type": "button",
+                    "text": {
+                        "type": "plain_text",
+                        "text": "Read Must Read papers"
+                    },
+                    "url": newsletter_url
+                }
+            ]
+        },
+        {
+            "type": "divider"
+        }
+    ])
+    
+    # Add Should Read section
+    message_blocks.extend([
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f"*Should Read: {should_read_count} papers*"
+            }
+        },
+        {
+            "type": "actions",
+            "elements": [
+                {
+                    "type": "button",
+                    "text": {
+                        "type": "plain_text",
+                        "text": "Read Should Read papers"
+                    },
+                    "url": newsletter_url
+                }
+            ]
+        },
+        {
+            "type": "divider"
+        }
+    ])
+    
+    # Add topic-specific sections
     for topic_name, topic_field in TOPICS.items():
         counts = count_papers_by_relevance(runtime_paper_dict, topic_field)
+        total_topic_papers = sum(counts.values())
         
-        message_parts.append(f"*{topic_name}*")
-        message_parts.append(f"Highly relevant: {counts['Highly Relevant']}")
-        message_parts.append(f"Moderately Relevant: {counts['Moderately Relevant']}")
-        message_parts.append(f"Tangentially Relevant: {counts['Tangentially Relevant']}")
-        message_parts.append("")  # Empty line for spacing
+        message_blocks.extend([
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": f"*{topic_name}: {total_topic_papers} papers*"
+                }
+            },
+            {
+                "type": "context",
+                "elements": [
+                    {
+                        "type": "mrkdwn",
+                        "text": f"Highly relevant: {counts['Highly Relevant']}   |   Moderately relevant: {counts['Moderately Relevant']}   |   Tangentially relevant: {counts['Tangentially Relevant']}"
+                    }
+                ]
+            },
+            {
+                "type": "actions",
+                "elements": [
+                    {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "text": f"Read {topic_name} papers"
+                        },
+                        "url": newsletter_url
+                    }
+                ]
+            },
+            {
+                "type": "divider"
+            }
+        ])
     
-    return "\n".join(message_parts).strip()
+    return message_blocks
 
 
-def send_slack_message(message: str) -> bool:
+def send_slack_message(message_blocks: List[Dict]) -> bool:
     """
-    Send a message to Slack using the webhook URL or bot token.
+    Send a Block Kit message to Slack using the bot token.
     
     Args:
-        message: The message text to send
+        message_blocks: List of Block Kit blocks to send
     
     Returns:
         True if successful, False otherwise
@@ -123,7 +260,7 @@ def send_slack_message(message: str) -> bool:
     
     payload = {
         'channel': slack_channel_id,
-        'text': message,
+        'blocks': message_blocks,
         'username': 'Paper Pipeline Bot',
         'icon_emoji': ':page_facing_up:'
     }
@@ -161,11 +298,11 @@ def run(runtime_paper_dict: Dict[str, Paper], run_mode: str, run_value: str) -> 
     logger.info("Starting Slack notification")
     
     try:
-        # Format the message
-        message = format_slack_message(runtime_paper_dict, run_mode, run_value)
+        # Format the message blocks
+        message_blocks = format_slack_message(runtime_paper_dict, run_mode, run_value)
         
         # Send the notification
-        success = send_slack_message(message)
+        success = send_slack_message(message_blocks)
         
         if success:
             logger.info("Slack notification sent successfully")
