@@ -93,15 +93,15 @@ H_INDEX_FETCHING = {
     
     # Sequential processing settings
     'timeout': 30,
-    'max_retries': 3,
+    'max_retries': 6,
     
     # Rate limiting (conservative to respect Semantic Scholar's public API limits)
-    'rate_limit_delay': 1.0,  # 1 second delay between requests
+    'rate_limit_delay': 2.0,  # 2 second delay between requests
     
     # Processing thresholds
     'notable_h_index_threshold': 5  # H-index threshold for "notable" authors
 }
-
+    
 # HTML Generation Parameters
 HTML_GENERATION = {
     # Output directory for generated HTML files
