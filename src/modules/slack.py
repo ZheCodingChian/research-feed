@@ -134,26 +134,15 @@ def format_slack_message(runtime_paper_dict: Dict[str, Paper], run_mode: str, ru
         }
     ]
     
-    # Count papers by overall relevance for Must Read and Should Read sections
+    # Count papers by their actual recommendation scores
     must_read_count = 0
     should_read_count = 0
     
     for paper in runtime_paper_dict.values():
-        # Count papers with "Highly Relevant" in any topic as Must Read
-        # Count papers with "Moderately Relevant" in any topic as Should Read
-        has_highly_relevant = False
-        has_moderately_relevant = False
-        
-        for topic_field in TOPICS.values():
-            relevance = getattr(paper, topic_field, "not_validated")
-            if relevance == 'Highly Relevant':
-                has_highly_relevant = True
-            elif relevance == 'Moderately Relevant':
-                has_moderately_relevant = True
-        
-        if has_highly_relevant:
+        recommendation = paper.recommendation_score
+        if recommendation == "Must Read":
             must_read_count += 1
-        elif has_moderately_relevant:
+        elif recommendation == "Should Read":
             should_read_count += 1
     
     # Add Must Read section
