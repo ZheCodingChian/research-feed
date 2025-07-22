@@ -13,10 +13,10 @@ on:
         required: true
         default: false
         type: boolean
-      days_ago:
-        description: 'Days to subtract from the current date for the report'
+      report_date:
+        description: 'Date for the report (YYYY-MM-DD format, e.g., 2025-07-01)'
         required: true
-        default: '20'
+        default: '2025-07-01'
         type: string
   # Triggers the workflow on a schedule - daily at 7:00 AM SGT (which is 23:00 UTC the previous day)
   schedule:
@@ -68,9 +68,14 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
-          DAYS_AGO: ${{ github.event.inputs.days_ago || '20' }}
         run: |
-          report_date=$(date -d "$DAYS_AGO days ago" +%Y-%m-%d)
+          # Use the provided date or calculate from days_ago for scheduled runs
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            report_date="${{ github.event.inputs.report_date }}"
+          else
+            # For scheduled runs, calculate 20 days ago
+            report_date=$(date -d "20 days ago" +%Y-%m-%d)
+          fi
           echo "Generating report for date: $report_date"
           python src/main.py --date=$report_date
 
