@@ -13,8 +13,8 @@ on:
         required: true
         default: false
         type: boolean
-      report_date:
-        description: 'Date for the report (YYYY-MM-DD format, e.g., 2025-07-01)'
+      paper_date:
+        description: 'Date of papers to process (YYYY-MM-DD format)'
         required: true
         default: '2025-07-01'
         type: string
@@ -68,16 +68,10 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
+          PAPER_DATE: ${{ github.event.inputs.paper_date || '2025-07-01' }}
         run: |
-          # Use the provided date or calculate from days_ago for scheduled runs
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            report_date="${{ github.event.inputs.report_date }}"
-          else
-            # For scheduled runs, calculate 20 days ago
-            report_date=$(date -d "20 days ago" +%Y-%m-%d)
-          fi
-          echo "Generating report for date: $report_date"
-          python src/main.py --date=$report_date
+          echo "Generating report for date: $PAPER_DATE"
+          python src/main.py --date=$PAPER_DATE
 
       - name: Check artifact size
         run: |
