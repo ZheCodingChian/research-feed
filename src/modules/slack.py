@@ -24,11 +24,11 @@ TOPICS = {
 
 # Topic URL parameters for filtering
 TOPIC_URL_PARAMS = {
-    'RLHF': 'topics=rlhf&relevance=highly%2Cmoderately%2Ctangentially',
-    'Weak supervision': 'topics=weak_supervision&relevance=highly%2Cmoderately%2Ctangentially',
-    'Diffusion Reasoning': 'topics=diffusion_reasoning&relevance=highly%2Cmoderately%2Ctangentially',
-    'Distributed Training': 'topics=distributed_training&relevance=highly%2Cmoderately%2Ctangentially',
-    'Datasets': 'topics=datasets&relevance=highly%2Cmoderately%2Ctangentially'
+    'RLHF': 'sort=relevance-desc&topics=rlhf&relevance=highly%2Cmoderately%2Ctangentially',
+    'Weak supervision': 'sort=relevance-desc&topics=weak_supervision&relevance=highly%2Cmoderately%2Ctangentially',
+    'Diffusion Reasoning': 'sort=relevance-desc&topics=diffusion_reasoning&relevance=highly%2Cmoderately%2Ctangentially',
+    'Distributed Training': 'sort=relevance-desc&topics=distributed_training&relevance=highly%2Cmoderately%2Ctangentially',
+    'Datasets': 'sort=relevance-desc&topics=datasets&relevance=highly%2Cmoderately%2Ctangentially'
 }
 
 # Relevance levels to count
