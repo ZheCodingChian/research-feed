@@ -22,6 +22,180 @@ class ArxivScraper:
     for a given date, with intelligent caching and selective metadata extraction.
     """
     
+    # ArXiv category mapping to descriptive names
+    ARXIV_CATEGORY_MAPPING = {
+        # Computer Science (cs)
+        'cs.AI': 'cs.AI (Artificial Intelligence)',
+        'cs.AR': 'cs.AR (Hardware Architecture)',
+        'cs.CC': 'cs.CC (Computational Complexity)',
+        'cs.CE': 'cs.CE (Computational Engineering, Finance, and Science)',
+        'cs.CG': 'cs.CG (Computational Geometry)',
+        'cs.CL': 'cs.CL (Computation and Language)',
+        'cs.CR': 'cs.CR (Cryptography and Security)',
+        'cs.CV': 'cs.CV (Computer Vision and Pattern Recognition)',
+        'cs.CY': 'cs.CY (Computers and Society)',
+        'cs.DB': 'cs.DB (Databases)',
+        'cs.DC': 'cs.DC (Distributed, Parallel, and Cluster Computing)',
+        'cs.DL': 'cs.DL (Digital Libraries)',
+        'cs.DM': 'cs.DM (Discrete Mathematics)',
+        'cs.DS': 'cs.DS (Data Structures and Algorithms)',
+        'cs.ET': 'cs.ET (Emerging Technologies)',
+        'cs.FL': 'cs.FL (Formal Languages and Automata Theory)',
+        'cs.GL': 'cs.GL (General Literature)',
+        'cs.GR': 'cs.GR (Graphics)',
+        'cs.GT': 'cs.GT (Computer Science and Game Theory)',
+        'cs.HC': 'cs.HC (Human-Computer Interaction)',
+        'cs.IR': 'cs.IR (Information Retrieval)',
+        'cs.IT': 'cs.IT (Information Theory)',
+        'cs.LG': 'cs.LG (Machine Learning)',
+        'cs.LO': 'cs.LO (Logic in Computer Science)',
+        'cs.MA': 'cs.MA (Multiagent Systems)',
+        'cs.MM': 'cs.MM (Multimedia)',
+        'cs.MS': 'cs.MS (Mathematical Software)',
+        'cs.NA': 'cs.NA (Numerical Analysis)',
+        'cs.NE': 'cs.NE (Neural and Evolutionary Computing)',
+        'cs.NI': 'cs.NI (Networking and Internet Architecture)',
+        'cs.OH': 'cs.OH (Other Computer Science)',
+        'cs.OS': 'cs.OS (Operating Systems)',
+        'cs.PF': 'cs.PF (Performance)',
+        'cs.PL': 'cs.PL (Programming Languages)',
+        'cs.RO': 'cs.RO (Robotics)',
+        'cs.SC': 'cs.SC (Symbolic Computation)',
+        'cs.SD': 'cs.SD (Sound)',
+        'cs.SE': 'cs.SE (Software Engineering)',
+        'cs.SI': 'cs.SI (Social and Information Networks)',
+        'cs.SY': 'cs.SY (Systems and Control)',
+        
+        # Economics (econ)
+        'econ.EM': 'econ.EM (Econometrics)',
+        'econ.GN': 'econ.GN (General Economics)',
+        'econ.TH': 'econ.TH (Theoretical Economics)',
+        
+        # Electrical Engineering and Systems Science (eess)
+        'eess.AS': 'eess.AS (Audio and Speech Processing)',
+        'eess.IV': 'eess.IV (Image and Video Processing)',
+        'eess.SP': 'eess.SP (Signal Processing)',
+        'eess.SY': 'eess.SY (Systems and Control)',
+        
+        # Mathematics (math)
+        'math.AC': 'math.AC (Commutative Algebra)',
+        'math.AG': 'math.AG (Algebraic Geometry)',
+        'math.AP': 'math.AP (Analysis of PDEs)',
+        'math.AT': 'math.AT (Algebraic Topology)',
+        'math.CA': 'math.CA (Classical Analysis and ODEs)',
+        'math.CO': 'math.CO (Combinatorics)',
+        'math.CT': 'math.CT (Category Theory)',
+        'math.CV': 'math.CV (Complex Variables)',
+        'math.DG': 'math.DG (Differential Geometry)',
+        'math.DS': 'math.DS (Dynamical Systems)',
+        'math.FA': 'math.FA (Functional Analysis)',
+        'math.GM': 'math.GM (General Mathematics)',
+        'math.GN': 'math.GN (General Topology)',
+        'math.GR': 'math.GR (Group Theory)',
+        'math.GT': 'math.GT (Geometric Topology)',
+        'math.HO': 'math.HO (History and Overview)',
+        'math.IT': 'math.IT (Information Theory)',
+        'math.KT': 'math.KT (K-Theory and Homology)',
+        'math.LO': 'math.LO (Logic)',
+        'math.MG': 'math.MG (Metric Geometry)',
+        'math.MP': 'math.MP (Mathematical Physics)',
+        'math.NA': 'math.NA (Numerical Analysis)',
+        'math.NT': 'math.NT (Number Theory)',
+        'math.OA': 'math.OA (Operator Algebras)',
+        'math.OC': 'math.OC (Optimization and Control)',
+        'math.PR': 'math.PR (Probability)',
+        'math.QA': 'math.QA (Quantum Algebra)',
+        'math.RA': 'math.RA (Rings and Algebras)',
+        'math.RT': 'math.RT (Representation Theory)',
+        'math.SG': 'math.SG (Symplectic Geometry)',
+        'math.SP': 'math.SP (Spectral Theory)',
+        'math.ST': 'math.ST (Statistics Theory)',
+        
+        # Physics (and related fields)
+        'astro-ph.CO': 'astro-ph.CO (Cosmology and Nongalactic Astrophysics)',
+        'astro-ph.EP': 'astro-ph.EP (Earth and Planetary Astrophysics)',
+        'astro-ph.GA': 'astro-ph.GA (Astrophysics of Galaxies)',
+        'astro-ph.HE': 'astro-ph.HE (High Energy Astrophysical Phenomena)',
+        'astro-ph.IM': 'astro-ph.IM (Instrumentation and Methods for Astrophysics)',
+        'astro-ph.SR': 'astro-ph.SR (Solar and Stellar Astrophysics)',
+        'cond-mat.dis-nn': 'cond-mat.dis-nn (Disordered Systems and Neural Networks)',
+        'cond-mat.mes-hall': 'cond-mat.mes-hall (Mesoscale and Nanoscale Physics)',
+        'cond-mat.mtrl-sci': 'cond-mat.mtrl-sci (Materials Science)',
+        'cond-mat.other': 'cond-mat.other (Other Condensed Matter)',
+        'cond-mat.quant-gas': 'cond-mat.quant-gas (Quantum Gases)',
+        'cond-mat.soft': 'cond-mat.soft (Soft Condensed Matter)',
+        'cond-mat.stat-mech': 'cond-mat.stat-mech (Statistical Mechanics)',
+        'cond-mat.str-el': 'cond-mat.str-el (Strongly Correlated Electrons)',
+        'cond-mat.supr-con': 'cond-mat.supr-con (Superconductivity)',
+        'gr-qc': 'gr-qc (General Relativity and Quantum Cosmology)',
+        'hep-ex': 'hep-ex (High Energy Physics - Experiment)',
+        'hep-lat': 'hep-lat (High Energy Physics - Lattice)',
+        'hep-ph': 'hep-ph (High Energy Physics - Phenomenology)',
+        'hep-th': 'hep-th (High Energy Physics - Theory)',
+        'math-ph': 'math-ph (Mathematical Physics)',
+        'nlin.AO': 'nlin.AO (Adaptation and Self-Organizing Systems)',
+        'nlin.CD': 'nlin.CD (Chaotic Dynamics)',
+        'nlin.CG': 'nlin.CG (Cellular Automata and Lattice Gases)',
+        'nlin.PS': 'nlin.PS (Pattern Formation and Solitons)',
+        'nlin.SI': 'nlin.SI (Exactly Solvable and Integrable Systems)',
+        'nucl-ex': 'nucl-ex (Nuclear Experiment)',
+        'nucl-th': 'nucl-th (Nuclear Theory)',
+        'physics.acc-ph': 'physics.acc-ph (Accelerator Physics)',
+        'physics.ao-ph': 'physics.ao-ph (Atmospheric and Oceanic Physics)',
+        'physics.app-ph': 'physics.app-ph (Applied Physics)',
+        'physics.atm-clus': 'physics.atm-clus (Atomic and Molecular Clusters)',
+        'physics.atom-ph': 'physics.atom-ph (Atomic Physics)',
+        'physics.bio-ph': 'physics.bio-ph (Biological Physics)',
+        'physics.chem-ph': 'physics.chem-ph (Chemical Physics)',
+        'physics.class-ph': 'physics.class-ph (Classical Physics)',
+        'physics.comp-ph': 'physics.comp-ph (Computational Physics)',
+        'physics.data-an': 'physics.data-an (Data Analysis, Statistics and Probability)',
+        'physics.ed-ph': 'physics.ed-ph (Physics Education)',
+        'physics.flu-dyn': 'physics.flu-dyn (Fluid Dynamics)',
+        'physics.gen-ph': 'physics.gen-ph (General Physics)',
+        'physics.geo-ph': 'physics.geo-ph (Geophysics)',
+        'physics.hist-ph': 'physics.hist-ph (History and Philosophy of Physics)',
+        'physics.ins-det': 'physics.ins-det (Instrumentation and Detectors)',
+        'physics.med-ph': 'physics.med-ph (Medical Physics)',
+        'physics.optics': 'physics.optics (Optics)',
+        'physics.plasm-ph': 'physics.plasm-ph (Plasma Physics)',
+        'physics.pop-ph': 'physics.pop-ph (Popular Physics)',
+        'physics.soc-ph': 'physics.soc-ph (Physics and Society)',
+        'physics.space-ph': 'physics.space-ph (Space Physics)',
+        'quant-ph': 'quant-ph (Quantum Physics)',
+        
+        # Quantitative Biology (q-bio)
+        'q-bio.BM': 'q-bio.BM (Biomolecules)',
+        'q-bio.CB': 'q-bio.CB (Cell Behavior)',
+        'q-bio.GN': 'q-bio.GN (Genomics)',
+        'q-bio.MN': 'q-bio.MN (Molecular Networks)',
+        'q-bio.NC': 'q-bio.NC (Neurons and Cognition)',
+        'q-bio.OT': 'q-bio.OT (Other Quantitative Biology)',
+        'q-bio.PE': 'q-bio.PE (Populations and Evolution)',
+        'q-bio.QM': 'q-bio.QM (Quantitative Methods)',
+        'q-bio.SC': 'q-bio.SC (Subcellular Processes)',
+        'q-bio.TO': 'q-bio.TO (Tissues and Organs)',
+        
+        # Quantitative Finance (q-fin)
+        'q-fin.CP': 'q-fin.CP (Computational Finance)',
+        'q-fin.EC': 'q-fin.EC (Economics)',
+        'q-fin.GN': 'q-fin.GN (General Finance)',
+        'q-fin.MF': 'q-fin.MF (Mathematical Finance)',
+        'q-fin.PM': 'q-fin.PM (Portfolio Management)',
+        'q-fin.PR': 'q-fin.PR (Pricing of Securities)',
+        'q-fin.RM': 'q-fin.RM (Risk Management)',
+        'q-fin.ST': 'q-fin.ST (Statistical Finance)',
+        'q-fin.TR': 'q-fin.TR (Trading and Market Microstructure)',
+        
+        # Statistics (stat)
+        'stat.AP': 'stat.AP (Applications)',
+        'stat.CO': 'stat.CO (Computation)',
+        'stat.ME': 'stat.ME (Methodology)',
+        'stat.ML': 'stat.ML (Machine Learning)',
+        'stat.OT': 'stat.OT (Other Statistics)',
+        'stat.TH': 'stat.TH (Statistics Theory)',
+    }
+    
     def __init__(self):
         self.config = config.ARXIV
         self.db = PaperDatabase()
@@ -426,40 +600,66 @@ class ArxivScraper:
 
     def _clean_arxiv_categories(self, runtime_dict: Dict[str, Paper]) -> Dict[str, Paper]:
         """
-        Clean up categories to keep only properly formatted arXiv categories.
+        Clean up categories to keep only properly formatted arXiv categories and enhance with descriptive names.
         
-        Keeps categories matching pattern: [a-z]{2,}\\.[A-Z]{2}
-        Examples: cs.AI, stat.ML, math.OC, physics.HE
+        Keeps categories matching pattern: [a-z]{2,}\\.[A-Z]{2} or other valid arXiv patterns
+        Examples: cs.AI -> cs.AI (Artificial Intelligence), stat.ML -> stat.ML (Machine Learning)
         Discards: ACM classifications, MSC codes, etc.
         
         Args:
             runtime_dict: Dictionary of paper_id -> Paper objects
             
         Returns:
-            Dictionary with cleaned Paper objects
+            Dictionary with cleaned Paper objects having enhanced category descriptions
         """
         import re
-        arxiv_pattern = re.compile(r'^[a-z]{2,}\.[A-Z]{2}$')
+        # Enhanced pattern to match more arXiv categories including physics categories
+        arxiv_pattern = re.compile(r'^([a-z]{2,}(-[a-z]{2,})*\.[A-Z]{2}|[a-z]+-[a-z]+|quant-ph|gr-qc|math-ph|nucl-ex|nucl-th|hep-ex|hep-lat|hep-ph|hep-th)$')
         
         cleaned_count = 0
+        total_enhanced_count = 0
+        
         for paper_id, paper in runtime_dict.items():
             if paper and paper.categories:
                 original_categories = paper.categories.copy()
                 # Filter to keep only arXiv-formatted categories
-                cleaned_categories = [cat for cat in paper.categories if arxiv_pattern.match(cat)]
+                valid_categories = [cat for cat in paper.categories if arxiv_pattern.match(cat)]
                 
-                if len(cleaned_categories) < len(original_categories):
-                    removed_categories = [cat for cat in original_categories if cat not in cleaned_categories]
-                    paper.categories = cleaned_categories
+                # Enhance valid categories with descriptive names
+                enhanced_categories = []
+                paper_enhanced_count = 0
+                for cat in valid_categories:
+                    if cat in self.ARXIV_CATEGORY_MAPPING:
+                        enhanced_categories.append(self.ARXIV_CATEGORY_MAPPING[cat])
+                        paper_enhanced_count += 1
+                        total_enhanced_count += 1
+                    else:
+                        # Keep original if not in mapping (fallback for new/unknown categories)
+                        enhanced_categories.append(cat)
+                        logger.debug(f"Category {cat} not found in mapping, keeping original format")
+                
+                # Update paper categories
+                paper.categories = enhanced_categories
+                
+                # Track changes for logging
+                if len(enhanced_categories) < len(original_categories):
+                    removed_categories = [cat for cat in original_categories if not arxiv_pattern.match(cat)]
                     cleaned_count += 1
                     
-                    logger.info(f"Cleaned categories for paper {paper_id}: "
-                               f"kept {cleaned_categories}, removed {removed_categories}")
+                    logger.info(f"Processed categories for paper {paper_id}: "
+                               f"enhanced {paper_enhanced_count} valid categories, "
+                               f"removed {len(removed_categories)} invalid categories: {removed_categories}")
+                elif paper_enhanced_count > 0:
+                    logger.debug(f"Enhanced categories for paper {paper_id}: {enhanced_categories}")
         
+        # Log summary
         if cleaned_count > 0:
-            logger.info(f"Category cleaning completed: {cleaned_count} papers had categories cleaned")
+            logger.info(f"Category processing completed: {cleaned_count} papers had invalid categories removed, "
+                       f"{total_enhanced_count} categories enhanced with descriptions")
+        elif total_enhanced_count > 0:
+            logger.info(f"Category processing completed: {total_enhanced_count} categories enhanced with descriptions")
         else:
-            logger.info("Category cleaning completed: no papers needed cleaning")
+            logger.info("Category processing completed: no changes needed")
         
         return runtime_dict
 
