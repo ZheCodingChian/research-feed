@@ -52,6 +52,13 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Calculate date 20 days ago
+        id: calculate_date
+        run: |
+          CALCULATED_DATE=$(date -d "20 days ago" +%Y-%m-%d)
+          echo "calculated_date=$CALCULATED_DATE" >> $GITHUB_OUTPUT
+          echo "Calculated date (20 days ago): $CALCULATED_DATE"
+
       - name: Run script in test mode
         if: github.event.inputs.test_run == 'true'
         env:
@@ -68,7 +75,7 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
-          PAPER_DATE: ${{ github.event.inputs.paper_date || '2025-07-01' }}
+          PAPER_DATE: ${{ github.event.inputs.paper_date || steps.calculate_date.outputs.calculated_date }}
         run: |
           echo "Generating report for date: $PAPER_DATE"
           python src/main.py --date=$PAPER_DATE
