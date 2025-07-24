@@ -19,7 +19,7 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 2rem 0 0 0;
-            margin-bottom: 2rem;
+            margin-bottom: 0;
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
             position: relative;
         }
@@ -267,10 +267,161 @@
             font-weight: 500;
         }
         
+        /* Unified filter section */
+        .unified-filter-section {
+            background: rgba(0,0,0,0.2);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 1.5rem 0 2rem 0;
+            margin-top: 0;
+        }
+        
+        /* Filter button grid - now part of unified section */
+        .filter-button-grid {
+            background: transparent;
+            border: none;
+            padding: 0 0 1.5rem 0;
+            margin: 0;
+        }
+        
+        .filter-buttons-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            justify-content: center;
+        }
+        
+        .filter-buttons-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Row 1: Two buttons centered - 250px each */
+        .filter-buttons-row.row-1 {
+            justify-content: center;
+        }
+        
+        .filter-buttons-row.row-1 .filter-preset-button {
+            width: 250px;
+        }
+        
+        /* Row 2: Five buttons evenly spaced - 250px each */
+        .filter-buttons-row.row-2 {
+            justify-content: center;
+        }
+        
+        .filter-buttons-row.row-2 .filter-preset-button {
+            width: 250px;
+        }
+        
+        /* Row 3: Two control buttons spanning same width as row 2 */
+        /* Row 2 total width = 5 × 250px + 4 × 1rem gaps = 1250px + 4rem */
+        /* So each row 3 button = (1250px + 4rem) / 2 - 0.5rem gap = 625px + 1.5rem */
+        .filter-buttons-row.row-3 {
+            justify-content: center;
+        }
+        
+        .filter-buttons-row.row-3 .filter-control-button {
+            width: calc(625px + 1.5rem);
+        }
+        
+        .filter-preset-button {
+            background-color: #2a2d30;
+            border: 1px solid #404040;
+            color: #e0e0e0;
+            text-align: center;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.375rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        
+        .filter-preset-button:hover,
+        .filter-preset-button:focus {
+            background-color: #2a2d30;
+            border-color: #667eea;
+            color: #e0e0e0;
+            text-decoration: none;
+        }
+        
+        .filter-control-button {
+            background-color: #2a2d30;
+            border: 1px solid #404040;
+            color: #e0e0e0;
+            text-align: center;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        
+        .filter-control-button:hover,
+        .filter-control-button:focus {
+            background-color: #2a2d30;
+            border-color: #667eea;
+            color: #e0e0e0;
+        }
+        
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .filter-buttons-row {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            
+            .filter-buttons-row.row-1 .filter-preset-button,
+            .filter-buttons-row.row-2 .filter-preset-button,
+            .filter-buttons-row.row-3 .filter-control-button {
+                width: 100%;
+            }
+        }
+        
+        /* Collapsible filter section with proper overflow */
+        .collapsible-filters {
+            overflow: visible;
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+            max-height: 0;
+            opacity: 0;
+        }
+        
+        .collapsible-filters.expanded {
+            max-height: 1000px;
+            opacity: 1;
+            overflow: visible;
+        }
+        
+        /* Advanced filter section styling */
+        .filter-section {
+            background: transparent;
+            border: none;
+            padding: 1rem 0 0 0;
+            margin-top: 0;
+            overflow: visible;
+        }
+        
+        .filter-section .dropdown-menu {
+            background-color: #2a2d30;
+            border: 1px solid #404040;
+            z-index: 1050;
+        }
+        
+        /* Paper count display integrated into unified section */
+        .paper-count-display {
+            color: rgba(255,255,255,0.9);
+            font-weight: 500;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 1.5rem;
+        }
+        
         /* Main content */
         .content-section {
             padding: 2rem 0;
             background-color: #0f1011;
+            margin-top: 0;
         }
         
         #papers-container {
@@ -914,6 +1065,24 @@
             visibility: visible;
         }
         
+        /* Page refresh flash effect */
+        .page-flash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.15s ease-in-out;
+        }
+        
+        .page-flash.active {
+            opacity: 1;
+        }
+        
         /* Responsive design */
         @media (max-width: 768px) {
             .title-content h1 {
@@ -951,6 +1120,9 @@
     </style>
 </head>
 <body>
+    <!-- Page refresh flash overlay -->
+    <div class="page-flash" id="page-flash"></div>
+    
     <!-- Title Section -->
     <div class="title-section">
         <a href="index.html" class="back-home-btn">← Back to Home</a>
@@ -960,8 +1132,56 @@
                 <p id="paper-count">{{ paper_count }} papers</p>
             </div>
         </div>
-        <div class="filter-section">
+        
+        <!-- Unified Filter Section -->
+        <div class="unified-filter-section">
             <div class="container">
+                <!-- Filter Button Grid -->
+                <div class="filter-button-grid">
+                    <!-- Row 1: Must Read, Should Read -->
+                    <div class="filter-buttons-row row-1">
+                        <a href="?status=completed&recommendation=must_read" class="filter-preset-button">
+                            Must Read
+                        </a>
+                        <a href="?status=completed&recommendation=should_read" class="filter-preset-button">
+                            Should Read
+                        </a>
+                    </div>
+                    
+                    <!-- Row 2: Topic filters -->
+                    <div class="filter-buttons-row row-2">
+                        <a href="?sort=relevance-desc&topics=rlhf&relevance=highly%2Cmoderately%2Ctangentially" class="filter-preset-button">
+                            RLHF
+                        </a>
+                        <a href="?sort=relevance-desc&topics=weak_supervision&relevance=highly%2Cmoderately%2Ctangentially" class="filter-preset-button">
+                            Weak Supervision
+                        </a>
+                        <a href="?sort=relevance-desc&topics=diffusion_reasoning&relevance=highly%2Cmoderately%2Ctangentially" class="filter-preset-button">
+                            Diffusion Reasoning
+                        </a>
+                        <a href="?sort=relevance-desc&topics=distributed_training&relevance=highly%2Cmoderately%2Ctangentially" class="filter-preset-button">
+                            Distributed Training
+                        </a>
+                        <a href="?sort=relevance-desc&topics=datasets&relevance=highly%2Cmoderately%2Ctangentially" class="filter-preset-button">
+                            Datasets
+                        </a>
+                    </div>
+                    
+                    <!-- Row 3: Control buttons -->
+                    <div class="filter-buttons-row row-3">
+                        <button type="button" class="filter-control-button" onclick="resetToDefault()">
+                            Reset to default
+                        </button>
+                        <button class="filter-control-button" id="advanced-filter-toggle" onclick="toggleAdvancedFilters()">
+                            <span>Show advanced filtering and sorting</span>
+                            <span class="toggle-icon">▼</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Collapsible Advanced Filters -->
+                <div class="collapsible-filters" id="collapsible-filters">
+                    <div class="filter-section">
                 <!-- First Row -->
                 <div class="row align-items-center">
                     <div class="col-md-6">
@@ -1277,25 +1497,18 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- Reset Button - Centered -->
-                <div class="row mt-3">
-                    <div class="col-12 text-center">
-                        <button type="button" class="reset-default-btn" onclick="resetToDefault()">
-                            Reset to default
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Paper Count Display - Centered -->
-                <div class="row mt-4">
-                    <div class="col-12">
-                        <div class="paper-count-display text-center">
-                            Showing <span id="filtered-count">{{ paper_count }}</span>/<span id="total-count">{{ paper_count }}</span> papers
-                        </div>
-                    </div>
+            </div>
+        </div>
+        </div> <!-- End collapsible-filters -->
+        
+        <!-- Paper Count Display - Integrated into unified section -->
+        <div class="row">
+            <div class="col-12">
+                <div class="paper-count-display text-center">
+                    Showing <span id="filtered-count">{{ paper_count }}</span>/<span id="total-count">{{ paper_count }}</span> papers
                 </div>
             </div>
+        </div>
         </div>
     </div>
 
@@ -1835,6 +2048,28 @@
     <!-- Bootstrap JS - Load before our custom script -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Advanced filter toggle functionality
+        function toggleAdvancedFilters() {
+            const toggle = document.getElementById('advanced-filter-toggle');
+            const filters = document.getElementById('collapsible-filters');
+            const textSpan = toggle.querySelector('span:first-child');
+            const iconSpan = toggle.querySelector('.toggle-icon');
+            
+            if (filters.classList.contains('expanded')) {
+                // Collapse
+                filters.classList.remove('expanded');
+                toggle.classList.remove('expanded');
+                textSpan.textContent = 'Show advanced filtering and sorting';
+                iconSpan.textContent = '▼';
+            } else {
+                // Expand
+                filters.classList.add('expanded');
+                toggle.classList.add('expanded');
+                textSpan.textContent = 'Hide advanced filtering and sorting';
+                iconSpan.textContent = '▲';
+            }
+        }
+        
         function toggleSimilarityMode(containerId) {
             const container = document.getElementById(containerId);
             const button = container.parentElement.querySelector('.llm-justification-toggle:not([data-toggle-type])');
@@ -1949,6 +2184,23 @@
             }
         }
         
+        // Page refresh flash effect
+        function showPageFlash() {
+            const flash = document.getElementById('page-flash');
+            flash.classList.add('active');
+            setTimeout(() => {
+                flash.classList.remove('active');
+            }, 50);
+        }
+        
+        // Reset to default function with flash effect
+        function resetToDefault() {
+            showPageFlash();
+            setTimeout(() => {
+                window.location.href = window.location.pathname;
+            }, 50);
+        }
+        
         // Paper data for sorting and filtering
         window.paperData = {{ papers_json|tojson|safe }};
         
@@ -1963,10 +2215,10 @@
         
         // Reset to default function
         function resetToDefault() {
-            // Get current URL without parameters
-            const baseUrl = window.location.pathname;
-            // Redirect to base URL to reset all filters and sorting
-            window.location.href = baseUrl;
+            showPageFlash();
+            setTimeout(() => {
+                window.location.href = window.location.pathname;
+            }, 50);
         }
         
         // Sorting and filtering functionality
@@ -2212,6 +2464,9 @@
                         e.preventDefault();
                         const value = e.target.getAttribute('data-value');
                         const text = e.target.textContent;
+                        
+                        // Show flash effect when sort is applied
+                        showPageFlash();
                         
                         // Update button text
                         document.getElementById('sort-selected').textContent = text;
@@ -2757,6 +3012,7 @@
             
             // Methods for applying pending state (when Apply Filter is clicked)
             applyPendingFilters() {
+                showPageFlash(); // Show flash effect when filters are applied
                 this.currentFilters = { ...this.pendingFilters };
                 this.updateFilterDropdownLabel();
                 this.updateLLMFilterDisabledState(); // Update disabled state when filters change
@@ -2764,6 +3020,7 @@
             }
             
             applyPendingTopicFilters() {
+                showPageFlash(); // Show flash effect when filters are applied
                 this.currentTopicFilters = { ...this.pendingTopicFilters };
                 this.updateTopicsDropdownLabel();
                 this.applyFiltersAndSort();
@@ -2771,12 +3028,14 @@
             }
             
             applyPendingRelevanceFilters() {
+                showPageFlash(); // Show flash effect when filters are applied
                 this.currentRelevanceFilters = { ...this.pendingRelevanceFilters };
                 this.updateRelevanceDropdownLabel();
                 this.applyFiltersAndSort();
             }
             
             applyPendingHIndexFilters() {
+                showPageFlash(); // Show flash effect when filters are applied
                 this.currentHIndexFilters = { ...this.pendingHIndexFilters };
                 this.updateHIndexDropdownLabel();
                 this.applyFiltersAndSort();
@@ -2824,6 +3083,7 @@
             }
             
             applyPendingRecommendationFilters() {
+                showPageFlash(); // Show flash effect when filters are applied
                 this.currentRecommendationFilters = { ...this.pendingRecommendationFilters };
                 this.updateRecommendationDropdownLabel();
                 this.applyFiltersAndSort();
@@ -2863,6 +3123,7 @@
             }
             
             applyPendingNoveltyFilters() {
+                showPageFlash(); // Show flash effect when filters are applied
                 this.currentNoveltyFilters = { ...this.pendingNoveltyFilters };
                 this.updateNoveltyDropdownLabel();
                 this.applyFiltersAndSort();
@@ -2902,6 +3163,7 @@
             }
             
             applyPendingImpactFilters() {
+                showPageFlash(); // Show flash effect when filters are applied
                 this.currentImpactFilters = { ...this.pendingImpactFilters };
                 this.updateImpactDropdownLabel();
                 this.applyFiltersAndSort();
@@ -3726,6 +3988,26 @@
         
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', () => {
+            // Initialize the advanced filters in collapsed state
+            const filters = document.getElementById('collapsible-filters');
+            const toggle = document.getElementById('advanced-filter-toggle');
+            if (filters && toggle) {
+                filters.classList.remove('expanded');
+                toggle.classList.remove('expanded');
+            }
+            
+            // Add flash effect to preset filter buttons
+            const presetButtons = document.querySelectorAll('.filter-preset-button');
+            presetButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showPageFlash();
+                    setTimeout(() => {
+                        window.location.href = button.href;
+                    }, 50);
+                });
+            });
+            
             new PaperManager();
         });
     </script>
