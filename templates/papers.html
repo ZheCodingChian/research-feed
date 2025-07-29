@@ -288,39 +288,47 @@
             gap: 1rem;
             margin-bottom: 1rem;
             justify-content: center;
+            flex-wrap: wrap;
         }
         
         .filter-buttons-row:last-child {
             margin-bottom: 0;
         }
         
-        /* Row 1: Two buttons centered - 250px each */
+        /* Row 1: Two buttons centered - flexible width */
         .filter-buttons-row.row-1 {
             justify-content: center;
+            flex-wrap: wrap;
         }
         
         .filter-buttons-row.row-1 .filter-preset-button {
-            width: 250px;
+            min-width: 200px;
+            max-width: 250px;
+            flex: 1;
         }
         
-        /* Row 2: Five buttons evenly spaced - 250px each */
+        /* Row 2: Five buttons evenly spaced - flexible width */
         .filter-buttons-row.row-2 {
             justify-content: center;
+            flex-wrap: wrap;
         }
         
         .filter-buttons-row.row-2 .filter-preset-button {
-            width: 250px;
+            min-width: 180px;
+            max-width: 250px;
+            flex: 1;
         }
         
-        /* Row 3: Two control buttons spanning same width as row 2 */
-        /* Row 2 total width = 5 × 250px + 4 × 1rem gaps = 1250px + 4rem */
-        /* So each row 3 button = (1250px + 4rem) / 2 - 0.5rem gap = 625px + 1.5rem */
+        /* Row 3: Two control buttons - flexible width */
         .filter-buttons-row.row-3 {
             justify-content: center;
+            flex-wrap: wrap;
         }
         
         .filter-buttons-row.row-3 .filter-control-button {
-            width: calc(625px + 1.5rem);
+            min-width: 280px;
+            max-width: 400px;
+            flex: 1;
         }
         
         .filter-preset-button {
@@ -365,7 +373,7 @@
             color: #e0e0e0;
         }
         
-        /* Mobile responsive */
+        /* Mobile and tablet responsive */
         @media (max-width: 768px) {
             .filter-buttons-row {
                 flex-direction: column;
@@ -376,6 +384,25 @@
             .filter-buttons-row.row-2 .filter-preset-button,
             .filter-buttons-row.row-3 .filter-control-button {
                 width: 100%;
+                min-width: unset;
+                max-width: unset;
+            }
+        }
+        
+        /* Tablet responsive - stack row 2 when needed */
+        @media (max-width: 1024px) {
+            .filter-buttons-row.row-2 {
+                gap: 0.5rem;
+            }
+            
+            .filter-buttons-row.row-2 .filter-preset-button {
+                min-width: 160px;
+                max-width: 200px;
+            }
+            
+            .filter-buttons-row.row-3 .filter-control-button {
+                min-width: 250px;
+                max-width: 350px;
             }
         }
         
