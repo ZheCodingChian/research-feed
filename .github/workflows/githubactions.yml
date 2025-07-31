@@ -25,20 +25,10 @@ on:
 # This section grants the necessary permissions to the GITHUB_TOKEN for the jobs.
 permissions:
   contents: write # Allows the workflow to read and write repository content.
-  pages: write # Allows the workflow to manage GitHub Pages.
-  id-token: write # Allows the workflow to request an ID token for authentication.
-
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 # This section defines the jobs that will be executed as part of the workflow.
 jobs:
   build-and-deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -87,23 +77,16 @@ jobs:
           echo "Listing report contents:"
           find ./report -type f -exec ls -lh {} \;
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          # Upload the report directory
-          path: './report'
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-      - name: Commit and push changes
+      - name: Commit and push changes to main branch
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add report/ cache.db
           git commit -m "Update newsletter report $(date +%Y-%m-%d)" || exit 0
           git push
+
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./report
