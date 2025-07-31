@@ -408,16 +408,20 @@
         
         /* Collapsible filter section with proper overflow */
         .collapsible-filters {
-            overflow: visible;
+            overflow: hidden;
             transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
             max-height: 0;
             opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
         }
         
         .collapsible-filters.expanded {
             max-height: 1000px;
             opacity: 1;
             overflow: visible;
+            pointer-events: auto;
+            visibility: visible;
         }
         
         /* Advanced filter section styling */
