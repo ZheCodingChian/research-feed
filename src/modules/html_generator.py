@@ -1,292 +1,413 @@
+#!/usr/bin/env python3
 """
-HTML Generator Module
+HTML Generator Module - Enhanced Version
 
-Starting fresh with a clean implementation.
+Generates beautiful HTML reports from cache.db using the improved template system.
+Adapted from the new report generator to work within the pipeline framework.
 """
 
+import sqlite3
+import json
 import os
-import logging
 import re
+import logging
 from datetime import datetime
-from typing import Dict, List
+from typing import List, Dict, Any, Optional
 from pathlib import Path
-from jinja2 import Environment, FileSystemLoader
 from paper import Paper
 
 logger = logging.getLogger('HTML_GENERATOR')
 
+# Template paths relative to project root
+TEMPLATE_PATH = 'templates/papers.html'
+LANDING_TEMPLATE_PATH = 'templates/landing.html'
 
-class HTMLGenerator:
-    """Clean implementation of HTML generator."""
+
+def safe_json_escape(text: Any) -> Any:
+    """
+    Safely escape text for JSON embedding in HTML.
+    Handles LaTeX notation, special characters, and potential injection issues.
+    """
+    if text is None:
+        return None
     
-    def __init__(self, config: dict):
-        """Initialize the HTML generator."""
-        self.config = config
-        self.output_dir = config.get('output_dir', 'report')
-        templates_dir = config.get('template_dir', 'templates')
+    if not isinstance(text, str):
+        return text
+    
+    return text
+
+
+def safe_json_dumps(data: Dict[str, Any]) -> str:
+    """
+    Safely serialize data to JSON with proper escaping and formatting.
+    """
+    try:
+        # Use ensure_ascii=False to preserve Unicode, with proper indentation
+        json_str = json.dumps(data, ensure_ascii=False, indent=2)
         
-        # Handle relative paths
-        if not os.path.isabs(templates_dir):
-            project_root = Path(__file__).parent.parent.parent
-            self.templates_dir = str(project_root / templates_dir)
-        else:
-            self.templates_dir = templates_dir
-            
-        if not os.path.isabs(self.output_dir):
-            project_root = Path(__file__).parent.parent.parent
-            self.output_dir = str(project_root / self.output_dir)
+        # Additional HTML-safe escaping for script injection prevention
+        json_str = json_str.replace('</script>', '<\\/script>')
+        json_str = json_str.replace('<!--', '<\\!--')
+        json_str = json_str.replace('-->', '--\\>')
         
-        # Ensure directories exist
-        Path(self.output_dir).mkdir(parents=True, exist_ok=True)
-        Path(self.templates_dir).mkdir(parents=True, exist_ok=True)
+        return json_str
         
-        # Initialize Jinja2 environment
-        self.env = Environment(loader=FileSystemLoader(self.templates_dir))
-    
-    def generate_filename(self, run_mode: str, run_value: str) -> str:
-        """Generate filename based on run mode and value."""
-        if run_mode == 'date':
-            # For date runs: "2025-01-15.html"
-            return self.config['naming']['date_format'].format(date=run_value)
-        else:  # test mode
-            # For test runs: "test_papers.txt_2025-01-15_14-30.html"
-            timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M')
-            # Extract just the filename without path for cleaner naming
-            test_name = os.path.basename(run_value)
-            return self.config['naming']['test_format'].format(
-                test_name=test_name,
-                timestamp=timestamp
-            )
-    
-    def generate_title(self, run_mode: str, run_value: str) -> str:
-        """Generate page title based on run mode and value."""
-        if run_mode == 'date':
-            return self.config['titles']['date_title'].format(date=run_value)
-        else:  # test mode
-            test_name = os.path.basename(run_value)
-            return self.config['titles']['test_title'].format(test_name=test_name)
-    
-    def scan_existing_reports(self) -> List[dict]:
-        """Scan the output directory for existing HTML reports."""
-        reports = []
+    except (TypeError, ValueError) as e:
+        logger.error(f"JSON serialization failed: {e}")
+        raise Exception(f"Failed to serialize data to JSON: {e}")
+
+
+def get_db_connection(db_path: str) -> sqlite3.Connection:
+    """Get database connection with proper error handling."""
+    try:
+        if not os.path.exists(db_path):
+            raise FileNotFoundError(f"Database file not found: {db_path}")
+            
+        conn = sqlite3.connect(db_path)
+        conn.row_factory = sqlite3.Row  # Enable column access by name
+        return conn
         
-        if not os.path.exists(self.output_dir):
-            return reports
+    except sqlite3.Error as e:
+        logger.error(f"Database connection failed: {e}")
+        raise Exception(f"Cannot connect to database: {e}")
+
+
+def parse_json_field(field_value: str) -> List[Any]:
+    """Safely parse JSON fields from database."""
+    if not field_value:
+        return []
+    
+    try:
+        return json.loads(field_value)
+    except (json.JSONDecodeError, TypeError) as e:
+        logger.warning(f"Failed to parse JSON field: {field_value[:50]}...")
+        return []
+
+
+def format_paper_data(row: sqlite3.Row) -> Dict[str, Any]:
+    """
+    Format a database row into the required JSON structure with safe escaping.
+    """
+    try:
+        # Parse JSON fields with validation
+        authors = parse_json_field(row['authors'])
+        categories = parse_json_field(row['categories']) 
+        author_h_indexes = parse_json_field(row['author_h_indexes'])
         
-        try:
-            for filename in os.listdir(self.output_dir):
-                if filename.endswith('.html') and filename != 'index.html':
-                    file_path = os.path.join(self.output_dir, filename)
-                    paper_count = self._extract_paper_count(file_path)
-                    
-                    # Determine run type and create report data
-                    if filename.startswith('test_'):
-                        # Test run
-                        # Parse: test_papers.txt_2025-01-15_14-30.html
-                        parts = filename.replace('test_', '').replace('.html', '').split('_')
-                        if len(parts) >= 3:
-                            test_name = parts[0]
-                            date_time = '_'.join(parts[-2:])  # Last two parts are date_time
-                            title = f"Test Run: {test_name}"
-                            subtitle = f"Run on {date_time.replace('_', ' ')}"
-                        else:
-                            title = "Test Run"
-                            subtitle = "Experimental Run"
-                        
-                        reports.append({
-                            'filename': filename,
-                            'title': title,
-                            'subtitle': subtitle,
-                            'paper_count': paper_count,
-                            'run_type': 'test',
-                            'sort_key': filename  # Use filename for sorting test runs
-                        })
-                    else:
-                        # Normal date run
-                        # Parse: 2025-01-15.html
-                        date_str = filename.replace('.html', '')
-                        try:
-                            # Validate date format
-                            parsed_date = datetime.strptime(date_str, '%Y-%m-%d')
-                            title = f"Papers from {date_str}"
-                            subtitle = parsed_date.strftime('%A, %B %d, %Y')
-                            
-                            reports.append({
-                                'filename': filename,
-                                'title': title,
-                                'subtitle': subtitle,
-                                'paper_count': paper_count,
-                                'run_type': 'normal',
-                                'sort_key': date_str
-                            })
-                        except ValueError:
-                            # Invalid date format, skip
-                            logger.warning(f"Skipping file with invalid date format: {filename}")
-                            continue
-            
-            # Sort reports: normal date runs first (newest first), then test runs (newest first)
-            normal_reports = [r for r in reports if r['run_type'] == 'normal']
-            test_reports = [r for r in reports if r['run_type'] == 'test']
-            
-            normal_reports.sort(key=lambda x: x['sort_key'], reverse=True)
-            test_reports.sort(key=lambda x: x['sort_key'], reverse=True)
-            
-            return normal_reports + test_reports
-            
-        except Exception as e:
-            logger.error(f"Error scanning reports: {e}")
-            return []
-    
-    def _extract_paper_count(self, html_file_path: str) -> int:
-        """Extract paper count from HTML file."""
-        try:
-            with open(html_file_path, 'r', encoding='utf-8') as f:
-                content = f.read()
-                # Look for various patterns that might indicate paper count
-                patterns = [
-                    r'(\d+)\s+papers?',
-                    r'paper_count["\']?\s*:\s*(\d+)',
-                    r'<.*?paper-count.*?>(\d+)<'
-                ]
-                
-                for pattern in patterns:
-                    match = re.search(pattern, content, re.IGNORECASE)
-                    if match:
-                        return int(match.group(1))
-                
-                return 0
-        except Exception as e:
-            logger.warning(f"Could not extract paper count from {html_file_path}: {e}")
-            return 0
-    
-    def generate_landing_page(self) -> str:
-        """Generate the landing page index.html."""
-        try:
-            # Scan for existing reports
-            reports = self.scan_existing_reports()
-            
-            # Prepare template data
-            template_data = {
-                'reports': reports,
-                'current_year': datetime.now().year
-            }
-            
-            # Load and render template
-            template = self.env.get_template('landing.html')
-            html_content = template.render(**template_data)
-            
-            # Save landing page
-            index_path = os.path.join(self.output_dir, 'index.html')
-            with open(index_path, 'w', encoding='utf-8') as f:
-                f.write(html_content)
-            
-            logger.info(f"Generated landing page: {index_path} with {len(reports)} reports")
-            return index_path
-            
-        except Exception as e:
-            logger.error(f"Error generating landing page: {e}")
-            raise
-            
-    def generate_papers_page(self, papers_dict: Dict[str, Paper], run_mode: str, run_value: str) -> str:
-        """Generate the papers analysis page."""
-        try:
-            # Filter papers to only include successfully scraped ones
-            papers_list = []
-            for paper in papers_dict.values():
-                if paper.is_successfully_scraped():
-                    # Calculate highest similarity score and topic
-                    scores = {}
-                    if paper.rlhf_score is not None:
-                        scores['RLHF'] = paper.rlhf_score
-                    if paper.weak_supervision_score is not None:
-                        scores['Weak_supervision'] = paper.weak_supervision_score
-                    if paper.diffusion_reasoning_score is not None:
-                        scores['Diffusion_reasoning'] = paper.diffusion_reasoning_score
-                    if paper.distributed_training_score is not None:
-                        scores['Distributed_training'] = paper.distributed_training_score
-                    if paper.datasets_score is not None:
-                        scores['Datasets'] = paper.datasets_score
-                    
-                    if scores:
-                        highest_topic = max(scores, key=scores.get)
-                        highest_score = scores[highest_topic]
-                        paper.highest_similarity_topic = highest_topic
-                        paper.highest_score = highest_score
-                    
-                    papers_list.append(paper)
-            
-            # Papers will be sorted on the client-side with JavaScript
-            # No backend sorting needed
-            
-            # Convert Paper objects to JSON-serializable dictionaries
-            papers_json = []
-            for paper in papers_list:
-                paper_dict = {
-                    'id': paper.id,
-                    'title': paper.title,
-                    'authors': paper.authors,
-                    'categories': paper.categories,
-                    'abstract': paper.abstract,
-                    'published_date': paper.published_date.isoformat() if paper.published_date else None,
-                    'recommendation_score': paper.recommendation_score,
-                    'llm_score_status': paper.llm_score_status,
-                    'highest_h_index': paper.highest_h_index,
-                    'average_h_index': paper.average_h_index,
-                    'authors_found': paper.authors_found,
-                    'total_authors': paper.total_authors,
-                    'notable_authors_count': paper.notable_authors_count,
-                    'summary': paper.summary,
-                    'novelty_score': paper.novelty_score,
-                    'impact_score': paper.impact_score,
-                    'rlhf_score': paper.rlhf_score,
-                    'weak_supervision_score': paper.weak_supervision_score,
-                    'diffusion_reasoning_score': paper.diffusion_reasoning_score,
-                    'distributed_training_score': paper.distributed_training_score,
-                    'datasets_score': paper.datasets_score,
-                    'rlhf_relevance': paper.rlhf_relevance,
-                    'weak_supervision_relevance': paper.weak_supervision_relevance,
-                    'diffusion_reasoning_relevance': paper.diffusion_reasoning_relevance,
-                    'distributed_training_relevance': paper.distributed_training_relevance,
-                    'datasets_relevance': paper.datasets_relevance,
-                    'highest_similarity_topic': paper.highest_similarity_topic,
-                    'highest_score': getattr(paper, 'highest_score', None),
-                    'scraper_status': paper.scraper_status,
-                    'intro_status': paper.intro_status,
-                    'embedding_status': paper.embedding_status,
-                    'llm_validation_status': paper.llm_validation_status,
-                    'h_index_status': paper.h_index_status
+        # Apply safe escaping to text fields
+        title = safe_json_escape(row['title'])
+        abstract = safe_json_escape(row['abstract'])
+        summary = safe_json_escape(row['summary'])
+        
+        # Apply escaping to justification fields
+        recommendation_justification = safe_json_escape(row['recommendation_justification'])
+        novelty_justification = safe_json_escape(row['novelty_justification'])
+        impact_justification = safe_json_escape(row['impact_justification'])
+        rlhf_justification = safe_json_escape(row['rlhf_justification'])
+        weak_supervision_justification = safe_json_escape(row['weak_supervision_justification'])
+        diffusion_reasoning_justification = safe_json_escape(row['diffusion_reasoning_justification'])
+        distributed_training_justification = safe_json_escape(row['distributed_training_justification'])
+        datasets_justification = safe_json_escape(row['datasets_justification'])
+        
+        # Apply escaping to author names in arrays
+        escaped_authors = [safe_json_escape(author) for author in authors]
+        escaped_categories = [safe_json_escape(cat) for cat in categories]
+        
+        # Handle author h-indexes with escaping
+        escaped_author_h_indexes = []
+        for author_info in author_h_indexes:
+            if isinstance(author_info, dict):
+                escaped_author_info = {
+                    'name': safe_json_escape(author_info.get('name', '')),
+                    'h_index': author_info.get('h_index', 0),
+                    'profile_url': safe_json_escape(author_info.get('profile_url', ''))
                 }
-                papers_json.append(paper_dict)
+                escaped_author_h_indexes.append(escaped_author_info)
+        
+        # Format date (extract date part from ISO datetime)
+        published_date = row['published_date']
+        if published_date:
+            try:
+                # Parse ISO format and extract date
+                dt = datetime.fromisoformat(published_date.replace('Z', '+00:00'))
+                published_date = dt.strftime('%Y-%m-%d')
+            except (ValueError, AttributeError):
+                # If parsing fails, try to extract YYYY-MM-DD pattern
+                match = re.search(r'(\d{4}-\d{2}-\d{2})', published_date)
+                published_date = match.group(1) if match else published_date
+        
+        # Build complete paper data structure
+        paper_data = {
+            "id": row['id'],
+            "title": title,
+            "authors": escaped_authors,
+            "categories": escaped_categories,
+            "abstract": abstract,
+            "published_date": published_date,
+            "arxiv_url": row['arxiv_url'],
+            "pdf_url": row['pdf_url'],
+            "scraper_status": row['scraper_status'],
+            "intro_status": row['intro_status'],
+            "embedding_status": row['embedding_status'],
+            "rlhf_score": float(row['rlhf_score']) if row['rlhf_score'] is not None else 0.0,
+            "weak_supervision_score": float(row['weak_supervision_score']) if row['weak_supervision_score'] is not None else 0.0,
+            "diffusion_reasoning_score": float(row['diffusion_reasoning_score']) if row['diffusion_reasoning_score'] is not None else 0.0,
+            "distributed_training_score": float(row['distributed_training_score']) if row['distributed_training_score'] is not None else 0.0,
+            "datasets_score": float(row['datasets_score']) if row['datasets_score'] is not None else 0.0,
+            "llm_validation_status": row['llm_validation_status'],
+            "rlhf_relevance": row['rlhf_relevance'],
+            "weak_supervision_relevance": row['weak_supervision_relevance'],
+            "diffusion_reasoning_relevance": row['diffusion_reasoning_relevance'],
+            "distributed_training_relevance": row['distributed_training_relevance'],
+            "datasets_relevance": row['datasets_relevance'],
+            "rlhf_justification": rlhf_justification,
+            "weak_supervision_justification": weak_supervision_justification,
+            "diffusion_reasoning_justification": diffusion_reasoning_justification,
+            "distributed_training_justification": distributed_training_justification,
+            "datasets_justification": datasets_justification,
+            "llm_score_status": row['llm_score_status'],
+            "summary": summary,
+            "novelty_score": row['novelty_score'],
+            "novelty_justification": novelty_justification,
+            "impact_score": row['impact_score'],
+            "impact_justification": impact_justification,
+            "recommendation_score": row['recommendation_score'],
+            "recommendation_justification": recommendation_justification,
+            "h_index_status": row['h_index_status'],
+            "semantic_scholar_url": row['semantic_scholar_url'],
+            "total_authors": row['total_authors'] if row['total_authors'] is not None else 0,
+            "authors_found": row['authors_found'] if row['authors_found'] is not None else 0,
+            "highest_h_index": row['highest_h_index'] if row['highest_h_index'] is not None else 0,
+            "average_h_index": float(row['average_h_index']) if row['average_h_index'] is not None else 0.0,
+            "notable_authors_count": row['notable_authors_count'] if row['notable_authors_count'] is not None else 0,
+            "author_h_indexes": escaped_author_h_indexes
+        }
+        
+        return paper_data
+        
+    except Exception as e:
+        logger.error(f"Error formatting paper {row.get('id', 'unknown')}: {e}")
+        raise Exception(f"Failed to format paper data: {e}")
+
+
+def get_papers_for_date(db_path: str, date: str) -> Dict[str, Any]:
+    """Get all papers for a specific date."""
+    conn = get_db_connection(db_path)
+    try:
+        cursor = conn.cursor()
+        
+        # Get total count first
+        cursor.execute(
+            "SELECT COUNT(*) as total FROM papers WHERE DATE(published_date) = ?",
+            (date,)
+        )
+        total_papers = cursor.fetchone()['total']
+        
+        if total_papers == 0:
+            logger.warning(f"No papers found for date {date}")
+            return {
+                "papers": [],
+                "total_papers": 0,
+                "date": date
+            }
+        
+        # Get papers for the date
+        query = """
+        SELECT id, title, authors, categories, abstract, published_date, arxiv_url, pdf_url,
+               scraper_status, intro_status, embedding_status, rlhf_score, weak_supervision_score,
+               diffusion_reasoning_score, distributed_training_score, datasets_score,
+               llm_validation_status, rlhf_relevance, weak_supervision_relevance,
+               diffusion_reasoning_relevance, distributed_training_relevance, datasets_relevance,
+               rlhf_justification, weak_supervision_justification, diffusion_reasoning_justification,
+               distributed_training_justification, datasets_justification, llm_score_status,
+               summary, novelty_score, novelty_justification, impact_score, impact_justification,
+               recommendation_score, recommendation_justification, h_index_status, semantic_scholar_url,
+               total_authors, authors_found, highest_h_index, average_h_index, notable_authors_count,
+               author_h_indexes
+        FROM papers 
+        WHERE DATE(published_date) = ?
+        ORDER BY id ASC
+        """
+        
+        cursor.execute(query, (date,))
+        rows = cursor.fetchall()
+        
+        # Format papers data
+        papers = []
+        for row in rows:
+            paper_data = format_paper_data(row)
+            papers.append(paper_data)
+        
+        result = {
+            "papers": papers,
+            "total_papers": len(papers),
+            "date": date
+        }
+        
+        logger.info(f"Processed {len(papers)} papers for {date}")
+        return result
+        
+    except sqlite3.Error as e:
+        logger.error(f"Database query failed for {date}: {e}")
+        raise Exception(f"Failed to query papers for {date}: {e}")
+    finally:
+        conn.close()
+
+
+def format_date_for_title(date_str: str) -> str:
+    """Format YYYY-MM-DD date into human readable format."""
+    try:
+        date_obj = datetime.strptime(date_str, '%Y-%m-%d')
+        return date_obj.strftime('%d %B %Y')  # "15 July 2025"
+    except ValueError:
+        logger.warning(f"Invalid date format: {date_str}")
+        return date_str
+
+
+def get_day_name(date_str: str) -> str:
+    """Get day name from YYYY-MM-DD date string."""
+    try:
+        date_obj = datetime.strptime(date_str, '%Y-%m-%d')
+        return date_obj.strftime('%A')  # "Friday"
+    except ValueError:
+        logger.warning(f"Invalid date format: {date_str}")
+        return ""
+
+
+def get_landing_page_data(db_path: str) -> List[Dict[str, Any]]:
+    """
+    Get data for all dates to populate the landing page.
+    Returns list of date objects with stats and URL.
+    """
+    conn = get_db_connection(db_path)
+    try:
+        cursor = conn.cursor()
+        
+        # Get all dates with papers
+        cursor.execute("""
+            SELECT DISTINCT DATE(published_date) as date 
+            FROM papers 
+            WHERE published_date IS NOT NULL 
+            ORDER BY date DESC
+        """)
+        
+        dates = [row['date'] for row in cursor.fetchall()]
+        logger.info(f"Processing {len(dates)} dates for landing page")
+        
+        landing_data = []
+        
+        for date in dates:
+            # Get total papers for this date
+            cursor.execute(
+                "SELECT COUNT(*) as total FROM papers WHERE DATE(published_date) = ?",
+                (date,)
+            )
+            total_papers = cursor.fetchone()['total']
             
-            # Generate filename and title
-            filename = self.generate_filename(run_mode, run_value)
-            page_title = self.generate_title(run_mode, run_value)
+            if total_papers == 0:
+                continue
             
-            # Prepare template data
-            template_data = {
-                'papers': papers_list,  # Full Paper objects for template rendering
-                'papers_json': papers_json,  # JSON-serializable data for JavaScript
-                'paper_count': len(papers_list),
-                'page_title': page_title,
-                'run_mode': run_mode,
-                'run_value': run_value
+            # Get recommendation score counts
+            cursor.execute("""
+                SELECT 
+                    COUNT(CASE WHEN recommendation_score = 'Must Read' THEN 1 END) as must_read,
+                    COUNT(CASE WHEN recommendation_score = 'Should Read' THEN 1 END) as should_read
+                FROM papers 
+                WHERE DATE(published_date) = ?
+            """, (date,))
+            
+            recommendation_counts = cursor.fetchone()
+            
+            # Get relevance counts for each category
+            cursor.execute("""
+                SELECT 
+                    COUNT(CASE WHEN rlhf_relevance IN ('Highly Relevant', 'Moderately Relevant', 'Tangentially Relevant') THEN 1 END) as rlhf,
+                    COUNT(CASE WHEN weak_supervision_relevance IN ('Highly Relevant', 'Moderately Relevant', 'Tangentially Relevant') THEN 1 END) as weak_supervision,
+                    COUNT(CASE WHEN diffusion_reasoning_relevance IN ('Highly Relevant', 'Moderately Relevant', 'Tangentially Relevant') THEN 1 END) as diffusion_reasoning,
+                    COUNT(CASE WHEN distributed_training_relevance IN ('Highly Relevant', 'Moderately Relevant', 'Tangentially Relevant') THEN 1 END) as distributed_training,
+                    COUNT(CASE WHEN datasets_relevance IN ('Highly Relevant', 'Moderately Relevant', 'Tangentially Relevant') THEN 1 END) as datasets
+                FROM papers 
+                WHERE DATE(published_date) = ?
+            """, (date,))
+            
+            relevance_counts = cursor.fetchone()
+            
+            # Format the data
+            date_data = {
+                "date": format_date_for_title(date),
+                "day": get_day_name(date),
+                "stats": {
+                    "Must Read": recommendation_counts['must_read'],
+                    "Should Read": recommendation_counts['should_read'],
+                    "RLHF": relevance_counts['rlhf'],
+                    "Weak Supervision": relevance_counts['weak_supervision'],
+                    "Diffusion Reasoning": relevance_counts['diffusion_reasoning'],
+                    "Distributed Training": relevance_counts['distributed_training'],
+                    "Datasets": relevance_counts['datasets']
+                },
+                "total": total_papers,
+                "url": f"{date}.html"
             }
             
-            # Load and render template
-            template = self.env.get_template('papers.html')
-            html_content = template.render(**template_data)
-            
-            # Save file
-            output_path = os.path.join(self.output_dir, filename)
-            with open(output_path, 'w', encoding='utf-8') as f:
-                f.write(html_content)
-            
-            logger.info(f"Generated papers page: {output_path} with {len(papers_list)} papers")
-            return output_path
-            
-        except Exception as e:
-            logger.error(f"Error generating papers page: {e}")
-            raise
+            landing_data.append(date_data)
+            logger.debug(f"Processed date {date}: {total_papers} papers")
+        
+        logger.info(f"Generated landing page data for {len(landing_data)} dates")
+        return landing_data
+        
+    except sqlite3.Error as e:
+        logger.error(f"Database query failed: {e}")
+        raise Exception(f"Failed to generate landing page data: {e}")
+    finally:
+        conn.close()
+
+
+def generate_static_page(date: str, paper_data: Dict[str, Any], template_content: str) -> str:
+    """
+    Generate static HTML page by injecting paper data into template.
+    """
+    try:
+        # Format date for titles
+        formatted_date = format_date_for_title(date)
+        page_title = f"Papers Published on {formatted_date}"
+        
+        # Serialize paper data to JSON
+        json_data = safe_json_dumps(paper_data)
+        
+        # Replace placeholders in template
+        html_content = template_content
+        
+        # Replace title placeholders
+        html_content = html_content.replace('PLACEHOLDER_TITLE', formatted_date)
+        html_content = html_content.replace('PLACEHOLDER_MOBILE_TITLE', page_title)
+        html_content = html_content.replace('PLACEHOLDER_DESKTOP_TITLE', page_title)
+        
+        # Replace data placeholder
+        html_content = html_content.replace('<!--DATA_HERE-->', json_data)
+        
+        return html_content
+        
+    except Exception as e:
+        logger.error(f"Failed to generate page for {date}: {e}")
+        raise Exception(f"Page generation failed: {e}")
+
+
+def generate_landing_page(landing_data: List[Dict[str, Any]], landing_template_content: str) -> str:
+    """
+    Generate landing page by injecting feed data into landing page template.
+    """
+    try:
+        # Serialize landing data to JSON
+        json_data = safe_json_dumps(landing_data)
+        
+        # Replace data placeholder in landing page template
+        html_content = landing_template_content.replace('<!--LANDING_DATA_HERE-->', json_data)
+        
+        return html_content
+        
+    except Exception as e:
+        logger.error(f"Failed to generate landing page: {e}")
+        raise Exception(f"Landing page generation failed: {e}")
 
 
 def run(papers: Dict[str, Paper], run_mode: str, run_value: str, config: dict) -> Dict[str, Paper]:
@@ -294,28 +415,79 @@ def run(papers: Dict[str, Paper], run_mode: str, run_value: str, config: dict) -
     Run HTML generation for the processed papers.
     
     Args:
-        papers: Dictionary of paper_id -> Paper objects
+        papers: Dictionary of paper_id -> Paper objects (ignored - we read from cache.db)
         run_mode: 'date' or 'test'
-        run_value: Date string or test file name
+        run_value: Date string (YYYY-MM-DD) or test file name
         config: HTML generation configuration
         
     Returns:
         The unchanged papers dictionary
     """
-    logger.info(f"Starting HTML generation for {len(papers)} papers")
+    logger.info(f"Starting HTML generation with new enhanced templates")
     logger.info(f"Run mode: {run_mode}, Run value: {run_value}")
     
+    # Handle test runs - not implemented yet
+    if run_mode == 'test':
+        raise NotImplementedError("Test run HTML generation not yet implemented")
+    
     try:
-        # Initialize HTML generator
-        generator = HTMLGenerator(config)
+        # Get project root and set up paths
+        project_root = Path(__file__).parent.parent.parent
+        template_path = project_root / TEMPLATE_PATH
+        landing_template_path = project_root / LANDING_TEMPLATE_PATH
+        output_dir = project_root / config.get('output_dir', 'report')
+        db_path = project_root / 'cache.db'
         
-        # Generate individual papers page
-        papers_file = generator.generate_papers_page(papers, run_mode, run_value)
+        # Ensure output directory exists
+        output_dir.mkdir(parents=True, exist_ok=True)
         
-        # Generate/update landing page
-        landing_file = generator.generate_landing_page()
+        # Validate templates exist
+        if not template_path.exists():
+            raise FileNotFoundError(f"Template file not found: {template_path}")
+        if not landing_template_path.exists():
+            raise FileNotFoundError(f"Landing page template not found: {landing_template_path}")
         
-        logger.info(f"HTML generation complete: {papers_file}, {landing_file}")
+        # Read template contents
+        with open(template_path, 'r', encoding='utf-8') as f:
+            template_content = f.read()
+        logger.info(f"Loaded template from {template_path}")
+        
+        with open(landing_template_path, 'r', encoding='utf-8') as f:
+            landing_template_content = f.read()
+        logger.info(f"Loaded landing page template from {landing_template_path}")
+        
+        # Generate papers page for the current date
+        logger.info(f"Processing papers for date: {run_value}")
+        
+        # Get paper data for this date from cache.db
+        paper_data = get_papers_for_date(str(db_path), run_value)
+        
+        if paper_data['total_papers'] == 0:
+            logger.warning(f"No papers found for date {run_value}")
+            return papers
+        
+        # Generate HTML page for this date
+        html_content = generate_static_page(run_value, paper_data, template_content)
+        
+        # Write to file
+        output_file = output_dir / f"{run_value}.html"
+        with open(output_file, 'w', encoding='utf-8') as f:
+            f.write(html_content)
+        
+        logger.info(f"Generated {output_file} with {paper_data['total_papers']} papers")
+        
+        # Generate/update landing page with all dates
+        logger.info("Generating updated landing page")
+        landing_data = get_landing_page_data(str(db_path))
+        landing_html = generate_landing_page(landing_data, landing_template_content)
+        
+        # Write landing page
+        landing_output_file = output_dir / "index.html"
+        with open(landing_output_file, 'w', encoding='utf-8') as f:
+            f.write(landing_html)
+        
+        logger.info(f"Generated {landing_output_file} with {len(landing_data)} date entries")
+        logger.info(f"HTML generation complete")
         
     except Exception as e:
         logger.error(f"HTML generation failed: {e}")
