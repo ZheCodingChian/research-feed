@@ -101,37 +101,10 @@ H_INDEX_FETCHING = {
     # Processing thresholds
     'notable_h_index_threshold': 5  # H-index threshold for "notable" authors
 }
-    
-# HTML Generation Parameters
-HTML_GENERATION = {
-    # Output directory for generated HTML files
-    'output_dir': 'report',
-    
-    # Template directory (relative to project root)
-    'template_dir': 'templates',
-    
-    # File naming configuration
-    'naming': {
-        # For normal date runs: --date 2025-01-15 -> "2025-01-15.html"
-        'date_format': '{date}.html',
-        
-        # For test runs: --test papers.txt -> "test_papers.txt_2025-01-15_14-30.html"
-        'test_format': 'test_{test_name}_{timestamp}.html'
-    },
-    
-    # Title configuration for different run types
-    'titles': {
-        # For normal runs: "Papers from 2025-01-15"
-        'date_title': 'Papers from {date}',
-        
-        # For test runs: "Test Papers: papers.txt"
-        'test_title': 'Test Papers: {test_name}'
-    }
-}
 
 # Cache Cleanup Parameters
 CACHE_CLEANUP = {
-    # Number of days to retain papers in the cache
+    # Number of days to retain papers in the database
     # Papers older than this will be deleted from the database
     'retention_days': 14
 }

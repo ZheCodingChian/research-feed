@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Main orchestrator for the modular paper processing pipeline.
+Main orchestrator for the arXiv paper data generation pipeline.
 
 This script serves as the central coordinator that manages the execution flow,
 handles command-line arguments, configures logging, and manages data persistence
-through the caching system.
+in the SQLite database.
 """
 
 import argparse
@@ -50,7 +50,7 @@ def setup_logging() -> None:
 def parse_arguments() -> argparse.Namespace:
     """Parse and validate command-line arguments."""
     parser = argparse.ArgumentParser(
-        description='Modular Paper Processing Pipeline',
+        description='arXiv Paper Data Generation Pipeline',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -88,26 +88,26 @@ def validate_arguments(args: argparse.Namespace) -> None:
             raise FileNotFoundError(f"Test file not found: {args.test}")
 
 
-def save_to_cache(runtime_paper_dict: Dict[str, Paper]) -> None:
+def save_to_database(runtime_paper_dict: Dict[str, Paper]) -> None:
     """
-    Save the current state of all papers to the cache database.
-    
+    Save the current state of all papers to the database.
+
     This function performs an INSERT OR UPDATE operation for every paper
-    in the runtime dictionary, ensuring the cache always reflects the
+    in the runtime dictionary, ensuring the database always reflects the
     latest state of processing.
-    
+
     Args:
         runtime_paper_dict: Dictionary of paper_id -> Paper objects
     """
     logger = logging.getLogger('MAIN')
-    
+
     if not runtime_paper_dict:
-        logger.info("No papers to save to cache")
+        logger.info("No papers to save to database")
         return
-    
+
     db = PaperDatabase()
     db.save_papers(runtime_paper_dict)
-    logger.info(f"Saved {len(runtime_paper_dict)} papers to cache")
+    logger.info(f"Saved {len(runtime_paper_dict)} papers to database")
 
 
 def main() -> None:
@@ -140,76 +140,48 @@ def main() -> None:
         # Step 1: Execute scraper module
         logger.info("Executing scraper module")
         runtime_paper_dict = scraper.run(run_mode, run_value)
-        
-        # Save Point: Persist scraper results to cache
-        save_to_cache(runtime_paper_dict)
-        
+        save_to_database(runtime_paper_dict)
+
         # Step 2: Execute introduction extractor module
         logger.info("Executing introduction extractor module")
         from modules import intro_extractor
         import config
         runtime_paper_dict = intro_extractor.run(runtime_paper_dict, config.LATEX_EXTRACTION)
-        
-        # Save Point: Persist introduction extraction results to cache
-        save_to_cache(runtime_paper_dict)
-        
+        save_to_database(runtime_paper_dict)
+
         # Step 3: Execute embedding similarity module
         logger.info("Executing embedding similarity module")
         from modules import embedding_similarity
         runtime_paper_dict = embedding_similarity.run(runtime_paper_dict, config.EMBEDDING)
-        
-        # Save Point: Persist embedding similarity results to cache
-        save_to_cache(runtime_paper_dict)
-        
+        save_to_database(runtime_paper_dict)
+
         # Step 4: Execute LLM validation module
         logger.info("Executing LLM validation module")
         from modules import llm_validation
         runtime_paper_dict = llm_validation.run(runtime_paper_dict, config.LLM_VALIDATION)
-        
-        # Save Point: Persist LLM validation results to cache
-        save_to_cache(runtime_paper_dict)
-        
+        save_to_database(runtime_paper_dict)
+
         # Step 5: Execute LLM scoring module
         logger.info("Executing LLM scoring module")
         from modules import llm_scoring
         runtime_paper_dict = llm_scoring.run(runtime_paper_dict, config.LLM_SCORING)
-        
-        # Save Point: Persist LLM scoring results to cache
-        save_to_cache(runtime_paper_dict)
-        
+        save_to_database(runtime_paper_dict)
+
         # Step 6: Execute H-index fetching module
         logger.info("Executing H-index fetching module")
         from modules import h_index_fetching
         runtime_paper_dict = h_index_fetching.run(runtime_paper_dict, config.H_INDEX_FETCHING)
-        
-        # Save Point: Persist H-index results to cache
-        save_to_cache(runtime_paper_dict)
-        
-        # Step 7: Execute HTML generation module
-        logger.info("Executing HTML generation module")
-        from modules import html_generator
-        html_generator.run(runtime_paper_dict, run_mode, run_value, config.HTML_GENERATION)
-        
-        # Step 8: Execute cache cleanup module
+        save_to_database(runtime_paper_dict)
+
+        # Step 7: Execute cache cleanup module
         logger.info("Executing cache cleanup module")
         try:
             from modules import cache_cleanup
             runtime_paper_dict = cache_cleanup.run(runtime_paper_dict, config.CACHE_CLEANUP)
-            
-            # Save Point: Persist cache cleanup results
-            save_to_cache(runtime_paper_dict)
+            save_to_database(runtime_paper_dict)
         except Exception as e:
             logger.warning(f"Cache cleanup failed: {e}")
             logger.info("Pipeline will continue despite cache cleanup failure")
-
-        # Step 9: Execute Slack notification module
-        logger.info("Executing Slack notification module")
-        try:
-            from modules import slack
-            slack.run(runtime_paper_dict, run_mode, run_value)
-        except Exception as e:
-            logger.warning(f"Slack notification failed: {e}")
-            logger.info("Pipeline will continue despite Slack notification failure")
 
         # Final summary
         total_papers = len(runtime_paper_dict)
@@ -225,14 +197,19 @@ def main() -> None:
         llm_scoring_failed = sum(1 for p in runtime_paper_dict.values() if p.llm_score_status == "failed")
         h_index_successful = sum(1 for p in runtime_paper_dict.values() if p.is_h_index_completed())
         h_index_failed = sum(1 for p in runtime_paper_dict.values() if p.h_index_status == "failed")
-        
-        logger.info(f"Pipeline completed: {total_papers} total papers, "
-                   f"{successful_papers} successfully scraped, {failed_papers} scraping failed")
-        logger.info(f"Introduction extraction: {intro_successful} successful, {intro_failed} failed/skipped")
-        logger.info(f"Embedding similarity: {embedding_successful} successful, {embedding_failed} failed")
-        logger.info(f"LLM validation: {llm_validation_successful} successful, {llm_validation_failed} failed")
-        logger.info(f"LLM scoring: {llm_scoring_successful} successful, {llm_scoring_failed} failed")
-        logger.info(f"H-index fetching: {h_index_successful} successful, {h_index_failed} failed")
+
+        logger.info("=" * 80)
+        logger.info("PIPELINE COMPLETED SUCCESSFULLY")
+        logger.info("=" * 80)
+        logger.info(f"Total papers processed: {total_papers}")
+        logger.info(f"  Scraping: {successful_papers} successful, {failed_papers} failed")
+        logger.info(f"  Introduction extraction: {intro_successful} successful, {intro_failed} failed/skipped")
+        logger.info(f"  Embedding similarity: {embedding_successful} successful, {embedding_failed} failed")
+        logger.info(f"  LLM validation: {llm_validation_successful} successful, {llm_validation_failed} failed")
+        logger.info(f"  LLM scoring: {llm_scoring_successful} successful, {llm_scoring_failed} failed")
+        logger.info(f"  H-index fetching: {h_index_successful} successful, {h_index_failed} failed")
+        logger.info(f"Data saved to: database.sqlite")
+        logger.info("=" * 80)
         
     except KeyboardInterrupt:
         logger.info("Pipeline interrupted by user")

@@ -1,17 +1,16 @@
-# arXiv AI Research Newsletter Pipeline
+# arXiv AI Research Data Pipeline
 
-A comprehensive automated pipeline for discovering, analyzing, and curating high-quality AI research papers from arXiv. This system combines web scraping, natural language processing, machine learning, and intelligent scoring to deliver a daily newsletter of the most relevant and impactful research papers in artificial intelligence.
+A comprehensive automated pipeline for discovering, analyzing, and curating high-quality AI research papers from arXiv. This system combines web scraping, natural language processing, machine learning, and intelligent scoring to generate a structured database of the most relevant and impactful research papers in artificial intelligence.
 
 ## 🎯 Project Overview
 
-The arXiv AI Research Newsletter Pipeline is a sophisticated content curation system that:
+The arXiv AI Research Data Pipeline is a sophisticated content curation system that:
 
 - **Automatically discovers** new AI research papers from arXiv
-- **Intelligently filters** papers based on research topic relevance  
+- **Intelligently filters** papers based on research topic relevance
 - **Evaluates paper quality** using advanced LLM-based scoring
 - **Enriches content** with author H-index data and detailed analysis
-- **Generates webpage reports** for easy consumption
-- **Delivers notifications** via Slack integration
+- **Generates structured data** in SQLite database format
 - **Runs continuously** via GitHub Actions automation
 
 ### Key Features
@@ -20,13 +19,13 @@ The arXiv AI Research Newsletter Pipeline is a sophisticated content curation sy
 - 🧠 **AI-Powered Analysis**: LLM validation and scoring using state-of-the-art models
 - 📊 **Quality Assessment**: Multi-dimensional scoring (novelty, impact, recommendation)
 - 👥 **Author Impact Analysis**: H-index fetching for research credibility
-- 🎨 **Professional Presentation**: Responsive webpage reports
+- 💾 **Structured Data Output**: SQLite database with comprehensive paper metadata
 - ⚡ **High Performance**: Parallel processing and intelligent caching
 - 🔄 **Robust Automation**: GitHub Actions with error handling and recovery
 
 ### Processing Pipeline
 
-The system follows a modular pipeline architecture with 9 distinct stages:
+The system follows a modular pipeline architecture with 7 distinct stages:
 
 ```
 ┌─────────────────┐
@@ -53,7 +52,7 @@ The system follows a modular pipeline architecture with 9 distinct stages:
          │
          ▼
 ┌─────────────────┐
-│ 5. LLM Scoring  │ ── Scores paper quality based on recommendation, novelty and potential impact 
+│ 5. LLM Scoring  │ ── Scores paper quality based on recommendation, novelty and potential impact
 └─────────────────┘
          │
          ▼
@@ -64,21 +63,13 @@ The system follows a modular pipeline architecture with 9 distinct stages:
          │
          ▼
 ┌─────────────────┐
-│ 7. HTML         │ ── Generates webpage
-│   Generator     │
-└─────────────────┘
-         │
-         ▼
-┌─────────────────┐
-│ 8. Cache        │ ── Cleans old data for efficiency
+│ 7. Cache        │ ── Cleans old data for efficiency
 │   Cleanup       │
 └─────────────────┘
          │
          ▼
-┌─────────────────┐
-│ 9. Slack        │ ── Sends notifications
-│   Notification  │
-└─────────────────┘
+     database.sqlite
+    (structured output)
 ```
 
 Each stage is fully modular and fault-tolerant, with comprehensive error handling and state persistence.
@@ -94,12 +85,12 @@ The `Paper` class serves as the central data structure that flows through the en
 class Paper:
     # Core metadata
     id: str                    # arXiv ID
-    title: str                 # Paper title  
+    title: str                 # Paper title
     authors: List[str]         # Author list
     categories: List[str]      # arXiv categories
     abstract: str              # Paper abstract
     published_date: datetime   # Publication date
-    
+
     # Processing status tracking
     scraper_status: str        # Scraping state
     intro_status: str          # Introduction extraction state
@@ -107,11 +98,11 @@ class Paper:
     llm_validation_status: str # LLM validation state
     llm_score_status: str      # LLM scoring state
     h_index_status: str        # H-index fetching state
-    
+
     # Analysis results
     summary: str               # LLM-generated summary
     novelty_score: str         # High/Moderate/Low/None
-    impact_score: str          # High/Moderate/Low/Negligible  
+    impact_score: str          # High/Moderate/Low/Negligible
     recommendation_score: str  # Must Read/Should Read/Can Skip/Ignore
     highest_h_index: int       # Author with highest H-index
 ```
@@ -130,7 +121,7 @@ Centralized configuration for all pipeline parameters:
 - API endpoints and rate limits
 - Processing thresholds and batch sizes
 - Retry policies and timeout settings
-- Output formatting preferences
+- Database retention settings
 
 ## 📋 Pipeline Modules
 
@@ -176,7 +167,7 @@ Centralized configuration for all pipeline parameters:
 
 **Research Topics Covered**:
 - **Reinforcement Learning from Human Feedback (RLHF)**
-- **Weak Supervision** 
+- **Weak Supervision**
 - **Diffusion Reasoning**
 - **Distributed Training**
 - **Datasets and Benchmarks**
@@ -254,25 +245,7 @@ Centralized configuration for all pipeline parameters:
 4. Calculates aggregate statistics
 5. Identifies notable researchers
 
-### Module 7: HTML Generator (`html_generator.py`)
-
-**Purpose**: Creates beautiful, responsive HTML reports
-
-**Key Features**:
-- Jinja2 templating system
-- Bootstrap-based responsive design
-- Dark theme optimization
-- Comprehensive paper presentation
-- Mobile-friendly interface
-
-**Processing Logic**:
-1. Filters and sorts papers by quality
-2. Renders papers using templates
-3. Generates navigation and metadata
-4. Optimizes for readability and aesthetics
-5. Outputs production-ready HTML
-
-### Module 8: Cache Cleanup (`cache_cleanup.py`)
+### Module 7: Cache Cleanup (`cache_cleanup.py`)
 
 **Purpose**: Maintains database efficiency by removing old data
 
@@ -281,16 +254,6 @@ Centralized configuration for all pipeline parameters:
 - Safe deletion with validation
 - Performance optimization
 - Storage management
-
-### Module 9: Slack Notification (`slack.py`)
-
-**Purpose**: Delivers notifications about processing results
-
-**Key Features**:
-- Rich message formatting
-- Error reporting
-- Success summaries
-- Configurable channels
 
 ## 🚀 Getting Started
 
@@ -301,14 +264,13 @@ Centralized configuration for all pipeline parameters:
 - **API Keys** for:
   - OpenAI (for embeddings)
   - OpenRouter (for LLM validation/scoring)
-  - Slack (for notifications)
 
 ### Installation
 
 1. **Clone the repository**:
 ```bash
-git clone https://github.com/ZheCodingChian/New-Newsletter.git
-cd New-Newsletter
+git clone https://github.com/ZheCodingChian/arXiv-Newsletter-Papers.git
+cd arXiv-Newsletter-Papers
 ```
 
 2. **Create a virtual environment**:
@@ -318,7 +280,7 @@ python -m venv venv
 # Windows
 venv\Scripts\activate
 
-# macOS/Linux  
+# macOS/Linux
 source venv/bin/activate
 ```
 
@@ -334,10 +296,6 @@ Create a `.env` file in the project root:
 # Required API Keys
 OPENAI_API_KEY=your_openai_api_key_here
 OPENROUTER_API_KEY=your_openrouter_api_key_here
-
-# Optional - for Slack notifications
-SLACK_BOT_TOKEN=your_slack_bot_token_here
-SLACK_CHANNEL_ID=your_slack_channel_id_here
 ```
 
 ### Environment Variables Setup
@@ -349,19 +307,12 @@ SLACK_CHANNEL_ID=your_slack_channel_id_here
 4. Generate a new API key
 5. Add to `.env` as `OPENAI_API_KEY`
 
-#### OpenRouter API Key  
+#### OpenRouter API Key
 1. Visit [OpenRouter](https://openrouter.ai/)
 2. Sign up for an account
 3. Go to API Keys section
 4. Generate a new key
 5. Add to `.env` as `OPENROUTER_API_KEY`
-
-#### Slack Integration (Optional)
-1. Create a Slack app at [Slack API](https://api.slack.com/apps)
-2. Add bot token scopes: `chat:write`, `channels:read`
-3. Install app to workspace
-4. Copy Bot User OAuth Token to `SLACK_BOT_TOKEN`
-5. Get channel ID from Slack (right-click channel → View channel details)
 
 ## 🎮 Usage
 
@@ -384,13 +335,12 @@ The system is designed to run automatically via GitHub Actions:
 #### Automatic Daily Execution
 - Runs daily at 7:00 AM SGT (23:00 UTC previous day)
 - Processes papers from 20 days ago (allows for arXiv processing delays)
-- Generates HTML reports
-- Deploys to GitHub Pages
-- Sends Slack notifications
+- Generates database with processed papers
+- Commits database and logs to repository
 
 #### Manual Execution
 1. Go to **Actions** tab in GitHub repository
-2. Select **"run and deploy page"** workflow
+2. Select **"run data pipeline"** workflow
 3. Click **"Run workflow"**
 4. Choose options:
    - **Test run**: Use `test_papers.txt` for testing
@@ -400,13 +350,61 @@ The system is designed to run automatically via GitHub Actions:
 
 ```
 project/
-├── report/                 # Generated HTML reports
-│   ├── index.html         # Landing page
-│   ├── 2025-01-15.html   # Daily reports
-│   └── ...
+├── database.sqlite        # SQLite database with all paper data
 ├── logs/                  # Processing logs
 │   ├── 20250115.log      # Daily log files
 │   └── ...
-├── cache.db              # SQLite database
 └── ...
 ```
+
+## 📊 Database Schema
+
+The `database.sqlite` file contains comprehensive paper data:
+
+### Papers Table
+- Core metadata (title, authors, abstract, dates, URLs)
+- Processing status for each pipeline stage
+- Embedding similarity scores for all topics
+- LLM validation results and justifications
+- Quality scores (novelty, impact, recommendation)
+- Author H-index data and statistics
+- Error tracking and timestamps
+
+### Topic Embeddings Table
+- Cached embeddings for research topics
+- Model information and creation timestamps
+
+## 🔧 Configuration
+
+Key configuration options in `config.py`:
+
+- **ARXIV**: API settings, rate limits, target categories
+- **LATEX_EXTRACTION**: Download settings, retry policies
+- **EMBEDDING**: Model selection, batch sizes
+- **LLM_VALIDATION**: API configuration, parallel processing
+- **LLM_SCORING**: Scoring model settings
+- **H_INDEX_FETCHING**: Semantic Scholar API settings
+- **CACHE_CLEANUP**: Data retention periods
+
+## 📝 Logging
+
+The pipeline generates detailed logs for monitoring and debugging:
+- All operations are logged with timestamps
+- Separate loggers for each module
+- Error tracking with full stack traces
+- Daily log rotation
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is open source and available under the MIT License.
+
+## 🙏 Acknowledgments
+
+- arXiv for providing open access to research papers
+- OpenAI for embedding models
+- OpenRouter for LLM API access
+- Semantic Scholar for author impact data
