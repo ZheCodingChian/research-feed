@@ -40,7 +40,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r pipeline/requirements.txt
 
       - name: Calculate date 20 days ago
         id: calculate_date
@@ -54,7 +54,9 @@ jobs:
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: python src/main.py --test test_papers.txt
+        run: |
+          cd pipeline
+          python src/main.py --test test_papers.txt
 
       - name: Run data pipeline
         if: github.event.inputs.test_run != 'true'
@@ -63,20 +65,21 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           PAPER_DATE: ${{ github.event.inputs.paper_date || steps.calculate_date.outputs.calculated_date }}
         run: |
+          cd pipeline
           echo "Running pipeline for date: $PAPER_DATE"
           python src/main.py --date=$PAPER_DATE
 
       - name: Check database size
         run: |
           echo "Checking database size:"
-          ls -lh database.sqlite
+          ls -lh pipeline/database.sqlite
           echo "Checking logs directory:"
-          du -sh ./logs
+          du -sh pipeline/logs
 
       - name: Commit and push changes to main branch
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add database.sqlite logs/
+          git add pipeline/database.sqlite pipeline/logs/
           git commit -m "Update database $(date +%Y-%m-%d)" || exit 0
           git push
