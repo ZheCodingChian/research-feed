@@ -1,7 +1,7 @@
 """
-Cache Cleanup Module
+Database Cleanup Module
 
-This module manages the cleanup of old papers from the cache database to prevent 
+This module manages the cleanup of old papers from the database to prevent 
 unlimited growth. It updates the last_generated date for all papers in the current 
 runtime and removes papers older than the configured retention period.
 """
@@ -12,12 +12,12 @@ from datetime import datetime, timedelta
 from typing import Dict
 from paper import Paper
 
-logger = logging.getLogger('CACHE_CLEANUP')
+logger = logging.getLogger('DATABASE_CLEANUP')
 
 
 def run(runtime_paper_dict: Dict[str, Paper], config: dict) -> Dict[str, Paper]:
     """
-    Run cache cleanup operations.
+    Run database cleanup operations.
     
     This function:
     1. Adds the last_generated column if it doesn't exist (for backward compatibility)
@@ -26,12 +26,12 @@ def run(runtime_paper_dict: Dict[str, Paper], config: dict) -> Dict[str, Paper]:
     
     Args:
         runtime_paper_dict: Dictionary of paper_id -> Paper objects from current run
-        config: Cache cleanup configuration containing retention_days
+        config: Database cleanup configuration containing retention_days
         
     Returns:
         The unchanged papers dictionary
     """
-    logger.info(f"Starting cache cleanup for {len(runtime_paper_dict)} runtime papers")
+    logger.info(f"Starting database cleanup for {len(runtime_paper_dict)} runtime papers")
     
     try:
         # Get configuration
@@ -42,7 +42,7 @@ def run(runtime_paper_dict: Dict[str, Paper], config: dict) -> Dict[str, Paper]:
         logger.info(f"Using retention period: {retention_days} days (cutoff date: {cutoff_date})")
         
         # Connect to the database
-        with sqlite3.connect("cache.db") as conn:
+        with sqlite3.connect("cache.sqlite") as conn:
             # Step 1: Ensure the last_generated column exists (for backward compatibility)
             _ensure_last_generated_column(conn)
             
@@ -52,7 +52,7 @@ def run(runtime_paper_dict: Dict[str, Paper], config: dict) -> Dict[str, Paper]:
             # Step 3: Clean up old papers
             deleted_count = _cleanup_old_papers(conn, cutoff_date)
             
-        logger.info(f"Cache cleanup complete: {updated_count} papers updated, {deleted_count} papers deleted")
+        logger.info(f"Database cleanup complete: {updated_count} papers updated, {deleted_count} papers deleted")
         
     except Exception as e:
         logger.error(f"Cache cleanup failed: {e}")

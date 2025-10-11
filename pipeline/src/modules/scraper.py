@@ -222,11 +222,14 @@ class ArxivScraper:
             RuntimeError: If paper count exceeds limit
         """
         if run_mode != 'date':
-            raise ValueError(f"Main scraper only supports 'date' mode, got '{run_mode}'")
+            raise ValueError(f"Scraper only supports 'date' mode, got '{run_mode}'")
         
         logger.info(f"Starting date-based scraping for {run_value}")
         
         # Step 1: Fetch all papers in single query
+        xml_response = self._fetch_papers_for_date(run_value)
+        
+        # Step 2: Extract IDs and check limits
         xml_response = self._fetch_papers_for_date(run_value)
         
         # Step 2: Extract IDs and check limits
@@ -616,34 +619,59 @@ class ArxivScraper:
         # Enhanced pattern to match more arXiv categories including physics categories
         arxiv_pattern = re.compile(r'^([a-z]{2,}(-[a-z]{2,})*\.[A-Z]{2}|[a-z]+-[a-z]+|quant-ph|gr-qc|math-ph|nucl-ex|nucl-th|hep-ex|hep-lat|hep-ph|hep-th)$')
         
+        def extract_base_category(category_string):
+            """Extract base arXiv category from enhanced format like 'cs.AI (Artificial Intelligence)' -> 'cs.AI'"""
+            if '(' in category_string:
+                return category_string.split('(')[0].strip()
+            return category_string
+        
         cleaned_count = 0
         total_enhanced_count = 0
         
         for paper_id, paper in runtime_dict.items():
             if paper and paper.categories:
+                # Skip enhancement if already enhanced
+                if paper.category_enhancement == "enhanced":
+                    logger.debug(f"Paper {paper_id}: categories already enhanced, skipping")
+                    continue
+                    
                 original_categories = paper.categories.copy()
-                # Filter to keep only arXiv-formatted categories
-                valid_categories = [cat for cat in paper.categories if arxiv_pattern.match(cat)]
+                # Filter to keep only arXiv-formatted categories (extract base category for validation)
+                valid_categories = []
+                for cat in paper.categories:
+                    base_cat = extract_base_category(cat)
+                    if arxiv_pattern.match(base_cat):
+                        valid_categories.append(cat)  # Keep the original format (which might already be enhanced)
                 
-                # Enhance valid categories with descriptive names
+                # Enhance valid categories with descriptive names (only if not already enhanced)
                 enhanced_categories = []
                 paper_enhanced_count = 0
                 for cat in valid_categories:
-                    if cat in self.ARXIV_CATEGORY_MAPPING:
-                        enhanced_categories.append(self.ARXIV_CATEGORY_MAPPING[cat])
+                    base_cat = extract_base_category(cat)
+                    if base_cat in self.ARXIV_CATEGORY_MAPPING and '(' not in cat:
+                        # Only enhance if not already enhanced
+                        enhanced_categories.append(self.ARXIV_CATEGORY_MAPPING[base_cat])
                         paper_enhanced_count += 1
                         total_enhanced_count += 1
                     else:
-                        # Keep original if not in mapping (fallback for new/unknown categories)
+                        # Keep original (might already be enhanced or unknown category)
                         enhanced_categories.append(cat)
-                        logger.debug(f"Category {cat} not found in mapping, keeping original format")
+                        if base_cat not in self.ARXIV_CATEGORY_MAPPING and '(' not in cat:
+                            logger.debug(f"Category {cat} not found in mapping, keeping original format")
                 
                 # Update paper categories
                 paper.categories = enhanced_categories
+                paper.category_enhancement = "enhanced"  # Mark as enhanced
                 
                 # Track changes for logging
                 if len(enhanced_categories) < len(original_categories):
-                    removed_categories = [cat for cat in original_categories if not arxiv_pattern.match(cat)]
+                    # Find which original categories were removed (base category doesn't match pattern)
+                    removed_categories = []
+                    for cat in original_categories:
+                        base_cat = extract_base_category(cat)
+                        if not arxiv_pattern.match(base_cat):
+                            removed_categories.append(cat)
+                    
                     cleaned_count += 1
                     
                     logger.info(f"Processed categories for paper {paper_id}: "

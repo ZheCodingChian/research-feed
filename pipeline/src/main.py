@@ -25,11 +25,13 @@ def setup_logging() -> None:
     format throughout the entire application. Each module will automatically
     tap into this configuration.
     """
-    # Create logs directory if it doesn't exist
-    os.makedirs('logs', exist_ok=True)
+    # Create logs directory if it doesn't exist (force to pipeline root)
+    pipeline_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    log_dir = os.path.join(pipeline_root, 'logs')
+    os.makedirs(log_dir, exist_ok=True)
     
     # Generate log filename based on current date
-    log_filename = f"logs/{datetime.now().strftime('%Y%m%d')}.log"
+    log_filename = os.path.join(log_dir, f"{datetime.now().strftime('%Y%m%d')}.log")
     
     # Configure logging format
     log_format = '%(asctime)s,%(msecs)03d [%(name)s] [%(levelname)s] %(message)s'
@@ -54,7 +56,7 @@ def parse_arguments() -> argparse.Namespace:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  %(prog)s --date 2025-01-08        Process papers from January 8, 2025
+  %(prog)s --date 2025-01-15        Process papers from January 15, 2025
   %(prog)s --test papers.txt        Process papers listed in papers.txt
         """
     )
@@ -125,21 +127,22 @@ def main() -> None:
         if args.date:
             run_mode = 'date'
             run_value = args.date
+            logger.info(f"Starting pipeline with --date {run_value}")
+            
+            # Import and run date-based scraper
+            from modules import scraper
+            runtime_paper_dict = scraper.run(run_mode, run_value)
         else:  # args.test
             run_mode = 'test'
             run_value = args.test
+            logger.info(f"Starting pipeline with --test {run_value}")
+            
+            # Import and run test-based scraper
+            from modules import test_scraper
+            runtime_paper_dict = test_scraper.run(run_mode, run_value)
         
-        logger.info(f"Starting pipeline with --{run_mode} {run_value}")
-        
-        # Import appropriate scraper module based on run mode
-        if run_mode == 'date':
-            from modules import scraper
-        else:  # run_mode == 'test'
-            from modules import scraper_test as scraper
-        
-        # Step 1: Execute scraper module
+        # Step 1: Save scraped papers to database
         logger.info("Executing scraper module")
-        runtime_paper_dict = scraper.run(run_mode, run_value)
         save_to_database(runtime_paper_dict)
 
         # Step 2: Execute introduction extractor module
@@ -173,15 +176,15 @@ def main() -> None:
         runtime_paper_dict = h_index_fetching.run(runtime_paper_dict, config.H_INDEX_FETCHING)
         save_to_database(runtime_paper_dict)
 
-        # Step 7: Execute cache cleanup module
-        logger.info("Executing cache cleanup module")
+        # Step 7: Execute database cleanup module
+        logger.info("Executing database cleanup module")
         try:
-            from modules import cache_cleanup
-            runtime_paper_dict = cache_cleanup.run(runtime_paper_dict, config.CACHE_CLEANUP)
+            from modules import database_cleanup
+            runtime_paper_dict = database_cleanup.run(runtime_paper_dict, config.DATABASE_CLEANUP)
             save_to_database(runtime_paper_dict)
         except Exception as e:
-            logger.warning(f"Cache cleanup failed: {e}")
-            logger.info("Pipeline will continue despite cache cleanup failure")
+            logger.warning(f"Database cleanup failed: {e}")
+            logger.info("Pipeline will continue despite database cleanup failure")
 
         # Final summary
         total_papers = len(runtime_paper_dict)

@@ -49,11 +49,11 @@ class LLMValidation:
         
         # Topic descriptions for prompt building
         self.topic_descriptions = {
-            "RLHF": "Reinforcement Learning from Human Feedback - systems that aligns an AI model with human preferences by training a separate reward model on human-ranked data, which is then used to fine-tune the main model using reinforcement learning. If no human feedback is used, it is not RLHF.",
-            "Weak_supervision": "Weak supervision - A machine learning approach that trains models by programmatically generating large quantities of training labels from high-level, noisy, or imprecise sources, rather than relying on perfectly hand-labeled data.",
-            "Diffusion_reasoning": "Models that adapt the iterative refinement process of diffusion to solve complex logical tasks. Instead of generating a static output, they treat an entire 'Chain-of-Thought' as a single entity, allowing the reasoning path to be holistically corrected and improved over multiple steps. If there is no clear component for multi-step logical reasoning using a diffusion model, this is not diffusion reasoning.",
-            "Distributed_training": "Distributed training, parallel computing, and multi-node machine learning. Algorithms or systems designed to accelerate model training by strategically partitioning the data, the model's architecture, or the computation itself across multiple processors or nodes.",
-            "Datasets": "Research focused on creating, analyzing, benchmarking, or evaluating datasets for machine learning and AI applications. This includes new dataset introduction, dataset curation methodologies, benchmark evaluation, and dataset analysis."
+            "Agentic Artificial Intelligence": "Agentic AI and Agentic Workflows - Systems where autonomous AI agents, typically powered by large language models, can perceive high-level goals, decompose them into subtasks, use external tools like APIs or code execution, and orchestrate multi-step workflows with minimal human intervention. Key features include task decomposition, tool use, planning modules, and often hierarchical multi-agent coordination. If the system is just a chatbot or single-prompt LLM without autonomous planning and tool use, it is not agentic AI.",
+            "Proximal Policy Optimization": "Proximal Policy Optimization - A specific policy gradient reinforcement learning algorithm that uses a clipped surrogate objective to prevent large, destructive policy updates during training. PPO is an actor-critic method known for stability and sample efficiency. The paper must explicitly mention PPO or describe its clipped probability ratio mechanism. General RL papers or other policy gradient methods like TRPO or A3C without PPO are not PPO papers.",
+            "Reinforcement Learning": "Reinforcement Learning - A machine learning paradigm where an autonomous agent learns to make sequential decisions by interacting with an environment to maximize cumulative reward. The problem is formalized as a Markov Decision Process with states, actions, and reward signals. The agent learns a policy through trial-and-error using algorithms like Q-learning, policy gradients, or actor-critic methods. If the paper does not involve an agent learning from rewards through environment interaction, it is not reinforcement learning.",
+            "Reasoning Models": "General Reasoning Models - AI systems, particularly large language models, designed to perform complex multi-step logical deduction, mathematical problem-solving, and structured thinking. These models use techniques like chain-of-thought prompting, tree-of-thoughts exploration, self-verification, and explicit step-by-step decomposition to solve problems requiring reasoning beyond pattern matching. Evaluated on benchmarks like mathematical reasoning, logical inference, or multi-hop question answering. If the model performs simple question answering without explicit reasoning traces or evaluation on reasoning tasks, it is not a reasoning model paper.",
+            "Inference Time Scaling": "Inference Time Scaling - Techniques that allocate additional computational resources during model inference, after training is complete, to improve prediction accuracy. This includes generating multiple candidate outputs with verifier-based selection, iterative self-correction, extended chain-of-thought reasoning, beam search over reasoning paths, or adaptive compute based on problem difficulty. If the paper focuses on training-time scaling or standard single-pass inference without deliberation mechanisms, it is not inference time scaling."
         }
     
     def run(self, papers: Dict[str, Paper]) -> Dict[str, Paper]:
@@ -147,11 +147,11 @@ class LLMValidation:
             
             # Check if any topic scores are above threshold
             topic_scores = {
-                'Reinforcement Learning from Human Feedback': paper.rlhf_score,
-                'Weak Supervision': paper.weak_supervision_score,
-                'Diffusion-based Reasoning': paper.diffusion_reasoning_score,
-                'Distributed Training': paper.distributed_training_score,
-                'Datasets': paper.datasets_score
+                'Agentic Artificial Intelligence': paper.agentic_ai_score,
+                'Proximal Policy Optimization': paper.proximal_policy_optimization_score,
+                'Reinforcement Learning': paper.reinforcement_learning_score,
+                'Reasoning Models': paper.reasoning_models_score,
+                'Inference Time Scaling': paper.inference_time_scaling_score
             }
             
             above_threshold_topics = [
@@ -191,25 +191,25 @@ class LLMValidation:
         """Set justifications for topics below threshold."""
         below_threshold_justification = "below_threshold"
         
-        if topic_scores['Reinforcement Learning from Human Feedback'] is None or topic_scores['Reinforcement Learning from Human Feedback'] < threshold:
-            paper.rlhf_justification = below_threshold_justification
-        if topic_scores['Weak Supervision'] is None or topic_scores['Weak Supervision'] < threshold:
-            paper.weak_supervision_justification = below_threshold_justification
-        if topic_scores['Diffusion-based Reasoning'] is None or topic_scores['Diffusion-based Reasoning'] < threshold:
-            paper.diffusion_reasoning_justification = below_threshold_justification
-        if topic_scores['Distributed Training'] is None or topic_scores['Distributed Training'] < threshold:
-            paper.distributed_training_justification = below_threshold_justification
-        if topic_scores['Datasets'] is None or topic_scores['Datasets'] < threshold:
-            paper.datasets_justification = below_threshold_justification
+        if topic_scores['Agentic Artificial Intelligence'] is None or topic_scores['Agentic Artificial Intelligence'] < threshold:
+            paper.agentic_ai_justification = below_threshold_justification
+        if topic_scores['Proximal Policy Optimization'] is None or topic_scores['Proximal Policy Optimization'] < threshold:
+            paper.proximal_policy_optimization_justification = below_threshold_justification
+        if topic_scores['Reinforcement Learning'] is None or topic_scores['Reinforcement Learning'] < threshold:
+            paper.reinforcement_learning_justification = below_threshold_justification
+        if topic_scores['Reasoning Models'] is None or topic_scores['Reasoning Models'] < threshold:
+            paper.reasoning_models_justification = below_threshold_justification
+        if topic_scores['Inference Time Scaling'] is None or topic_scores['Inference Time Scaling'] < threshold:
+            paper.inference_time_scaling_justification = below_threshold_justification
     
     def _set_all_below_threshold(self, paper: Paper) -> None:
         """Set all topic justifications to below_threshold."""
         below_threshold_justification = "below_threshold"
-        paper.rlhf_justification = below_threshold_justification
-        paper.weak_supervision_justification = below_threshold_justification
-        paper.diffusion_reasoning_justification = below_threshold_justification
-        paper.distributed_training_justification = below_threshold_justification
-        paper.datasets_justification = below_threshold_justification
+        paper.agentic_ai_justification = below_threshold_justification
+        paper.proximal_policy_optimization_justification = below_threshold_justification
+        paper.reinforcement_learning_justification = below_threshold_justification
+        paper.reasoning_models_justification = below_threshold_justification
+        paper.inference_time_scaling_justification = below_threshold_justification
     
     def _process_paper_with_retry_wrapper(self, paper: Paper, paper_index: int, total_papers: int) -> None:
         """
@@ -303,11 +303,11 @@ class LLMValidation:
         topics_to_validate = []
         
         topic_scores = {
-            'Reinforcement Learning from Human Feedback': paper.rlhf_score,
-            'Weak Supervision': paper.weak_supervision_score,
-            'Diffusion-based Reasoning': paper.diffusion_reasoning_score,
-            'Distributed Training': paper.distributed_training_score,
-            'Datasets': paper.datasets_score
+            'Agentic Artificial Intelligence': paper.agentic_ai_score,
+            'Proximal Policy Optimization': paper.proximal_policy_optimization_score,
+            'Reinforcement Learning': paper.reinforcement_learning_score,
+            'Reasoning Models': paper.reasoning_models_score,
+            'Inference Time Scaling': paper.inference_time_scaling_score
         }
         
         for topic, score in topic_scores.items():
@@ -337,19 +337,9 @@ class LLMValidation:
         if paper.introduction_text:
             paper_info += f"\nIntroduction: {paper.introduction_text}"
         
-        # Build topics section - map from natural language names to prompt keys
-        topic_mapping = {
-            'Reinforcement Learning from Human Feedback': 'RLHF',
-            'Weak Supervision': 'Weak_supervision', 
-            'Diffusion-based Reasoning': 'Diffusion_reasoning',
-            'Distributed Training': 'Distributed_training',
-            'Datasets': 'Datasets'
-        }
-        
         topics_section = "Topics to evaluate:\n"
         for topic in topics_to_validate:
-            topic_key = topic_mapping[topic]
-            topics_section += f"- {topic}: {self.topic_descriptions[topic_key]}\n"
+            topics_section += f"- {topic}: {self.topic_descriptions[topic]}\n"
         
         # Build the complete prompt
         prompt = f"""You are an expert AI researcher evaluating paper relevance to research topics.
@@ -525,21 +515,21 @@ Important: Ensure you evaluate ALL {len(topics_to_validate)} topics listed and u
             justification = result['justification']
             
             # Update relevance and justification based on topic
-            if topic_name == 'Reinforcement Learning from Human Feedback':
-                paper.rlhf_relevance = conclusion
-                paper.rlhf_justification = justification
-            elif topic_name == 'Weak Supervision':
-                paper.weak_supervision_relevance = conclusion
-                paper.weak_supervision_justification = justification
-            elif topic_name == 'Diffusion-based Reasoning':
-                paper.diffusion_reasoning_relevance = conclusion
-                paper.diffusion_reasoning_justification = justification
-            elif topic_name == 'Distributed Training':
-                paper.distributed_training_relevance = conclusion
-                paper.distributed_training_justification = justification
-            elif topic_name == 'Datasets':
-                paper.datasets_relevance = conclusion
-                paper.datasets_justification = justification
+            if topic_name == 'Agentic Artificial Intelligence':
+                paper.agentic_ai_relevance = conclusion
+                paper.agentic_ai_justification = justification
+            elif topic_name == 'Proximal Policy Optimization':
+                paper.proximal_policy_optimization_relevance = conclusion
+                paper.proximal_policy_optimization_justification = justification
+            elif topic_name == 'Reinforcement Learning':
+                paper.reinforcement_learning_relevance = conclusion
+                paper.reinforcement_learning_justification = justification
+            elif topic_name == 'Reasoning Models':
+                paper.reasoning_models_relevance = conclusion
+                paper.reasoning_models_justification = justification
+            elif topic_name == 'Inference Time Scaling':
+                paper.inference_time_scaling_relevance = conclusion
+                paper.inference_time_scaling_justification = justification
 
 def run(papers: Dict[str, Paper], config: dict) -> Dict[str, Paper]:
     """

@@ -2,409 +2,382 @@
 
 A comprehensive automated pipeline for discovering, analyzing, and curating high-quality AI research papers from arXiv. This system combines web scraping, natural language processing, machine learning, and intelligent scoring to generate a structured database of the most relevant and impactful research papers in artificial intelligence.
 
-## 🎯 Project Overview
+## 🎯 What It Does
 
-The arXiv AI Research Data Pipeline is a sophisticated content curation system that:
+The arXiv AI Research Data Pipeline automatically:
 
-- **Automatically discovers** new AI research papers from arXiv
-- **Intelligently filters** papers based on research topic relevance
-- **Evaluates paper quality** using advanced LLM-based scoring
-- **Enriches content** with author H-index data and detailed analysis
-- **Generates structured data** in SQLite database format
-- **Runs continuously** via GitHub Actions automation
+- **Discovers** new AI research papers from arXiv's cs.AI and cs.CV categories
+- **Extracts** paper introductions from LaTeX source files when available
+- **Calculates** semantic similarity scores for 5 key AI research topics
+- **Validates** topic relevance using advanced LLM analysis
+- **Scores** papers on novelty, impact, and recommendation quality
+- **Enriches** data with author H-index information from Semantic Scholar
+- **Stores** everything in a structured SQLite database for analysis
 
-### Key Features
+## 🔬 Research Topics Analyzed
 
-- 🔍 **Smart Content Discovery**: Targeted scraping of cs.AI and cs.CV categories
-- 🧠 **AI-Powered Analysis**: LLM validation and scoring using state-of-the-art models
-- 📊 **Quality Assessment**: Multi-dimensional scoring (novelty, impact, recommendation)
-- 👥 **Author Impact Analysis**: H-index fetching for research credibility
-- 💾 **Structured Data Output**: SQLite database with comprehensive paper metadata
-- ⚡ **High Performance**: Parallel processing and intelligent caching
-- 🔄 **Robust Automation**: GitHub Actions with error handling and recovery
+The pipeline analyzes papers across these 5 cutting-edge AI research areas:
 
-### Processing Pipeline
+1. **Reinforcement Learning** - Agents learning through environment interaction and reward feedback
+2. **Proximal Policy Optimization (PPO)** - Specific RL algorithm with clipped surrogate objectives
+3. **Reasoning Models** - AI systems performing multi-step logical deduction and structured thinking
+4. **Agentic AI** - Autonomous AI agents with tool use, planning, and workflow orchestration
+5. **Inference Time Scaling** - Techniques allocating additional compute during model inference
 
-The system follows a modular pipeline architecture with 7 distinct stages:
+## 🏗️ How It Works
+
+The pipeline processes papers through 7 sequential stages:
 
 ```
 ┌─────────────────┐
-│   1. Scraper    │ ── Fetches papers from arXiv API
+│   1. Scraper    │ ── Fetches papers from arXiv API by date or test file
 └─────────────────┘
          │
          ▼
 ┌─────────────────┐
-│ 2. Introduction │ ── Extracts paper introductions
+│ 2. Introduction │ ── Downloads and extracts introductions from LaTeX source
 │   Extractor     │
 └─────────────────┘
          │
          ▼
 ┌─────────────────┐
-│  3. Embedding   │ ── Calculates topic similarity scores
+│  3. Embedding   │ ── Computes semantic similarity scores using OpenAI embeddings
 │   Similarity    │
 └─────────────────┘
          │
          ▼
 ┌─────────────────┐
-│ 4. LLM          │ ── Validates relevance to topics with justification
+│ 4. LLM          │ ── Validates topic relevance with detailed justifications
 │   Validation    │
 └─────────────────┘
          │
          ▼
 ┌─────────────────┐
-│ 5. LLM Scoring  │ ── Scores paper quality based on recommendation, novelty and potential impact
+│ 5. LLM Scoring  │ ── Scores novelty, impact, and generates recommendations
 └─────────────────┘
          │
          ▼
 ┌─────────────────┐
-│ 6. H-Index      │ ── Fetches author research impact data
+│ 6. H-Index      │ ── Fetches author research impact data from Semantic Scholar
 │   Fetching      │
 └─────────────────┘
          │
          ▼
 ┌─────────────────┐
-│ 7. Cache        │ ── Cleans old data for efficiency
+│ 7. Database        │ ── Cleans up database data for efficiency
 │   Cleanup       │
 └─────────────────┘
          │
          ▼
      database.sqlite
-    (structured output)
+    (final output)
 ```
 
-Each stage is fully modular and fault-tolerant, with comprehensive error handling and state persistence.
+Each stage is fault-tolerant with comprehensive error handling and state persistence.
 
-## 🧩 Core Components
-
-### 1. Paper Data Model (`paper.py`)
-
-The `Paper` class serves as the central data structure that flows through the entire pipeline:
-
-```python
-@dataclass
-class Paper:
-    # Core metadata
-    id: str                    # arXiv ID
-    title: str                 # Paper title
-    authors: List[str]         # Author list
-    categories: List[str]      # arXiv categories
-    abstract: str              # Paper abstract
-    published_date: datetime   # Publication date
-
-    # Processing status tracking
-    scraper_status: str        # Scraping state
-    intro_status: str          # Introduction extraction state
-    embedding_status: str      # Embedding calculation state
-    llm_validation_status: str # LLM validation state
-    llm_score_status: str      # LLM scoring state
-    h_index_status: str        # H-index fetching state
-
-    # Analysis results
-    summary: str               # LLM-generated summary
-    novelty_score: str         # High/Moderate/Low/None
-    impact_score: str          # High/Moderate/Low/Negligible
-    recommendation_score: str  # Must Read/Should Read/Can Skip/Ignore
-    highest_h_index: int       # Author with highest H-index
-```
-
-### 2. Database Layer (`database.py`)
-
-SQLite-based persistence layer providing:
-- **Efficient caching** of all processing results
-- **Crash recovery** capabilities
-- **Incremental processing** support
-- **Data consistency** across pipeline restarts
-
-### 3. Configuration Management (`config.py`)
-
-Centralized configuration for all pipeline parameters:
-- API endpoints and rate limits
-- Processing thresholds and batch sizes
-- Retry policies and timeout settings
-- Database retention settings
-
-## 📋 Pipeline Modules
-
-### Module 1: arXiv Scraper (`scraper.py`)
-
-**Purpose**: Discovers and fetches new research papers from arXiv API
-
-**Key Features**:
-- Intelligent date-based paper discovery
-- Category filtering (cs.AI, cs.CV)
-- Rate limiting and retry logic
-- Comprehensive metadata extraction
-- Duplicate detection and handling
-
-**Processing Logic**:
-1. Constructs targeted arXiv API queries
-2. Fetches papers in configurable batches
-3. Extracts metadata (title, authors, abstract, categories)
-4. Generates direct access URLs
-5. Validates against processing limits
-
-### Module 2: Introduction Extractor (`intro_extractor.py`)
-
-**Purpose**: Extracts introduction sections from LaTeX source files
-
-**Key Features**:
-- LaTeX source download and parsing
-- Intelligent introduction section detection
-- Content cleaning and formatting
-- Fallback strategies for extraction failures
-- Length limits for processing efficiency
-
-**Processing Logic**:
-1. Downloads LaTeX source archives
-2. Identifies main document files
-3. Parses LaTeX structure for introduction sections
-4. Cleans and formats extracted text
-5. Handles extraction errors gracefully
-
-### Module 3: Embedding Similarity (`embedding_similarity.py`)
-
-**Purpose**: Calculates semantic similarity between papers and research topics
-
-**Research Topics Covered**:
-- **Reinforcement Learning from Human Feedback (RLHF)**
-- **Weak Supervision**
-- **Diffusion Reasoning**
-- **Distributed Training**
-- **Datasets and Benchmarks**
-
-**Key Features**:
-- OpenAI text-embedding-3-large model
-- Batch processing for efficiency
-- Topic embedding caching
-- Similarity threshold filtering
-- Comprehensive error handling
-
-**Processing Logic**:
-1. Generates embeddings for paper content
-2. Calculates cosine similarity against topic embeddings
-3. Identifies highest-scoring topics
-4. Filters papers meeting similarity thresholds
-5. Caches embeddings for reuse
-
-### Module 4: LLM Validation (`llm_validation.py`)
-
-**Purpose**: Validates paper relevance using Large Language Models
-
-**Key Features**:
-- Grok 3 Mini via OpenRouter API
-- Parallel processing with rate limiting
-- XML-structured response parsing
-- Detailed relevance justifications
-- Comprehensive error recovery
-
-**Processing Logic**:
-1. Builds detailed prompts with paper content
-2. Requests relevance assessment for each topic
-3. Parses structured XML responses
-4. Validates response format and content
-5. Updates paper objects with results
-
-### Module 5: LLM Scoring (`llm_scoring.py`)
-
-**Purpose**: Provides multi-dimensional quality scoring for high-relevance papers
-
-**Scoring Dimensions**:
-- **Novelty**: How original and innovative the work is
-- **Impact**: Potential influence on future research
-- **Recommendation**: Action guidance for readers
-
-**Key Features**:
-- Only processes highly/moderately relevant papers
-- Detailed justifications for all scores
-- Structured XML response parsing
-- Robust error handling and retry logic
-- Parallel processing optimization
-
-**Processing Logic**:
-1. Identifies papers with high relevance scores
-2. Builds comprehensive evaluation prompts
-3. Requests multi-dimensional scoring
-4. Parses and validates LLM responses
-5. Updates papers with scoring results
-
-### Module 6: H-Index Fetching (`h_index_fetching.py`)
-
-**Purpose**: Enriches papers with author research impact data
-
-**Key Features**:
-- Semantic Scholar API integration
-- Multiple search strategies (ID, title-based)
-- Author profile matching
-- H-index aggregation and statistics
-- Conservative rate limiting
-
-**Processing Logic**:
-1. Searches for papers on Semantic Scholar
-2. Retrieves author profile information
-3. Extracts H-index data for each author
-4. Calculates aggregate statistics
-5. Identifies notable researchers
-
-### Module 7: Cache Cleanup (`cache_cleanup.py`)
-
-**Purpose**: Maintains database efficiency by removing old data
-
-**Key Features**:
-- Configurable retention periods
-- Safe deletion with validation
-- Performance optimization
-- Storage management
-
-## 🚀 Getting Started
+## 🚀 Usage
 
 ### Prerequisites
 
-- **Python 3.11+**
-- **Git**
-- **API Keys** for:
-  - OpenAI (for embeddings)
-  - OpenRouter (for LLM validation/scoring)
+1. **Python 3.8+** with required packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### Installation
+2. **API Keys** (set as environment variables):
+   ```bash
+   export OPENAI_API_KEY="your_openai_key"
+   export OPENROUTER_API_KEY="your_openrouter_key"
+   ```
 
-1. **Clone the repository**:
-```bash
-git clone https://github.com/ZheCodingChian/arXiv-Newsletter-Papers.git
-cd arXiv-Newsletter-Papers
-```
+### Running the Pipeline
 
-2. **Create a virtual environment**:
-```bash
-python -m venv venv
-
-# Windows
-venv\Scripts\activate
-
-# macOS/Linux
-source venv/bin/activate
-```
-
-3. **Install dependencies**:
-```bash
-pip install -r requirements.txt
-```
-
-4. **Set up environment variables**:
-
-Create a `.env` file in the project root:
-```env
-# Required API Keys
-OPENAI_API_KEY=your_openai_api_key_here
-OPENROUTER_API_KEY=your_openrouter_api_key_here
-```
-
-### Environment Variables Setup
-
-#### OpenAI API Key
-1. Visit [OpenAI Platform](https://platform.openai.com/)
-2. Create an account or sign in
-3. Navigate to API Keys section
-4. Generate a new API key
-5. Add to `.env` as `OPENAI_API_KEY`
-
-#### OpenRouter API Key
-1. Visit [OpenRouter](https://openrouter.ai/)
-2. Sign up for an account
-3. Go to API Keys section
-4. Generate a new key
-5. Add to `.env` as `OPENROUTER_API_KEY`
-
-## 🎮 Usage
-
-### Local Development
-
-#### Process papers from a specific date:
+**Process papers from a specific date:**
 ```bash
 python src/main.py --date 2025-01-15
 ```
 
-#### Run in test mode with sample papers:
+
+**Doing a test run:**
 ```bash
-python src/main.py --test test_papers.txt
+python src/main.py --test <testfile.txt>
+```
+### Test file example
+
+Create a text file with one arXiv ID per line:
+```
+2301.07041
+2312.11805
+2401.02412
 ```
 
-### Production Deployment
+## 🔍 Relevance Filtering
 
-The system is designed to run automatically via GitHub Actions:
+The pipeline uses a **similarity threshold of 0.4** to filter papers based on topic relevance. Papers that don't achieve this minimum similarity score for any of the 5 research topics are considered not relevant to our field of interest and **skip LLM analysis entirely**. This ensures computational resources are focused on the most promising papers.
 
-#### Automatic Daily Execution
-- Runs daily at 7:00 AM SGT (23:00 UTC previous day)
-- Processes papers from 20 days ago (allows for arXiv processing delays)
-- Generates database with processed papers
-- Commits database and logs to repository
+Papers above the threshold proceed through the full LLM validation and scoring pipeline for detailed analysis.
 
-#### Manual Execution
-1. Go to **Actions** tab in GitHub repository
-2. Select **"run data pipeline"** workflow
-3. Click **"Run workflow"**
-4. Choose options:
-   - **Test run**: Use `test_papers.txt` for testing
-   - **Paper date**: Specific date to process (YYYY-MM-DD)
+## 🧩 Pipeline Modules
 
-### Output Structure
+### 1. Scraper Module (`scraper.py`)
 
-```
-project/
-├── database.sqlite        # SQLite database with all paper data
-├── logs/                  # Processing logs
-│   ├── 20250115.log      # Daily log files
-│   └── ...
-└── ...
-```
+**What it does:** Discovers and fetches paper metadata from arXiv based on date or test file input.
+
+**How it works:**
+- Queries arXiv API for papers in cs.AI and cs.CV categories for specified dates
+- Parses XML responses to extract core metadata (title, authors, abstract, categories)
+- **Category Enhancement**: Converts raw arXiv categories (e.g., "cs.AI") to descriptive format (e.g., "cs.AI (Artificial Intelligence)")
+  - Only enhances categories once per paper using `category_enhancement` flag to prevent data loss on re-runs
+  - Validates categories against arXiv format patterns and removes invalid entries
+- Constructs URLs for arXiv page, PDF download, and LaTeX source
+- Handles rate limiting and API errors with exponential backoff
+- Creates Paper objects with initial "scraped" status
+
+### 2. Introduction Extractor Module (`intro_extractor.py`)
+
+**What it does:** Downloads LaTeX source files and extracts paper introductions for enhanced content analysis.
+
+**How it works:**
+- Downloads LaTeX source archives from arXiv when available
+- Extracts and parses .tex files from compressed archives
+- Uses pattern matching to identify introduction sections
+- Cleans LaTeX markup while preserving meaningful content
+- Handles various introduction formats (\\section{Introduction}, \\section{1}, etc.)
+- Falls back gracefully when LaTeX source is unavailable
+
+### 3. Embedding Similarity Module (`embedding_similarity.py`)
+
+**What it does:** Computes semantic similarity scores between papers and the 5 research topics using OpenAI embeddings.
+
+**How it works:**
+- Combines paper title, abstract, and introduction into content string
+- Generates embeddings using OpenAI's text-embedding-3-large model
+- Loads cached topic embeddings or computes them from detailed topic descriptions
+- Calculates cosine similarity between paper and topic embeddings
+- Applies 0.4 similarity threshold to filter relevant papers
+- Caches embeddings in SQLite database for efficiency
+- Identifies highest-scoring topic for each paper
+
+### 4. LLM Validation Module (`llm_validation.py`)
+
+**What it does:** Uses advanced language models to validate topic relevance and provide detailed justifications for papers above the similarity threshold.
+
+**How it works:**
+- Processes only papers with similarity scores ≥ 0.4
+- Sends paper content to Grok-3-Mini via OpenRouter API
+- Uses structured XML prompts with detailed topic descriptions
+- Evaluates relevance on 4-point scale: Highly/Moderately/Somewhat/Not Relevant
+- Generates detailed justifications explaining relevance assessments
+- Handles concurrent API calls with rate limiting and retry logic
+- Parses structured XML responses for reliable data extraction
+
+### 5. LLM Scoring Module (`llm_scoring.py`)
+
+**What it does:** Evaluates paper quality across multiple dimensions using LLM analysis for validated papers.
+
+**How it works:**
+- Processes papers with "Highly Relevant", "Moderately Relevant", or "Tangentially Relevant" ratings
+- Generates comprehensive paper summaries
+- Scores papers on three dimensions:
+  - **Novelty**: Groundbreaking/Significant/Incremental/Minimal with justification
+  - **Impact**: Transformative/Substantial/Moderate/Negligible with justification  
+  - **Recommendation**: Must Read/Should Read/Can Skip/Ignore with justification
+- Uses structured prompts for consistent scoring criteria
+- Provides detailed explanations for each score
+
+### 6. H-Index Fetching Module (`h_index_fetching.py`)
+
+**What it does:** Enriches paper data with author research impact metrics from Semantic Scholar.
+
+**How it works:**
+- Searches Semantic Scholar API using arXiv ID, then title if needed
+- Fetches author profiles and H-index data for each paper author
+- Calculates aggregate statistics: highest, average, and notable author counts
+- Handles author name variations and disambiguation
+- Tracks fetch methods and success rates for quality assessment
+- Respects API rate limits with intelligent retry mechanisms
+
+### 7. Database Cleanup Module (`database_cleanup.py`)
+
+**What it does:** Maintains database efficiency by removing old cached data while preserving current processing results.
+
+**How it works:**
+- Updates timestamps for papers processed in current pipeline run
+- Removes cached embedding and topic data older than retention period
+- Preserves recent data to avoid unnecessary recomputation
+- Maintains database size and query performance
+- Provides detailed cleanup statistics and logging
 
 ## 📊 Database Schema
 
-The `database.sqlite` file contains comprehensive paper data:
+The pipeline outputs to `database.sqlite` with two main tables:
 
 ### Papers Table
-- Core metadata (title, authors, abstract, dates, URLs)
-- Processing status for each pipeline stage
-- Embedding similarity scores for all topics
-- LLM validation results and justifications
-- Quality scores (novelty, impact, recommendation)
-- Author H-index data and statistics
-- Error tracking and timestamps
+
+**Core Metadata:**
+- `id` (TEXT) - arXiv ID (e.g., "2301.07041")
+- `title` (TEXT) - Paper title
+- `authors` (TEXT) - JSON array of author names
+- `categories` (TEXT) - JSON array of enhanced arXiv categories (e.g., ["cs.AI (Artificial Intelligence)", "cs.LG (Machine Learning)"])
+- `abstract` (TEXT) - Paper abstract
+- `published_date` (TEXT) - ISO format publication date
+- `category_enhancement` (TEXT) - Enhancement status: "not_enhanced" or "enhanced"
+- `arxiv_url` (TEXT) - arXiv abstract page URL
+- `pdf_url` (TEXT) - Direct PDF download URL
+- `latex_url` (TEXT) - LaTeX source files URL
+
+**Processing Status Fields:**
+
+- `scraper_status` (TEXT)
+  - Values: `"initial"`, `"successfully_scraped"`, `"scraping_failed"`
+
+- `intro_status` (TEXT)
+  - Values: `"not_extracted"`, `"intro_successful"`, `"no_intro_found"`, `"extraction_failed"`
+
+- `embedding_status` (TEXT)
+  - Values: `"not_embedded"`, `"completed"`, `"failed"`
+
+- `llm_validation_status` (TEXT)
+  - Values: `"not_validated"`, `"completed"`, `"failed"`
+
+- `llm_score_status` (TEXT)
+  - Values: `"not_scored"`, `"completed"`, `"failed"`, `"not_relevant_enough"`
+
+- `h_index_status` (TEXT)
+  - Values: `"not_fetched"`, `"completed"`, `"failed"`
+
+**Introduction Extraction:**
+- `introduction_text` (TEXT) - Extracted introduction content
+- `intro_extraction_method` (TEXT) - Method used for extraction
+- `tex_file_name` (TEXT) - Source LaTeX file name
+
+**Topic Similarity Scores (REAL, 0.0-1.0):**
+- `agentic_ai_score`
+- `proximal_policy_optimization_score`
+- `reinforcement_learning_score`
+- `reasoning_models_score`
+- `inference_time_scaling_score`
+
+**LLM Validation Results:**
+
+Relevance assessments for each topic:
+- `agentic_ai_relevance`
+- `proximal_policy_optimization_relevance`
+- `reinforcement_learning_relevance`
+- `reasoning_models_relevance`
+- `inference_time_scaling_relevance`
+
+Values: `"not_validated"`, `"Highly Relevant"`, `"Moderately Relevant"`, `"Tangentially Relevant"`, `"Not Relevant"`
+
+Justifications for each topic:
+- `agentic_ai_justification`
+- `proximal_policy_optimization_justification`
+- `reinforcement_learning_justification`
+- `reasoning_models_justification`
+- `inference_time_scaling_justification`
+
+Values: `"no_justification"` (default) or detailed text explanations when validation is completed
+
+**LLM Quality Scoring:**
+- `summary` (TEXT) - LLM-generated paper summary
+- `novelty_score` (TEXT) - Values: `"Groundbreaking"`, `"Significant"`, `"Incremental"`, `"Minimal"`
+- `novelty_justification` (TEXT) - Explanation for novelty score
+- `impact_score` (TEXT) - Values: `"Transformative"`, `"Substantial"`, `"Moderate"`, `"Negligible"`
+- `impact_justification` (TEXT) - Explanation for impact score
+- `recommendation_score` (TEXT) - Values: `"Must Read"`, `"Should Read"`, `"Can Skip"`, `"Ignore"`
+- `recommendation_justification` (TEXT) - Explanation for recommendation
+
+**Author Impact Data:**
+- `semantic_scholar_url` (TEXT) - Semantic Scholar paper URL
+- `h_index_fetch_method` (TEXT) - Values: `"full_id"`, `"base_id"`, `"title_search"`
+- `total_authors` (INTEGER) - Total number of authors
+- `authors_found` (INTEGER) - Authors found with H-index data
+- `highest_h_index` (INTEGER) - Highest H-index among authors
+- `average_h_index` (REAL) - Average H-index of authors with data
+- `notable_authors_count` (INTEGER) - Authors with H-index > 5
+- `author_h_indexes` (TEXT) - JSON array of detailed author H-index objects
+
+**Metadata:**
+- `errors` (TEXT) - JSON array of error messages
+- `created_at` (TEXT) - ISO format creation timestamp
+- `updated_at` (TEXT) - ISO format last update timestamp
+- `last_generated` (TEXT) - YYYY-MM-DD format for cache cleanup
 
 ### Topic Embeddings Table
-- Cached embeddings for research topics
-- Model information and creation timestamps
 
-## 🔧 Configuration
+- `topic_name` (TEXT) - Research topic name
+- `description` (TEXT) - Detailed topic description
+- `embedding_vector` (TEXT) - JSON array of embedding floats
+- `model` (TEXT) - Embedding model used (e.g., "text-embedding-3-large")
+- `created_at` (TEXT) - ISO format creation timestamp
 
-Key configuration options in `config.py`:
+## 🗂️ Output Files
 
-- **ARXIV**: API settings, rate limits, target categories
-- **LATEX_EXTRACTION**: Download settings, retry policies
-- **EMBEDDING**: Model selection, batch sizes
-- **LLM_VALIDATION**: API configuration, parallel processing
-- **LLM_SCORING**: Scoring model settings
+After running the pipeline, you'll find:
+
+```
+pipeline/
+├── database.sqlite       # Main database with all paper data
+├── cache.sqlite         # Cached embeddings and temporary data
+└── logs/
+    └── YYYYMMDD.log     # Daily processing logs
+```
+
+## ⚙️ Configuration
+
+The pipeline can be configured by modifying `src/config.py`:
+
+- **ARXIV**: API rate limits, target categories
+- **LATEX_EXTRACTION**: Download timeouts, retry policies
+- **EMBEDDING**: OpenAI model selection, batch sizes
+- **LLM_VALIDATION**: API configuration, concurrency limits
+- **LLM_SCORING**: Model selection, scoring criteria
 - **H_INDEX_FETCHING**: Semantic Scholar API settings
 - **CACHE_CLEANUP**: Data retention periods
 
+## 📈 Performance
+
+The pipeline is optimized for efficiency:
+
+- **Parallel Processing**: Concurrent API calls and batch operations
+- **Intelligent Caching**: Avoids reprocessing existing data
+- **Rate Limiting**: Respects API limits with exponential backoff
+- **Incremental Updates**: Only processes new or changed papers
+- **Memory Efficient**: Streams large datasets without loading all in memory
+
+## 🔧 Development
+
+### Project Structure
+
+```
+src/
+├── main.py                    # Pipeline orchestrator
+├── paper.py                   # Core data model
+├── database.py               # SQLite database operations
+├── config.py                 # Configuration settings
+└── modules/
+    ├── scraper.py            # arXiv paper discovery
+    ├── intro_extractor.py    # LaTeX introduction extraction
+    ├── embedding_similarity.py # Semantic similarity calculation
+    ├── llm_validation.py     # Topic relevance validation
+    ├── llm_scoring.py        # Quality scoring
+    ├── h_index_fetching.py   # Author impact data
+    └── cache_cleanup.py      # Data maintenance
+```
+
+### Adding New Topics
+
+To add new research topics:
+
+1. Update topic descriptions in `embedding_similarity.py`
+2. Add corresponding fields to `paper.py` and `database.py`
+3. Update LLM validation descriptions in `llm_validation.py`
+
 ## 📝 Logging
 
-The pipeline generates detailed logs for monitoring and debugging:
-- All operations are logged with timestamps
-- Separate loggers for each module
-- Error tracking with full stack traces
-- Daily log rotation
+The pipeline generates comprehensive logs:
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📄 License
-
-This project is open source and available under the MIT License.
-
-## 🙏 Acknowledgments
-
-- arXiv for providing open access to research papers
-- OpenAI for embedding models
-- OpenRouter for LLM API access
-- Semantic Scholar for author impact data
+- **Daily Log Files**: `logs/YYYYMMDD.log`
+- **Module-Specific Loggers**: Each component logs with its own identifier
+- **Error Tracking**: Full stack traces for debugging
+- **Progress Monitoring**: Detailed status updates and timing information

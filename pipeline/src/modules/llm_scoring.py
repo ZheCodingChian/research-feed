@@ -1,9 +1,9 @@
 """
 LLM Scoring Module
 
-This module scores papers that have passed LLM validation with at least one Highly Relevant 
-or Moderately Relevant topic. It provides detailed scoring across three dimensions: novelty, 
-impact, and recommendation using Grok 3 Mini via OpenRouter API.
+This module scores papers that have passed LLM validation with at least one Highly Relevant, 
+Moderately Relevant, or Tangentially Relevant topic. It provides detailed scoring across three 
+dimensions: novelty, impact, and recommendation using Grok 3 Mini via OpenRouter API.
 """
 
 import logging
@@ -28,9 +28,9 @@ class LLMScoring:
     """
     Handles LLM-based scoring of paper quality across multiple dimensions.
     
-    This class takes papers that have at least one Highly Relevant or Moderately Relevant 
-    topic from LLM validation and provides detailed scoring for novelty, impact, and 
-    recommendation using an LLM.
+    This class takes papers that have at least one Highly Relevant, Moderately Relevant, 
+    or Tangentially Relevant topic from LLM validation and provides detailed scoring for 
+    novelty, impact, and recommendation using an LLM.
     """
     
     def __init__(self, config: dict):
@@ -49,7 +49,7 @@ class LLMScoring:
     
     def run(self, papers: Dict[str, Paper]) -> Dict[str, Paper]:
         """
-        Run LLM scoring on papers that have at least one Highly Relevant or Moderately Relevant topic.
+        Run LLM scoring on papers that have at least one Highly Relevant, Moderately Relevant, or Tangentially Relevant topic.
         
         Args:
             papers: Dictionary of paper_id -> Paper objects
@@ -109,7 +109,7 @@ class LLMScoring:
         # Counters for detailed logging
         no_llm_validation = 0
         already_scored = 0
-        no_highly_or_moderately_relevant = 0
+        insufficient_relevance = 0
         
         for paper in papers.values():
             # Check if LLM validation is completed
@@ -122,26 +122,26 @@ class LLMScoring:
                 already_scored += 1
                 continue
             
-            # Check if has at least one Highly Relevant or Moderately Relevant topic
+            # Check if has at least one Highly/Moderately/Tangentially Relevant topic
             if paper.has_highly_relevant_topic():
                 papers_to_process.append(paper)
                 logger.debug(f"Paper {paper.id} needs scoring")
             else:
                 # Mark as not relevant enough
                 paper.update_llm_score_status("not_relevant_enough")
-                no_highly_or_moderately_relevant += 1
-                logger.debug(f"Paper {paper.id} has no Highly Relevant or Moderately Relevant topics, marked as not_relevant_enough")
+                insufficient_relevance += 1
+                logger.debug(f"Paper {paper.id} has no Highly/Moderately/Tangentially Relevant topics, marked as not_relevant_enough")
         
         # Log detailed skip statistics
-        total_skipped = no_llm_validation + already_scored + no_highly_or_moderately_relevant
+        total_skipped = no_llm_validation + already_scored + insufficient_relevance
         if total_skipped > 0:
             skip_details = []
             if no_llm_validation > 0:
                 skip_details.append(f"{no_llm_validation} no LLM validation")
             if already_scored > 0:
                 skip_details.append(f"{already_scored} already scored")
-            if no_highly_or_moderately_relevant > 0:
-                skip_details.append(f"{no_highly_or_moderately_relevant} no Highly/Moderately Relevant topics")
+            if insufficient_relevance > 0:
+                skip_details.append(f"{insufficient_relevance} insufficient relevance (below Tangentially Relevant)")
             
             logger.info(f"Skipping {total_skipped} papers: {', '.join(skip_details)}")
         
@@ -263,20 +263,20 @@ Your Task:
 Evaluation Dimensions & Scoring Rubric
 
 Novelty: The nature of the paper's contribution.
-- High: The paper introduces a truly new problem, architecture, or technique that significantly advances the state-of-the-art.
-- Moderate: The paper presents a notable improvement or a clever combination of existing ideas to solve a known problem in a new way.
-- Low: The paper offers a minor, incremental refinement to an existing method or largely confirms previous findings.
-- None: The work is derivative and does not present any discernible new information or techniques.
+- Groundbreaking: Introduces a fundamentally new problem, paradigm, or breakthrough technique that redefines how we approach an area. Represents a major shift in thinking or methodology.
+- Significant: Presents a novel architecture, method, or problem formulation that meaningfully advances current approaches. Offers fresh perspectives or solutions that move the field forward in important ways.
+- Incremental: Provides refinements, extensions, or clever combinations of existing methods. The contribution is solid but builds directly on established work without introducing fundamentally new concepts.
+- Minimal: Largely derivative work that confirms known findings or makes trivial modifications to existing approaches. Offers little to no new insight or methodology.
 
 Potential Impact: The likely influence of the work.
-- High: The work could influence a wide range of future research or commercial applications.
-- Moderate: The work is likely to be cited and built upon within its specific subfield.
-- Low: The work has limited applicability or is unlikely to influence future work.
-- Negligible: The work is unlikely to have any discernible impact.
+- Transformative: Could reshape the field or enable entirely new research directions and applications across multiple domains. Has potential to become foundational work that others build upon for years.
+- Substantial: Likely to influence a broad range of work within the field and spawn follow-up research. Will be widely cited and adopted by researchers working on related problems.
+- Moderate: Will be recognized and built upon within its specific subfield or application area. Relevant to practitioners in focused domains but won't drive field-wide changes.
+- Negligible: Unlikely to influence future research or applications. Addresses problems too narrow or presents work too limited to generate meaningful follow-up interest.
 
 Final Recommendation: The action an informed reader should take.
-- Must Read: An exceptional paper. A work of such high quality, insight, or importance that it's considered essential.
-- Should Read: A high-quality, significant paper. It represents a strong, valuable contribution that you need to be aware of. Second to Must Read.
+- Must Read: A high-quality paper with significant contributions or novel insights. Work that advances the field meaningfully and you should prioritize reading.
+- Should Read: A solid paper with valuable contributions. Represents good work worth your attention when you have time, but may be more incremental. Second to Must Read papers.
 - Can Skip: An interesting paper, but not essential. The contribution is incremental, niche, or a less impactful version of another idea.
 - Ignore: Not recommended for review; lacks substance, relevance, or is poorly presented.
 
@@ -288,11 +288,11 @@ Respond ONLY in this exact XML format:
 <paper_evaluation>
     <summary><![CDATA[Your single paragraph summary here]]></summary>
     <novelty>
-        <score>High|Moderate|Low|None</score>
+        <score>Groundbreaking|Significant|Incremental|Minimal</score>
         <justification><![CDATA[1-2 sentences explaining your choice]]></justification>
     </novelty>
     <impact>
-        <score>High|Moderate|Low|Negligible</score>
+        <score>Transformative|Substantial|Moderate|Negligible</score>
         <justification><![CDATA[1-2 sentences explaining your choice]]></justification>
     </impact>
     <recommendation>
@@ -407,7 +407,7 @@ Important: Evaluate all three dimensions and use only the specified categories. 
             if novelty_justification is None or not novelty_justification.text:
                 raise Exception("Missing or empty novelty justification")
             
-            valid_novelty_scores = {'High', 'Moderate', 'Low', 'None'}
+            valid_novelty_scores = {'Groundbreaking', 'Significant', 'Incremental', 'Minimal'}
             if novelty_score.text.strip() not in valid_novelty_scores:
                 raise Exception(f"Invalid novelty score: {novelty_score.text.strip()}")
             
@@ -427,7 +427,7 @@ Important: Evaluate all three dimensions and use only the specified categories. 
             if impact_justification is None or not impact_justification.text:
                 raise Exception("Missing or empty impact justification")
             
-            valid_impact_scores = {'High', 'Moderate', 'Low', 'Negligible'}
+            valid_impact_scores = {'Transformative', 'Substantial', 'Moderate', 'Negligible'}
             if impact_score.text.strip() not in valid_impact_scores:
                 raise Exception(f"Invalid impact score: {impact_score.text.strip()}")
             

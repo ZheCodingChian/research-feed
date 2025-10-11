@@ -1,0 +1,1279 @@
+2025-10-10 20:18:49,095 [MAIN] [INFO] Starting pipeline with --date 2025-05-07
+2025-10-10 20:18:49,144 [MAIN] [INFO] Executing scraper module
+2025-10-10 20:18:49,147 [SCRAPER] [INFO] Starting date-based scraping for 2025-05-07
+2025-10-10 20:18:49,147 [SCRAPER] [INFO] Fetching papers for date 2025-05-07
+2025-10-10 20:18:50,767 [SCRAPER] [INFO] Extracted 184 paper IDs from XML response
+2025-10-10 20:18:50,768 [SCRAPER] [INFO] Found 184 papers for date 2025-05-07
+2025-10-10 20:18:50,768 [SCRAPER] [INFO] Loading cached papers for 184 IDs
+2025-10-10 20:18:50,769 [DATABASE] [INFO] Loaded 0 papers from database
+2025-10-10 20:18:50,769 [SCRAPER] [INFO] Found 0 papers in cache
+2025-10-10 20:18:50,769 [SCRAPER] [INFO] Cache analysis: 0 hits, 184 misses
+2025-10-10 20:18:50,769 [SCRAPER] [INFO] Extracting metadata for 184 papers
+2025-10-10 20:18:50,782 [SCRAPER] [INFO] Successfully processed 184 papers
+2025-10-10 20:18:50,783 [SCRAPER] [INFO] Processed categories for paper 2505.04497: enhanced 2 valid categories, removed 1 invalid categories: ['I.4.m; I.2.m']
+2025-10-10 20:18:50,783 [SCRAPER] [INFO] Processed categories for paper 2505.04664: enhanced 3 valid categories, removed 1 invalid categories: ['68T07']
+2025-10-10 20:18:50,783 [SCRAPER] [INFO] Processed categories for paper 2505.04306: enhanced 1 valid categories, removed 1 invalid categories: ['I.4.8; I.5.4; I.2.10']
+2025-10-10 20:18:50,783 [SCRAPER] [INFO] Processed categories for paper 2505.04075: enhanced 2 valid categories, removed 1 invalid categories: ['I.2']
+2025-10-10 20:18:50,783 [SCRAPER] [INFO] Processed categories for paper 2505.04308: enhanced 2 valid categories, removed 1 invalid categories: ['F.2.2, I.2.7']
+2025-10-10 20:18:50,783 [SCRAPER] [INFO] Processed categories for paper 2505.04464: enhanced 2 valid categories, removed 2 invalid categories: ['62H30', 'G.3']
+2025-10-10 20:18:50,783 [SCRAPER] [INFO] Processed categories for paper 2505.04843: enhanced 2 valid categories, removed 1 invalid categories: ['I.2.0']
+2025-10-10 20:18:50,783 [SCRAPER] [INFO] Processed categories for paper 2505.04590: enhanced 2 valid categories, removed 1 invalid categories: ['I.3.5']
+2025-10-10 20:18:50,783 [SCRAPER] [INFO] Processed categories for paper 2505.04672: enhanced 1 valid categories, removed 1 invalid categories: ['q-bio.QM']
+2025-10-10 20:18:50,783 [SCRAPER] [INFO] Processed categories for paper 2505.04104: enhanced 3 valid categories, removed 1 invalid categories: ['I.2.0; K.4.1; J.4']
+2025-10-10 20:18:50,783 [SCRAPER] [INFO] Processed categories for paper 2505.04300: enhanced 2 valid categories, removed 1 invalid categories: ['q-bio.QM']
+2025-10-10 20:18:50,783 [SCRAPER] [INFO] Processed categories for paper 2505.04405: enhanced 1 valid categories, removed 2 invalid categories: ['physics.optics', 'physics.app-ph']
+2025-10-10 20:18:50,784 [SCRAPER] [INFO] Processed categories for paper 2505.04553: enhanced 1 valid categories, removed 2 invalid categories: ['q-fin.MF', 'q-fin.RM']
+2025-10-10 20:18:50,784 [SCRAPER] [INFO] Processed categories for paper 2505.05516: enhanced 2 valid categories, removed 1 invalid categories: ['q-bio.TO']
+2025-10-10 20:18:50,784 [SCRAPER] [INFO] Processed categories for paper 2505.06287: enhanced 3 valid categories, removed 1 invalid categories: ['D.2.2; D.2.4; J.3']
+2025-10-10 20:18:50,784 [SCRAPER] [INFO] Processed categories for paper 2505.04621: enhanced 5 valid categories, removed 2 invalid categories: ['68T07', 'I.2.6; H.5.5; H.5.1']
+2025-10-10 20:18:50,784 [SCRAPER] [INFO] Processed categories for paper 2505.04802: enhanced 4 valid categories, removed 1 invalid categories: ['physics.ao-ph']
+2025-10-10 20:18:50,784 [SCRAPER] [INFO] Category processing completed: 17 papers had invalid categories removed, 395 categories enhanced with descriptions
+2025-10-10 20:18:50,784 [SCRAPER] [INFO] Scraping session completed:
+2025-10-10 20:18:50,784 [SCRAPER] [INFO]   Successfully scraped: 184
+2025-10-10 20:18:50,784 [SCRAPER] [INFO]   Scraping failed: 0
+2025-10-10 20:18:50,784 [SCRAPER] [INFO]   API calls made: 1
+2025-10-10 20:18:50,784 [SCRAPER] [INFO]   Retries: 0
+2025-10-10 20:18:50,784 [DATABASE] [INFO] Saving 184 papers to database
+2025-10-10 20:18:50,790 [DATABASE] [INFO] Successfully saved 184 papers to database
+2025-10-10 20:18:50,790 [MAIN] [INFO] Saved 184 papers to database
+2025-10-10 20:18:50,790 [MAIN] [INFO] Executing introduction extractor module
+2025-10-10 20:18:50,903 [INTRO_EXTRACTOR] [INFO] Starting introduction extraction for 184 papers
+2025-10-10 20:18:50,903 [INTRO_EXTRACTOR] [INFO] Processing 184 papers for introduction extraction with 1.0s delays
+2025-10-10 20:18:50,903 [INTRO_EXTRACTOR] [INFO] Processing paper 1/184: 2505.04147
+2025-10-10 20:19:44,431 [INTRO_EXTRACTOR] [INFO]   2505.04147 - SUCCESS - Method: main_tex_file
+2025-10-10 20:19:45,436 [INTRO_EXTRACTOR] [INFO] Processing paper 2/184: 2505.04175
+2025-10-10 20:19:46,595 [INTRO_EXTRACTOR] [WARNING] [2505.04175] Retry 1/4 after 1s: not a gzip file
+2025-10-10 20:19:47,947 [INTRO_EXTRACTOR] [WARNING] [2505.04175] Retry 2/4 after 5s: not a gzip file
+2025-10-10 20:19:53,399 [INTRO_EXTRACTOR] [WARNING] [2505.04175] Retry 3/4 after 10s: not a gzip file
+2025-10-10 20:20:03,756 [INTRO_EXTRACTOR] [ERROR] [2505.04175] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 20:20:03,757 [INTRO_EXTRACTOR] [INFO]   2505.04175 - FAILED - Status: extraction_failed
+2025-10-10 20:20:04,762 [INTRO_EXTRACTOR] [INFO] Processing paper 3/184: 2505.04185
+2025-10-10 20:20:10,136 [INTRO_EXTRACTOR] [INFO]   2505.04185 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:20:11,141 [INTRO_EXTRACTOR] [INFO] Processing paper 4/184: 2505.04207
+2025-10-10 20:20:12,934 [INTRO_EXTRACTOR] [WARNING] [2505.04207] Retry 1/4 after 1s: not a gzip file
+2025-10-10 20:20:14,408 [INTRO_EXTRACTOR] [WARNING] [2505.04207] Retry 2/4 after 5s: not a gzip file
+2025-10-10 20:20:20,009 [INTRO_EXTRACTOR] [WARNING] [2505.04207] Retry 3/4 after 10s: not a gzip file
+2025-10-10 20:20:30,530 [INTRO_EXTRACTOR] [ERROR] [2505.04207] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 20:20:30,531 [INTRO_EXTRACTOR] [INFO]   2505.04207 - FAILED - Status: extraction_failed
+2025-10-10 20:20:31,536 [INTRO_EXTRACTOR] [INFO] Processing paper 5/184: 2505.04270
+2025-10-10 20:20:34,604 [INTRO_EXTRACTOR] [INFO]   2505.04270 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:20:35,609 [INTRO_EXTRACTOR] [INFO] Processing paper 6/184: 2505.04497
+2025-10-10 20:23:25,431 [INTRO_EXTRACTOR] [WARNING] [2505.04497] Retry 1/4 after 1s: HTTPSConnectionPool(host='arxiv.org', port=443): Read timed out.
+2025-10-10 20:23:51,036 [INTRO_EXTRACTOR] [INFO]   2505.04497 - SUCCESS - Method: main_tex_file
+2025-10-10 20:23:52,041 [INTRO_EXTRACTOR] [INFO] Processing paper 7/184: 2505.04526
+2025-10-10 20:24:06,628 [INTRO_EXTRACTOR] [INFO]   2505.04526 - SUCCESS - Method: main_tex_file
+2025-10-10 20:24:07,634 [INTRO_EXTRACTOR] [INFO] Processing paper 8/184: 2505.04192
+2025-10-10 20:24:10,682 [INTRO_EXTRACTOR] [INFO]   2505.04192 - SUCCESS - Method: main_tex_file
+2025-10-10 20:24:11,692 [INTRO_EXTRACTOR] [INFO] Processing paper 9/184: 2505.04375
+2025-10-10 20:24:39,852 [INTRO_EXTRACTOR] [INFO]   2505.04375 - SUCCESS - Method: main_tex_file
+2025-10-10 20:24:40,866 [INTRO_EXTRACTOR] [INFO] Processing paper 10/184: 2505.04397
+2025-10-10 20:24:42,713 [INTRO_EXTRACTOR] [INFO]   2505.04397 - SUCCESS - Method: main_tex_file
+2025-10-10 20:24:43,718 [INTRO_EXTRACTOR] [INFO] Processing paper 11/184: 2505.04486
+2025-10-10 20:24:54,241 [INTRO_EXTRACTOR] [INFO]   2505.04486 - SUCCESS - Method: main_tex_file
+2025-10-10 20:24:55,246 [INTRO_EXTRACTOR] [INFO] Processing paper 12/184: 2505.04488
+2025-10-10 20:24:56,724 [INTRO_EXTRACTOR] [INFO]   2505.04488 - SUCCESS - Method: main_tex_file
+2025-10-10 20:24:57,730 [INTRO_EXTRACTOR] [INFO] Processing paper 13/184: 2505.04664
+2025-10-10 20:24:58,798 [INTRO_EXTRACTOR] [WARNING] [2505.04664] Retry 1/4 after 1s: not a gzip file
+2025-10-10 20:25:00,107 [INTRO_EXTRACTOR] [WARNING] [2505.04664] Retry 2/4 after 5s: not a gzip file
+2025-10-10 20:25:05,444 [INTRO_EXTRACTOR] [WARNING] [2505.04664] Retry 3/4 after 10s: not a gzip file
+2025-10-10 20:25:15,867 [INTRO_EXTRACTOR] [ERROR] [2505.04664] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 20:25:15,868 [INTRO_EXTRACTOR] [INFO]   2505.04664 - FAILED - Status: extraction_failed
+2025-10-10 20:25:16,874 [INTRO_EXTRACTOR] [INFO] Processing paper 14/184: 2505.04787
+2025-10-10 20:25:19,387 [INTRO_EXTRACTOR] [INFO]   2505.04787 - SUCCESS - Method: main_tex_file
+2025-10-10 20:25:20,392 [INTRO_EXTRACTOR] [INFO] Processing paper 15/184: 2505.07851
+2025-10-10 20:25:21,639 [INTRO_EXTRACTOR] [INFO]   2505.07851 - SUCCESS - Method: main_tex_file
+2025-10-10 20:25:22,644 [INTRO_EXTRACTOR] [INFO] Processing paper 16/184: 2505.04851
+2025-10-10 20:25:35,344 [INTRO_EXTRACTOR] [INFO]   2505.04851 - SUCCESS - Method: main_tex_file
+2025-10-10 20:25:36,349 [INTRO_EXTRACTOR] [INFO] Processing paper 17/184: 2505.04115
+2025-10-10 20:25:36,599 [INTRO_EXTRACTOR] [INFO]   2505.04115 - SUCCESS - Method: main_tex_file
+2025-10-10 20:25:37,605 [INTRO_EXTRACTOR] [INFO] Processing paper 18/184: 2505.04317
+2025-10-10 20:25:42,539 [INTRO_EXTRACTOR] [INFO]   2505.04317 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:25:43,544 [INTRO_EXTRACTOR] [INFO] Processing paper 19/184: 2505.04525
+2025-10-10 20:25:45,497 [INTRO_EXTRACTOR] [INFO]   2505.04525 - SUCCESS - Method: main_tex_file
+2025-10-10 20:25:46,502 [INTRO_EXTRACTOR] [INFO] Processing paper 20/184: 2505.04539
+2025-10-10 20:25:47,314 [INTRO_EXTRACTOR] [INFO]   2505.04539 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:25:48,320 [INTRO_EXTRACTOR] [INFO] Processing paper 21/184: 2505.04674
+2025-10-10 20:25:49,840 [INTRO_EXTRACTOR] [INFO]   2505.04674 - SUCCESS - Method: main_tex_file
+2025-10-10 20:25:50,846 [INTRO_EXTRACTOR] [INFO] Processing paper 22/184: 2505.04736
+2025-10-10 20:25:52,145 [INTRO_EXTRACTOR] [INFO]   2505.04736 - SUCCESS - Method: main_tex_file
+2025-10-10 20:25:53,150 [INTRO_EXTRACTOR] [INFO] Processing paper 23/184: 2505.13466
+2025-10-10 20:25:59,485 [INTRO_EXTRACTOR] [INFO]   2505.13466 - SUCCESS - Method: main_tex_file
+2025-10-10 20:26:00,490 [INTRO_EXTRACTOR] [INFO] Processing paper 24/184: 2505.04055
+2025-10-10 20:26:03,495 [INTRO_EXTRACTOR] [INFO]   2505.04055 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:26:04,500 [INTRO_EXTRACTOR] [INFO] Processing paper 25/184: 2505.04058
+2025-10-10 20:26:12,255 [INTRO_EXTRACTOR] [INFO]   2505.04058 - SUCCESS - Method: main_tex_file
+2025-10-10 20:26:13,260 [INTRO_EXTRACTOR] [INFO] Processing paper 26/184: 2505.04087
+2025-10-10 20:26:21,752 [INTRO_EXTRACTOR] [INFO]   2505.04087 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:26:22,757 [INTRO_EXTRACTOR] [INFO] Processing paper 27/184: 2505.04088
+2025-10-10 20:26:27,705 [INTRO_EXTRACTOR] [WARNING] [2505.04088] Retry 1/4 after 1s: not a gzip file
+2025-10-10 20:26:29,152 [INTRO_EXTRACTOR] [WARNING] [2505.04088] Retry 2/4 after 5s: not a gzip file
+2025-10-10 20:26:34,663 [INTRO_EXTRACTOR] [WARNING] [2505.04088] Retry 3/4 after 10s: not a gzip file
+2025-10-10 20:26:45,220 [INTRO_EXTRACTOR] [ERROR] [2505.04088] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 20:26:45,221 [INTRO_EXTRACTOR] [INFO]   2505.04088 - FAILED - Status: extraction_failed
+2025-10-10 20:26:46,227 [INTRO_EXTRACTOR] [INFO] Processing paper 28/184: 2505.04109
+2025-10-10 20:26:50,592 [INTRO_EXTRACTOR] [INFO]   2505.04109 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:26:51,594 [INTRO_EXTRACTOR] [INFO] Processing paper 29/184: 2505.04119
+2025-10-10 20:26:55,978 [INTRO_EXTRACTOR] [INFO]   2505.04119 - SUCCESS - Method: main_tex_file
+2025-10-10 20:26:56,984 [INTRO_EXTRACTOR] [INFO] Processing paper 30/184: 2505.04121
+2025-10-10 20:27:10,924 [INTRO_EXTRACTOR] [INFO]   2505.04121 - SUCCESS - Method: main_tex_file
+2025-10-10 20:27:11,930 [INTRO_EXTRACTOR] [INFO] Processing paper 31/184: 2505.04201
+2025-10-10 20:27:19,120 [INTRO_EXTRACTOR] [INFO]   2505.04201 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:27:20,126 [INTRO_EXTRACTOR] [INFO] Processing paper 32/184: 2505.04214
+2025-10-10 20:27:21,656 [INTRO_EXTRACTOR] [INFO]   2505.04214 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:27:22,662 [INTRO_EXTRACTOR] [INFO] Processing paper 33/184: 2505.04262
+2025-10-10 20:27:24,393 [INTRO_EXTRACTOR] [WARNING] [2505.04262] Retry 1/4 after 1s: not a gzip file
+2025-10-10 20:27:25,915 [INTRO_EXTRACTOR] [WARNING] [2505.04262] Retry 2/4 after 5s: not a gzip file
+2025-10-10 20:27:31,419 [INTRO_EXTRACTOR] [WARNING] [2505.04262] Retry 3/4 after 10s: not a gzip file
+2025-10-10 20:27:41,889 [INTRO_EXTRACTOR] [ERROR] [2505.04262] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 20:27:41,890 [INTRO_EXTRACTOR] [INFO]   2505.04262 - FAILED - Status: extraction_failed
+2025-10-10 20:27:42,892 [INTRO_EXTRACTOR] [INFO] Processing paper 34/184: 2505.04306
+2025-10-10 20:27:46,594 [INTRO_EXTRACTOR] [INFO]   2505.04306 - SUCCESS - Method: main_tex_file
+2025-10-10 20:27:47,600 [INTRO_EXTRACTOR] [INFO] Processing paper 35/184: 2505.04320
+2025-10-10 20:28:44,108 [INTRO_EXTRACTOR] [INFO]   2505.04320 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:28:45,115 [INTRO_EXTRACTOR] [INFO] Processing paper 36/184: 2505.04347
+2025-10-10 20:29:06,767 [INTRO_EXTRACTOR] [INFO]   2505.04347 - SUCCESS - Method: main_tex_file
+2025-10-10 20:29:07,772 [INTRO_EXTRACTOR] [INFO] Processing paper 37/184: 2505.04369
+2025-10-10 20:29:09,266 [INTRO_EXTRACTOR] [INFO]   2505.04369 - SUCCESS - Method: main_tex_file
+2025-10-10 20:29:10,271 [INTRO_EXTRACTOR] [INFO] Processing paper 38/184: 2505.04384
+2025-10-10 20:29:17,583 [INTRO_EXTRACTOR] [INFO]   2505.04384 - SUCCESS - Method: main_tex_file
+2025-10-10 20:29:18,588 [INTRO_EXTRACTOR] [INFO] Processing paper 39/184: 2505.04392
+2025-10-10 20:29:29,485 [INTRO_EXTRACTOR] [INFO]   2505.04392 - SUCCESS - Method: main_tex_file
+2025-10-10 20:29:30,491 [INTRO_EXTRACTOR] [INFO] Processing paper 40/184: 2505.04408
+2025-10-10 20:29:32,445 [INTRO_EXTRACTOR] [INFO]   2505.04408 - SUCCESS - Method: main_tex_file
+2025-10-10 20:29:33,450 [INTRO_EXTRACTOR] [INFO] Processing paper 41/184: 2505.04410
+2025-10-10 20:29:44,058 [INTRO_EXTRACTOR] [INFO]   2505.04410 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:29:45,063 [INTRO_EXTRACTOR] [INFO] Processing paper 42/184: 2505.04424
+2025-10-10 20:29:50,708 [INTRO_EXTRACTOR] [INFO]   2505.04424 - SUCCESS - Method: main_tex_file
+2025-10-10 20:29:51,713 [INTRO_EXTRACTOR] [INFO] Processing paper 43/184: 2505.04460
+2025-10-10 20:29:53,610 [INTRO_EXTRACTOR] [INFO]   2505.04460 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:29:54,615 [INTRO_EXTRACTOR] [INFO] Processing paper 44/184: 2505.04481
+2025-10-10 20:30:05,482 [INTRO_EXTRACTOR] [INFO]   2505.04481 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:30:06,487 [INTRO_EXTRACTOR] [INFO] Processing paper 45/184: 2505.04485
+2025-10-10 20:30:07,662 [INTRO_EXTRACTOR] [INFO]   2505.04485 - SUCCESS - Method: main_tex_file
+2025-10-10 20:30:08,667 [INTRO_EXTRACTOR] [INFO] Processing paper 46/184: 2505.04512
+2025-10-10 20:31:04,538 [INTRO_EXTRACTOR] [INFO]   2505.04512 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:31:05,544 [INTRO_EXTRACTOR] [INFO] Processing paper 47/184: 2505.04529
+2025-10-10 20:31:13,859 [INTRO_EXTRACTOR] [INFO]   2505.04529 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:31:14,864 [INTRO_EXTRACTOR] [INFO] Processing paper 48/184: 2505.04540
+2025-10-10 20:31:52,495 [INTRO_EXTRACTOR] [INFO]   2505.04540 - SUCCESS - Method: main_tex_file
+2025-10-10 20:31:53,500 [INTRO_EXTRACTOR] [INFO] Processing paper 49/184: 2505.04594
+2025-10-10 20:31:54,056 [INTRO_EXTRACTOR] [WARNING] [2505.04594] Retry 1/4 after 1s: 404 Client Error: Not Found for url: https://arxiv.org/src/2505.04594v5
+2025-10-10 20:31:55,243 [INTRO_EXTRACTOR] [WARNING] [2505.04594] Retry 2/4 after 5s: 404 Client Error: Not Found for url: https://arxiv.org/src/2505.04594v5
+2025-10-10 20:32:00,462 [INTRO_EXTRACTOR] [WARNING] [2505.04594] Retry 3/4 after 10s: 404 Client Error: Not Found for url: https://arxiv.org/src/2505.04594v5
+2025-10-10 20:32:10,679 [INTRO_EXTRACTOR] [ERROR] [2505.04594] Introduction extraction failed after 4 attempts: 404 Client Error: Not Found for url: https://arxiv.org/src/2505.04594v5
+2025-10-10 20:32:10,681 [INTRO_EXTRACTOR] [INFO]   2505.04594 - FAILED - Status: extraction_failed
+2025-10-10 20:32:11,686 [INTRO_EXTRACTOR] [INFO] Processing paper 50/184: 2505.04601
+2025-10-10 20:32:12,013 [INTRO_EXTRACTOR] [INFO]   2505.04601 - SUCCESS - Method: main_tex_file
+2025-10-10 20:32:13,019 [INTRO_EXTRACTOR] [INFO] Processing paper 51/184: 2505.04612
+2025-10-10 20:32:14,107 [INTRO_EXTRACTOR] [INFO]   2505.04612 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:32:15,112 [INTRO_EXTRACTOR] [INFO] Processing paper 52/184: 2505.04616
+2025-10-10 20:32:38,973 [INTRO_EXTRACTOR] [INFO]   2505.04616 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:32:39,978 [INTRO_EXTRACTOR] [INFO] Processing paper 53/184: 2505.04620
+2025-10-10 20:33:18,276 [INTRO_EXTRACTOR] [INFO]   2505.04620 - SUCCESS - Method: main_tex_file
+2025-10-10 20:33:19,281 [INTRO_EXTRACTOR] [INFO] Processing paper 54/184: 2505.04720
+2025-10-10 20:33:22,171 [INTRO_EXTRACTOR] [WARNING] [2505.04720] No introduction found in any tex files
+2025-10-10 20:33:22,172 [INTRO_EXTRACTOR] [INFO]   2505.04720 - FAILED - Status: no_intro_found
+2025-10-10 20:33:23,177 [INTRO_EXTRACTOR] [INFO] Processing paper 55/184: 2505.04740
+2025-10-10 20:33:24,522 [INTRO_EXTRACTOR] [WARNING] [2505.04740] Retry 1/4 after 1s: not a gzip file
+2025-10-10 20:33:26,038 [INTRO_EXTRACTOR] [WARNING] [2505.04740] Retry 2/4 after 5s: not a gzip file
+2025-10-10 20:33:31,759 [INTRO_EXTRACTOR] [WARNING] [2505.04740] Retry 3/4 after 10s: not a gzip file
+2025-10-10 20:33:42,219 [INTRO_EXTRACTOR] [ERROR] [2505.04740] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 20:33:42,222 [INTRO_EXTRACTOR] [INFO]   2505.04740 - FAILED - Status: extraction_failed
+2025-10-10 20:33:43,228 [INTRO_EXTRACTOR] [INFO] Processing paper 56/184: 2505.04758
+2025-10-10 20:33:56,573 [INTRO_EXTRACTOR] [INFO]   2505.04758 - SUCCESS - Method: main_tex_file
+2025-10-10 20:33:57,577 [INTRO_EXTRACTOR] [INFO] Processing paper 57/184: 2505.04769
+2025-10-10 20:34:00,166 [INTRO_EXTRACTOR] [INFO]   2505.04769 - SUCCESS - Method: main_tex_file
+2025-10-10 20:34:01,171 [INTRO_EXTRACTOR] [INFO] Processing paper 58/184: 2505.04788
+2025-10-10 20:34:24,936 [INTRO_EXTRACTOR] [INFO]   2505.04788 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:34:25,941 [INTRO_EXTRACTOR] [INFO] Processing paper 59/184: 2505.04793
+2025-10-10 20:34:59,583 [INTRO_EXTRACTOR] [INFO]   2505.04793 - SUCCESS - Method: main_tex_file
+2025-10-10 20:35:00,589 [INTRO_EXTRACTOR] [INFO] Processing paper 60/184: 2505.04835
+2025-10-10 20:35:20,256 [INTRO_EXTRACTOR] [INFO]   2505.04835 - SUCCESS - Method: main_tex_file
+2025-10-10 20:35:21,262 [INTRO_EXTRACTOR] [INFO] Processing paper 61/184: 2505.04838
+2025-10-10 20:35:23,104 [INTRO_EXTRACTOR] [INFO]   2505.04838 - SUCCESS - Method: main_tex_file
+2025-10-10 20:35:24,110 [INTRO_EXTRACTOR] [INFO] Processing paper 62/184: 2505.04850
+2025-10-10 20:35:48,502 [INTRO_EXTRACTOR] [INFO]   2505.04850 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:35:49,508 [INTRO_EXTRACTOR] [INFO] Processing paper 63/184: 2505.05513
+2025-10-10 20:35:52,302 [INTRO_EXTRACTOR] [WARNING] [2505.05513] Retry 1/4 after 1s: not a gzip file
+2025-10-10 20:35:53,995 [INTRO_EXTRACTOR] [WARNING] [2505.05513] Retry 2/4 after 5s: not a gzip file
+2025-10-10 20:35:59,575 [INTRO_EXTRACTOR] [WARNING] [2505.05513] Retry 3/4 after 10s: not a gzip file
+2025-10-10 20:36:10,277 [INTRO_EXTRACTOR] [ERROR] [2505.05513] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 20:36:10,278 [INTRO_EXTRACTOR] [INFO]   2505.05513 - FAILED - Status: extraction_failed
+2025-10-10 20:36:11,283 [INTRO_EXTRACTOR] [INFO] Processing paper 64/184: 2505.04072
+2025-10-10 20:36:24,441 [INTRO_EXTRACTOR] [INFO]   2505.04072 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:36:25,447 [INTRO_EXTRACTOR] [INFO] Processing paper 65/184: 2505.04075
+2025-10-10 20:36:27,254 [INTRO_EXTRACTOR] [INFO]   2505.04075 - SUCCESS - Method: main_tex_file
+2025-10-10 20:36:28,260 [INTRO_EXTRACTOR] [INFO] Processing paper 66/184: 2505.04084
+2025-10-10 20:36:30,530 [INTRO_EXTRACTOR] [INFO]   2505.04084 - SUCCESS - Method: main_tex_file
+2025-10-10 20:36:31,535 [INTRO_EXTRACTOR] [INFO] Processing paper 67/184: 2505.04132
+2025-10-10 20:36:41,018 [INTRO_EXTRACTOR] [INFO]   2505.04132 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:36:42,023 [INTRO_EXTRACTOR] [INFO] Processing paper 68/184: 2505.04165
+2025-10-10 20:36:43,572 [INTRO_EXTRACTOR] [INFO]   2505.04165 - SUCCESS - Method: main_tex_file
+2025-10-10 20:36:44,578 [INTRO_EXTRACTOR] [INFO] Processing paper 69/184: 2505.04260
+2025-10-10 20:36:46,958 [INTRO_EXTRACTOR] [INFO]   2505.04260 - SUCCESS - Method: main_tex_file
+2025-10-10 20:36:47,963 [INTRO_EXTRACTOR] [INFO] Processing paper 70/184: 2505.04265
+2025-10-10 20:36:48,981 [INTRO_EXTRACTOR] [WARNING] [2505.04265] Retry 1/4 after 1s: not a gzip file
+2025-10-10 20:36:50,292 [INTRO_EXTRACTOR] [WARNING] [2505.04265] Retry 2/4 after 5s: not a gzip file
+2025-10-10 20:36:55,590 [INTRO_EXTRACTOR] [WARNING] [2505.04265] Retry 3/4 after 10s: not a gzip file
+2025-10-10 20:37:05,910 [INTRO_EXTRACTOR] [ERROR] [2505.04265] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 20:37:05,911 [INTRO_EXTRACTOR] [INFO]   2505.04265 - FAILED - Status: extraction_failed
+2025-10-10 20:37:06,917 [INTRO_EXTRACTOR] [INFO] Processing paper 71/184: 2505.04278
+2025-10-10 20:37:10,634 [INTRO_EXTRACTOR] [INFO]   2505.04278 - SUCCESS - Method: main_tex_file
+2025-10-10 20:37:11,639 [INTRO_EXTRACTOR] [INFO] Processing paper 72/184: 2505.04284
+2025-10-10 20:37:16,228 [INTRO_EXTRACTOR] [INFO]   2505.04284 - SUCCESS - Method: main_tex_file
+2025-10-10 20:37:17,234 [INTRO_EXTRACTOR] [INFO] Processing paper 73/184: 2505.04308
+2025-10-10 20:37:18,021 [INTRO_EXTRACTOR] [WARNING] [2505.04308] Retry 1/4 after 1s: not a gzip file
+2025-10-10 20:37:19,333 [INTRO_EXTRACTOR] [WARNING] [2505.04308] Retry 2/4 after 5s: not a gzip file
+2025-10-10 20:37:24,596 [INTRO_EXTRACTOR] [WARNING] [2505.04308] Retry 3/4 after 10s: not a gzip file
+2025-10-10 20:37:34,862 [INTRO_EXTRACTOR] [ERROR] [2505.04308] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 20:37:34,865 [INTRO_EXTRACTOR] [INFO]   2505.04308 - FAILED - Status: extraction_failed
+2025-10-10 20:37:35,866 [INTRO_EXTRACTOR] [INFO] Processing paper 74/184: 2505.04339
+2025-10-10 20:37:42,620 [INTRO_EXTRACTOR] [INFO]   2505.04339 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:37:43,625 [INTRO_EXTRACTOR] [INFO] Processing paper 75/184: 2505.04340
+2025-10-10 20:37:45,282 [INTRO_EXTRACTOR] [INFO]   2505.04340 - SUCCESS - Method: main_tex_file
+2025-10-10 20:37:46,287 [INTRO_EXTRACTOR] [INFO] Processing paper 76/184: 2505.04352
+2025-10-10 20:37:46,995 [INTRO_EXTRACTOR] [INFO]   2505.04352 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:37:47,997 [INTRO_EXTRACTOR] [INFO] Processing paper 77/184: 2505.04354
+2025-10-10 20:37:49,483 [INTRO_EXTRACTOR] [INFO]   2505.04354 - SUCCESS - Method: main_tex_file
+2025-10-10 20:37:50,488 [INTRO_EXTRACTOR] [INFO] Processing paper 78/184: 2505.04388
+2025-10-10 20:37:54,043 [INTRO_EXTRACTOR] [INFO]   2505.04388 - SUCCESS - Method: main_tex_file
+2025-10-10 20:37:55,048 [INTRO_EXTRACTOR] [INFO] Processing paper 79/184: 2505.04404
+2025-10-10 20:38:00,434 [INTRO_EXTRACTOR] [INFO]   2505.04404 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:38:01,439 [INTRO_EXTRACTOR] [INFO] Processing paper 80/184: 2505.04435
+2025-10-10 20:38:05,331 [INTRO_EXTRACTOR] [INFO]   2505.04435 - SUCCESS - Method: main_tex_file
+2025-10-10 20:38:06,336 [INTRO_EXTRACTOR] [INFO] Processing paper 81/184: 2505.04464
+2025-10-10 20:38:07,882 [INTRO_EXTRACTOR] [INFO]   2505.04464 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:38:08,888 [INTRO_EXTRACTOR] [INFO] Processing paper 82/184: 2505.04493
+2025-10-10 20:38:09,615 [INTRO_EXTRACTOR] [WARNING] [2505.04493] Retry 1/4 after 1s: not a gzip file
+2025-10-10 20:38:10,868 [INTRO_EXTRACTOR] [WARNING] [2505.04493] Retry 2/4 after 5s: not a gzip file
+2025-10-10 20:38:16,149 [INTRO_EXTRACTOR] [WARNING] [2505.04493] Retry 3/4 after 10s: not a gzip file
+2025-10-10 20:38:26,423 [INTRO_EXTRACTOR] [ERROR] [2505.04493] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 20:38:26,425 [INTRO_EXTRACTOR] [INFO]   2505.04493 - FAILED - Status: extraction_failed
+2025-10-10 20:38:27,430 [INTRO_EXTRACTOR] [INFO] Processing paper 83/184: 2505.04531
+2025-10-10 20:38:28,289 [INTRO_EXTRACTOR] [INFO]   2505.04531 - SUCCESS - Method: main_tex_file
+2025-10-10 20:38:29,295 [INTRO_EXTRACTOR] [INFO] Processing paper 84/184: 2505.04558
+2025-10-10 20:38:32,188 [INTRO_EXTRACTOR] [INFO]   2505.04558 - SUCCESS - Method: main_tex_file
+2025-10-10 20:38:33,194 [INTRO_EXTRACTOR] [INFO] Processing paper 85/184: 2505.04578
+2025-10-10 20:38:34,114 [INTRO_EXTRACTOR] [INFO]   2505.04578 - SUCCESS - Method: main_tex_file
+2025-10-10 20:38:35,120 [INTRO_EXTRACTOR] [INFO] Processing paper 86/184: 2505.04592
+2025-10-10 20:38:35,842 [INTRO_EXTRACTOR] [INFO]   2505.04592 - SUCCESS - Method: main_tex_file
+2025-10-10 20:38:36,848 [INTRO_EXTRACTOR] [INFO] Processing paper 87/184: 2505.04665
+2025-10-10 20:38:37,618 [INTRO_EXTRACTOR] [WARNING] [2505.04665] Retry 1/4 after 1s: not a gzip file
+2025-10-10 20:38:38,871 [INTRO_EXTRACTOR] [WARNING] [2505.04665] Retry 2/4 after 5s: not a gzip file
+2025-10-10 20:38:44,173 [INTRO_EXTRACTOR] [WARNING] [2505.04665] Retry 3/4 after 10s: not a gzip file
+2025-10-10 20:38:54,456 [INTRO_EXTRACTOR] [ERROR] [2505.04665] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 20:38:54,459 [INTRO_EXTRACTOR] [INFO]   2505.04665 - FAILED - Status: extraction_failed
+2025-10-10 20:38:55,465 [INTRO_EXTRACTOR] [INFO] Processing paper 88/184: 2505.04670
+2025-10-10 20:38:57,657 [INTRO_EXTRACTOR] [INFO]   2505.04670 - SUCCESS - Method: main_tex_file
+2025-10-10 20:38:58,667 [INTRO_EXTRACTOR] [INFO] Processing paper 89/184: 2505.04673
+2025-10-10 20:39:51,879 [INTRO_EXTRACTOR] [WARNING] [2505.04673] Retry 1/4 after 1s: HTTPSConnectionPool(host='arxiv.org', port=443): Max retries exceeded with url: /src/2505.04673v1 (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x109327250>: Failed to establish a new connection: [Errno 50] Network is down'))
+2025-10-10 20:41:22,718 [MAIN] [INFO] Pipeline interrupted by user
+2025-10-10 20:41:26,000 [MAIN] [INFO] Starting pipeline with --date 2025-05-07
+2025-10-10 20:41:26,031 [MAIN] [INFO] Executing scraper module
+2025-10-10 20:41:26,032 [SCRAPER] [INFO] Starting date-based scraping for 2025-05-07
+2025-10-10 20:41:26,032 [SCRAPER] [INFO] Fetching papers for date 2025-05-07
+2025-10-10 20:41:26,437 [SCRAPER] [INFO] Extracted 184 paper IDs from XML response
+2025-10-10 20:41:26,438 [SCRAPER] [INFO] Found 184 papers for date 2025-05-07
+2025-10-10 20:41:26,438 [SCRAPER] [INFO] Loading cached papers for 184 IDs
+2025-10-10 20:41:26,454 [DATABASE] [INFO] Loaded 184 papers from database
+2025-10-10 20:41:26,454 [SCRAPER] [INFO] Found 184 papers in cache
+2025-10-10 20:41:26,454 [SCRAPER] [INFO] Cache analysis: 184 hits, 0 misses
+2025-10-10 20:41:26,454 [SCRAPER] [INFO] Extracting metadata for 0 papers
+2025-10-10 20:41:26,454 [SCRAPER] [INFO] No papers need metadata extraction
+2025-10-10 20:41:26,455 [SCRAPER] [INFO] Processed categories for paper 2505.04147: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,455 [SCRAPER] [INFO] Processed categories for paper 2505.04175: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,455 [SCRAPER] [INFO] Processed categories for paper 2505.04185: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,455 [SCRAPER] [INFO] Processed categories for paper 2505.04207: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,455 [SCRAPER] [INFO] Processed categories for paper 2505.04270: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,455 [SCRAPER] [INFO] Processed categories for paper 2505.04497: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,455 [SCRAPER] [INFO] Processed categories for paper 2505.04526: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,455 [SCRAPER] [INFO] Processed categories for paper 2505.04192: enhanced 0 valid categories, removed 3 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'cs.AI (Artificial Intelligence)', 'cs.CL (Computation and Language)']
+2025-10-10 20:41:26,455 [SCRAPER] [INFO] Processed categories for paper 2505.04375: enhanced 0 valid categories, removed 3 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'cs.AI (Artificial Intelligence)', 'cs.LG (Machine Learning)']
+2025-10-10 20:41:26,455 [SCRAPER] [INFO] Processed categories for paper 2505.04397: enhanced 0 valid categories, removed 4 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'cs.AI (Artificial Intelligence)', 'cs.LG (Machine Learning)', 'eess.IV (Image and Video Processing)']
+2025-10-10 20:41:26,455 [SCRAPER] [INFO] Processed categories for paper 2505.04486: enhanced 0 valid categories, removed 3 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'cs.AI (Artificial Intelligence)', 'cs.LG (Machine Learning)']
+2025-10-10 20:41:26,455 [SCRAPER] [INFO] Processed categories for paper 2505.04488: enhanced 0 valid categories, removed 4 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'cs.AI (Artificial Intelligence)', 'cs.HC (Human-Computer Interaction)', 'cs.MM (Multimedia)']
+2025-10-10 20:41:26,455 [SCRAPER] [INFO] Processed categories for paper 2505.04664: enhanced 0 valid categories, removed 3 invalid categories: ['eess.IV (Image and Video Processing)', 'cs.AI (Artificial Intelligence)', 'cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,455 [SCRAPER] [INFO] Processed categories for paper 2505.04787: enhanced 0 valid categories, removed 3 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'cs.AI (Artificial Intelligence)', 'cs.LG (Machine Learning)']
+2025-10-10 20:41:26,455 [SCRAPER] [INFO] Processed categories for paper 2505.07851: enhanced 0 valid categories, removed 4 invalid categories: ['eess.IV (Image and Video Processing)', 'cs.AI (Artificial Intelligence)', 'cs.CV (Computer Vision and Pattern Recognition)', 'cs.RO (Robotics)']
+2025-10-10 20:41:26,455 [SCRAPER] [INFO] Processed categories for paper 2505.04851: enhanced 0 valid categories, removed 5 invalid categories: ['cs.AI (Artificial Intelligence)', 'cs.CL (Computation and Language)', 'cs.CV (Computer Vision and Pattern Recognition)', 'cs.CY (Computers and Society)', 'cs.LG (Machine Learning)']
+2025-10-10 20:41:26,455 [SCRAPER] [INFO] Processed categories for paper 2505.04115: enhanced 0 valid categories, removed 1 invalid categories: ['cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,455 [SCRAPER] [INFO] Processed categories for paper 2505.04317: enhanced 0 valid categories, removed 1 invalid categories: ['cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,455 [SCRAPER] [INFO] Processed categories for paper 2505.04525: enhanced 0 valid categories, removed 1 invalid categories: ['cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,455 [SCRAPER] [INFO] Processed categories for paper 2505.04539: enhanced 0 valid categories, removed 1 invalid categories: ['cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,455 [SCRAPER] [INFO] Processed categories for paper 2505.04674: enhanced 0 valid categories, removed 1 invalid categories: ['cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,455 [SCRAPER] [INFO] Processed categories for paper 2505.04736: enhanced 0 valid categories, removed 1 invalid categories: ['cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.13466: enhanced 0 valid categories, removed 1 invalid categories: ['cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04055: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04058: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04087: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04088: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04109: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04119: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04121: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04201: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04214: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04262: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04306: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04320: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04347: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04369: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04384: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04392: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04408: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04410: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04424: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04460: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04481: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04485: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04512: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04529: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04540: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04594: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04601: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04612: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04616: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04620: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04720: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04740: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04758: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04769: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,456 [SCRAPER] [INFO] Processed categories for paper 2505.04788: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04793: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04835: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04838: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04850: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.05513: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04072: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CL (Computation and Language)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04075: enhanced 0 valid categories, removed 2 invalid categories: ['cs.LG (Machine Learning)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04084: enhanced 0 valid categories, removed 2 invalid categories: ['cs.SE (Software Engineering)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04132: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CL (Computation and Language)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04165: enhanced 0 valid categories, removed 2 invalid categories: ['cs.NE (Neural and Evolutionary Computing)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04260: enhanced 0 valid categories, removed 2 invalid categories: ['cs.HC (Human-Computer Interaction)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04265: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CR (Cryptography and Security)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04278: enhanced 0 valid categories, removed 2 invalid categories: ['cs.LG (Machine Learning)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04284: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CL (Computation and Language)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04308: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CR (Cryptography and Security)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04339: enhanced 0 valid categories, removed 2 invalid categories: ['cs.LG (Machine Learning)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04340: enhanced 0 valid categories, removed 2 invalid categories: ['cs.LG (Machine Learning)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04352: enhanced 0 valid categories, removed 2 invalid categories: ['cs.AI (Artificial Intelligence)', 'cs.CY (Computers and Society)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04354: enhanced 0 valid categories, removed 2 invalid categories: ['math.OC (Optimization and Control)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04388: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CL (Computation and Language)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04404: enhanced 0 valid categories, removed 2 invalid categories: ['cs.DB (Databases)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04435: enhanced 0 valid categories, removed 2 invalid categories: ['cs.LG (Machine Learning)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04464: enhanced 0 valid categories, removed 2 invalid categories: ['cs.LG (Machine Learning)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04493: enhanced 0 valid categories, removed 2 invalid categories: ['cs.RO (Robotics)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04531: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CL (Computation and Language)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04558: enhanced 0 valid categories, removed 2 invalid categories: ['cs.LG (Machine Learning)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04578: enhanced 0 valid categories, removed 2 invalid categories: ['cs.LG (Machine Learning)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04592: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CY (Computers and Society)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04665: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CL (Computation and Language)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04670: enhanced 0 valid categories, removed 2 invalid categories: ['cs.SE (Software Engineering)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04673: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CL (Computation and Language)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04678: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CL (Computation and Language)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04732: enhanced 0 valid categories, removed 2 invalid categories: ['cs.IR (Information Retrieval)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,457 [SCRAPER] [INFO] Processed categories for paper 2505.04759: enhanced 0 valid categories, removed 2 invalid categories: ['cs.SE (Software Engineering)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04785: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CL (Computation and Language)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04808: enhanced 0 valid categories, removed 2 invalid categories: ['cs.LG (Machine Learning)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04822: enhanced 0 valid categories, removed 2 invalid categories: ['cs.AI (Artificial Intelligence)', 'cs.LG (Machine Learning)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04841: enhanced 0 valid categories, removed 2 invalid categories: ['quant-ph (Quantum Physics)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04842: enhanced 0 valid categories, removed 2 invalid categories: ['cs.LG (Machine Learning)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04843: enhanced 0 valid categories, removed 2 invalid categories: ['cs.AI (Artificial Intelligence)', 'cs.CR (Cryptography and Security)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04847: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CL (Computation and Language)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.06136: enhanced 0 valid categories, removed 2 invalid categories: ['cs.RO (Robotics)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.06300: enhanced 0 valid categories, removed 2 invalid categories: ['cs.LG (Machine Learning)', 'cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.07846: enhanced 0 valid categories, removed 2 invalid categories: ['cs.AI (Artificial Intelligence)', 'cs.CR (Cryptography and Security)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.07847: enhanced 0 valid categories, removed 2 invalid categories: ['cs.AI (Artificial Intelligence)', 'cs.MA (Multiagent Systems)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04050: enhanced 0 valid categories, removed 2 invalid categories: ['cs.GR (Graphics)', 'cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04052: enhanced 0 valid categories, removed 2 invalid categories: ['cs.GR (Graphics)', 'cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04095: enhanced 0 valid categories, removed 2 invalid categories: ['cs.RO (Robotics)', 'cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04105: enhanced 0 valid categories, removed 2 invalid categories: ['eess.IV (Image and Video Processing)', 'cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04150: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'cs.LG (Machine Learning)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04173: enhanced 0 valid categories, removed 2 invalid categories: ['cs.LG (Machine Learning)', 'cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04228: enhanced 0 valid categories, removed 2 invalid categories: ['cs.RO (Robotics)', 'cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04229: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'cs.CY (Computers and Society)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04258: enhanced 0 valid categories, removed 2 invalid categories: ['cs.RO (Robotics)', 'cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04276: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'cs.MM (Multimedia)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04281: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'eess.IV (Image and Video Processing)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04376: enhanced 0 valid categories, removed 2 invalid categories: ['eess.IV (Image and Video Processing)', 'cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04387: enhanced 0 valid categories, removed 2 invalid categories: ['cs.GR (Graphics)', 'cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04522: enhanced 0 valid categories, removed 2 invalid categories: ['eess.IV (Image and Video Processing)', 'cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04575: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'cs.LG (Machine Learning)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04590: enhanced 0 valid categories, removed 2 invalid categories: ['cs.GR (Graphics)', 'cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04622: enhanced 0 valid categories, removed 2 invalid categories: ['cs.GR (Graphics)', 'cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,458 [SCRAPER] [INFO] Processed categories for paper 2505.04623: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'eess.AS (Audio and Speech Processing)']
+2025-10-10 20:41:26,459 [SCRAPER] [INFO] Processed categories for paper 2505.04660: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CL (Computation and Language)', 'cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,459 [SCRAPER] [INFO] Processed categories for paper 2505.04672: enhanced 0 valid categories, removed 1 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,459 [SCRAPER] [INFO] Processed categories for paper 2505.04713: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'cs.LG (Machine Learning)']
+2025-10-10 20:41:26,459 [SCRAPER] [INFO] Processed categories for paper 2505.04718: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'cs.LG (Machine Learning)']
+2025-10-10 20:41:26,459 [SCRAPER] [INFO] Processed categories for paper 2505.04813: enhanced 0 valid categories, removed 2 invalid categories: ['cs.GR (Graphics)', 'cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,459 [SCRAPER] [INFO] Processed categories for paper 2505.04836: enhanced 0 valid categories, removed 2 invalid categories: ['eess.SP (Signal Processing)', 'cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,459 [SCRAPER] [INFO] Processed categories for paper 2505.05504: enhanced 0 valid categories, removed 2 invalid categories: ['eess.IV (Image and Video Processing)', 'cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,459 [SCRAPER] [INFO] Processed categories for paper 2505.05505: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'eess.IV (Image and Video Processing)']
+2025-10-10 20:41:26,459 [SCRAPER] [INFO] Processed categories for paper 2505.05509: enhanced 0 valid categories, removed 2 invalid categories: ['eess.IV (Image and Video Processing)', 'cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,459 [SCRAPER] [INFO] Processed categories for paper 2505.05512: enhanced 0 valid categories, removed 2 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'cs.RO (Robotics)']
+2025-10-10 20:41:26,459 [SCRAPER] [INFO] Processed categories for paper 2505.06285: enhanced 0 valid categories, removed 2 invalid categories: ['eess.SP (Signal Processing)', 'cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,460 [SCRAPER] [INFO] Processed categories for paper 2505.04034: enhanced 0 valid categories, removed 3 invalid categories: ['cs.NE (Neural and Evolutionary Computing)', 'cs.AI (Artificial Intelligence)', 'cs.LG (Machine Learning)']
+2025-10-10 20:41:26,460 [SCRAPER] [INFO] Processed categories for paper 2505.04083: enhanced 0 valid categories, removed 3 invalid categories: ['cs.LG (Machine Learning)', 'cs.AI (Artificial Intelligence)', 'cs.DC (Distributed, Parallel, and Cluster Computing)']
+2025-10-10 20:41:26,460 [SCRAPER] [INFO] Processed categories for paper 2505.04101: enhanced 0 valid categories, removed 3 invalid categories: ['cs.CR (Cryptography and Security)', 'cs.AI (Artificial Intelligence)', 'cs.NI (Networking and Internet Architecture)']
+2025-10-10 20:41:26,460 [SCRAPER] [INFO] Processed categories for paper 2505.04104: enhanced 0 valid categories, removed 3 invalid categories: ['cs.LG (Machine Learning)', 'cs.AI (Artificial Intelligence)', 'cs.CY (Computers and Society)']
+2025-10-10 20:41:26,461 [SCRAPER] [INFO] Processed categories for paper 2505.04146: enhanced 0 valid categories, removed 3 invalid categories: ['cs.CL (Computation and Language)', 'cs.AI (Artificial Intelligence)', 'cs.CY (Computers and Society)']
+2025-10-10 20:41:26,461 [SCRAPER] [INFO] Processed categories for paper 2505.04174: enhanced 0 valid categories, removed 4 invalid categories: ['cs.LG (Machine Learning)', 'cs.AI (Artificial Intelligence)', 'cs.NI (Networking and Internet Architecture)', 'eess.SP (Signal Processing)']
+2025-10-10 20:41:26,461 [SCRAPER] [INFO] Processed categories for paper 2505.04209: enhanced 0 valid categories, removed 3 invalid categories: ['cs.IR (Information Retrieval)', 'cs.AI (Artificial Intelligence)', 'cs.LG (Machine Learning)']
+2025-10-10 20:41:26,461 [SCRAPER] [INFO] Processed categories for paper 2505.04223: enhanced 0 valid categories, removed 3 invalid categories: ['cs.LG (Machine Learning)', 'cs.AI (Artificial Intelligence)', 'cs.DC (Distributed, Parallel, and Cluster Computing)']
+2025-10-10 20:41:26,461 [SCRAPER] [INFO] Processed categories for paper 2505.04251: enhanced 0 valid categories, removed 3 invalid categories: ['cs.SE (Software Engineering)', 'cs.AI (Artificial Intelligence)', 'cs.MA (Multiagent Systems)']
+2025-10-10 20:41:26,461 [SCRAPER] [INFO] Processed categories for paper 2505.04300: enhanced 0 valid categories, removed 2 invalid categories: ['cs.AI (Artificial Intelligence)', 'cs.LG (Machine Learning)']
+2025-10-10 20:41:26,461 [SCRAPER] [INFO] Processed categories for paper 2505.04310: enhanced 0 valid categories, removed 3 invalid categories: ['cs.AI (Artificial Intelligence)', 'cs.LG (Machine Learning)', 'math.OC (Optimization and Control)']
+2025-10-10 20:41:26,461 [SCRAPER] [INFO] Processed categories for paper 2505.04313: enhanced 0 valid categories, removed 3 invalid categories: ['cs.AI (Artificial Intelligence)', 'cs.ET (Emerging Technologies)', 'cs.SC (Symbolic Computation)']
+2025-10-10 20:41:26,461 [SCRAPER] [INFO] Processed categories for paper 2505.04318: enhanced 0 valid categories, removed 3 invalid categories: ['cs.LG (Machine Learning)', 'cs.AI (Artificial Intelligence)', 'eess.IV (Image and Video Processing)']
+2025-10-10 20:41:26,461 [SCRAPER] [INFO] Processed categories for paper 2505.04379: enhanced 0 valid categories, removed 4 invalid categories: ['cs.MA (Multiagent Systems)', 'cs.AI (Artificial Intelligence)', 'cs.SY (Systems and Control)', 'eess.SY (Systems and Control)']
+2025-10-10 20:41:26,461 [SCRAPER] [INFO] Processed categories for paper 2505.04405: enhanced 0 valid categories, removed 1 invalid categories: ['cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,461 [SCRAPER] [INFO] Processed categories for paper 2505.04406: enhanced 0 valid categories, removed 3 invalid categories: ['cs.CL (Computation and Language)', 'cs.AI (Artificial Intelligence)', 'cs.SE (Software Engineering)']
+2025-10-10 20:41:26,461 [SCRAPER] [INFO] Processed categories for paper 2505.04416: enhanced 0 valid categories, removed 4 invalid categories: ['cs.CL (Computation and Language)', 'cs.AI (Artificial Intelligence)', 'cs.CR (Cryptography and Security)', 'cs.LG (Machine Learning)']
+2025-10-10 20:41:26,461 [SCRAPER] [INFO] Processed categories for paper 2505.04419: enhanced 0 valid categories, removed 4 invalid categories: ['eess.AS (Audio and Speech Processing)', 'cs.AI (Artificial Intelligence)', 'cs.LG (Machine Learning)', 'cs.SD (Sound)']
+2025-10-10 20:41:26,462 [SCRAPER] [INFO] Processed categories for paper 2505.04461: enhanced 0 valid categories, removed 3 invalid categories: ['cs.LG (Machine Learning)', 'cs.AI (Artificial Intelligence)', 'cs.SI (Social and Information Networks)']
+2025-10-10 20:41:26,462 [SCRAPER] [INFO] Processed categories for paper 2505.04480: enhanced 0 valid categories, removed 3 invalid categories: ['cs.AI (Artificial Intelligence)', 'cs.NE (Neural and Evolutionary Computing)', 'cs.RO (Robotics)']
+2025-10-10 20:41:26,462 [SCRAPER] [INFO] Processed categories for paper 2505.04528: enhanced 0 valid categories, removed 3 invalid categories: ['cs.AI (Artificial Intelligence)', 'cs.CL (Computation and Language)', 'cs.LO (Logic in Computer Science)']
+2025-10-10 20:41:26,462 [SCRAPER] [INFO] Processed categories for paper 2505.04553: enhanced 0 valid categories, removed 1 invalid categories: ['cs.AI (Artificial Intelligence)']
+2025-10-10 20:41:26,462 [SCRAPER] [INFO] Processed categories for paper 2505.04608: enhanced 0 valid categories, removed 3 invalid categories: ['cs.LG (Machine Learning)', 'cs.AI (Artificial Intelligence)', 'stat.ML (Machine Learning)']
+2025-10-10 20:41:26,462 [SCRAPER] [INFO] Processed categories for paper 2505.04677: enhanced 0 valid categories, removed 3 invalid categories: ['cs.LO (Logic in Computer Science)', 'cs.AI (Artificial Intelligence)', 'cs.LG (Machine Learning)']
+2025-10-10 20:41:26,462 [SCRAPER] [INFO] Processed categories for paper 2505.04741: enhanced 0 valid categories, removed 3 invalid categories: ['cs.LG (Machine Learning)', 'cs.AI (Artificial Intelligence)', 'cs.CL (Computation and Language)']
+2025-10-10 20:41:26,462 [SCRAPER] [INFO] Processed categories for paper 2505.04784: enhanced 0 valid categories, removed 3 invalid categories: ['cs.CR (Cryptography and Security)', 'cs.AI (Artificial Intelligence)', 'cs.CY (Computers and Society)']
+2025-10-10 20:41:26,462 [SCRAPER] [INFO] Processed categories for paper 2505.04792: enhanced 0 valid categories, removed 3 invalid categories: ['math.DS (Dynamical Systems)', 'cs.AI (Artificial Intelligence)', 'cs.LG (Machine Learning)']
+2025-10-10 20:41:26,462 [SCRAPER] [INFO] Processed categories for paper 2505.04852: enhanced 0 valid categories, removed 3 invalid categories: ['cs.SE (Software Engineering)', 'cs.AI (Artificial Intelligence)', 'cs.PL (Programming Languages)']
+2025-10-10 20:41:26,462 [SCRAPER] [INFO] Processed categories for paper 2505.05516: enhanced 0 valid categories, removed 2 invalid categories: ['cs.AI (Artificial Intelligence)', 'cs.HC (Human-Computer Interaction)']
+2025-10-10 20:41:26,462 [SCRAPER] [INFO] Processed categories for paper 2505.06287: enhanced 0 valid categories, removed 3 invalid categories: ['cs.AI (Artificial Intelligence)', 'cs.ET (Emerging Technologies)', 'cs.LO (Logic in Computer Science)']
+2025-10-10 20:41:26,462 [SCRAPER] [INFO] Processed categories for paper 2505.06299: enhanced 0 valid categories, removed 3 invalid categories: ['cs.CR (Cryptography and Security)', 'cs.AI (Artificial Intelligence)', 'cs.LG (Machine Learning)']
+2025-10-10 20:41:26,462 [SCRAPER] [INFO] Processed categories for paper 2505.07849: enhanced 0 valid categories, removed 3 invalid categories: ['cs.SE (Software Engineering)', 'cs.AI (Artificial Intelligence)', 'cs.IR (Information Retrieval)']
+2025-10-10 20:41:26,462 [SCRAPER] [INFO] Processed categories for paper 2505.07850: enhanced 0 valid categories, removed 3 invalid categories: ['cs.CL (Computation and Language)', 'cs.AI (Artificial Intelligence)', 'cs.CY (Computers and Society)']
+2025-10-10 20:41:26,462 [SCRAPER] [INFO] Processed categories for paper 2505.07852: enhanced 0 valid categories, removed 3 invalid categories: ['cs.CL (Computation and Language)', 'cs.AI (Artificial Intelligence)', 'cs.LG (Machine Learning)']
+2025-10-10 20:41:26,462 [SCRAPER] [INFO] Processed categories for paper 2505.08795: enhanced 0 valid categories, removed 3 invalid categories: ['cs.LG (Machine Learning)', 'cs.AI (Artificial Intelligence)', 'cs.CL (Computation and Language)']
+2025-10-10 20:41:26,462 [SCRAPER] [INFO] Processed categories for paper 2506.14774: enhanced 0 valid categories, removed 3 invalid categories: ['cs.LG (Machine Learning)', 'cs.AI (Artificial Intelligence)', 'cs.HC (Human-Computer Interaction)']
+2025-10-10 20:41:26,463 [SCRAPER] [INFO] Processed categories for paper 2505.04046: enhanced 0 valid categories, removed 3 invalid categories: ['cs.LG (Machine Learning)', 'cs.CR (Cryptography and Security)', 'cs.CV (Computer Vision and Pattern Recognition)']
+2025-10-10 20:41:26,463 [SCRAPER] [INFO] Processed categories for paper 2505.04097: enhanced 0 valid categories, removed 3 invalid categories: ['eess.IV (Image and Video Processing)', 'cs.CV (Computer Vision and Pattern Recognition)', 'cs.LG (Machine Learning)']
+2025-10-10 20:41:26,463 [SCRAPER] [INFO] Processed categories for paper 2505.04380: enhanced 0 valid categories, removed 3 invalid categories: ['eess.IV (Image and Video Processing)', 'cs.CV (Computer Vision and Pattern Recognition)', 'cs.IR (Information Retrieval)']
+2025-10-10 20:41:26,463 [SCRAPER] [INFO] Processed categories for paper 2505.04394: enhanced 0 valid categories, removed 3 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'cs.SD (Sound)', 'eess.AS (Audio and Speech Processing)']
+2025-10-10 20:41:26,463 [SCRAPER] [INFO] Processed categories for paper 2505.04502: enhanced 0 valid categories, removed 3 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'cs.AR (Hardware Architecture)', 'eess.IV (Image and Video Processing)']
+2025-10-10 20:41:26,463 [SCRAPER] [INFO] Processed categories for paper 2505.04524: enhanced 0 valid categories, removed 4 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'cs.AR (Hardware Architecture)', 'cs.LG (Machine Learning)', 'eess.IV (Image and Video Processing)']
+2025-10-10 20:41:26,463 [SCRAPER] [INFO] Processed categories for paper 2505.04586: enhanced 0 valid categories, removed 3 invalid categories: ['eess.IV (Image and Video Processing)', 'cs.CV (Computer Vision and Pattern Recognition)', 'cs.LG (Machine Learning)']
+2025-10-10 20:41:26,463 [SCRAPER] [INFO] Processed categories for paper 2505.04596: enhanced 0 valid categories, removed 4 invalid categories: ['math.OC (Optimization and Control)', 'cs.CV (Computer Vision and Pattern Recognition)', 'cs.SY (Systems and Control)', 'eess.SY (Systems and Control)']
+2025-10-10 20:41:26,463 [SCRAPER] [INFO] Processed categories for paper 2505.04619: enhanced 0 valid categories, removed 3 invalid categories: ['cs.LG (Machine Learning)', 'cs.CV (Computer Vision and Pattern Recognition)', 'cs.RO (Robotics)']
+2025-10-10 20:41:26,463 [SCRAPER] [INFO] Processed categories for paper 2505.05510: enhanced 0 valid categories, removed 3 invalid categories: ['cs.NE (Neural and Evolutionary Computing)', 'cs.CV (Computer Vision and Pattern Recognition)', 'cs.LG (Machine Learning)']
+2025-10-10 20:41:26,463 [SCRAPER] [INFO] Processed categories for paper 2505.05517: enhanced 0 valid categories, removed 3 invalid categories: ['cs.CV (Computer Vision and Pattern Recognition)', 'cs.LG (Machine Learning)', 'cs.RO (Robotics)']
+2025-10-10 20:41:26,463 [SCRAPER] [INFO] Processed categories for paper 2505.04451: enhanced 0 valid categories, removed 5 invalid categories: ['cs.SD (Sound)', 'cs.AI (Artificial Intelligence)', 'cs.LG (Machine Learning)', 'cs.MM (Multimedia)', 'eess.AS (Audio and Speech Processing)']
+2025-10-10 20:41:26,463 [SCRAPER] [INFO] Processed categories for paper 2505.04468: enhanced 0 valid categories, removed 5 invalid categories: ['cs.LG (Machine Learning)', 'cs.AI (Artificial Intelligence)', 'cs.IT (Information Theory)', 'cs.NE (Neural and Evolutionary Computing)', 'math.IT (Information Theory)']
+2025-10-10 20:41:26,463 [SCRAPER] [INFO] Processed categories for paper 2505.04621: enhanced 0 valid categories, removed 5 invalid categories: ['cs.SD (Sound)', 'cs.AI (Artificial Intelligence)', 'cs.LG (Machine Learning)', 'cs.MM (Multimedia)', 'eess.AS (Audio and Speech Processing)']
+2025-10-10 20:41:26,463 [SCRAPER] [INFO] Processed categories for paper 2505.04725: enhanced 0 valid categories, removed 5 invalid categories: ['eess.SY (Systems and Control)', 'cs.AI (Artificial Intelligence)', 'cs.RO (Robotics)', 'cs.SY (Systems and Control)', 'math.DS (Dynamical Systems)']
+2025-10-10 20:41:26,463 [SCRAPER] [INFO] Processed categories for paper 2505.04802: enhanced 0 valid categories, removed 4 invalid categories: ['cs.LG (Machine Learning)', 'astro-ph.EP (Earth and Planetary Astrophysics)', 'cs.AI (Artificial Intelligence)', 'cs.DC (Distributed, Parallel, and Cluster Computing)']
+2025-10-10 20:41:26,463 [SCRAPER] [INFO] Category processing completed: 184 papers had invalid categories removed, 0 categories enhanced with descriptions
+2025-10-10 20:41:26,463 [SCRAPER] [INFO] Scraping session completed:
+2025-10-10 20:41:26,463 [SCRAPER] [INFO]   Successfully scraped: 0
+2025-10-10 20:41:26,463 [SCRAPER] [INFO]   Scraping failed: 0
+2025-10-10 20:41:26,463 [SCRAPER] [INFO]   API calls made: 1
+2025-10-10 20:41:26,463 [SCRAPER] [INFO]   Retries: 0
+2025-10-10 20:41:26,464 [DATABASE] [INFO] Saving 184 papers to database
+2025-10-10 20:41:26,471 [DATABASE] [INFO] Successfully saved 184 papers to database
+2025-10-10 20:41:26,471 [MAIN] [INFO] Saved 184 papers to database
+2025-10-10 20:41:26,471 [MAIN] [INFO] Executing introduction extractor module
+2025-10-10 20:41:26,518 [INTRO_EXTRACTOR] [INFO] Starting introduction extraction for 184 papers
+2025-10-10 20:41:26,518 [INTRO_EXTRACTOR] [INFO] Processing 184 papers for introduction extraction with 1.0s delays
+2025-10-10 20:41:26,518 [INTRO_EXTRACTOR] [INFO] Processing paper 1/184: 2505.04147
+2025-10-10 20:41:32,610 [INTRO_EXTRACTOR] [INFO]   2505.04147 - SUCCESS - Method: main_tex_file
+2025-10-10 20:41:33,616 [INTRO_EXTRACTOR] [INFO] Processing paper 2/184: 2505.04175
+2025-10-10 20:41:33,959 [INTRO_EXTRACTOR] [WARNING] [2505.04175] Retry 1/4 after 1s: not a gzip file
+2025-10-10 20:41:35,289 [INTRO_EXTRACTOR] [WARNING] [2505.04175] Retry 2/4 after 5s: not a gzip file
+2025-10-10 20:41:40,633 [INTRO_EXTRACTOR] [WARNING] [2505.04175] Retry 3/4 after 10s: not a gzip file
+2025-10-10 20:41:51,013 [INTRO_EXTRACTOR] [ERROR] [2505.04175] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 20:41:51,014 [INTRO_EXTRACTOR] [INFO]   2505.04175 - FAILED - Status: extraction_failed
+2025-10-10 20:41:52,019 [INTRO_EXTRACTOR] [INFO] Processing paper 3/184: 2505.04185
+2025-10-10 20:41:52,987 [INTRO_EXTRACTOR] [INFO]   2505.04185 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:41:53,992 [INTRO_EXTRACTOR] [INFO] Processing paper 4/184: 2505.04207
+2025-10-10 20:41:54,833 [INTRO_EXTRACTOR] [WARNING] [2505.04207] Retry 1/4 after 1s: not a gzip file
+2025-10-10 20:41:57,332 [INTRO_EXTRACTOR] [WARNING] [2505.04207] Retry 2/4 after 5s: not a gzip file
+2025-10-10 20:42:02,873 [INTRO_EXTRACTOR] [WARNING] [2505.04207] Retry 3/4 after 10s: not a gzip file
+2025-10-10 20:42:13,461 [INTRO_EXTRACTOR] [ERROR] [2505.04207] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 20:42:13,463 [INTRO_EXTRACTOR] [INFO]   2505.04207 - FAILED - Status: extraction_failed
+2025-10-10 20:42:14,468 [INTRO_EXTRACTOR] [INFO] Processing paper 5/184: 2505.04270
+2025-10-10 20:42:15,196 [INTRO_EXTRACTOR] [INFO]   2505.04270 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:42:16,201 [INTRO_EXTRACTOR] [INFO] Processing paper 6/184: 2505.04497
+2025-10-10 20:42:26,026 [INTRO_EXTRACTOR] [INFO]   2505.04497 - SUCCESS - Method: main_tex_file
+2025-10-10 20:42:27,033 [INTRO_EXTRACTOR] [INFO] Processing paper 7/184: 2505.04526
+2025-10-10 20:42:30,517 [INTRO_EXTRACTOR] [INFO]   2505.04526 - SUCCESS - Method: main_tex_file
+2025-10-10 20:42:31,522 [INTRO_EXTRACTOR] [INFO] Processing paper 8/184: 2505.04192
+2025-10-10 20:42:32,843 [INTRO_EXTRACTOR] [INFO]   2505.04192 - SUCCESS - Method: main_tex_file
+2025-10-10 20:42:33,848 [INTRO_EXTRACTOR] [INFO] Processing paper 9/184: 2505.04375
+2025-10-10 20:42:39,766 [INTRO_EXTRACTOR] [INFO]   2505.04375 - SUCCESS - Method: main_tex_file
+2025-10-10 20:42:40,771 [INTRO_EXTRACTOR] [INFO] Processing paper 10/184: 2505.04397
+2025-10-10 20:42:41,475 [INTRO_EXTRACTOR] [INFO]   2505.04397 - SUCCESS - Method: main_tex_file
+2025-10-10 20:42:42,480 [INTRO_EXTRACTOR] [INFO] Processing paper 11/184: 2505.04486
+2025-10-10 20:42:46,370 [INTRO_EXTRACTOR] [INFO]   2505.04486 - SUCCESS - Method: main_tex_file
+2025-10-10 20:42:47,376 [INTRO_EXTRACTOR] [INFO] Processing paper 12/184: 2505.04488
+2025-10-10 20:42:48,093 [INTRO_EXTRACTOR] [INFO]   2505.04488 - SUCCESS - Method: main_tex_file
+2025-10-10 20:42:49,099 [INTRO_EXTRACTOR] [INFO] Processing paper 13/184: 2505.04664
+2025-10-10 20:42:49,544 [INTRO_EXTRACTOR] [WARNING] [2505.04664] Retry 1/4 after 1s: not a gzip file
+2025-10-10 20:42:50,931 [INTRO_EXTRACTOR] [WARNING] [2505.04664] Retry 2/4 after 5s: not a gzip file
+2025-10-10 20:42:56,276 [INTRO_EXTRACTOR] [WARNING] [2505.04664] Retry 3/4 after 10s: not a gzip file
+2025-10-10 20:43:06,766 [INTRO_EXTRACTOR] [ERROR] [2505.04664] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 20:43:06,767 [INTRO_EXTRACTOR] [INFO]   2505.04664 - FAILED - Status: extraction_failed
+2025-10-10 20:43:07,772 [INTRO_EXTRACTOR] [INFO] Processing paper 14/184: 2505.04787
+2025-10-10 20:43:08,937 [INTRO_EXTRACTOR] [INFO]   2505.04787 - SUCCESS - Method: main_tex_file
+2025-10-10 20:43:09,942 [INTRO_EXTRACTOR] [INFO] Processing paper 15/184: 2505.07851
+2025-10-10 20:43:10,436 [INTRO_EXTRACTOR] [INFO]   2505.07851 - SUCCESS - Method: main_tex_file
+2025-10-10 20:43:11,442 [INTRO_EXTRACTOR] [INFO] Processing paper 16/184: 2505.04851
+2025-10-10 20:43:13,988 [INTRO_EXTRACTOR] [INFO]   2505.04851 - SUCCESS - Method: main_tex_file
+2025-10-10 20:43:14,993 [INTRO_EXTRACTOR] [INFO] Processing paper 17/184: 2505.04115
+2025-10-10 20:43:15,274 [INTRO_EXTRACTOR] [INFO]   2505.04115 - SUCCESS - Method: main_tex_file
+2025-10-10 20:43:16,276 [INTRO_EXTRACTOR] [INFO] Processing paper 18/184: 2505.04317
+2025-10-10 20:43:17,690 [INTRO_EXTRACTOR] [INFO]   2505.04317 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:43:18,696 [INTRO_EXTRACTOR] [INFO] Processing paper 19/184: 2505.04525
+2025-10-10 20:43:19,099 [INTRO_EXTRACTOR] [INFO]   2505.04525 - SUCCESS - Method: main_tex_file
+2025-10-10 20:43:20,104 [INTRO_EXTRACTOR] [INFO] Processing paper 20/184: 2505.04539
+2025-10-10 20:43:20,406 [INTRO_EXTRACTOR] [INFO]   2505.04539 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:43:21,409 [INTRO_EXTRACTOR] [INFO] Processing paper 21/184: 2505.04674
+2025-10-10 20:43:21,797 [INTRO_EXTRACTOR] [INFO]   2505.04674 - SUCCESS - Method: main_tex_file
+2025-10-10 20:43:22,803 [INTRO_EXTRACTOR] [INFO] Processing paper 22/184: 2505.04736
+2025-10-10 20:43:23,537 [INTRO_EXTRACTOR] [INFO]   2505.04736 - SUCCESS - Method: main_tex_file
+2025-10-10 20:43:24,542 [INTRO_EXTRACTOR] [INFO] Processing paper 23/184: 2505.13466
+2025-10-10 20:43:26,814 [INTRO_EXTRACTOR] [INFO]   2505.13466 - SUCCESS - Method: main_tex_file
+2025-10-10 20:43:27,819 [INTRO_EXTRACTOR] [INFO] Processing paper 24/184: 2505.04055
+2025-10-10 20:43:28,930 [INTRO_EXTRACTOR] [INFO]   2505.04055 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:43:29,935 [INTRO_EXTRACTOR] [INFO] Processing paper 25/184: 2505.04058
+2025-10-10 20:43:31,434 [INTRO_EXTRACTOR] [INFO]   2505.04058 - SUCCESS - Method: main_tex_file
+2025-10-10 20:43:32,439 [INTRO_EXTRACTOR] [INFO] Processing paper 26/184: 2505.04087
+2025-10-10 20:43:32,880 [INTRO_EXTRACTOR] [INFO]   2505.04087 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:43:33,885 [INTRO_EXTRACTOR] [INFO] Processing paper 27/184: 2505.04088
+2025-10-10 20:43:34,381 [INTRO_EXTRACTOR] [WARNING] [2505.04088] Retry 1/4 after 1s: not a gzip file
+2025-10-10 20:43:36,034 [INTRO_EXTRACTOR] [WARNING] [2505.04088] Retry 2/4 after 5s: not a gzip file
+2025-10-10 20:43:41,548 [INTRO_EXTRACTOR] [WARNING] [2505.04088] Retry 3/4 after 10s: not a gzip file
+2025-10-10 20:43:52,141 [INTRO_EXTRACTOR] [ERROR] [2505.04088] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 20:43:52,142 [INTRO_EXTRACTOR] [INFO]   2505.04088 - FAILED - Status: extraction_failed
+2025-10-10 20:43:53,147 [INTRO_EXTRACTOR] [INFO] Processing paper 28/184: 2505.04109
+2025-10-10 20:43:54,356 [INTRO_EXTRACTOR] [INFO]   2505.04109 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:43:55,361 [INTRO_EXTRACTOR] [INFO] Processing paper 29/184: 2505.04119
+2025-10-10 20:43:56,075 [INTRO_EXTRACTOR] [INFO]   2505.04119 - SUCCESS - Method: main_tex_file
+2025-10-10 20:43:57,080 [INTRO_EXTRACTOR] [INFO] Processing paper 30/184: 2505.04121
+2025-10-10 20:43:58,805 [INTRO_EXTRACTOR] [INFO]   2505.04121 - SUCCESS - Method: main_tex_file
+2025-10-10 20:43:59,810 [INTRO_EXTRACTOR] [INFO] Processing paper 31/184: 2505.04201
+2025-10-10 20:44:01,204 [INTRO_EXTRACTOR] [INFO]   2505.04201 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:44:02,210 [INTRO_EXTRACTOR] [INFO] Processing paper 32/184: 2505.04214
+2025-10-10 20:44:02,813 [INTRO_EXTRACTOR] [INFO]   2505.04214 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:44:03,818 [INTRO_EXTRACTOR] [INFO] Processing paper 33/184: 2505.04262
+2025-10-10 20:44:04,317 [INTRO_EXTRACTOR] [WARNING] [2505.04262] Retry 1/4 after 1s: not a gzip file
+2025-10-10 20:44:06,008 [INTRO_EXTRACTOR] [WARNING] [2505.04262] Retry 2/4 after 5s: not a gzip file
+2025-10-10 20:44:11,549 [INTRO_EXTRACTOR] [WARNING] [2505.04262] Retry 3/4 after 10s: not a gzip file
+2025-10-10 20:44:22,072 [INTRO_EXTRACTOR] [ERROR] [2505.04262] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 20:44:22,074 [INTRO_EXTRACTOR] [INFO]   2505.04262 - FAILED - Status: extraction_failed
+2025-10-10 20:44:23,074 [INTRO_EXTRACTOR] [INFO] Processing paper 34/184: 2505.04306
+2025-10-10 20:44:24,006 [INTRO_EXTRACTOR] [INFO]   2505.04306 - SUCCESS - Method: main_tex_file
+2025-10-10 20:44:25,012 [INTRO_EXTRACTOR] [INFO] Processing paper 35/184: 2505.04320
+2025-10-10 20:44:27,659 [INTRO_EXTRACTOR] [INFO]   2505.04320 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:44:28,664 [INTRO_EXTRACTOR] [INFO] Processing paper 36/184: 2505.04347
+2025-10-10 20:44:30,219 [INTRO_EXTRACTOR] [INFO]   2505.04347 - SUCCESS - Method: main_tex_file
+2025-10-10 20:44:31,225 [INTRO_EXTRACTOR] [INFO] Processing paper 37/184: 2505.04369
+2025-10-10 20:44:31,795 [INTRO_EXTRACTOR] [INFO]   2505.04369 - SUCCESS - Method: main_tex_file
+2025-10-10 20:44:32,801 [INTRO_EXTRACTOR] [INFO] Processing paper 38/184: 2505.04384
+2025-10-10 20:44:34,436 [INTRO_EXTRACTOR] [INFO]   2505.04384 - SUCCESS - Method: main_tex_file
+2025-10-10 20:44:35,442 [INTRO_EXTRACTOR] [INFO] Processing paper 39/184: 2505.04392
+2025-10-10 20:44:37,814 [INTRO_EXTRACTOR] [INFO]   2505.04392 - SUCCESS - Method: main_tex_file
+2025-10-10 20:44:38,819 [INTRO_EXTRACTOR] [INFO] Processing paper 40/184: 2505.04408
+2025-10-10 20:44:39,625 [INTRO_EXTRACTOR] [INFO]   2505.04408 - SUCCESS - Method: main_tex_file
+2025-10-10 20:44:40,630 [INTRO_EXTRACTOR] [INFO] Processing paper 41/184: 2505.04410
+2025-10-10 20:44:42,098 [INTRO_EXTRACTOR] [INFO]   2505.04410 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:44:43,103 [INTRO_EXTRACTOR] [INFO] Processing paper 42/184: 2505.04424
+2025-10-10 20:44:44,754 [INTRO_EXTRACTOR] [INFO]   2505.04424 - SUCCESS - Method: main_tex_file
+2025-10-10 20:44:45,760 [INTRO_EXTRACTOR] [INFO] Processing paper 43/184: 2505.04460
+2025-10-10 20:44:46,387 [INTRO_EXTRACTOR] [INFO]   2505.04460 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:44:47,393 [INTRO_EXTRACTOR] [INFO] Processing paper 44/184: 2505.04481
+2025-10-10 20:44:49,013 [INTRO_EXTRACTOR] [INFO]   2505.04481 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:44:50,018 [INTRO_EXTRACTOR] [INFO] Processing paper 45/184: 2505.04485
+2025-10-10 20:44:50,472 [INTRO_EXTRACTOR] [INFO]   2505.04485 - SUCCESS - Method: main_tex_file
+2025-10-10 20:44:51,478 [INTRO_EXTRACTOR] [INFO] Processing paper 46/184: 2505.04512
+2025-10-10 20:44:54,050 [INTRO_EXTRACTOR] [INFO]   2505.04512 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:44:55,056 [INTRO_EXTRACTOR] [INFO] Processing paper 47/184: 2505.04529
+2025-10-10 20:44:56,503 [INTRO_EXTRACTOR] [INFO]   2505.04529 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:44:57,508 [INTRO_EXTRACTOR] [INFO] Processing paper 48/184: 2505.04540
+2025-10-10 20:45:04,333 [INTRO_EXTRACTOR] [INFO]   2505.04540 - SUCCESS - Method: main_tex_file
+2025-10-10 20:45:05,338 [INTRO_EXTRACTOR] [INFO] Processing paper 49/184: 2505.04594
+2025-10-10 20:45:05,539 [INTRO_EXTRACTOR] [WARNING] [2505.04594] Retry 1/4 after 1s: 404 Client Error: Not Found for url: https://arxiv.org/src/2505.04594v5
+2025-10-10 20:45:06,799 [INTRO_EXTRACTOR] [WARNING] [2505.04594] Retry 2/4 after 5s: 404 Client Error: Not Found for url: https://arxiv.org/src/2505.04594v5
+2025-10-10 20:45:12,029 [INTRO_EXTRACTOR] [WARNING] [2505.04594] Retry 3/4 after 10s: 404 Client Error: Not Found for url: https://arxiv.org/src/2505.04594v5
+2025-10-10 20:45:22,277 [INTRO_EXTRACTOR] [ERROR] [2505.04594] Introduction extraction failed after 4 attempts: 404 Client Error: Not Found for url: https://arxiv.org/src/2505.04594v5
+2025-10-10 20:45:22,282 [INTRO_EXTRACTOR] [INFO]   2505.04594 - FAILED - Status: extraction_failed
+2025-10-10 20:45:23,288 [INTRO_EXTRACTOR] [INFO] Processing paper 50/184: 2505.04601
+2025-10-10 20:45:23,715 [INTRO_EXTRACTOR] [INFO]   2505.04601 - SUCCESS - Method: main_tex_file
+2025-10-10 20:45:24,720 [INTRO_EXTRACTOR] [INFO] Processing paper 51/184: 2505.04612
+2025-10-10 20:45:25,087 [INTRO_EXTRACTOR] [INFO]   2505.04612 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:45:26,092 [INTRO_EXTRACTOR] [INFO] Processing paper 52/184: 2505.04616
+2025-10-10 20:45:28,410 [INTRO_EXTRACTOR] [INFO]   2505.04616 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:45:29,416 [INTRO_EXTRACTOR] [INFO] Processing paper 53/184: 2505.04620
+2025-10-10 20:45:32,964 [INTRO_EXTRACTOR] [INFO]   2505.04620 - SUCCESS - Method: main_tex_file
+2025-10-10 20:45:33,970 [INTRO_EXTRACTOR] [INFO] Processing paper 54/184: 2505.04720
+2025-10-10 20:45:34,619 [INTRO_EXTRACTOR] [WARNING] [2505.04720] No introduction found in any tex files
+2025-10-10 20:45:34,620 [INTRO_EXTRACTOR] [INFO]   2505.04720 - FAILED - Status: no_intro_found
+2025-10-10 20:45:35,625 [INTRO_EXTRACTOR] [INFO] Processing paper 55/184: 2505.04740
+2025-10-10 20:45:36,143 [INTRO_EXTRACTOR] [WARNING] [2505.04740] Retry 1/4 after 1s: not a gzip file
+2025-10-10 20:45:37,765 [INTRO_EXTRACTOR] [WARNING] [2505.04740] Retry 2/4 after 5s: not a gzip file
+2025-10-10 20:45:43,269 [INTRO_EXTRACTOR] [WARNING] [2505.04740] Retry 3/4 after 10s: not a gzip file
+2025-10-10 20:50:30,779 [INTRO_EXTRACTOR] [ERROR] [2505.04740] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 20:50:30,781 [INTRO_EXTRACTOR] [INFO]   2505.04740 - FAILED - Status: extraction_failed
+2025-10-10 20:50:31,786 [INTRO_EXTRACTOR] [INFO] Processing paper 56/184: 2505.04758
+2025-10-10 20:50:33,444 [INTRO_EXTRACTOR] [INFO]   2505.04758 - SUCCESS - Method: main_tex_file
+2025-10-10 20:50:34,449 [INTRO_EXTRACTOR] [INFO] Processing paper 57/184: 2505.04769
+2025-10-10 20:50:34,947 [INTRO_EXTRACTOR] [INFO]   2505.04769 - SUCCESS - Method: main_tex_file
+2025-10-10 20:50:35,952 [INTRO_EXTRACTOR] [INFO] Processing paper 58/184: 2505.04788
+2025-10-10 20:50:37,678 [INTRO_EXTRACTOR] [INFO]   2505.04788 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:50:38,684 [INTRO_EXTRACTOR] [INFO] Processing paper 59/184: 2505.04793
+2025-10-10 20:50:41,575 [INTRO_EXTRACTOR] [INFO]   2505.04793 - SUCCESS - Method: main_tex_file
+2025-10-10 20:50:42,580 [INTRO_EXTRACTOR] [INFO] Processing paper 60/184: 2505.04835
+2025-10-10 20:50:45,822 [INTRO_EXTRACTOR] [INFO]   2505.04835 - SUCCESS - Method: main_tex_file
+2025-10-10 20:50:46,827 [INTRO_EXTRACTOR] [INFO] Processing paper 61/184: 2505.04838
+2025-10-10 20:50:47,209 [INTRO_EXTRACTOR] [INFO]   2505.04838 - SUCCESS - Method: main_tex_file
+2025-10-10 20:50:48,215 [INTRO_EXTRACTOR] [INFO] Processing paper 62/184: 2505.04850
+2025-10-10 20:50:48,776 [INTRO_EXTRACTOR] [INFO]   2505.04850 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:50:49,782 [INTRO_EXTRACTOR] [INFO] Processing paper 63/184: 2505.05513
+2025-10-10 20:50:50,251 [INTRO_EXTRACTOR] [WARNING] [2505.05513] Retry 1/4 after 1s: not a gzip file
+2025-10-10 20:50:51,684 [INTRO_EXTRACTOR] [WARNING] [2505.05513] Retry 2/4 after 5s: not a gzip file
+2025-10-10 20:50:57,283 [INTRO_EXTRACTOR] [WARNING] [2505.05513] Retry 3/4 after 10s: not a gzip file
+2025-10-10 20:51:07,811 [INTRO_EXTRACTOR] [ERROR] [2505.05513] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 20:51:07,813 [INTRO_EXTRACTOR] [INFO]   2505.05513 - FAILED - Status: extraction_failed
+2025-10-10 20:51:08,819 [INTRO_EXTRACTOR] [INFO] Processing paper 64/184: 2505.04072
+2025-10-10 20:51:10,014 [INTRO_EXTRACTOR] [INFO]   2505.04072 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:51:11,019 [INTRO_EXTRACTOR] [INFO] Processing paper 65/184: 2505.04075
+2025-10-10 20:51:11,231 [INTRO_EXTRACTOR] [INFO]   2505.04075 - SUCCESS - Method: main_tex_file
+2025-10-10 20:51:12,233 [INTRO_EXTRACTOR] [INFO] Processing paper 66/184: 2505.04084
+2025-10-10 20:51:12,807 [INTRO_EXTRACTOR] [INFO]   2505.04084 - SUCCESS - Method: main_tex_file
+2025-10-10 20:51:13,812 [INTRO_EXTRACTOR] [INFO] Processing paper 67/184: 2505.04132
+2025-10-10 20:51:15,236 [INTRO_EXTRACTOR] [INFO]   2505.04132 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:51:16,241 [INTRO_EXTRACTOR] [INFO] Processing paper 68/184: 2505.04165
+2025-10-10 20:51:16,641 [INTRO_EXTRACTOR] [INFO]   2505.04165 - SUCCESS - Method: main_tex_file
+2025-10-10 20:51:17,646 [INTRO_EXTRACTOR] [INFO] Processing paper 69/184: 2505.04260
+2025-10-10 20:51:18,087 [INTRO_EXTRACTOR] [INFO]   2505.04260 - SUCCESS - Method: main_tex_file
+2025-10-10 20:51:19,092 [INTRO_EXTRACTOR] [INFO] Processing paper 70/184: 2505.04265
+2025-10-10 20:51:19,412 [INTRO_EXTRACTOR] [WARNING] [2505.04265] Retry 1/4 after 1s: not a gzip file
+2025-10-10 20:51:20,691 [INTRO_EXTRACTOR] [WARNING] [2505.04265] Retry 2/4 after 5s: not a gzip file
+2025-10-10 20:51:25,977 [INTRO_EXTRACTOR] [WARNING] [2505.04265] Retry 3/4 after 10s: not a gzip file
+2025-10-10 20:51:36,280 [INTRO_EXTRACTOR] [ERROR] [2505.04265] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 20:51:36,281 [INTRO_EXTRACTOR] [INFO]   2505.04265 - FAILED - Status: extraction_failed
+2025-10-10 20:51:37,286 [INTRO_EXTRACTOR] [INFO] Processing paper 71/184: 2505.04278
+2025-10-10 20:51:37,975 [INTRO_EXTRACTOR] [INFO]   2505.04278 - SUCCESS - Method: main_tex_file
+2025-10-10 20:51:38,980 [INTRO_EXTRACTOR] [INFO] Processing paper 72/184: 2505.04284
+2025-10-10 20:51:39,715 [INTRO_EXTRACTOR] [INFO]   2505.04284 - SUCCESS - Method: main_tex_file
+2025-10-10 20:51:40,720 [INTRO_EXTRACTOR] [INFO] Processing paper 73/184: 2505.04308
+2025-10-10 20:51:40,978 [INTRO_EXTRACTOR] [WARNING] [2505.04308] Retry 1/4 after 1s: not a gzip file
+2025-10-10 20:51:42,262 [INTRO_EXTRACTOR] [WARNING] [2505.04308] Retry 2/4 after 5s: not a gzip file
+2025-10-10 20:51:47,550 [INTRO_EXTRACTOR] [WARNING] [2505.04308] Retry 3/4 after 10s: not a gzip file
+2025-10-10 20:51:57,827 [INTRO_EXTRACTOR] [ERROR] [2505.04308] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 20:51:57,829 [INTRO_EXTRACTOR] [INFO]   2505.04308 - FAILED - Status: extraction_failed
+2025-10-10 20:51:58,835 [INTRO_EXTRACTOR] [INFO] Processing paper 74/184: 2505.04339
+2025-10-10 20:52:00,361 [INTRO_EXTRACTOR] [INFO]   2505.04339 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:52:01,366 [INTRO_EXTRACTOR] [INFO] Processing paper 75/184: 2505.04340
+2025-10-10 20:52:01,875 [INTRO_EXTRACTOR] [INFO]   2505.04340 - SUCCESS - Method: main_tex_file
+2025-10-10 20:52:02,880 [INTRO_EXTRACTOR] [INFO] Processing paper 76/184: 2505.04352
+2025-10-10 20:52:03,078 [INTRO_EXTRACTOR] [INFO]   2505.04352 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:52:04,078 [INTRO_EXTRACTOR] [INFO] Processing paper 77/184: 2505.04354
+2025-10-10 20:52:04,534 [INTRO_EXTRACTOR] [INFO]   2505.04354 - SUCCESS - Method: main_tex_file
+2025-10-10 20:52:05,539 [INTRO_EXTRACTOR] [INFO] Processing paper 78/184: 2505.04388
+2025-10-10 20:52:06,109 [INTRO_EXTRACTOR] [INFO]   2505.04388 - SUCCESS - Method: main_tex_file
+2025-10-10 20:52:07,114 [INTRO_EXTRACTOR] [INFO] Processing paper 79/184: 2505.04404
+2025-10-10 20:52:07,930 [INTRO_EXTRACTOR] [INFO]   2505.04404 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:52:08,936 [INTRO_EXTRACTOR] [INFO] Processing paper 80/184: 2505.04435
+2025-10-10 20:52:09,678 [INTRO_EXTRACTOR] [INFO]   2505.04435 - SUCCESS - Method: main_tex_file
+2025-10-10 20:52:10,683 [INTRO_EXTRACTOR] [INFO] Processing paper 81/184: 2505.04464
+2025-10-10 20:52:11,246 [INTRO_EXTRACTOR] [INFO]   2505.04464 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:52:12,251 [INTRO_EXTRACTOR] [INFO] Processing paper 82/184: 2505.04493
+2025-10-10 20:52:12,562 [INTRO_EXTRACTOR] [WARNING] [2505.04493] Retry 1/4 after 1s: not a gzip file
+2025-10-10 20:52:13,845 [INTRO_EXTRACTOR] [WARNING] [2505.04493] Retry 2/4 after 5s: not a gzip file
+2025-10-10 20:52:19,117 [INTRO_EXTRACTOR] [WARNING] [2505.04493] Retry 3/4 after 10s: not a gzip file
+2025-10-10 20:52:29,425 [INTRO_EXTRACTOR] [ERROR] [2505.04493] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 20:52:29,426 [INTRO_EXTRACTOR] [INFO]   2505.04493 - FAILED - Status: extraction_failed
+2025-10-10 20:52:30,431 [INTRO_EXTRACTOR] [INFO] Processing paper 83/184: 2505.04531
+2025-10-10 20:52:30,764 [INTRO_EXTRACTOR] [INFO]   2505.04531 - SUCCESS - Method: main_tex_file
+2025-10-10 20:52:31,769 [INTRO_EXTRACTOR] [INFO] Processing paper 84/184: 2505.04558
+2025-10-10 20:52:32,303 [INTRO_EXTRACTOR] [INFO]   2505.04558 - SUCCESS - Method: main_tex_file
+2025-10-10 20:52:33,309 [INTRO_EXTRACTOR] [INFO] Processing paper 85/184: 2505.04578
+2025-10-10 20:52:33,517 [INTRO_EXTRACTOR] [INFO]   2505.04578 - SUCCESS - Method: main_tex_file
+2025-10-10 20:52:34,522 [INTRO_EXTRACTOR] [INFO] Processing paper 86/184: 2505.04592
+2025-10-10 20:52:34,809 [INTRO_EXTRACTOR] [INFO]   2505.04592 - SUCCESS - Method: main_tex_file
+2025-10-10 20:52:35,814 [INTRO_EXTRACTOR] [INFO] Processing paper 87/184: 2505.04665
+2025-10-10 20:52:36,109 [INTRO_EXTRACTOR] [WARNING] [2505.04665] Retry 1/4 after 1s: not a gzip file
+2025-10-10 20:52:37,398 [INTRO_EXTRACTOR] [WARNING] [2505.04665] Retry 2/4 after 5s: not a gzip file
+2025-10-10 20:52:42,688 [INTRO_EXTRACTOR] [WARNING] [2505.04665] Retry 3/4 after 10s: not a gzip file
+2025-10-10 20:52:52,969 [INTRO_EXTRACTOR] [ERROR] [2505.04665] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 20:52:52,971 [INTRO_EXTRACTOR] [INFO]   2505.04665 - FAILED - Status: extraction_failed
+2025-10-10 20:52:53,976 [INTRO_EXTRACTOR] [INFO] Processing paper 88/184: 2505.04670
+2025-10-10 20:52:54,397 [INTRO_EXTRACTOR] [INFO]   2505.04670 - SUCCESS - Method: main_tex_file
+2025-10-10 20:52:55,402 [INTRO_EXTRACTOR] [INFO] Processing paper 89/184: 2505.04673
+2025-10-10 20:53:18,774 [INTRO_EXTRACTOR] [INFO]   2505.04673 - SUCCESS - Method: main_tex_file
+2025-10-10 20:53:19,779 [INTRO_EXTRACTOR] [INFO] Processing paper 90/184: 2505.04678
+2025-10-10 20:53:20,893 [INTRO_EXTRACTOR] [INFO]   2505.04678 - SUCCESS - Method: main_tex_file
+2025-10-10 20:53:21,899 [INTRO_EXTRACTOR] [INFO] Processing paper 91/184: 2505.04732
+2025-10-10 20:53:22,584 [INTRO_EXTRACTOR] [INFO]   2505.04732 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:53:23,590 [INTRO_EXTRACTOR] [INFO] Processing paper 92/184: 2505.04759
+2025-10-10 20:53:24,381 [INTRO_EXTRACTOR] [INFO]   2505.04759 - SUCCESS - Method: main_tex_file
+2025-10-10 20:53:25,386 [INTRO_EXTRACTOR] [INFO] Processing paper 93/184: 2505.04785
+2025-10-10 20:53:28,721 [INTRO_EXTRACTOR] [INFO]   2505.04785 - SUCCESS - Method: main_tex_file
+2025-10-10 20:53:29,727 [INTRO_EXTRACTOR] [INFO] Processing paper 94/184: 2505.04808
+2025-10-10 20:53:32,097 [INTRO_EXTRACTOR] [INFO]   2505.04808 - SUCCESS - Method: main_tex_file
+2025-10-10 20:53:33,103 [INTRO_EXTRACTOR] [INFO] Processing paper 95/184: 2505.04822
+2025-10-10 20:53:33,904 [INTRO_EXTRACTOR] [INFO]   2505.04822 - SUCCESS - Method: main_tex_file
+2025-10-10 20:53:34,909 [INTRO_EXTRACTOR] [INFO] Processing paper 96/184: 2505.04841
+2025-10-10 20:53:40,696 [INTRO_EXTRACTOR] [INFO]   2505.04841 - SUCCESS - Method: main_tex_file
+2025-10-10 20:53:41,701 [INTRO_EXTRACTOR] [INFO] Processing paper 97/184: 2505.04842
+2025-10-10 20:53:42,632 [INTRO_EXTRACTOR] [INFO]   2505.04842 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:53:43,638 [INTRO_EXTRACTOR] [INFO] Processing paper 98/184: 2505.04843
+2025-10-10 20:53:45,773 [INTRO_EXTRACTOR] [INFO]   2505.04843 - SUCCESS - Method: main_tex_file
+2025-10-10 20:53:46,778 [INTRO_EXTRACTOR] [INFO] Processing paper 99/184: 2505.04847
+2025-10-10 20:53:47,917 [INTRO_EXTRACTOR] [INFO]   2505.04847 - SUCCESS - Method: main_tex_file
+2025-10-10 20:53:48,922 [INTRO_EXTRACTOR] [INFO] Processing paper 100/184: 2505.06136
+2025-10-10 20:56:50,744 [INTRO_EXTRACTOR] [INFO]   2505.06136 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:56:51,750 [INTRO_EXTRACTOR] [INFO] Processing paper 101/184: 2505.06300
+2025-10-10 20:56:52,909 [INTRO_EXTRACTOR] [WARNING] [2505.06300] Retry 1/4 after 1s: not a gzip file
+2025-10-10 20:56:54,346 [INTRO_EXTRACTOR] [WARNING] [2505.06300] Retry 2/4 after 5s: not a gzip file
+2025-10-10 20:56:59,680 [INTRO_EXTRACTOR] [WARNING] [2505.06300] Retry 3/4 after 10s: not a gzip file
+2025-10-10 20:57:10,047 [INTRO_EXTRACTOR] [ERROR] [2505.06300] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 20:57:10,049 [INTRO_EXTRACTOR] [INFO]   2505.06300 - FAILED - Status: extraction_failed
+2025-10-10 20:57:11,054 [INTRO_EXTRACTOR] [INFO] Processing paper 102/184: 2505.07846
+2025-10-10 20:57:12,340 [INTRO_EXTRACTOR] [INFO]   2505.07846 - SUCCESS - Method: main_tex_file
+2025-10-10 20:57:13,345 [INTRO_EXTRACTOR] [INFO] Processing paper 103/184: 2505.07847
+2025-10-10 20:57:13,958 [INTRO_EXTRACTOR] [WARNING] [2505.07847] Retry 1/4 after 1s: invalid header
+2025-10-10 20:57:15,215 [INTRO_EXTRACTOR] [WARNING] [2505.07847] Retry 2/4 after 5s: invalid header
+2025-10-10 20:57:20,478 [INTRO_EXTRACTOR] [WARNING] [2505.07847] Retry 3/4 after 10s: invalid header
+2025-10-10 20:57:30,741 [INTRO_EXTRACTOR] [ERROR] [2505.07847] Introduction extraction failed after 4 attempts: invalid header
+2025-10-10 20:57:30,742 [INTRO_EXTRACTOR] [INFO]   2505.07847 - FAILED - Status: extraction_failed
+2025-10-10 20:57:31,748 [INTRO_EXTRACTOR] [INFO] Processing paper 104/184: 2505.04050
+2025-10-10 20:57:36,067 [INTRO_EXTRACTOR] [INFO]   2505.04050 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:57:37,073 [INTRO_EXTRACTOR] [INFO] Processing paper 105/184: 2505.04052
+2025-10-10 20:57:43,087 [INTRO_EXTRACTOR] [INFO]   2505.04052 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:57:44,092 [INTRO_EXTRACTOR] [INFO] Processing paper 106/184: 2505.04095
+2025-10-10 20:57:51,632 [INTRO_EXTRACTOR] [INFO]   2505.04095 - SUCCESS - Method: main_tex_file
+2025-10-10 20:57:52,637 [INTRO_EXTRACTOR] [INFO] Processing paper 107/184: 2505.04105
+2025-10-10 20:57:53,983 [INTRO_EXTRACTOR] [WARNING] [2505.04105] Retry 1/4 after 1s: not a gzip file
+2025-10-10 20:57:55,405 [INTRO_EXTRACTOR] [WARNING] [2505.04105] Retry 2/4 after 5s: not a gzip file
+2025-10-10 20:58:00,771 [INTRO_EXTRACTOR] [WARNING] [2505.04105] Retry 3/4 after 10s: not a gzip file
+2025-10-10 20:58:11,181 [INTRO_EXTRACTOR] [ERROR] [2505.04105] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 20:58:11,183 [INTRO_EXTRACTOR] [INFO]   2505.04105 - FAILED - Status: extraction_failed
+2025-10-10 20:58:12,188 [INTRO_EXTRACTOR] [INFO] Processing paper 108/184: 2505.04150
+2025-10-10 20:58:15,054 [INTRO_EXTRACTOR] [INFO]   2505.04150 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:58:16,059 [INTRO_EXTRACTOR] [INFO] Processing paper 109/184: 2505.04173
+2025-10-10 20:58:21,171 [INTRO_EXTRACTOR] [INFO]   2505.04173 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:58:22,176 [INTRO_EXTRACTOR] [INFO] Processing paper 110/184: 2505.04228
+2025-10-10 20:58:24,741 [INTRO_EXTRACTOR] [INFO]   2505.04228 - SUCCESS - Method: main_tex_file
+2025-10-10 20:58:25,746 [INTRO_EXTRACTOR] [INFO] Processing paper 111/184: 2505.04229
+2025-10-10 20:58:27,439 [INTRO_EXTRACTOR] [INFO]   2505.04229 - SUCCESS - Method: main_tex_file
+2025-10-10 20:58:28,444 [INTRO_EXTRACTOR] [INFO] Processing paper 112/184: 2505.04258
+2025-10-10 20:58:33,474 [INTRO_EXTRACTOR] [INFO]   2505.04258 - SUCCESS - Method: main_tex_file
+2025-10-10 20:58:34,479 [INTRO_EXTRACTOR] [INFO] Processing paper 113/184: 2505.04276
+2025-10-10 20:58:36,184 [INTRO_EXTRACTOR] [INFO]   2505.04276 - SUCCESS - Method: main_tex_file
+2025-10-10 20:58:37,189 [INTRO_EXTRACTOR] [INFO] Processing paper 114/184: 2505.04281
+2025-10-10 20:58:43,947 [INTRO_EXTRACTOR] [INFO]   2505.04281 - SUCCESS - Method: main_tex_file
+2025-10-10 20:58:44,952 [INTRO_EXTRACTOR] [INFO] Processing paper 115/184: 2505.04376
+2025-10-10 20:58:47,267 [INTRO_EXTRACTOR] [INFO]   2505.04376 - SUCCESS - Method: main_tex_file
+2025-10-10 20:58:48,273 [INTRO_EXTRACTOR] [INFO] Processing paper 116/184: 2505.04387
+2025-10-10 20:59:48,052 [INTRO_EXTRACTOR] [INFO]   2505.04387 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 20:59:49,057 [INTRO_EXTRACTOR] [INFO] Processing paper 117/184: 2505.04522
+2025-10-10 21:00:08,303 [INTRO_EXTRACTOR] [INFO]   2505.04522 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 21:00:09,308 [INTRO_EXTRACTOR] [INFO] Processing paper 118/184: 2505.04575
+2025-10-10 21:00:14,617 [INTRO_EXTRACTOR] [INFO]   2505.04575 - SUCCESS - Method: main_tex_file
+2025-10-10 21:00:15,622 [INTRO_EXTRACTOR] [INFO] Processing paper 119/184: 2505.04590
+2025-10-10 21:01:22,223 [INTRO_EXTRACTOR] [INFO]   2505.04590 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 21:01:23,228 [INTRO_EXTRACTOR] [INFO] Processing paper 120/184: 2505.04622
+2025-10-10 21:02:19,947 [INTRO_EXTRACTOR] [INFO]   2505.04622 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 21:02:20,952 [INTRO_EXTRACTOR] [INFO] Processing paper 121/184: 2505.04623
+2025-10-10 21:02:24,102 [INTRO_EXTRACTOR] [INFO]   2505.04623 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 21:02:25,112 [INTRO_EXTRACTOR] [INFO] Processing paper 122/184: 2505.04660
+2025-10-10 21:02:28,077 [INTRO_EXTRACTOR] [INFO]   2505.04660 - SUCCESS - Method: main_tex_file
+2025-10-10 21:02:36,434 [INTRO_EXTRACTOR] [INFO] Processing paper 123/184: 2505.04672
+2025-10-10 21:03:00,233 [INTRO_EXTRACTOR] [INFO]   2505.04672 - SUCCESS - Method: main_tex_file
+2025-10-10 21:03:01,238 [INTRO_EXTRACTOR] [INFO] Processing paper 124/184: 2505.04713
+2025-10-10 21:03:04,102 [INTRO_EXTRACTOR] [INFO]   2505.04713 - SUCCESS - Method: main_tex_file
+2025-10-10 21:03:05,107 [INTRO_EXTRACTOR] [INFO] Processing paper 125/184: 2505.04718
+2025-10-10 21:03:07,127 [INTRO_EXTRACTOR] [INFO]   2505.04718 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 21:03:08,132 [INTRO_EXTRACTOR] [INFO] Processing paper 126/184: 2505.04813
+2025-10-10 21:04:23,878 [INTRO_EXTRACTOR] [INFO]   2505.04813 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 21:04:24,883 [INTRO_EXTRACTOR] [INFO] Processing paper 127/184: 2505.04836
+2025-10-10 21:04:31,156 [INTRO_EXTRACTOR] [INFO]   2505.04836 - SUCCESS - Method: main_tex_file
+2025-10-10 21:04:32,161 [INTRO_EXTRACTOR] [INFO] Processing paper 128/184: 2505.05504
+2025-10-10 21:05:04,606 [INTRO_EXTRACTOR] [INFO]   2505.05504 - SUCCESS - Method: main_tex_file
+2025-10-10 21:05:05,612 [INTRO_EXTRACTOR] [INFO] Processing paper 129/184: 2505.05505
+2025-10-10 21:05:11,846 [INTRO_EXTRACTOR] [INFO]   2505.05505 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 21:05:12,851 [INTRO_EXTRACTOR] [INFO] Processing paper 130/184: 2505.05509
+2025-10-10 21:05:25,165 [INTRO_EXTRACTOR] [INFO]   2505.05509 - SUCCESS - Method: main_tex_file
+2025-10-10 21:05:26,170 [INTRO_EXTRACTOR] [INFO] Processing paper 131/184: 2505.05512
+2025-10-10 21:05:31,187 [INTRO_EXTRACTOR] [INFO]   2505.05512 - SUCCESS - Method: main_tex_file
+2025-10-10 21:05:32,193 [INTRO_EXTRACTOR] [INFO] Processing paper 132/184: 2505.06285
+2025-10-10 21:05:36,789 [INTRO_EXTRACTOR] [INFO]   2505.06285 - SUCCESS - Method: main_tex_file
+2025-10-10 21:05:37,795 [INTRO_EXTRACTOR] [INFO] Processing paper 133/184: 2505.04034
+2025-10-10 21:05:43,562 [INTRO_EXTRACTOR] [INFO]   2505.04034 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 21:05:44,567 [INTRO_EXTRACTOR] [INFO] Processing paper 134/184: 2505.04083
+2025-10-10 21:05:45,821 [INTRO_EXTRACTOR] [INFO]   2505.04083 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 21:05:46,827 [INTRO_EXTRACTOR] [INFO] Processing paper 135/184: 2505.04101
+2025-10-10 21:05:48,036 [INTRO_EXTRACTOR] [INFO]   2505.04101 - SUCCESS - Method: main_tex_file
+2025-10-10 21:05:49,041 [INTRO_EXTRACTOR] [INFO] Processing paper 136/184: 2505.04104
+2025-10-10 21:05:51,231 [INTRO_EXTRACTOR] [INFO]   2505.04104 - SUCCESS - Method: main_tex_file
+2025-10-10 21:05:52,236 [INTRO_EXTRACTOR] [INFO] Processing paper 137/184: 2505.04146
+2025-10-10 21:05:53,318 [INTRO_EXTRACTOR] [INFO]   2505.04146 - SUCCESS - Method: main_tex_file
+2025-10-10 21:05:54,323 [INTRO_EXTRACTOR] [INFO] Processing paper 138/184: 2505.04174
+2025-10-10 21:06:59,255 [INTRO_EXTRACTOR] [INFO]   2505.04174 - SUCCESS - Method: scrape_entire_folder
+2025-10-10 21:07:00,260 [INTRO_EXTRACTOR] [INFO] Processing paper 139/184: 2505.04209
+2025-10-10 21:07:04,038 [INTRO_EXTRACTOR] [INFO]   2505.04209 - SUCCESS - Method: main_tex_file
+2025-10-10 21:07:05,043 [INTRO_EXTRACTOR] [INFO] Processing paper 140/184: 2505.04223
+2025-10-10 21:07:11,420 [INTRO_EXTRACTOR] [INFO]   2505.04223 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 21:08:20,402 [INTRO_EXTRACTOR] [INFO] Processing paper 141/184: 2505.04251
+2025-10-10 21:08:21,895 [INTRO_EXTRACTOR] [INFO]   2505.04251 - SUCCESS - Method: main_tex_file
+2025-10-10 21:08:22,901 [INTRO_EXTRACTOR] [INFO] Processing paper 142/184: 2505.04300
+2025-10-10 21:08:58,908 [INTRO_EXTRACTOR] [WARNING] [2505.04300] No introduction found in any tex files
+2025-10-10 21:08:58,909 [INTRO_EXTRACTOR] [INFO]   2505.04300 - FAILED - Status: no_intro_found
+2025-10-10 21:08:59,914 [INTRO_EXTRACTOR] [INFO] Processing paper 143/184: 2505.04310
+2025-10-10 21:09:01,819 [INTRO_EXTRACTOR] [INFO]   2505.04310 - SUCCESS - Method: main_tex_file
+2025-10-10 21:09:02,825 [INTRO_EXTRACTOR] [INFO] Processing paper 144/184: 2505.04313
+2025-10-10 21:09:21,411 [INTRO_EXTRACTOR] [INFO]   2505.04313 - SUCCESS - Method: main_tex_file
+2025-10-10 21:09:22,416 [INTRO_EXTRACTOR] [INFO] Processing paper 145/184: 2505.04318
+2025-10-10 21:09:24,240 [INTRO_EXTRACTOR] [INFO]   2505.04318 - SUCCESS - Method: main_tex_file
+2025-10-10 21:09:25,246 [INTRO_EXTRACTOR] [INFO] Processing paper 146/184: 2505.04379
+2025-10-10 21:09:32,277 [INTRO_EXTRACTOR] [INFO]   2505.04379 - SUCCESS - Method: main_tex_file
+2025-10-10 21:09:33,283 [INTRO_EXTRACTOR] [INFO] Processing paper 147/184: 2505.04405
+2025-10-10 21:09:35,176 [INTRO_EXTRACTOR] [WARNING] [2505.04405] Retry 1/4 after 1s: not a gzip file
+2025-10-10 21:09:36,605 [INTRO_EXTRACTOR] [WARNING] [2505.04405] Retry 2/4 after 5s: not a gzip file
+2025-10-10 21:09:42,042 [INTRO_EXTRACTOR] [WARNING] [2505.04405] Retry 3/4 after 10s: not a gzip file
+2025-10-10 21:09:52,443 [INTRO_EXTRACTOR] [ERROR] [2505.04405] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 21:09:52,445 [INTRO_EXTRACTOR] [INFO]   2505.04405 - FAILED - Status: extraction_failed
+2025-10-10 21:09:53,451 [INTRO_EXTRACTOR] [INFO] Processing paper 148/184: 2505.04406
+2025-10-10 21:09:54,318 [INTRO_EXTRACTOR] [INFO]   2505.04406 - SUCCESS - Method: main_tex_file
+2025-10-10 21:09:55,323 [INTRO_EXTRACTOR] [INFO] Processing paper 149/184: 2505.04416
+2025-10-10 21:09:56,325 [INTRO_EXTRACTOR] [INFO]   2505.04416 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 21:09:57,330 [INTRO_EXTRACTOR] [INFO] Processing paper 150/184: 2505.04419
+2025-10-10 21:09:58,875 [INTRO_EXTRACTOR] [INFO]   2505.04419 - SUCCESS - Method: main_tex_file
+2025-10-10 21:09:59,880 [INTRO_EXTRACTOR] [INFO] Processing paper 151/184: 2505.04461
+2025-10-10 21:10:01,315 [INTRO_EXTRACTOR] [INFO]   2505.04461 - SUCCESS - Method: main_tex_file
+2025-10-10 21:10:02,321 [INTRO_EXTRACTOR] [INFO] Processing paper 152/184: 2505.04480
+2025-10-10 21:10:04,486 [INTRO_EXTRACTOR] [INFO]   2505.04480 - SUCCESS - Method: main_tex_file
+2025-10-10 21:10:05,491 [INTRO_EXTRACTOR] [INFO] Processing paper 153/184: 2505.04528
+2025-10-10 21:10:06,380 [INTRO_EXTRACTOR] [INFO]   2505.04528 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 21:10:07,385 [INTRO_EXTRACTOR] [INFO] Processing paper 154/184: 2505.04553
+2025-10-10 21:10:54,559 [INTRO_EXTRACTOR] [INFO]   2505.04553 - SUCCESS - Method: main_tex_file
+2025-10-10 21:10:55,564 [INTRO_EXTRACTOR] [INFO] Processing paper 155/184: 2505.04608
+2025-10-10 21:11:03,514 [INTRO_EXTRACTOR] [INFO]   2505.04608 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 21:11:04,519 [INTRO_EXTRACTOR] [INFO] Processing paper 156/184: 2505.04677
+2025-10-10 21:11:05,459 [INTRO_EXTRACTOR] [WARNING] [2505.04677] Retry 1/4 after 1s: invalid header
+2025-10-10 21:11:06,648 [INTRO_EXTRACTOR] [WARNING] [2505.04677] Retry 2/4 after 5s: invalid header
+2025-10-10 21:11:11,876 [INTRO_EXTRACTOR] [WARNING] [2505.04677] Retry 3/4 after 10s: invalid header
+2025-10-10 21:11:22,123 [INTRO_EXTRACTOR] [ERROR] [2505.04677] Introduction extraction failed after 4 attempts: invalid header
+2025-10-10 21:11:22,126 [INTRO_EXTRACTOR] [INFO]   2505.04677 - FAILED - Status: extraction_failed
+2025-10-10 21:11:23,131 [INTRO_EXTRACTOR] [INFO] Processing paper 157/184: 2505.04741
+2025-10-10 21:11:25,141 [INTRO_EXTRACTOR] [INFO]   2505.04741 - SUCCESS - Method: main_tex_file
+2025-10-10 21:11:26,147 [INTRO_EXTRACTOR] [INFO] Processing paper 158/184: 2505.04784
+2025-10-10 21:11:28,292 [INTRO_EXTRACTOR] [INFO]   2505.04784 - SUCCESS - Method: main_tex_file
+2025-10-10 21:11:29,298 [INTRO_EXTRACTOR] [INFO] Processing paper 159/184: 2505.04792
+2025-10-10 21:11:40,470 [INTRO_EXTRACTOR] [INFO]   2505.04792 - SUCCESS - Method: main_tex_file
+2025-10-10 21:11:41,475 [INTRO_EXTRACTOR] [INFO] Processing paper 160/184: 2505.04852
+2025-10-10 21:11:46,995 [INTRO_EXTRACTOR] [INFO]   2505.04852 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 21:11:48,000 [INTRO_EXTRACTOR] [INFO] Processing paper 161/184: 2505.05516
+2025-10-10 21:11:50,007 [INTRO_EXTRACTOR] [WARNING] [2505.05516] Retry 1/4 after 1s: not a gzip file
+2025-10-10 21:11:51,353 [INTRO_EXTRACTOR] [WARNING] [2505.05516] Retry 2/4 after 5s: not a gzip file
+2025-10-10 21:11:56,769 [INTRO_EXTRACTOR] [WARNING] [2505.05516] Retry 3/4 after 10s: not a gzip file
+2025-10-10 21:12:07,178 [INTRO_EXTRACTOR] [ERROR] [2505.05516] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 21:12:07,180 [INTRO_EXTRACTOR] [INFO]   2505.05516 - FAILED - Status: extraction_failed
+2025-10-10 21:12:08,184 [INTRO_EXTRACTOR] [INFO] Processing paper 162/184: 2505.06287
+2025-10-10 21:12:09,883 [INTRO_EXTRACTOR] [INFO]   2505.06287 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 21:12:10,888 [INTRO_EXTRACTOR] [INFO] Processing paper 163/184: 2505.06299
+2025-10-10 21:12:14,312 [INTRO_EXTRACTOR] [INFO]   2505.06299 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 21:12:15,317 [INTRO_EXTRACTOR] [INFO] Processing paper 164/184: 2505.07849
+2025-10-10 21:12:18,556 [INTRO_EXTRACTOR] [INFO]   2505.07849 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 21:12:19,561 [INTRO_EXTRACTOR] [INFO] Processing paper 165/184: 2505.07850
+2025-10-10 21:12:22,896 [INTRO_EXTRACTOR] [INFO]   2505.07850 - SUCCESS - Method: main_tex_file
+2025-10-10 21:12:23,901 [INTRO_EXTRACTOR] [INFO] Processing paper 166/184: 2505.07852
+2025-10-10 21:12:24,787 [INTRO_EXTRACTOR] [INFO]   2505.07852 - SUCCESS - Method: main_tex_file
+2025-10-10 21:12:25,792 [INTRO_EXTRACTOR] [INFO] Processing paper 167/184: 2505.08795
+2025-10-10 21:12:26,669 [INTRO_EXTRACTOR] [INFO]   2505.08795 - SUCCESS - Method: main_tex_file
+2025-10-10 21:12:27,669 [INTRO_EXTRACTOR] [INFO] Processing paper 168/184: 2506.14774
+2025-10-10 21:12:28,899 [INTRO_EXTRACTOR] [INFO]   2506.14774 - SUCCESS - Method: main_tex_file
+2025-10-10 21:12:29,905 [INTRO_EXTRACTOR] [INFO] Processing paper 169/184: 2505.04046
+2025-10-10 21:12:30,981 [INTRO_EXTRACTOR] [INFO]   2505.04046 - SUCCESS - Method: main_tex_file
+2025-10-10 21:12:31,986 [INTRO_EXTRACTOR] [INFO] Processing paper 170/184: 2505.04097
+2025-10-10 21:12:32,853 [INTRO_EXTRACTOR] [INFO]   2505.04097 - SUCCESS - Method: main_tex_file
+2025-10-10 21:12:33,859 [INTRO_EXTRACTOR] [INFO] Processing paper 171/184: 2505.04380
+2025-10-10 21:12:44,211 [INTRO_EXTRACTOR] [INFO]   2505.04380 - SUCCESS - Method: main_tex_file
+2025-10-10 21:12:45,217 [INTRO_EXTRACTOR] [INFO] Processing paper 172/184: 2505.04394
+2025-10-10 21:12:46,099 [INTRO_EXTRACTOR] [INFO]   2505.04394 - SUCCESS - Method: main_tex_file
+2025-10-10 21:12:47,105 [INTRO_EXTRACTOR] [INFO] Processing paper 173/184: 2505.04502
+2025-10-10 21:12:50,905 [INTRO_EXTRACTOR] [WARNING] [2505.04502] Retry 1/4 after 1s: not a gzip file
+2025-10-10 21:12:52,627 [INTRO_EXTRACTOR] [WARNING] [2505.04502] Retry 2/4 after 5s: not a gzip file
+2025-10-10 21:12:59,008 [INTRO_EXTRACTOR] [WARNING] [2505.04502] Retry 3/4 after 10s: not a gzip file
+2025-10-10 21:13:09,776 [INTRO_EXTRACTOR] [ERROR] [2505.04502] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 21:13:09,777 [INTRO_EXTRACTOR] [INFO]   2505.04502 - FAILED - Status: extraction_failed
+2025-10-10 21:13:10,782 [INTRO_EXTRACTOR] [INFO] Processing paper 174/184: 2505.04524
+2025-10-10 21:13:14,688 [INTRO_EXTRACTOR] [WARNING] [2505.04524] Retry 1/4 after 1s: not a gzip file
+2025-10-10 21:13:16,119 [INTRO_EXTRACTOR] [WARNING] [2505.04524] Retry 2/4 after 5s: not a gzip file
+2025-10-10 21:13:21,637 [INTRO_EXTRACTOR] [WARNING] [2505.04524] Retry 3/4 after 10s: not a gzip file
+2025-10-10 21:13:32,124 [INTRO_EXTRACTOR] [ERROR] [2505.04524] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 21:13:32,125 [INTRO_EXTRACTOR] [INFO]   2505.04524 - FAILED - Status: extraction_failed
+2025-10-10 21:13:33,131 [INTRO_EXTRACTOR] [INFO] Processing paper 175/184: 2505.04586
+2025-10-10 21:13:34,848 [INTRO_EXTRACTOR] [INFO]   2505.04586 - SUCCESS - Method: main_tex_file
+2025-10-10 21:13:35,854 [INTRO_EXTRACTOR] [INFO] Processing paper 176/184: 2505.04596
+2025-10-10 21:13:36,726 [INTRO_EXTRACTOR] [INFO]   2505.04596 - SUCCESS - Method: main_tex_file
+2025-10-10 21:13:37,732 [INTRO_EXTRACTOR] [INFO] Processing paper 177/184: 2505.04619
+2025-10-10 21:13:44,756 [INTRO_EXTRACTOR] [INFO]   2505.04619 - SUCCESS - Method: main_tex_file
+2025-10-10 21:13:45,761 [INTRO_EXTRACTOR] [INFO] Processing paper 178/184: 2505.05510
+2025-10-10 21:13:46,517 [INTRO_EXTRACTOR] [INFO]   2505.05510 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 21:13:47,522 [INTRO_EXTRACTOR] [INFO] Processing paper 179/184: 2505.05517
+2025-10-10 21:13:54,855 [INTRO_EXTRACTOR] [INFO]   2505.05517 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 21:13:55,860 [INTRO_EXTRACTOR] [INFO] Processing paper 180/184: 2505.04451
+2025-10-10 21:13:57,830 [INTRO_EXTRACTOR] [WARNING] [2505.04451] Retry 1/4 after 1s: not a gzip file
+2025-10-10 21:13:59,133 [INTRO_EXTRACTOR] [WARNING] [2505.04451] Retry 2/4 after 5s: not a gzip file
+2025-10-10 21:14:04,465 [INTRO_EXTRACTOR] [WARNING] [2505.04451] Retry 3/4 after 10s: not a gzip file
+2025-10-10 21:14:14,770 [INTRO_EXTRACTOR] [ERROR] [2505.04451] Introduction extraction failed after 4 attempts: not a gzip file
+2025-10-10 21:14:14,773 [INTRO_EXTRACTOR] [INFO]   2505.04451 - FAILED - Status: extraction_failed
+2025-10-10 21:14:15,776 [INTRO_EXTRACTOR] [INFO] Processing paper 181/184: 2505.04468
+2025-10-10 21:14:20,272 [INTRO_EXTRACTOR] [INFO]   2505.04468 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 21:14:21,278 [INTRO_EXTRACTOR] [INFO] Processing paper 182/184: 2505.04621
+2025-10-10 21:14:27,469 [INTRO_EXTRACTOR] [INFO]   2505.04621 - SUCCESS - Method: main_tex_file
+2025-10-10 21:14:28,474 [INTRO_EXTRACTOR] [INFO] Processing paper 183/184: 2505.04725
+2025-10-10 21:14:43,773 [INTRO_EXTRACTOR] [INFO]   2505.04725 - SUCCESS - Method: main_tex_file
+2025-10-10 21:14:44,778 [INTRO_EXTRACTOR] [INFO] Processing paper 184/184: 2505.04802
+2025-10-10 21:14:46,373 [INTRO_EXTRACTOR] [INFO]   2505.04802 - SUCCESS - Method: dedicated_intro_file
+2025-10-10 21:14:46,373 [INTRO_EXTRACTOR] [INFO] Introduction extraction complete: 161/184 successful, 23 failed, 0 skipped
+2025-10-10 21:14:46,374 [DATABASE] [INFO] Saving 184 papers to database
+2025-10-10 21:14:46,385 [DATABASE] [INFO] Successfully saved 184 papers to database
+2025-10-10 21:14:46,385 [MAIN] [INFO] Saved 184 papers to database
+2025-10-10 21:14:46,385 [MAIN] [INFO] Executing embedding similarity module
+2025-10-10 21:14:47,065 [EMBEDDING_SIMILARITY] [INFO] Starting embedding similarity calculation for 184 papers
+2025-10-10 21:14:47,065 [EMBEDDING_SIMILARITY] [INFO] Computing embeddings for 5 topics
+2025-10-10 21:14:49,106 [httpx] [INFO] HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-10-10 21:14:49,116 [EMBEDDING_SIMILARITY] [INFO] Generated and saved embedding for topic: Agentic Artificial Intelligence
+2025-10-10 21:14:50,177 [httpx] [INFO] HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-10-10 21:14:50,405 [EMBEDDING_SIMILARITY] [INFO] Generated and saved embedding for topic: Reinforcement Learning
+2025-10-10 21:14:51,126 [httpx] [INFO] HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-10-10 21:14:51,133 [EMBEDDING_SIMILARITY] [INFO] Generated and saved embedding for topic: Reasoning Models
+2025-10-10 21:14:52,787 [httpx] [INFO] HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-10-10 21:14:52,794 [EMBEDDING_SIMILARITY] [INFO] Generated and saved embedding for topic: Inference Time Scaling
+2025-10-10 21:14:53,708 [httpx] [INFO] HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-10-10 21:14:53,712 [EMBEDDING_SIMILARITY] [INFO] Generated and saved embedding for topic: Proximal Policy Optimization
+2025-10-10 21:14:53,714 [EMBEDDING_SIMILARITY] [INFO] Loaded embeddings for 5 topics
+2025-10-10 21:14:53,714 [EMBEDDING_SIMILARITY] [INFO] Processing 184 papers for embedding similarity
+2025-10-10 21:14:53,715 [EMBEDDING_SIMILARITY] [INFO] Processing batch 1 with 100 papers
+2025-10-10 21:14:56,781 [httpx] [INFO] HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-10-10 21:14:57,823 [EMBEDDING_SIMILARITY] [INFO] Processing batch 2 with 84 papers
+2025-10-10 21:15:00,471 [httpx] [INFO] HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-10-10 21:15:00,582 [EMBEDDING_SIMILARITY] [INFO] Embedding similarity complete: 184/184 successful, 0 failed, 0 skipped
+2025-10-10 21:15:00,582 [DATABASE] [INFO] Saving 184 papers to database
+2025-10-10 21:15:00,590 [DATABASE] [INFO] Successfully saved 184 papers to database
+2025-10-10 21:15:00,590 [MAIN] [INFO] Saved 184 papers to database
+2025-10-10 21:15:00,590 [MAIN] [INFO] Executing LLM validation module
+2025-10-10 21:15:00,591 [LLM_VALIDATION] [INFO] Starting LLM validation for 184 papers
+2025-10-10 21:15:00,591 [LLM_VALIDATION] [INFO] Skipping 63 papers: 63 no topics above threshold
+2025-10-10 21:15:00,591 [LLM_VALIDATION] [INFO] Processing 121 papers for LLM validation using 10 workers
+2025-10-10 21:15:00,592 [LLM_VALIDATION] [INFO] Processing batch 1/13 with 10 papers
+2025-10-10 21:15:09,160 [LLM_VALIDATION] [INFO] Paper 5/121: 2505.04486 - LLM validation SUCCESS for topics: Proximal Policy Optimization
+2025-10-10 21:15:10,049 [LLM_VALIDATION] [INFO] Paper 3/121: 2505.04192 - LLM validation SUCCESS for topics: Reasoning Models
+2025-10-10 21:15:10,273 [LLM_VALIDATION] [INFO] Paper 4/121: 2505.04375 - LLM validation SUCCESS for topics: Reinforcement Learning, Inference Time Scaling
+2025-10-10 21:15:11,477 [LLM_VALIDATION] [WARNING] Paper 2/121: 2505.04497 - attempt 1/4 FAILED: Response parsing error: Unexpected topic in response: General Reasoning Models
+2025-10-10 21:15:12,144 [LLM_VALIDATION] [INFO] Paper 1/121: 2505.04147 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:15:12,759 [LLM_VALIDATION] [INFO] Paper 8/121: 2505.04115 - LLM validation SUCCESS for topics: Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:15:12,765 [LLM_VALIDATION] [INFO] Paper 9/121: 2505.04317 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reinforcement Learning
+2025-10-10 21:15:12,983 [LLM_VALIDATION] [INFO] Paper 7/121: 2505.04787 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:15:14,602 [LLM_VALIDATION] [INFO] Paper 6/121: 2505.04488 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reasoning Models, Inference Time Scaling
+2025-10-10 21:15:17,377 [LLM_VALIDATION] [INFO] Paper 10/121: 2505.04525 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Reinforcement Learning, Inference Time Scaling
+2025-10-10 21:15:25,882 [LLM_VALIDATION] [INFO] Paper 2/121: 2505.04497 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reasoning Models, Inference Time Scaling
+2025-10-10 21:15:26,500 [LLM_VALIDATION] [INFO] Processing batch 2/13 with 10 papers
+2025-10-10 21:15:34,279 [LLM_VALIDATION] [INFO] Paper 17/121: 2505.04109 - LLM validation SUCCESS for topics: Proximal Policy Optimization
+2025-10-10 21:15:37,703 [LLM_VALIDATION] [INFO] Paper 12/121: 2505.04674 - LLM validation SUCCESS for topics: Inference Time Scaling
+2025-10-10 21:15:37,845 [LLM_VALIDATION] [INFO] Paper 19/121: 2505.04121 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reasoning Models, Inference Time Scaling
+2025-10-10 21:15:38,098 [LLM_VALIDATION] [INFO] Paper 15/121: 2505.04058 - LLM validation SUCCESS for topics: Reasoning Models
+2025-10-10 21:15:38,441 [LLM_VALIDATION] [INFO] Paper 11/121: 2505.04539 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Reinforcement Learning
+2025-10-10 21:15:38,693 [LLM_VALIDATION] [INFO] Paper 18/121: 2505.04119 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Reasoning Models, Inference Time Scaling
+2025-10-10 21:15:39,179 [LLM_VALIDATION] [INFO] Paper 20/121: 2505.04201 - LLM validation SUCCESS for topics: Reasoning Models, Inference Time Scaling
+2025-10-10 21:15:39,183 [LLM_VALIDATION] [INFO] Paper 14/121: 2505.13466 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:15:39,373 [LLM_VALIDATION] [INFO] Paper 16/121: 2505.04087 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Inference Time Scaling
+2025-10-10 21:15:41,940 [LLM_VALIDATION] [INFO] Paper 13/121: 2505.04736 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reasoning Models, Inference Time Scaling
+2025-10-10 21:15:42,516 [LLM_VALIDATION] [INFO] Processing batch 3/13 with 10 papers
+2025-10-10 21:15:50,801 [LLM_VALIDATION] [INFO] Paper 23/121: 2505.04384 - LLM validation SUCCESS for topics: Proximal Policy Optimization
+2025-10-10 21:15:53,458 [LLM_VALIDATION] [INFO] Paper 26/121: 2505.04424 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reinforcement Learning
+2025-10-10 21:15:53,719 [LLM_VALIDATION] [INFO] Paper 28/121: 2505.04529 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Reinforcement Learning
+2025-10-10 21:15:53,767 [LLM_VALIDATION] [INFO] Paper 25/121: 2505.04410 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Reasoning Models, Inference Time Scaling
+2025-10-10 21:15:54,361 [LLM_VALIDATION] [INFO] Paper 30/121: 2505.04620 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:15:54,473 [LLM_VALIDATION] [INFO] Paper 27/121: 2505.04481 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reasoning Models, Inference Time Scaling
+2025-10-10 21:15:54,838 [LLM_VALIDATION] [INFO] Paper 24/121: 2505.04408 - LLM validation SUCCESS for topics: Inference Time Scaling
+2025-10-10 21:15:55,767 [LLM_VALIDATION] [INFO] Paper 22/121: 2505.04320 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Inference Time Scaling
+2025-10-10 21:15:56,382 [LLM_VALIDATION] [INFO] Paper 29/121: 2505.04601 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reasoning Models, Inference Time Scaling
+2025-10-10 21:15:57,728 [LLM_VALIDATION] [INFO] Paper 21/121: 2505.04214 - LLM validation SUCCESS for topics: Reasoning Models
+2025-10-10 21:15:58,346 [LLM_VALIDATION] [INFO] Processing batch 4/13 with 10 papers
+2025-10-10 21:16:08,201 [LLM_VALIDATION] [INFO] Paper 32/121: 2505.04740 - LLM validation SUCCESS for topics: Inference Time Scaling
+2025-10-10 21:16:08,836 [LLM_VALIDATION] [INFO] Paper 31/121: 2505.04720 - LLM validation SUCCESS for topics: Reasoning Models, Inference Time Scaling
+2025-10-10 21:16:09,455 [LLM_VALIDATION] [INFO] Paper 38/121: 2505.04084 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reasoning Models
+2025-10-10 21:16:09,504 [LLM_VALIDATION] [INFO] Paper 40/121: 2505.04165 - LLM validation SUCCESS for topics: Inference Time Scaling
+2025-10-10 21:16:09,851 [LLM_VALIDATION] [INFO] Paper 34/121: 2505.04835 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:16:10,513 [LLM_VALIDATION] [INFO] Paper 36/121: 2505.04072 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reasoning Models, Inference Time Scaling
+2025-10-10 21:16:10,877 [LLM_VALIDATION] [INFO] Paper 35/121: 2505.04850 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:16:12,819 [LLM_VALIDATION] [INFO] Paper 39/121: 2505.04132 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reasoning Models, Inference Time Scaling
+2025-10-10 21:16:13,653 [LLM_VALIDATION] [WARNING] Paper 37/121: 2505.04075 - attempt 1/4 FAILED: Response parsing error: Unexpected topic in response: General Reasoning Models
+2025-10-10 21:16:15,429 [LLM_VALIDATION] [INFO] Paper 33/121: 2505.04769 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:16:30,173 [LLM_VALIDATION] [INFO] Paper 37/121: 2505.04075 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:16:30,791 [LLM_VALIDATION] [INFO] Processing batch 5/13 with 10 papers
+2025-10-10 21:16:41,748 [LLM_VALIDATION] [INFO] Paper 49/121: 2505.04435 - LLM validation SUCCESS for topics: Proximal Policy Optimization
+2025-10-10 21:16:43,465 [LLM_VALIDATION] [INFO] Paper 43/121: 2505.04278 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Inference Time Scaling
+2025-10-10 21:16:43,647 [LLM_VALIDATION] [INFO] Paper 44/121: 2505.04339 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Reinforcement Learning
+2025-10-10 21:16:43,728 [LLM_VALIDATION] [WARNING] Paper 50/121: 2505.04493 - attempt 1/4 FAILED: Response parsing error: Unexpected topic in response: General Reasoning Models
+2025-10-10 21:16:43,736 [LLM_VALIDATION] [INFO] Paper 48/121: 2505.04404 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Inference Time Scaling
+2025-10-10 21:16:44,306 [LLM_VALIDATION] [INFO] Paper 46/121: 2505.04354 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:16:44,854 [LLM_VALIDATION] [INFO] Paper 41/121: 2505.04260 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:16:44,959 [LLM_VALIDATION] [INFO] Paper 42/121: 2505.04265 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reasoning Models
+2025-10-10 21:16:45,207 [LLM_VALIDATION] [INFO] Paper 45/121: 2505.04352 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reinforcement Learning
+2025-10-10 21:16:47,244 [LLM_VALIDATION] [INFO] Paper 47/121: 2505.04388 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reasoning Models, Inference Time Scaling
+2025-10-10 21:16:55,511 [LLM_VALIDATION] [INFO] Paper 50/121: 2505.04493 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reinforcement Learning, Reasoning Models
+2025-10-10 21:16:56,166 [LLM_VALIDATION] [INFO] Processing batch 6/13 with 10 papers
+2025-10-10 21:17:06,721 [LLM_VALIDATION] [INFO] Paper 59/121: 2505.04759 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reasoning Models
+2025-10-10 21:17:06,985 [LLM_VALIDATION] [INFO] Paper 52/121: 2505.04558 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Reinforcement Learning, Inference Time Scaling
+2025-10-10 21:17:07,794 [LLM_VALIDATION] [INFO] Paper 60/121: 2505.04822 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Reinforcement Learning, Reasoning Models
+2025-10-10 21:17:07,808 [LLM_VALIDATION] [INFO] Paper 54/121: 2505.04592 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Inference Time Scaling
+2025-10-10 21:17:07,954 [LLM_VALIDATION] [INFO] Paper 53/121: 2505.04578 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:17:08,295 [LLM_VALIDATION] [INFO] Paper 51/121: 2505.04531 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reasoning Models, Inference Time Scaling
+2025-10-10 21:17:08,710 [LLM_VALIDATION] [INFO] Paper 58/121: 2505.04732 - LLM validation SUCCESS for topics: Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:17:09,806 [LLM_VALIDATION] [INFO] Paper 56/121: 2505.04670 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reasoning Models, Inference Time Scaling
+2025-10-10 21:17:10,293 [LLM_VALIDATION] [INFO] Paper 57/121: 2505.04673 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:17:10,351 [LLM_VALIDATION] [INFO] Paper 55/121: 2505.04665 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reinforcement Learning, Reasoning Models
+2025-10-10 21:17:11,042 [LLM_VALIDATION] [INFO] Processing batch 7/13 with 10 papers
+2025-10-10 21:17:18,098 [LLM_VALIDATION] [INFO] Paper 70/121: 2505.04276 - LLM validation SUCCESS for topics: Proximal Policy Optimization
+2025-10-10 21:17:18,603 [LLM_VALIDATION] [INFO] Paper 68/121: 2505.04150 - LLM validation SUCCESS for topics: Proximal Policy Optimization
+2025-10-10 21:17:20,599 [LLM_VALIDATION] [INFO] Paper 67/121: 2505.07847 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reasoning Models
+2025-10-10 21:17:21,556 [LLM_VALIDATION] [INFO] Paper 64/121: 2505.06136 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reinforcement Learning, Inference Time Scaling
+2025-10-10 21:17:22,326 [LLM_VALIDATION] [INFO] Paper 69/121: 2505.04173 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Inference Time Scaling
+2025-10-10 21:17:22,452 [LLM_VALIDATION] [INFO] Paper 66/121: 2505.07846 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:17:22,576 [LLM_VALIDATION] [INFO] Paper 61/121: 2505.04842 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:17:23,935 [LLM_VALIDATION] [INFO] Paper 65/121: 2505.06300 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:17:23,938 [LLM_VALIDATION] [INFO] Paper 63/121: 2505.04847 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:17:24,152 [LLM_VALIDATION] [INFO] Paper 62/121: 2505.04843 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:17:24,791 [LLM_VALIDATION] [INFO] Processing batch 8/13 with 10 papers
+2025-10-10 21:17:32,917 [LLM_VALIDATION] [INFO] Paper 71/121: 2505.04376 - LLM validation SUCCESS for topics: Reinforcement Learning
+2025-10-10 21:17:35,488 [LLM_VALIDATION] [INFO] Paper 80/121: 2505.05512 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reinforcement Learning, Reasoning Models
+2025-10-10 21:17:35,559 [LLM_VALIDATION] [INFO] Paper 72/121: 2505.04522 - LLM validation SUCCESS for topics: Reasoning Models, Inference Time Scaling
+2025-10-10 21:17:35,928 [LLM_VALIDATION] [INFO] Paper 74/121: 2505.04622 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence
+2025-10-10 21:17:36,018 [LLM_VALIDATION] [INFO] Paper 79/121: 2505.05509 - LLM validation SUCCESS for topics: Inference Time Scaling
+2025-10-10 21:17:37,274 [LLM_VALIDATION] [INFO] Paper 75/121: 2505.04623 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:17:37,433 [LLM_VALIDATION] [INFO] Paper 78/121: 2505.05505 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reasoning Models, Inference Time Scaling
+2025-10-10 21:17:38,856 [LLM_VALIDATION] [INFO] Paper 77/121: 2505.04718 - LLM validation SUCCESS for topics: Reasoning Models, Inference Time Scaling
+2025-10-10 21:17:39,251 [LLM_VALIDATION] [INFO] Paper 73/121: 2505.04575 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:17:47,597 [LLM_VALIDATION] [INFO] Paper 76/121: 2505.04660 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:17:48,198 [LLM_VALIDATION] [INFO] Processing batch 9/13 with 10 papers
+2025-10-10 21:17:57,938 [LLM_VALIDATION] [INFO] Paper 81/121: 2505.04034 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Inference Time Scaling
+2025-10-10 21:17:58,252 [LLM_VALIDATION] [INFO] Paper 82/121: 2505.04083 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Inference Time Scaling
+2025-10-10 21:17:58,647 [LLM_VALIDATION] [INFO] Paper 90/121: 2505.04310 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Reinforcement Learning, Inference Time Scaling
+2025-10-10 21:18:00,370 [LLM_VALIDATION] [WARNING] Paper 84/121: 2505.04104 - attempt 1/4 FAILED: Response parsing error: Unexpected topic in response: General Reasoning Models
+2025-10-10 21:18:00,544 [LLM_VALIDATION] [INFO] Paper 85/121: 2505.04146 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reasoning Models, Inference Time Scaling
+2025-10-10 21:18:01,199 [LLM_VALIDATION] [INFO] Paper 83/121: 2505.04101 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reasoning Models, Inference Time Scaling
+2025-10-10 21:18:01,722 [LLM_VALIDATION] [INFO] Paper 87/121: 2505.04209 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:18:02,388 [LLM_VALIDATION] [INFO] Paper 89/121: 2505.04251 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reinforcement Learning, Reasoning Models
+2025-10-10 21:18:02,403 [LLM_VALIDATION] [INFO] Paper 86/121: 2505.04174 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:18:02,946 [LLM_VALIDATION] [INFO] Paper 88/121: 2505.04223 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Reinforcement Learning, Inference Time Scaling
+2025-10-10 21:18:13,157 [LLM_VALIDATION] [WARNING] Paper 84/121: 2505.04104 - attempt 2/4 FAILED: Response parsing error: Unexpected topic in response: General Reasoning Models
+2025-10-10 21:18:25,485 [LLM_VALIDATION] [INFO] Paper 84/121: 2505.04104 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:18:26,139 [LLM_VALIDATION] [INFO] Processing batch 10/13 with 10 papers
+2025-10-10 21:18:34,440 [LLM_VALIDATION] [INFO] Paper 97/121: 2505.04461 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Reinforcement Learning, Inference Time Scaling
+2025-10-10 21:18:36,662 [LLM_VALIDATION] [INFO] Paper 100/121: 2505.04553 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Reinforcement Learning, Inference Time Scaling
+2025-10-10 21:18:37,042 [LLM_VALIDATION] [INFO] Paper 96/121: 2505.04416 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:18:37,210 [LLM_VALIDATION] [INFO] Paper 93/121: 2505.04379 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reinforcement Learning
+2025-10-10 21:18:37,520 [LLM_VALIDATION] [INFO] Paper 94/121: 2505.04405 - LLM validation SUCCESS for topics: Inference Time Scaling
+2025-10-10 21:18:37,899 [LLM_VALIDATION] [INFO] Paper 95/121: 2505.04406 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reasoning Models, Inference Time Scaling
+2025-10-10 21:18:38,056 [LLM_VALIDATION] [INFO] Paper 92/121: 2505.04318 - LLM validation SUCCESS for topics: Inference Time Scaling
+2025-10-10 21:18:39,222 [LLM_VALIDATION] [INFO] Paper 91/121: 2505.04313 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:18:40,191 [LLM_VALIDATION] [INFO] Paper 99/121: 2505.04528 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:18:40,728 [LLM_VALIDATION] [INFO] Paper 98/121: 2505.04480 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:18:41,429 [LLM_VALIDATION] [INFO] Processing batch 11/13 with 10 papers
+2025-10-10 21:18:48,977 [LLM_VALIDATION] [INFO] Paper 105/121: 2505.04852 - LLM validation SUCCESS for topics: Proximal Policy Optimization
+2025-10-10 21:18:51,816 [LLM_VALIDATION] [INFO] Paper 108/121: 2505.07850 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reasoning Models
+2025-10-10 21:18:53,229 [LLM_VALIDATION] [INFO] Paper 110/121: 2505.08795 - LLM validation SUCCESS for topics: Reasoning Models, Inference Time Scaling
+2025-10-10 21:18:54,014 [LLM_VALIDATION] [WARNING] Paper 104/121: 2505.04792 - attempt 1/4 FAILED: Response parsing error: Unexpected topic in response: General Reasoning Models
+2025-10-10 21:18:54,276 [LLM_VALIDATION] [INFO] Paper 106/121: 2505.05516 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence
+2025-10-10 21:18:54,460 [LLM_VALIDATION] [INFO] Paper 101/121: 2505.04608 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:18:54,758 [LLM_VALIDATION] [INFO] Paper 107/121: 2505.07849 - LLM validation SUCCESS for topics: Reasoning Models, Inference Time Scaling
+2025-10-10 21:18:55,172 [LLM_VALIDATION] [INFO] Paper 109/121: 2505.07852 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reasoning Models
+2025-10-10 21:18:57,155 [LLM_VALIDATION] [INFO] Paper 102/121: 2505.04741 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Proximal Policy Optimization, Reasoning Models, Inference Time Scaling
+2025-10-10 21:18:57,357 [LLM_VALIDATION] [INFO] Paper 103/121: 2505.04784 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reasoning Models
+2025-10-10 21:19:05,736 [LLM_VALIDATION] [WARNING] Paper 104/121: 2505.04792 - attempt 2/4 FAILED: Response parsing error: Unexpected topic in response: General Reasoning Models
+2025-10-10 21:19:19,751 [LLM_VALIDATION] [WARNING] Paper 104/121: 2505.04792 - attempt 3/4 FAILED: Response parsing error: Unexpected topic in response: General Reasoning Models
+2025-10-10 21:19:33,267 [LLM_VALIDATION] [INFO] Paper 104/121: 2505.04792 - LLM validation SUCCESS for topics: Reinforcement Learning, Reasoning Models, Inference Time Scaling
+2025-10-10 21:19:33,938 [LLM_VALIDATION] [INFO] Processing batch 12/13 with 10 papers
+2025-10-10 21:19:41,542 [LLM_VALIDATION] [INFO] Paper 118/121: 2505.04468 - LLM validation SUCCESS for topics: Proximal Policy Optimization
+2025-10-10 21:19:42,935 [LLM_VALIDATION] [INFO] Paper 119/121: 2505.04621 - LLM validation SUCCESS for topics: Proximal Policy Optimization
+2025-10-10 21:19:43,409 [LLM_VALIDATION] [INFO] Paper 112/121: 2505.04046 - LLM validation SUCCESS for topics: Reinforcement Learning, Reasoning Models
+2025-10-10 21:19:43,493 [LLM_VALIDATION] [INFO] Paper 120/121: 2505.04725 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Reinforcement Learning
+2025-10-10 21:19:43,499 [LLM_VALIDATION] [INFO] Paper 117/121: 2505.05517 - LLM validation SUCCESS for topics: Proximal Policy Optimization
+2025-10-10 21:19:43,748 [LLM_VALIDATION] [INFO] Paper 116/121: 2505.05510 - LLM validation SUCCESS for topics: Inference Time Scaling
+2025-10-10 21:19:45,333 [LLM_VALIDATION] [INFO] Paper 115/121: 2505.04619 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Reinforcement Learning
+2025-10-10 21:19:45,865 [LLM_VALIDATION] [WARNING] Paper 111/121: 2506.14774 - attempt 1/4 FAILED: Response parsing error: Unexpected topic in response: General Reasoning Models
+2025-10-10 21:19:45,869 [LLM_VALIDATION] [INFO] Paper 114/121: 2505.04586 - LLM validation SUCCESS for topics: Proximal Policy Optimization, Reinforcement Learning, Inference Time Scaling
+2025-10-10 21:19:50,204 [LLM_VALIDATION] [INFO] Paper 113/121: 2505.04502 - LLM validation SUCCESS for topics: Inference Time Scaling
+2025-10-10 21:19:58,152 [LLM_VALIDATION] [INFO] Paper 111/121: 2506.14774 - LLM validation SUCCESS for topics: Agentic Artificial Intelligence, Reasoning Models, Inference Time Scaling
+2025-10-10 21:19:58,729 [LLM_VALIDATION] [INFO] Processing batch 13/13 with 1 papers
+2025-10-10 21:20:09,422 [LLM_VALIDATION] [INFO] Paper 121/121: 2505.04802 - LLM validation SUCCESS for topics: Reasoning Models, Inference Time Scaling
+2025-10-10 21:20:09,423 [LLM_VALIDATION] [INFO] LLM validation complete: 184/184 successful, 0 failed, 63 skipped
+2025-10-10 21:20:09,424 [DATABASE] [INFO] Saving 184 papers to database
+2025-10-10 21:20:09,440 [DATABASE] [INFO] Successfully saved 184 papers to database
+2025-10-10 21:20:09,440 [MAIN] [INFO] Saved 184 papers to database
+2025-10-10 21:20:09,440 [MAIN] [INFO] Executing LLM scoring module
+2025-10-10 21:20:09,442 [LLM_SCORING] [INFO] Starting LLM scoring for 184 papers
+2025-10-10 21:20:09,442 [LLM_SCORING] [INFO] Skipping 141 papers: 141 no Highly/Moderately Relevant topics
+2025-10-10 21:20:09,442 [LLM_SCORING] [INFO] Processing 43 papers for LLM scoring using 5 workers
+2025-10-10 21:20:23,367 [LLM_SCORING] [INFO] Paper 3/43: 2505.04317 - LLM scoring SUCCESS
+2025-10-10 21:20:23,501 [LLM_SCORING] [INFO] Paper 1/43: 2505.04147 - LLM scoring SUCCESS
+2025-10-10 21:20:23,558 [LLM_SCORING] [INFO] Paper 2/43: 2505.04192 - LLM scoring SUCCESS
+2025-10-10 21:20:23,644 [LLM_SCORING] [INFO] Paper 5/43: 2505.04736 - LLM scoring SUCCESS
+2025-10-10 21:20:23,663 [LLM_SCORING] [INFO] Paper 4/43: 2505.04525 - LLM scoring SUCCESS
+2025-10-10 21:20:35,323 [LLM_SCORING] [INFO] Paper 7/43: 2505.04087 - LLM scoring SUCCESS
+2025-10-10 21:20:35,327 [LLM_SCORING] [INFO] Paper 8/43: 2505.04201 - LLM scoring SUCCESS
+2025-10-10 21:20:35,359 [LLM_SCORING] [INFO] Paper 10/43: 2505.04769 - LLM scoring SUCCESS
+2025-10-10 21:20:35,411 [LLM_SCORING] [INFO] Paper 6/43: 2505.13466 - LLM scoring SUCCESS
+2025-10-10 21:20:37,193 [LLM_SCORING] [INFO] Paper 9/43: 2505.04424 - LLM scoring SUCCESS
+2025-10-10 21:20:47,611 [LLM_SCORING] [INFO] Paper 14/43: 2505.04339 - LLM scoring SUCCESS
+2025-10-10 21:20:47,719 [LLM_SCORING] [INFO] Paper 11/43: 2505.04850 - LLM scoring SUCCESS
+2025-10-10 21:20:47,979 [LLM_SCORING] [INFO] Paper 13/43: 2505.04265 - LLM scoring SUCCESS
+2025-10-10 21:20:48,533 [LLM_SCORING] [INFO] Paper 12/43: 2505.04072 - LLM scoring SUCCESS
+2025-10-10 21:20:49,101 [LLM_SCORING] [INFO] Paper 15/43: 2505.04352 - LLM scoring SUCCESS
+2025-10-10 21:20:58,804 [LLM_SCORING] [INFO] Paper 17/43: 2505.04388 - LLM scoring SUCCESS
+2025-10-10 21:20:58,901 [LLM_SCORING] [INFO] Paper 16/43: 2505.04354 - LLM scoring SUCCESS
+2025-10-10 21:21:00,371 [LLM_SCORING] [INFO] Paper 18/43: 2505.04558 - LLM scoring SUCCESS
+2025-10-10 21:21:00,843 [LLM_SCORING] [INFO] Paper 19/43: 2505.04578 - LLM scoring SUCCESS
+2025-10-10 21:21:02,005 [LLM_SCORING] [INFO] Paper 20/43: 2505.04670 - LLM scoring SUCCESS
+2025-10-10 21:21:11,298 [LLM_SCORING] [INFO] Paper 21/43: 2505.04822 - LLM scoring SUCCESS
+2025-10-10 21:21:13,062 [LLM_SCORING] [INFO] Paper 23/43: 2505.04843 - LLM scoring SUCCESS
+2025-10-10 21:21:13,604 [LLM_SCORING] [INFO] Paper 22/43: 2505.04842 - LLM scoring SUCCESS
+2025-10-10 21:21:14,996 [LLM_SCORING] [INFO] Paper 24/43: 2505.06300 - LLM scoring SUCCESS
+2025-10-10 21:21:16,797 [LLM_SCORING] [INFO] Paper 25/43: 2505.07846 - LLM scoring SUCCESS
+2025-10-10 21:21:25,398 [LLM_SCORING] [INFO] Paper 26/43: 2505.07847 - LLM scoring SUCCESS
+2025-10-10 21:21:27,317 [LLM_SCORING] [INFO] Paper 27/43: 2505.04623 - LLM scoring SUCCESS
+2025-10-10 21:21:27,367 [LLM_SCORING] [INFO] Paper 29/43: 2505.04101 - LLM scoring SUCCESS
+2025-10-10 21:21:28,616 [LLM_SCORING] [INFO] Paper 28/43: 2505.05505 - LLM scoring SUCCESS
+2025-10-10 21:21:31,312 [LLM_SCORING] [INFO] Paper 30/43: 2505.04174 - LLM scoring SUCCESS
+2025-10-10 21:21:38,761 [LLM_SCORING] [INFO] Paper 31/43: 2505.04209 - LLM scoring SUCCESS
+2025-10-10 21:21:40,142 [LLM_SCORING] [INFO] Paper 32/43: 2505.04251 - LLM scoring SUCCESS
+2025-10-10 21:21:40,490 [LLM_SCORING] [INFO] Paper 33/43: 2505.04310 - LLM scoring SUCCESS
+2025-10-10 21:21:41,983 [LLM_SCORING] [INFO] Paper 34/43: 2505.04313 - LLM scoring SUCCESS
+2025-10-10 21:21:45,639 [LLM_SCORING] [INFO] Paper 35/43: 2505.04480 - LLM scoring SUCCESS
+2025-10-10 21:21:51,853 [LLM_SCORING] [INFO] Paper 38/43: 2505.04741 - LLM scoring SUCCESS
+2025-10-10 21:21:52,812 [LLM_SCORING] [INFO] Paper 36/43: 2505.04528 - LLM scoring SUCCESS
+2025-10-10 21:21:53,566 [LLM_SCORING] [INFO] Paper 39/43: 2505.05516 - LLM scoring SUCCESS
+2025-10-10 21:21:53,919 [LLM_SCORING] [INFO] Paper 37/43: 2505.04553 - LLM scoring SUCCESS
+2025-10-10 21:21:57,650 [LLM_SCORING] [INFO] Paper 40/43: 2505.07852 - LLM scoring SUCCESS
+2025-10-10 21:22:03,778 [LLM_SCORING] [INFO] Paper 41/43: 2506.14774 - LLM scoring SUCCESS
+2025-10-10 21:22:05,342 [LLM_SCORING] [INFO] Paper 42/43: 2505.04586 - LLM scoring SUCCESS
+2025-10-10 21:22:09,374 [LLM_SCORING] [INFO] Paper 43/43: 2505.04619 - LLM scoring SUCCESS
+2025-10-10 21:22:09,376 [LLM_SCORING] [INFO] LLM scoring complete: 43/184 successful, 0 failed, 141 not relevant enough, 141 skipped
+2025-10-10 21:22:09,377 [DATABASE] [INFO] Saving 184 papers to database
+2025-10-10 21:22:09,397 [DATABASE] [INFO] Successfully saved 184 papers to database
+2025-10-10 21:22:09,397 [MAIN] [INFO] Saved 184 papers to database
+2025-10-10 21:22:09,397 [MAIN] [INFO] Executing H-index fetching module
+2025-10-10 21:22:09,398 [H_INDEX_FETCHING] [INFO] Starting H-index fetching for 184 papers
+2025-10-10 21:22:09,399 [H_INDEX_FETCHING] [INFO] Fetching H-index for 41 papers, skipping 143 papers (0 already completed, 143 not recommended)
+2025-10-10 21:22:09,743 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:22:12,100 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 4.0s before retry
+2025-10-10 21:22:16,499 [H_INDEX_FETCHING] [INFO] 2505.04147 - found via full id, found 9/9 authors, highest H-index: 2
+2025-10-10 21:22:19,119 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:22:21,967 [H_INDEX_FETCHING] [INFO] 2505.04192 - found via full id, found 2/2 authors, highest H-index: 9
+2025-10-10 21:22:24,682 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:22:27,143 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 4.0s before retry
+2025-10-10 21:22:31,806 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 8.0s before retry
+2025-10-10 21:22:40,249 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 16.0s before retry
+2025-10-10 21:22:56,636 [H_INDEX_FETCHING] [INFO] 2505.04317 - found via full id, found 9/9 authors, highest H-index: 5
+2025-10-10 21:22:58,966 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:23:01,332 [H_INDEX_FETCHING] [INFO] 2505.04525 - found via full id, found 2/2 authors, highest H-index: 5
+2025-10-10 21:23:04,044 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:23:06,360 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 4.0s before retry
+2025-10-10 21:23:11,177 [H_INDEX_FETCHING] [INFO] 2505.04736 - found via full id, found 7/7 authors, highest H-index: 2
+2025-10-10 21:23:13,837 [H_INDEX_FETCHING] [INFO] 2505.13466 - found via full id, found 4/4 authors, highest H-index: 16
+2025-10-10 21:23:16,197 [H_INDEX_FETCHING] [INFO] 2505.04087 - found via full id, found 3/3 authors, highest H-index: 2
+2025-10-10 21:23:18,550 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:23:21,208 [H_INDEX_FETCHING] [INFO] 2505.04201 - found via full id, found 4/4 authors, highest H-index: 6
+2025-10-10 21:23:23,575 [H_INDEX_FETCHING] [INFO] 2505.04424 - found via full id, found 7/7 authors, highest H-index: 9
+2025-10-10 21:23:25,927 [H_INDEX_FETCHING] [INFO] 2505.04769 - found via full id, found 4/4 authors, highest H-index: 13
+2025-10-10 21:23:28,266 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:23:30,673 [H_INDEX_FETCHING] [INFO] 2505.04850 - found via full id, found 4/4 authors, highest H-index: 14
+2025-10-10 21:23:33,046 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:23:35,423 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 4.0s before retry
+2025-10-10 21:23:39,836 [H_INDEX_FETCHING] [INFO] 2505.04072 - found via full id, found 8/8 authors, highest H-index: 11
+2025-10-10 21:23:42,204 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:23:44,608 [H_INDEX_FETCHING] [INFO] 2505.04339 - found via full id, found 5/5 authors, highest H-index: 6
+2025-10-10 21:23:46,944 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:23:49,342 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 4.0s before retry
+2025-10-10 21:23:53,728 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 8.0s before retry
+2025-10-10 21:24:02,074 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 16.0s before retry
+2025-10-10 21:24:18,662 [H_INDEX_FETCHING] [INFO] 2505.04352 - found via full id, found 4/4 authors, highest H-index: 1
+2025-10-10 21:24:21,113 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:24:23,486 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 4.0s before retry
+2025-10-10 21:24:28,183 [H_INDEX_FETCHING] [INFO] 2505.04354 - found via full id, found 5/5 authors, highest H-index: 11
+2025-10-10 21:24:30,752 [H_INDEX_FETCHING] [INFO] 2505.04388 - found via full id, found 13/13 authors, highest H-index: 12
+2025-10-10 21:24:33,111 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:24:35,863 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 4.0s before retry
+2025-10-10 21:24:40,303 [H_INDEX_FETCHING] [INFO] 2505.04558 - found via full id, found 6/6 authors, highest H-index: 16
+2025-10-10 21:24:43,233 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:24:45,540 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 4.0s before retry
+2025-10-10 21:24:50,319 [H_INDEX_FETCHING] [INFO] 2505.04578 - found via full id, found 1/1 authors, highest H-index: 1
+2025-10-10 21:24:52,724 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:24:55,524 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 4.0s before retry
+2025-10-10 21:25:00,360 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 8.0s before retry
+2025-10-10 21:25:09,355 [H_INDEX_FETCHING] [INFO] 2505.04670 - found via full id, found 5/5 authors, highest H-index: 30
+2025-10-10 21:25:11,711 [H_INDEX_FETCHING] [INFO] 2505.04822 - found via full id, found 2/2 authors, highest H-index: 29
+2025-10-10 21:25:14,566 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:25:16,901 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 4.0s before retry
+2025-10-10 21:25:21,633 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 8.0s before retry
+2025-10-10 21:25:30,078 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 16.0s before retry
+2025-10-10 21:25:46,829 [H_INDEX_FETCHING] [INFO] 2505.04842 - found via full id, found 5/5 authors, highest H-index: 33
+2025-10-10 21:25:49,188 [H_INDEX_FETCHING] [INFO] 2505.04843 - found via full id, found 6/6 authors, highest H-index: 2
+2025-10-10 21:25:51,581 [H_INDEX_FETCHING] [INFO] 2505.06300 - found via full id, found 1/1 authors, highest H-index: 0
+2025-10-10 21:25:53,944 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:25:56,657 [H_INDEX_FETCHING] [INFO] 2505.07846 - found via full id, found 1/1 authors, highest H-index: 1
+2025-10-10 21:25:58,991 [H_INDEX_FETCHING] [INFO] 2505.07847 - found via full id, found 1/1 authors, highest H-index: 0
+2025-10-10 21:26:01,355 [H_INDEX_FETCHING] [INFO] 2505.04623 - found via full id, found 6/6 authors, highest H-index: 28
+2025-10-10 21:26:03,688 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:26:06,026 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 4.0s before retry
+2025-10-10 21:26:10,403 [H_INDEX_FETCHING] [INFO] 2505.05505 - found via full id, found 3/3 authors, highest H-index: 2
+2025-10-10 21:26:12,743 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:26:15,704 [H_INDEX_FETCHING] [INFO] 2505.04101 - found via full id, found 2/2 authors, highest H-index: 5
+2025-10-10 21:26:18,319 [H_INDEX_FETCHING] [INFO] 2505.04174 - found via full id, found 3/3 authors, highest H-index: 1
+2025-10-10 21:26:20,676 [H_INDEX_FETCHING] [INFO] 2505.04209 - found via full id, found 3/3 authors, highest H-index: 3
+2025-10-10 21:26:23,689 [H_INDEX_FETCHING] [INFO] 2505.04310 - found via full id, found 4/4 authors, highest H-index: 53
+2025-10-10 21:26:26,453 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:26:29,221 [H_INDEX_FETCHING] [INFO] 2505.04313 - found via full id, found 3/3 authors, highest H-index: 9
+2025-10-10 21:26:31,676 [H_INDEX_FETCHING] [INFO] 2505.04480 - found via full id, found 7/7 authors, highest H-index: 7
+2025-10-10 21:26:33,994 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:26:36,364 [H_INDEX_FETCHING] [INFO] 2505.04528 - found via full id, found 6/6 authors, highest H-index: 6
+2025-10-10 21:26:38,681 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:26:41,351 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 4.0s before retry
+2025-10-10 21:26:45,723 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 8.0s before retry
+2025-10-10 21:26:54,091 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 16.0s before retry
+2025-10-10 21:27:10,793 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 32.0s before retry
+2025-10-10 21:27:43,177 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 64.0s before retry
+2025-10-10 21:28:47,912 [H_INDEX_FETCHING] [ERROR] Rate limited after all retries
+2025-10-10 21:28:48,553 [H_INDEX_FETCHING] [INFO] 2505.04553 - found via title search, found 3/3 authors, highest H-index: 0
+2025-10-10 21:28:51,300 [H_INDEX_FETCHING] [INFO] 2505.04741 - found via full id, found 4/4 authors, highest H-index: 9
+2025-10-10 21:28:53,685 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:28:56,046 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 4.0s before retry
+2025-10-10 21:29:00,671 [H_INDEX_FETCHING] [INFO] 2505.05516 - found via full id, found 8/8 authors, highest H-index: 17
+2025-10-10 21:29:03,128 [H_INDEX_FETCHING] [INFO] 2505.07852 - found via full id, found 3/3 authors, highest H-index: 9
+2025-10-10 21:29:05,449 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:29:08,351 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 4.0s before retry
+2025-10-10 21:29:12,960 [H_INDEX_FETCHING] [INFO] 2506.14774 - found via full id, found 7/7 authors, highest H-index: 5
+2025-10-10 21:29:15,327 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:29:17,874 [H_INDEX_FETCHING] [INFO] 2505.04586 - found via full id, found 4/4 authors, highest H-index: 49
+2025-10-10 21:29:20,195 [H_INDEX_FETCHING] [WARNING] Rate limited, waiting 2.0s before retry
+2025-10-10 21:29:22,781 [H_INDEX_FETCHING] [INFO] 2505.04619 - found via full id, found 4/4 authors, highest H-index: 2
+2025-10-10 21:29:22,782 [H_INDEX_FETCHING] [INFO] H-index fetching complete: 41/41 successful, 0 failed
+2025-10-10 21:29:22,783 [DATABASE] [INFO] Saving 184 papers to database
+2025-10-10 21:29:22,805 [DATABASE] [INFO] Successfully saved 184 papers to database
+2025-10-10 21:29:22,806 [MAIN] [INFO] Saved 184 papers to database
+2025-10-10 21:29:22,806 [MAIN] [INFO] Executing cache cleanup module
+2025-10-10 21:29:22,807 [CACHE_CLEANUP] [INFO] Starting cache cleanup for 184 runtime papers
+2025-10-10 21:29:22,807 [CACHE_CLEANUP] [INFO] Using retention period: 14 days (cutoff date: 2025-09-26)
+2025-10-10 21:29:22,807 [CACHE_CLEANUP] [INFO] Adding last_generated column to papers table
+2025-10-10 21:29:22,807 [CACHE_CLEANUP] [ERROR] Cache cleanup failed: no such table: papers
+2025-10-10 21:29:22,807 [MAIN] [WARNING] Cache cleanup failed: no such table: papers
+2025-10-10 21:29:22,807 [MAIN] [INFO] Pipeline will continue despite cache cleanup failure
+2025-10-10 21:29:22,808 [MAIN] [INFO] ================================================================================
+2025-10-10 21:29:22,808 [MAIN] [INFO] PIPELINE COMPLETED SUCCESSFULLY
+2025-10-10 21:29:22,808 [MAIN] [INFO] ================================================================================
+2025-10-10 21:29:22,808 [MAIN] [INFO] Total papers processed: 184
+2025-10-10 21:29:22,808 [MAIN] [INFO]   Scraping: 184 successful, 0 failed
+2025-10-10 21:29:22,808 [MAIN] [INFO]   Introduction extraction: 161 successful, 23 failed/skipped
+2025-10-10 21:29:22,808 [MAIN] [INFO]   Embedding similarity: 184 successful, 0 failed
+2025-10-10 21:29:22,808 [MAIN] [INFO]   LLM validation: 184 successful, 0 failed
+2025-10-10 21:29:22,808 [MAIN] [INFO]   LLM scoring: 43 successful, 0 failed
+2025-10-10 21:29:22,808 [MAIN] [INFO]   H-index fetching: 41 successful, 0 failed
+2025-10-10 21:29:22,808 [MAIN] [INFO] Data saved to: database.sqlite
+2025-10-10 21:29:22,808 [MAIN] [INFO] ================================================================================

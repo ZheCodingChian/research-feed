@@ -36,6 +36,7 @@ class Paper:
     # Processing status and error tracking
     scraper_status: str = "initial"  # Track scraping state
     intro_status: str = "not_extracted"  # Track introduction extraction state
+    category_enhancement: str = "not_enhanced"  # Track category enhancement state: "not_enhanced" or "enhanced"
     errors: List[str] = field(default_factory=list)  # Store any error messages
     
     # Introduction extraction fields
@@ -45,32 +46,31 @@ class Paper:
     
     # Embedding similarity fields
     embedding_status: str = "not_embedded"  # Track embedding processing state
-    rlhf_score: Optional[float] = None  # Similarity score for RLHF topic
-    weak_supervision_score: Optional[float] = None  # Similarity score for weak supervision topic
-    diffusion_reasoning_score: Optional[float] = None  # Similarity score for diffusion reasoning topic
-    distributed_training_score: Optional[float] = None  # Similarity score for distributed training topic
-    datasets_score: Optional[float] = None  # Similarity score for datasets topic
-    highest_similarity_topic: Optional[str] = None  # Topic with highest similarity score
+    agentic_ai_score: Optional[float] = None  # Similarity score for Agentic Artificial Intelligence topic
+    proximal_policy_optimization_score: Optional[float] = None  # Similarity score for Proximal Policy Optimization topic
+    reinforcement_learning_score: Optional[float] = None  # Similarity score for Reinforcement Learning topic
+    reasoning_models_score: Optional[float] = None  # Similarity score for Reasoning Models topic
+    inference_time_scaling_score: Optional[float] = None  # Similarity score for Inference Time Scaling topic
     
     # LLM validation fields
     llm_validation_status: str = "not_validated"  # Track LLM validation state
-    rlhf_relevance: str = "not_validated"  # LLM relevance assessment for RLHF
-    weak_supervision_relevance: str = "not_validated"  # LLM relevance assessment for weak supervision
-    diffusion_reasoning_relevance: str = "not_validated"  # LLM relevance assessment for diffusion reasoning
-    distributed_training_relevance: str = "not_validated"  # LLM relevance assessment for distributed training
-    datasets_relevance: str = "not_validated"  # LLM relevance assessment for datasets
-    rlhf_justification: str = "no_justification"  # LLM justification for RLHF assessment
-    weak_supervision_justification: str = "no_justification"  # LLM justification for weak supervision assessment
-    diffusion_reasoning_justification: str = "no_justification"  # LLM justification for diffusion reasoning assessment
-    distributed_training_justification: str = "no_justification"  # LLM justification for distributed training assessment
-    datasets_justification: str = "no_justification"  # LLM justification for datasets assessment
+    agentic_ai_relevance: str = "not_validated"  # LLM relevance assessment for Agentic Artificial Intelligence
+    proximal_policy_optimization_relevance: str = "not_validated"  # LLM relevance assessment for Proximal Policy Optimization
+    reinforcement_learning_relevance: str = "not_validated"  # LLM relevance assessment for Reinforcement Learning
+    reasoning_models_relevance: str = "not_validated"  # LLM relevance assessment for Reasoning Models
+    inference_time_scaling_relevance: str = "not_validated"  # LLM relevance assessment for Inference Time Scaling
+    agentic_ai_justification: str = "no_justification"  # LLM justification for Agentic Artificial Intelligence assessment
+    proximal_policy_optimization_justification: str = "no_justification"  # LLM justification for Proximal Policy Optimization assessment
+    reinforcement_learning_justification: str = "no_justification"  # LLM justification for Reinforcement Learning assessment
+    reasoning_models_justification: str = "no_justification"  # LLM justification for Reasoning Models assessment
+    inference_time_scaling_justification: str = "no_justification"  # LLM justification for Inference Time Scaling assessment
     
     # LLM scoring fields
     llm_score_status: str = "not_scored"  # Track LLM scoring state: not_scored, completed, failed, not_relevant_enough
     summary: Optional[str] = None  # LLM-generated paper summary
-    novelty_score: Optional[str] = None  # High, Moderate, Low, None
+    novelty_score: Optional[str] = None  # Groundbreaking, Significant, Incremental, Minimal
     novelty_justification: Optional[str] = None  # LLM justification for novelty score
-    impact_score: Optional[str] = None  # High, Moderate, Low, Negligible
+    impact_score: Optional[str] = None  # Transformative, Substantial, Moderate, Negligible
     impact_justification: Optional[str] = None  # LLM justification for impact score
     recommendation_score: Optional[str] = None  # Must Read, Should Read, Can Skip, Ignore
     recommendation_justification: Optional[str] = None  # LLM justification for recommendation
@@ -158,15 +158,17 @@ class Paper:
         return self.llm_score_status in ["completed", "failed", "not_relevant_enough"]
     
     def has_highly_relevant_topic(self) -> bool:
-        """Check if paper has at least one highly relevant or moderately relevant topic."""
+        """Check if paper has at least one highly relevant, moderately relevant, or tangentially relevant topic."""
         relevance_scores = [
-            self.rlhf_relevance,
-            self.weak_supervision_relevance,
-            self.diffusion_reasoning_relevance,
-            self.distributed_training_relevance,
-            self.datasets_relevance
+            self.agentic_ai_relevance,
+            self.proximal_policy_optimization_relevance,
+            self.reinforcement_learning_relevance,
+            self.reasoning_models_relevance,
+            self.inference_time_scaling_relevance
         ]
-        return "Highly Relevant" in relevance_scores or "Moderately Relevant" in relevance_scores
+        return ("Highly Relevant" in relevance_scores or 
+                "Moderately Relevant" in relevance_scores or 
+                "Tangentially Relevant" in relevance_scores)
     
     def update_h_index_status(self, new_status: str) -> None:
         """Update the paper's H-index fetching status."""

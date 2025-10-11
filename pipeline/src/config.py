@@ -102,8 +102,8 @@ H_INDEX_FETCHING = {
     'notable_h_index_threshold': 5  # H-index threshold for "notable" authors
 }
 
-# Cache Cleanup Parameters
-CACHE_CLEANUP = {
+# Database Cleanup Parameters
+DATABASE_CLEANUP = {
     # Number of days to retain papers in the database
     # Papers older than this will be deleted from the database
     'retention_days': 14
