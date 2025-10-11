@@ -186,6 +186,16 @@ def main() -> None:
             logger.warning(f"Database cleanup failed: {e}")
             logger.info("Pipeline will continue despite database cleanup failure")
 
+        # Step 8: Execute Slack notification module
+        logger.info("Executing Slack notification module")
+        try:
+            from modules import slack
+            runtime_paper_dict = slack.run(runtime_paper_dict, {})
+            save_to_database(runtime_paper_dict)
+        except Exception as e:
+            logger.warning(f"Slack notification failed: {e}")
+            logger.info("Pipeline will continue despite Slack notification failure")
+
         # Final summary
         total_papers = len(runtime_paper_dict)
         successful_papers = sum(1 for p in runtime_paper_dict.values() if p.is_successfully_scraped())
