@@ -1,4 +1,6 @@
 const express = require('express');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const db = require('./database/db');
 const papersRouter = require('./routes/papers');
 const corsMiddleware = require('./middleware/cors');
@@ -6,12 +8,36 @@ const corsMiddleware = require('./middleware/cors');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Security: Helmet - Set secure HTTP headers
+app.use(helmet());
+
+// Security: Global rate limiter (100 requests per 15 minutes per IP)
+const globalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: { success: false, error: 'Too many requests, please try again later' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Security: Strict rate limiter for API endpoints (30 requests per minute per IP)
+const apiLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 30,
+  message: { success: false, error: 'Too many API requests, please slow down' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Apply global rate limiter to all requests
+app.use(globalLimiter);
+
 // Middleware
 app.use(corsMiddleware);
 app.use(express.json());
 
-// Routes
-app.use('/api/papers', papersRouter);
+// Routes (with stricter rate limiting for API endpoints)
+app.use('/api/papers', apiLimiter, papersRouter);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -31,11 +57,15 @@ app.use('*', (req, res) => {
 });
 
 // Error handler
-app.use((err, req, res) => {
-  console.error('Unhandled error:', err);
-  res.status(500).json({
+app.use((err, req, res, next) => {
+  console.error('Unhandled error:', err.stack);
+
+  const isDevelopment = process.env.NODE_ENV !== 'production';
+
+  res.status(err.status || 500).json({
     success: false,
-    error: 'Internal server error'
+    error: isDevelopment ? err.message : 'Internal server error',
+    ...(isDevelopment && { stack: err.stack })
   });
 });
 
