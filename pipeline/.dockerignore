@@ -1,0 +1,7 @@
+database.sqlite
+logs/
+*.pyc
+__pycache__/
+.env
+test-papers.txt
+README.md

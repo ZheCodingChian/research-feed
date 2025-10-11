@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  server:
+    build: ./server
+    container_name: arxiv-server
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    volumes:
+      - db-data:/data:ro
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3001/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  pipeline:
+    build: ./pipeline
+    container_name: arxiv-pipeline
+    volumes:
+      - db-data:/data:rw
+      - ./pipeline/logs:/app/logs:rw
+    env_file:
+      - ./pipeline/.env
+    profiles:
+      - manual
+
+volumes:
+  db-data:
+    driver: local

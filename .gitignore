@@ -204,3 +204,13 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Project-specific: Database files (uploaded manually to VPS)
+pipeline/database.sqlite
+server/database/database.sqlite
+
+# Project-specific: Generated logs
+pipeline/logs/
+
+# Project-specific: Docker volumes
+db-data/

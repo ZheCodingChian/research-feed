@@ -9,7 +9,7 @@ class Database {
 
   connect() {
     return new Promise((resolve, reject) => {
-      const dbPath = path.join(__dirname, 'database.sqlite');
+      const dbPath = '/data/database.sqlite';
       this.db = new sqlite3.Database(dbPath, (err) => {
         if (err) {
           console.error('Error connecting to database:', err.message);
