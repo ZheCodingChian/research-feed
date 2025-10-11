@@ -1,6 +1,6 @@
-import { BrandHeader } from '../components/ui/BrandHeader';
-import { DateCardList } from '../components/ui/DateCardList';
-import { LandingPageError } from '../components/ui/LandingPageError';
+import { BrandHeader } from '../components/layout/BrandHeader';
+import { DateCardList } from '../components/date/DateCardList';
+import { LandingPageError } from '../components/error/LandingPageError';
 import { usePapersMetadata } from '../hooks/usePapersMetadata';
 
 export function LandingPage() {

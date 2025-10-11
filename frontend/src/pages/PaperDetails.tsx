@@ -1,17 +1,17 @@
 import { useParams, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 import { usePaperDetails } from '../hooks/usePaperDetails';
-import { PaperDetailsHeader } from '../components/ui/PaperDetailsHeader';
-import { MobilePaperMetadataSection } from '../components/ui/MobilePaperMetadataSection';
-import { SummarySection } from '../components/ui/SummarySection';
-import { AbstractSection } from '../components/ui/AbstractSection';
-import { PaperScoringSection } from '../components/ui/PaperScoringSection';
-import { PaperTopicRelevanceSection } from '../components/ui/PaperTopicRelevanceSection';
-import { PaperSimilarityScoresSection } from '../components/ui/PaperSimilarityScoresSection';
-import { PaperHIndexSection } from '../components/ui/PaperHIndexSection';
-import { PaperIndividualAuthorHIndexSection } from '../components/ui/PaperIndividualAuthorHIndexSection';
-import { LeftArrow } from '../components/ui/LeftArrow';
-import { PaperDetailsRightColumn } from '../components/ui/PaperDetailsRightColumn';
+import { PaperDetailsHeader } from '../components/layout/PaperDetailsHeader';
+import { MobilePaperMetadataSection } from '../components/paperDetails/MobilePaperMetadataSection';
+import { SummarySection } from '../components/paperDetails/SummarySection';
+import { AbstractSection } from '../components/paperDetails/AbstractSection';
+import { PaperScoringSection } from '../components/paperDetails/PaperScoringSection';
+import { PaperTopicRelevanceSection } from '../components/paperDetails/PaperTopicRelevanceSection';
+import { PaperSimilarityScoresSection } from '../components/paperDetails/PaperSimilarityScoresSection';
+import { PaperHIndexSection } from '../components/paperDetails/PaperHIndexSection';
+import { PaperIndividualAuthorHIndexSection } from '../components/paperDetails/PaperIndividualAuthorHIndexSection';
+import { LeftArrow } from '../components/common/LeftArrow';
+import { PaperDetailsRightColumn } from '../components/paperDetails/PaperDetailsRightColumn';
 
 export function PaperDetails() {
   const { id } = useParams<{ id: string }>();

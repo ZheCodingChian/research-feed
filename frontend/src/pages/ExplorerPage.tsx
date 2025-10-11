@@ -2,17 +2,17 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useSearchParams, useLocation } from 'react-router-dom';
 import { OverlayScrollbarsComponent, OverlayScrollbarsComponentRef } from 'overlayscrollbars-react';
 import { useExplorerPapers } from '../hooks/useExplorerPapers';
-import { ExplorerHeader } from '../components/ui/ExplorerHeader';
-import { ExplorerPageError } from '../components/ui/ExplorerPageError';
-import { ErrorPaperList } from '../components/ui/ErrorPaperList';
-import { PaperCardList } from '../components/ui/PaperCardList';
-import { SortDropdown } from '../components/ui/SortDropdown';
-import { FilterColumn } from '../components/ui/FilterColumn';
-import { MobileFilterSortButtons } from '../components/ui/MobileFilterSortButtons';
-import { MobileSortModal } from '../components/ui/MobileSortModal';
-import { MobileFilterModal } from '../components/ui/MobileFilterModal';
-import { PaperCountDisplay } from '../components/ui/PaperCountDisplay';
-import { LeftArrow } from '../components/ui/LeftArrow';
+import { ExplorerHeader } from '../components/layout/ExplorerHeader';
+import { ExplorerPageError } from '../components/error/ExplorerPageError';
+import { ErrorPaperList } from '../components/paperCard/ErrorPaperList';
+import { PaperCardList } from '../components/paperCard/PaperCardList';
+import { SortDropdown } from '../components/sort/SortDropdown';
+import { FilterColumn } from '../components/filter/FilterColumn';
+import { MobileFilterSortButtons } from '../components/filter/MobileFilterSortButtons';
+import { MobileSortModal } from '../components/sort/MobileSortModal';
+import { MobileFilterModal } from '../components/filter/MobileFilterModal';
+import { PaperCountDisplay } from '../components/filter/PaperCountDisplay';
+import { LeftArrow } from '../components/common/LeftArrow';
 
 function isCriticalError(error: Error | null): boolean {
   if (!error) return false;
