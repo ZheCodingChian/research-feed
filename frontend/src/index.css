@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Space Grotesk font family */
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('./assets/fonts/Space_Grotesk/static/SpaceGrotesk-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('./assets/fonts/Space_Grotesk/static/SpaceGrotesk-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('./assets/fonts/Space_Grotesk/static/SpaceGrotesk-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* Space Mono font family */
+@font-face {
+  font-family: 'Space Mono';
+  src: url('./assets/fonts/Space_Mono/SpaceMono-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* Base styles */
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  background-color: theme('colors.neutral.100');
+  color: theme('colors.neutral.900');
+}
+
+/* Custom OverlayScrollbars styling */
+.os-theme-dark > .os-scrollbar > .os-scrollbar-track {
+  background: transparent;
+}
+
+.os-theme-dark > .os-scrollbar > .os-scrollbar-track > .os-scrollbar-handle {
+  background: rgba(107, 106, 101, 0.7); /* neutral-600 at 70% */
+}
+
+.os-theme-dark > .os-scrollbar > .os-scrollbar-track > .os-scrollbar-handle:hover {
+  background: rgba(79, 78, 75, 0.7); /* neutral-700 at 70% */
+}

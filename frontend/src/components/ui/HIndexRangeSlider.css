@@ -1,0 +1,28 @@
+.rc-slider-neutral .rc-slider-handle:hover {
+  border-color: #333331 !important;
+}
+
+.rc-slider-neutral .rc-slider-handle:active {
+  border-color: #333331 !important;
+  box-shadow: none !important;
+}
+
+.rc-slider-neutral .rc-slider-handle:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.rc-slider-neutral .rc-slider-handle:focus-visible {
+  border-color: #333331 !important;
+  box-shadow: none !important;
+}
+
+.rc-slider-neutral .rc-slider-handle-click-focused:focus {
+  border-color: #4f4e4b !important;
+  box-shadow: none !important;
+}
+
+.rc-slider-neutral .rc-slider-handle-dragging.rc-slider-handle-dragging.rc-slider-handle-dragging {
+  border-color: #333331 !important;
+  box-shadow: none !important;
+}
