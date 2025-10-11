@@ -24,32 +24,23 @@ export function PaperCardList({
   onBeforeLoadMore,
 }: PaperCardListProps) {
   const handleLoadMoreClick = () => {
-    // Capture scroll position BEFORE any state changes
     let scrollPosition = 0;
 
     if (scrollRef?.current) {
-      // Check if it's an OverlayScrollbarsComponentRef
       const current = scrollRef.current as any;
 
       if ('osInstance' in current && typeof current.osInstance === 'function') {
-        // Desktop: OverlayScrollbars
         const osInstance = current.osInstance();
         if (osInstance) {
           const { viewport } = osInstance.elements();
           scrollPosition = viewport.scrollTop;
-          console.log('[PaperCardList] Captured desktop scroll:', scrollPosition);
         }
       } else if ('scrollTop' in current) {
-        // Mobile: Native div
         scrollPosition = current.scrollTop;
-        console.log('[PaperCardList] Captured mobile scroll:', scrollPosition);
       }
     }
 
-    // Notify parent to save position
     onBeforeLoadMore?.(scrollPosition);
-
-    // Then trigger fetch (this will cause re-render)
     onLoadMore?.();
   };
 

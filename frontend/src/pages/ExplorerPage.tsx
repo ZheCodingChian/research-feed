@@ -134,22 +134,15 @@ export function ExplorerPage() {
   // Restore scroll position after content update (for "Load More")
   useLayoutEffect(() => {
     if (!isFetchingNextPage && savedScrollTop > 0) {
-      console.log('[DEBUG] Restoring scroll position:', savedScrollTop);
-
-      // Desktop: OverlayScrollbars
       if (rightScrollRef.current) {
         const osInstance = rightScrollRef.current.osInstance();
         if (osInstance) {
           const { viewport } = osInstance.elements();
           viewport.scrollTop = savedScrollTop;
-          console.log('[DEBUG] Desktop: Restored to', savedScrollTop);
           setSavedScrollTop(0);
         }
-      }
-      // Mobile: Native scroll
-      else if (mobileScrollRef.current) {
+      } else if (mobileScrollRef.current) {
         mobileScrollRef.current.scrollTop = savedScrollTop;
-        console.log('[DEBUG] Mobile: Restored to', savedScrollTop);
         setSavedScrollTop(0);
       }
     }
@@ -157,90 +150,47 @@ export function ExplorerPage() {
 
   // Restore scroll position from sessionStorage (when navigating back from paper details)
   useLayoutEffect(() => {
-    console.log('[SCROLL] ExplorerPage useLayoutEffect triggered');
-    console.log('[SCROLL] isLoading:', isLoading, 'papers.length:', papers.length);
-
     const savedScrollData = sessionStorage.getItem('explorerScrollPosition');
-    console.log('[SCROLL] savedScrollData from sessionStorage:', savedScrollData);
 
     if (savedScrollData && !isLoading && papers.length > 0) {
       try {
         const scrollData = JSON.parse(savedScrollData);
         const currentPath = location.pathname + location.search;
 
-        console.log('[SCROLL] Parsed scrollData:', scrollData);
-        console.log('[SCROLL] Current path:', currentPath);
-        console.log('[SCROLL] Saved path:', scrollData.path);
-        console.log('[SCROLL] Path matches:', scrollData.path === currentPath);
-        console.log('[SCROLL] Time diff (ms):', Date.now() - scrollData.timestamp);
-
-        // Only restore if the path matches and data is recent (within 5 minutes)
         if (scrollData.path === currentPath && Date.now() - scrollData.timestamp < 5 * 60 * 1000 && scrollData.scrollTop > 0) {
-          console.log('[SCROLL] Conditions met, attempting to restore to:', scrollData.scrollTop);
-
-          // Use setTimeout to ensure OverlayScrollbars and content are fully rendered
           const attemptRestore = (attempt = 0) => {
-            console.log('[SCROLL] Restore attempt:', attempt);
-
-            // Try desktop first (OverlayScrollbars)
             if (rightScrollRef.current) {
-              console.log('[SCROLL] Desktop path - rightScrollRef exists');
               const osInstance = rightScrollRef.current.osInstance();
-              console.log('[SCROLL] osInstance:', osInstance);
               if (osInstance) {
                 const { viewport } = osInstance.elements();
-                console.log('[SCROLL] viewport:', viewport);
-                console.log('[SCROLL] Current viewport.scrollTop:', viewport.scrollTop);
-                console.log('[SCROLL] Attempting to set scrollTop to:', scrollData.scrollTop);
                 viewport.scrollTop = scrollData.scrollTop;
 
-                // Verify it was set
                 setTimeout(() => {
-                  console.log('[SCROLL] After setting, viewport.scrollTop is:', viewport.scrollTop);
                   if (viewport.scrollTop < scrollData.scrollTop - 50 && attempt < 5) {
-                    // If scroll didn't take, retry
-                    console.log('[SCROLL] Scroll did not take effect, retrying...');
                     setTimeout(() => attemptRestore(attempt + 1), 50);
                   } else {
-                    console.log('[SCROLL] Desktop: Successfully restored to', viewport.scrollTop);
                     sessionStorage.removeItem('explorerScrollPosition');
-                    console.log('[SCROLL] Cleared sessionStorage');
                   }
                 }, 0);
                 return;
               } else if (attempt < 10) {
-                // Retry if osInstance is not ready yet (max 10 attempts)
-                console.log('[SCROLL] osInstance not ready, retrying...');
                 setTimeout(() => attemptRestore(attempt + 1), 50);
                 return;
               }
-            }
-            // Try mobile (Native scroll)
-            else if (mobileScrollRef.current) {
-              console.log('[SCROLL] Mobile path - mobileScrollRef exists');
+            } else if (mobileScrollRef.current) {
               mobileScrollRef.current.scrollTop = scrollData.scrollTop;
-              console.log('[SCROLL] Mobile: Restored to', scrollData.scrollTop);
               sessionStorage.removeItem('explorerScrollPosition');
-              console.log('[SCROLL] Cleared sessionStorage');
               return;
             }
 
-            console.log('[SCROLL] Could not restore scroll - rightScrollRef:', !!rightScrollRef.current,
-              'mobileScrollRef:', !!mobileScrollRef.current);
             sessionStorage.removeItem('explorerScrollPosition');
           };
 
           setTimeout(() => attemptRestore(0), 100);
-        } else {
-          console.log('[SCROLL] Conditions not met for restoration');
         }
       } catch (error) {
-        console.error('[SCROLL] Failed to restore scroll position:', error);
         sessionStorage.removeItem('explorerScrollPosition');
       }
-    } else {
-      console.log('[SCROLL] Skipping restoration - savedScrollData:', !!savedScrollData,
-        'isLoading:', isLoading, 'papers.length:', papers.length);
     }
   }, [isLoading, papers.length, location.pathname, location.search]);
 

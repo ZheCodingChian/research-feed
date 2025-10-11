@@ -13,33 +13,20 @@ export function PaperCard({ paper, scrollRef }: PaperCardProps) {
   const location = useLocation();
 
   const handleClick = () => {
-    // Save scroll position to sessionStorage before navigation
-    console.log('[SCROLL] PaperCard clicked, saving scroll position...');
-    console.log('[SCROLL] scrollRef:', scrollRef);
-
     let scrollTop = 0;
 
     if (scrollRef?.current) {
       const current = scrollRef.current as any;
-      console.log('[SCROLL] scrollRef.current:', current);
 
-      // Check if it's an OverlayScrollbarsComponentRef
       if ('osInstance' in current && typeof current.osInstance === 'function') {
-        // Desktop: OverlayScrollbars
         const osInstance = current.osInstance();
-        console.log('[SCROLL] Desktop - osInstance:', osInstance);
         if (osInstance) {
           const { viewport } = osInstance.elements();
           scrollTop = viewport.scrollTop;
-          console.log('[SCROLL] Desktop scrollTop:', scrollTop);
         }
       } else if ('scrollTop' in current) {
-        // Mobile: Native div
         scrollTop = current.scrollTop;
-        console.log('[SCROLL] Mobile scrollTop:', scrollTop);
       }
-    } else {
-      console.log('[SCROLL] No scrollRef available');
     }
 
     const scrollData = {
@@ -48,9 +35,7 @@ export function PaperCard({ paper, scrollRef }: PaperCardProps) {
       timestamp: Date.now()
     };
 
-    console.log('[SCROLL] Saving to sessionStorage:', scrollData);
     sessionStorage.setItem('explorerScrollPosition', JSON.stringify(scrollData));
-    console.log('[SCROLL] Saved successfully!');
   };
 
   // Helper function to check if a topic is relevant
