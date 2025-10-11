@@ -6,7 +6,7 @@ services:
     container_name: research-feed-server
     restart: unless-stopped
     ports:
-      - "3001:3001"
+      - "0.0.0.0:3001:3001" # Expose to all interfaces
     volumes:
       - db-data:/data:ro
       - ./server/logs:/app/logs:rw

@@ -9,5 +9,14 @@ export default defineConfig({
     hmr: {
       clientPort: 443,
     },
-  }
+  },
+  build: {
+    assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
+    },
+  },
+  base: './' // Use relative paths for better compatibility
 })
