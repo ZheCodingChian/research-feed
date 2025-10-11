@@ -1,6 +1,6 @@
 module.exports = {
   apps: [{
-    name: 'arxiv-newsletter-api',
+    name: 'research-feed-server',
     script: './server.js',
     instances: 1,
     exec_mode: 'fork',

@@ -1,6 +1,6 @@
 # Deployment Guide
 
-Complete guide for deploying the arXiv Newsletter system to production on a VPS.
+Complete guide for deploying the Research Feed system to production on a VPS.
 
 ---
 
@@ -75,8 +75,8 @@ apt install git -y
 
 ```bash
 cd /root  # Or your preferred location
-git clone https://github.com/yourusername/arXiv-Newsletter-Papers.git
-cd arXiv-Newsletter-Papers
+git clone https://github.com/yourusername/research-feed.git
+cd research-feed
 ```
 
 ### 2.2 Create Pipeline .env File
@@ -111,19 +111,19 @@ scp pipeline/database.sqlite root@your-vps-ip:/tmp/database.sqlite
 **On VPS:**
 
 ```bash
-cd /root/arXiv-Newsletter-Papers
+cd /root/research-feed
 
 # Create the Docker volume
-docker volume create arXiv-newsletter-papers_db-data
+docker volume create research-feed_db-data
 
 # Copy database into the volume
 docker run --rm \
-  -v arXiv-newsletter-papers_db-data:/data \
+  -v research-feed_db-data:/data \
   -v /tmp:/host \
   alpine cp /host/database.sqlite /data/database.sqlite
 
 # Verify the database is in the volume
-docker run --rm -v arXiv-newsletter-papers_db-data:/data alpine ls -lh /data/
+docker run --rm -v research-feed_db-data:/data alpine ls -lh /data/
 ```
 
 You should see `database.sqlite` listed.
@@ -141,7 +141,7 @@ rm /tmp/database.sqlite
 ### 4.1 Build Docker Images
 
 ```bash
-cd /root/arXiv-Newsletter-Papers
+cd /root/research-feed
 docker-compose build
 ```
 
@@ -192,7 +192,7 @@ curl "http://localhost:3001/api/papers?limit=10&offset=0"
 ### 5.1 Test Pipeline Manually First
 
 ```bash
-cd /root/arXiv-Newsletter-Papers
+cd /root/research-feed
 
 # Run pipeline once manually
 docker-compose run --rm pipeline
@@ -228,15 +228,15 @@ crontab -e
 Add this line (runs daily at 7:00 AM SGT):
 
 ```cron
-0 7 * * * cd /root/arXiv-Newsletter-Papers && docker-compose run --rm pipeline && docker-compose exec -T server pm2 reload all >> /var/log/arxiv-pipeline-cron.log 2>&1
+0 7 * * * cd /root/research-feed && docker-compose run --rm pipeline && docker-compose exec -T server pm2 reload all >> /var/log/research-feed-pipeline-cron.log 2>&1
 ```
 
 **Explanation:**
 - `0 7 * * *` - Run at 7:00 AM every day
-- `cd /root/arXiv-Newsletter-Papers` - Navigate to project directory
+- `cd /root/research-feed` - Navigate to project directory
 - `docker-compose run --rm pipeline` - Run pipeline, remove container after exit
 - `docker-compose exec -T server pm2 reload all` - Gracefully reload server
-- `>> /var/log/arxiv-pipeline-cron.log 2>&1` - Log cron output
+- `>> /var/log/research-feed-pipeline-cron.log 2>&1` - Log cron output
 
 Save and exit.
 
@@ -356,7 +356,7 @@ cat pipeline/logs/$(date +%Y%m%d).log
 cat pipeline/logs/20251011.log
 
 # Cron job logs
-tail -f /var/log/arxiv-pipeline-cron.log
+tail -f /var/log/research-feed-pipeline-cron.log
 ```
 
 **PM2 logs (inside container):**
@@ -396,7 +396,7 @@ docker-compose exec server pm2 reload all
 ### 9.1 Pull Latest Changes
 
 ```bash
-cd /root/arXiv-Newsletter-Papers
+cd /root/research-feed
 git pull origin main
 ```
 
@@ -453,12 +453,12 @@ cat pipeline/logs/$(date +%Y%m%d).log
 **Check cron status:**
 ```bash
 systemctl status cron
-cat /var/log/arxiv-pipeline-cron.log
+cat /var/log/research-feed-pipeline-cron.log
 ```
 
 **Test cron command manually:**
 ```bash
-cd /root/arXiv-Newsletter-Papers && docker-compose run --rm pipeline
+cd /root/research-feed && docker-compose run --rm pipeline
 ```
 
 ### Issue: Database not updating
@@ -468,7 +468,7 @@ cd /root/arXiv-Newsletter-Papers && docker-compose run --rm pipeline
 # Inside a pipeline run, check if database.new.sqlite is created
 docker-compose run --rm pipeline
 # After run, verify database was updated
-docker run --rm -v arXiv-newsletter-papers_db-data:/data alpine ls -lh /data/
+docker run --rm -v research-feed_db-data:/data alpine ls -lh /data/
 ```
 
 ### Issue: Server shows old data after pipeline run
@@ -493,7 +493,7 @@ docker-compose logs server --tail 50
 ```bash
 # Backup from Docker volume
 docker run --rm \
-  -v arXiv-newsletter-papers_db-data:/data \
+  -v research-feed_db-data:/data \
   -v /root/backups:/backup \
   alpine cp /data/database.sqlite /backup/database-$(date +%Y%m%d).sqlite
 
@@ -509,7 +509,7 @@ scp ./database-backup.sqlite root@your-vps-ip:/tmp/
 
 # Restore to volume
 docker run --rm \
-  -v arXiv-newsletter-papers_db-data:/data \
+  -v research-feed_db-data:/data \
   -v /tmp:/host \
   alpine cp /host/database-backup.sqlite /data/database.sqlite
 
@@ -552,7 +552,7 @@ docker-compose exec server pm2 status
 
 # View Docker volumes
 docker volume ls
-docker volume inspect arXiv-newsletter-papers_db-data
+docker volume inspect research-feed_db-data
 ```
 
 ---

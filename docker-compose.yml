@@ -3,7 +3,7 @@ version: '3.8'
 services:
   server:
     build: ./server
-    container_name: arxiv-server
+    container_name: research-feed-server
     restart: unless-stopped
     ports:
       - "3001:3001"
@@ -21,7 +21,7 @@ services:
 
   pipeline:
     build: ./pipeline
-    container_name: arxiv-pipeline
+    container_name: research-feed-pipeline
     volumes:
       - db-data:/data:rw
       - ./pipeline/logs:/app/logs:rw
