@@ -3929,3 +3929,91 @@
 2025-10-11 15:39:10,094 [MAIN] [INFO] Data saved to: database.sqlite
 2025-10-11 15:39:10,094 [MAIN] [INFO] ================================================================================
 2025-10-11 18:13:02,485 [MAIN] [ERROR] Pipeline failed: Test file not found: /app/test_papers.txt
+2025-10-11 18:14:13,012 [MAIN] [ERROR] Pipeline failed: Test file not found: /app/test_papers.txt
+2025-10-11 18:14:31,970 [MAIN] [ERROR] Pipeline failed: Test file not found: /app/test_papers.txt
+2025-10-11 18:17:11,138 [MAIN] [INFO] Starting pipeline with --test /app/test_papers.txt
+2025-10-11 18:17:11,192 [SCRAPER] [INFO] Starting test-based scraping from file /app/test_papers.txt
+2025-10-11 18:17:11,192 [SCRAPER] [INFO] Fetching 1 papers from test file
+2025-10-11 18:17:11,649 [SCRAPER] [INFO] Extracted 1 paper IDs from XML response
+2025-10-11 18:17:11,649 [SCRAPER] [INFO] Found 1 papers from test file
+2025-10-11 18:17:11,649 [SCRAPER] [INFO] Loading cached papers for 1 IDs
+2025-10-11 18:17:11,650 [DATABASE] [INFO] Loaded 0 papers from database
+2025-10-11 18:17:11,651 [SCRAPER] [INFO] Found 0 papers in cache
+2025-10-11 18:17:11,651 [SCRAPER] [INFO] Cache analysis: 0 hits, 1 misses
+2025-10-11 18:17:11,651 [SCRAPER] [INFO] Extracting metadata for 1 papers
+2025-10-11 18:17:11,652 [SCRAPER] [INFO] Successfully processed 1 papers
+2025-10-11 18:17:11,652 [SCRAPER] [INFO] Category processing completed: 1 categories enhanced with descriptions
+2025-10-11 18:17:11,652 [MAIN] [INFO] Executing scraper module
+2025-10-11 18:17:11,653 [DATABASE] [INFO] Saving 1 papers to database
+2025-10-11 18:17:11,656 [DATABASE] [INFO] Successfully saved 1 papers to database
+2025-10-11 18:17:11,656 [MAIN] [INFO] Saved 1 papers to database
+2025-10-11 18:17:11,656 [MAIN] [INFO] Executing introduction extractor module
+2025-10-11 18:17:11,696 [INTRO_EXTRACTOR] [INFO] Starting introduction extraction for 1 papers
+2025-10-11 18:17:11,696 [INTRO_EXTRACTOR] [INFO] Processing 1 papers for introduction extraction with 1.0s delays
+2025-10-11 18:17:11,696 [INTRO_EXTRACTOR] [INFO] Processing paper 1/1: 2510.07715
+2025-10-11 18:17:12,702 [INTRO_EXTRACTOR] [INFO]   2510.07715 - SUCCESS - Method: dedicated_intro_file
+2025-10-11 18:17:12,702 [INTRO_EXTRACTOR] [INFO] Introduction extraction complete: 1/1 successful, 0 failed, 0 skipped
+2025-10-11 18:17:12,703 [DATABASE] [INFO] Saving 1 papers to database
+2025-10-11 18:17:12,705 [DATABASE] [INFO] Successfully saved 1 papers to database
+2025-10-11 18:17:12,705 [MAIN] [INFO] Saved 1 papers to database
+2025-10-11 18:17:12,705 [MAIN] [INFO] Executing embedding similarity module
+2025-10-11 18:17:12,970 [EMBEDDING_SIMILARITY] [INFO] Starting embedding similarity calculation for 1 papers
+2025-10-11 18:17:12,975 [EMBEDDING_SIMILARITY] [INFO] Loaded embeddings for 5 topics
+2025-10-11 18:17:12,975 [EMBEDDING_SIMILARITY] [INFO] Processing 1 papers for embedding similarity
+2025-10-11 18:17:12,975 [EMBEDDING_SIMILARITY] [INFO] Processing batch 1 with 1 papers
+2025-10-11 18:17:13,812 [httpx] [INFO] HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-10-11 18:17:13,819 [EMBEDDING_SIMILARITY] [INFO] Embedding similarity complete: 1/1 successful, 0 failed, 0 skipped
+2025-10-11 18:17:13,820 [DATABASE] [INFO] Saving 1 papers to database
+2025-10-11 18:17:13,825 [DATABASE] [INFO] Successfully saved 1 papers to database
+2025-10-11 18:17:13,826 [MAIN] [INFO] Saved 1 papers to database
+2025-10-11 18:17:13,826 [MAIN] [INFO] Executing LLM validation module
+2025-10-11 18:17:13,831 [LLM_VALIDATION] [INFO] Starting LLM validation for 1 papers
+2025-10-11 18:17:13,831 [LLM_VALIDATION] [INFO] Processing 1 papers for LLM validation using 10 workers
+2025-10-11 18:17:13,832 [LLM_VALIDATION] [INFO] Processing batch 1/1 with 1 papers
+2025-10-11 18:17:15,073 [LLM_VALIDATION] [WARNING] Paper 1/1: 2510.07715 - attempt 1/4 FAILED: API request failed: 403 Client Error: Forbidden for url: https://openrouter.ai/api/v1/chat/completions
+2025-10-11 18:17:17,200 [LLM_VALIDATION] [WARNING] Paper 1/1: 2510.07715 - attempt 2/4 FAILED: API request failed: 403 Client Error: Forbidden for url: https://openrouter.ai/api/v1/chat/completions
+2025-10-11 18:17:19,850 [LLM_VALIDATION] [WARNING] Paper 1/1: 2510.07715 - attempt 3/4 FAILED: API request failed: 403 Client Error: Forbidden for url: https://openrouter.ai/api/v1/chat/completions
+2025-10-11 18:17:25,721 [LLM_VALIDATION] [ERROR] Paper 1/1: 2510.07715 - LLM validation FAILED after all retries: API request failed: 403 Client Error: Forbidden for url: https://openrouter.ai/api/v1/chat/completions
+2025-10-11 18:17:25,725 [LLM_VALIDATION] [INFO] LLM validation complete: 0/1 successful, 1 failed, 0 skipped
+2025-10-11 18:17:25,726 [DATABASE] [INFO] Saving 1 papers to database
+2025-10-11 18:17:25,730 [DATABASE] [INFO] Successfully saved 1 papers to database
+2025-10-11 18:17:25,730 [MAIN] [INFO] Saved 1 papers to database
+2025-10-11 18:17:25,731 [MAIN] [INFO] Executing LLM scoring module
+2025-10-11 18:17:25,736 [LLM_SCORING] [INFO] Starting LLM scoring for 1 papers
+2025-10-11 18:17:25,736 [LLM_SCORING] [INFO] Skipping 1 papers: 1 no LLM validation
+2025-10-11 18:17:25,736 [LLM_SCORING] [INFO] No papers require LLM scoring
+2025-10-11 18:17:25,736 [DATABASE] [INFO] Saving 1 papers to database
+2025-10-11 18:17:25,739 [DATABASE] [INFO] Successfully saved 1 papers to database
+2025-10-11 18:17:25,739 [MAIN] [INFO] Saved 1 papers to database
+2025-10-11 18:17:25,739 [MAIN] [INFO] Executing H-index fetching module
+2025-10-11 18:17:25,741 [H_INDEX_FETCHING] [INFO] Starting H-index fetching for 1 papers
+2025-10-11 18:17:25,741 [H_INDEX_FETCHING] [INFO] No papers require H-index fetching
+2025-10-11 18:17:25,742 [DATABASE] [INFO] Saving 1 papers to database
+2025-10-11 18:17:25,744 [DATABASE] [INFO] Successfully saved 1 papers to database
+2025-10-11 18:17:25,744 [MAIN] [INFO] Saved 1 papers to database
+2025-10-11 18:17:25,744 [MAIN] [INFO] Executing database cleanup module
+2025-10-11 18:17:25,745 [DATABASE_CLEANUP] [INFO] Starting database cleanup for 1 runtime papers
+2025-10-11 18:17:25,745 [DATABASE_CLEANUP] [INFO] Using retention period: 14 days (cutoff date: 2025-09-27)
+2025-10-11 18:17:25,746 [DATABASE_CLEANUP] [INFO] Adding last_generated column to papers table
+2025-10-11 18:17:25,746 [DATABASE_CLEANUP] [ERROR] Cache cleanup failed: no such table: papers
+2025-10-11 18:17:25,746 [MAIN] [WARNING] Database cleanup failed: no such table: papers
+2025-10-11 18:17:25,746 [MAIN] [INFO] Pipeline will continue despite database cleanup failure
+2025-10-11 18:17:25,746 [MAIN] [INFO] Executing Slack notification module
+2025-10-11 18:17:25,747 [SLACK] [INFO] Starting Slack notification
+2025-10-11 18:17:26,124 [SLACK] [INFO] Successfully sent Slack notification
+2025-10-11 18:17:26,126 [SLACK] [INFO] Slack notification sent successfully
+2025-10-11 18:17:26,128 [DATABASE] [INFO] Saving 1 papers to database
+2025-10-11 18:17:26,132 [DATABASE] [INFO] Successfully saved 1 papers to database
+2025-10-11 18:17:26,133 [MAIN] [INFO] Saved 1 papers to database
+2025-10-11 18:17:26,133 [MAIN] [INFO] ================================================================================
+2025-10-11 18:17:26,133 [MAIN] [INFO] PIPELINE COMPLETED SUCCESSFULLY
+2025-10-11 18:17:26,133 [MAIN] [INFO] ================================================================================
+2025-10-11 18:17:26,133 [MAIN] [INFO] Total papers processed: 1
+2025-10-11 18:17:26,134 [MAIN] [INFO]   Scraping: 1 successful, 0 failed
+2025-10-11 18:17:26,134 [MAIN] [INFO]   Introduction extraction: 1 successful, 0 failed/skipped
+2025-10-11 18:17:26,134 [MAIN] [INFO]   Embedding similarity: 1 successful, 0 failed
+2025-10-11 18:17:26,134 [MAIN] [INFO]   LLM validation: 0 successful, 1 failed
+2025-10-11 18:17:26,134 [MAIN] [INFO]   LLM scoring: 0 successful, 0 failed
+2025-10-11 18:17:26,134 [MAIN] [INFO]   H-index fetching: 0 successful, 0 failed
+2025-10-11 18:17:26,134 [MAIN] [INFO] Data saved to: database.sqlite
+2025-10-11 18:17:26,134 [MAIN] [INFO] ================================================================================
