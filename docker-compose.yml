@@ -1,7 +1,5 @@
 version: '3.8'
 
-name: research-feed
-
 services:
   server:
     build: ./server
