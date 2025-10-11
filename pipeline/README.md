@@ -276,7 +276,10 @@ Justifications for each topic:
 - `reasoning_models_justification`
 - `inference_time_scaling_justification`
 
-Values: `"no_justification"` (default) or detailed text explanations when validation is completed
+Values: 
+- Detailed text explanations for topics scoring above the similarity threshold
+- `"below_threshold"` for topics scoring below the similarity threshold
+- (Default `"no_justification"` is overwritten during LLM validation process)
 
 **LLM Quality Scoring:**
 - `summary` (TEXT) - LLM-generated paper summary
