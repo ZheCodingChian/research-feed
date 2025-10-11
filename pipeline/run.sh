@@ -3,9 +3,14 @@ set -e
 
 echo "=== Pipeline Starting at $(date) ==="
 
-# Calculate date from 15 days ago
-TARGET_DATE=$(date -d "15 days ago" +%Y-%m-%d)
-echo "Processing papers from: $TARGET_DATE"
+# Accept date as argument, or calculate from 15 days ago
+if [ -n "$1" ]; then
+    TARGET_DATE="$1"
+    echo "Processing papers from (manual): $TARGET_DATE"
+else
+    TARGET_DATE=$(date -d "15 days ago" +%Y-%m-%d)  # Linux compatible (for Docker)
+    echo "Processing papers from (auto): $TARGET_DATE"
+fi
 
 # Step 1: Copy existing database to working copy
 if [ -f /data/database.sqlite ]; then

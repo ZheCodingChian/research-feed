@@ -12,7 +12,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy pipeline source code
 COPY src/ ./src/
-COPY cache.sqlite .
+COPY cache.sqlite ./src/
 COPY run.sh .
 
 # Make run.sh executable
