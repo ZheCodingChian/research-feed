@@ -1,0 +1,3 @@
+GET /api/health 200 96 - 8.898 ms
+GET /api/papers 400 237 - 4.025 ms
+GET /api/papers?page=1&limit=5&sortBy=date&sortOrder=desc&date=latest&topics=&recommendation=&impact=&novelty=&relevance=&scoring=&h_index_status=&highest_h_index_range=&average_h_index_range= 400 148 - 1.081 ms

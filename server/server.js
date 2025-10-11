@@ -1,6 +1,9 @@
 const express = require('express');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const morgan = require('morgan');
+const rfs = require('rotating-file-stream');
+const path = require('path');
 const db = require('./database/db');
 const papersRouter = require('./routes/papers');
 const corsMiddleware = require('./middleware/cors');
@@ -8,8 +11,18 @@ const corsMiddleware = require('./middleware/cors');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Configure rotating file stream for access logs
+const accessLogStream = rfs.createStream('access.log', {
+  interval: '1d', // Daily rotation
+  maxFiles: 14,   // Keep 14 days of logs
+  path: path.join(__dirname, 'logs')
+});
+
 // Security: Helmet - Set secure HTTP headers
 app.use(helmet());
+
+// Logging: Morgan HTTP request logger
+app.use(morgan('combined', { stream: accessLogStream }));
 
 // Security: Global rate limiter (100 requests per 15 minutes per IP)
 const globalLimiter = rateLimit({

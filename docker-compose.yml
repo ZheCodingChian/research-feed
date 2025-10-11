@@ -11,6 +11,7 @@ services:
       - "3001:3001"
     volumes:
       - db-data:/data:ro
+      - ./server/logs:/app/logs:rw
     environment:
       - NODE_ENV=production
       - PORT=3001
