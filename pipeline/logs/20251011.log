@@ -3928,3 +3928,4 @@
 2025-10-11 15:39:10,094 [MAIN] [INFO]   H-index fetching: 214 successful, 0 failed
 2025-10-11 15:39:10,094 [MAIN] [INFO] Data saved to: database.sqlite
 2025-10-11 15:39:10,094 [MAIN] [INFO] ================================================================================
+2025-10-11 18:13:02,485 [MAIN] [ERROR] Pipeline failed: Test file not found: /app/test_papers.txt
