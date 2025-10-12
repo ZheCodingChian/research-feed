@@ -8,7 +8,7 @@ services:
     ports:
       - "0.0.0.0:3001:3001" # Expose to all interfaces
     volumes:
-      - db-data:/data:ro
+      - research-db:/data:ro
       - ./server/logs:/app/logs:rw
     environment:
       - NODE_ENV=production
@@ -24,7 +24,7 @@ services:
     build: ./pipeline
     container_name: research-feed-pipeline
     volumes:
-      - db-data:/data:rw
+      - research-db:/data:rw
       - ./pipeline/logs:/app/logs:rw
     env_file:
       - ./pipeline/.env
@@ -32,5 +32,5 @@ services:
       - manual
 
 volumes:
-  db-data:
+  research-db:
     driver: local
