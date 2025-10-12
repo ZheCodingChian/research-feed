@@ -12,7 +12,8 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Trust proxy - Required when behind reverse proxy (Cloudflare, etc.)
-app.set('trust proxy', true);
+// Set to 1 to trust only the first proxy in the chain (most secure for single reverse proxy setup)
+app.set('trust proxy', 1);
 
 // Configure rotating file stream for access logs
 const accessLogStream = rfs.createStream('access.log', {
