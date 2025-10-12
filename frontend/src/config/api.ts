@@ -1,5 +1,8 @@
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
+// Debug: Log the API URL being used
+console.log('API_BASE_URL:', API_BASE_URL);
+
 export const API_ENDPOINTS = {
   PAPERS: '/papers',
   PAPERS_METADATA: '/papers/metadata',
