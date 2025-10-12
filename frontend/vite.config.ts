@@ -18,5 +18,5 @@ export default defineConfig({
       },
     },
   },
-  base: './' // Use relative paths for better compatibility
+  base: '/' // Use absolute paths for Cloudflare Pages
 })
