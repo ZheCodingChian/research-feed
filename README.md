@@ -1,6 +1,8 @@
 # Research Feed
 
-A full-stack application for discovering, analyzing, and browsing AI research papers from arXiv. The system combines automated data pipeline processing with a modern web interface to deliver curated, AI-scored research papers with topic relevance analysis and author impact metrics.
+A full-stack application for scraping, analyzing and displaying AI research papers from arXiv.
+
+Website at https://researchfeed.pages.dev/
 
 ## Architecture Overview
 
