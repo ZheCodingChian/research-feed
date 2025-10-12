@@ -57,7 +57,7 @@ EMBEDDING = {
 LLM_VALIDATION = {
     # OpenRouter API configuration
     'api_base_url': 'https://openrouter.ai/api/v1',
-    'model': 'x-ai/grok-3-mini',
+    'model': 'x-ai/grok-4-fast',
     'api_key_env': 'OPENROUTER_API_KEY',
     
     # Similarity threshold for validation
@@ -78,7 +78,7 @@ LLM_VALIDATION = {
 LLM_SCORING = {
     # OpenRouter API configuration
     'api_base_url': 'https://openrouter.ai/api/v1',
-    'model': 'x-ai/grok-3-mini',
+    'model': 'x-ai/grok-4-fast',
     'api_key_env': 'OPENROUTER_API_KEY',
     
     # Parallel processing settings (no batching for this module)
