@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://159.223.48.147:3001/api';
+const API_BASE_URL = 'https://researchfeed.zhechianl.workers.dev/api/';
 
 export const API_ENDPOINTS = {
   PAPERS: '/papers',
