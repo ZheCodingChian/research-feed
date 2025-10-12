@@ -11,6 +11,9 @@ const corsMiddleware = require('./middleware/cors');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Trust proxy - Required when behind reverse proxy (Cloudflare, etc.)
+app.set('trust proxy', true);
+
 // Configure rotating file stream for access logs
 const accessLogStream = rfs.createStream('access.log', {
   interval: '1d', // Daily rotation
