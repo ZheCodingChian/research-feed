@@ -41,7 +41,7 @@ export function FilterActionButton({
           />
         </svg>
       ) : (
-        <span className="text-neutral-100 font-header font-bold text-[1.25rem]">
+        <span className="text-neutral-100 font-header font-bold text-[1rem]">
           {showError
             ? 'Show -- / -- Papers'
             : `Show ${filteredCount} / ${totalCount} Papers`}

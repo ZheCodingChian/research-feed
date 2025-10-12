@@ -42,16 +42,33 @@ export function MobileFilterModal({
     if (isOpen) {
       setShouldRender(true);
       setTimeout(() => setIsAnimatingIn(true), 10);
+
+      // Prevent scrolling on body (works for most browsers)
       document.body.style.overflow = 'hidden';
+      // Prevent scrolling on iOS Safari
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.top = `-${window.scrollY}px`;
     } else {
       setIsAnimatingIn(false);
       const timer = setTimeout(() => setShouldRender(false), 200);
+
+      // Restore scrolling
+      const scrollY = document.body.style.top;
       document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.top = '';
+      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+
       return () => clearTimeout(timer);
     }
 
     return () => {
       document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.top = '';
     };
   }, [isOpen]);
 

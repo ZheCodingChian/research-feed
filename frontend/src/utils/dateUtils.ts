@@ -6,15 +6,17 @@ import { DateMetadata } from '../types/api';
  * @returns Formatted string like "Saturday, 21 September 2024"
  */
 export function formatDateForCard(dateString: string): string {
-  const formatted = new Intl.DateTimeFormat('en-GB', {
+  // Use en-US locale which consistently includes comma after weekday across all browsers
+  const formatted = new Intl.DateTimeFormat('en-US', {
     weekday: 'long',
     day: '2-digit',
     month: 'long',
     year: 'numeric'
   }).format(new Date(dateString));
 
-  // Add comma after weekday
-  return formatted.replace(/^(\w+)/, '$1,');
+  // en-US format is "Tuesday, September 30, 2025" but we want "Tuesday, 30 September 2025"
+  // Rearrange to move day before month
+  return formatted.replace(/(\w+), (\w+) (\d+), (\d+)/, '$1, $3 $2 $4');
 }
 
 /**
