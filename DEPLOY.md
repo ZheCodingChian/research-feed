@@ -114,16 +114,16 @@ scp pipeline/database.sqlite root@your-vps-ip:/tmp/database.sqlite
 cd /root/research-feed
 
 # Create the Docker volume
-docker volume create research-feed_research-db
+docker volume create research-feed_database
 
 # Copy database into the volume
 docker run --rm \
-  -v research-feed_research-db:/data \
+  -v research-feed_database:/data \
   -v /tmp:/host \
   alpine cp /host/database.sqlite /data/database.sqlite
 
 # Verify the database is in the volume
-docker run --rm -v research-feed_research-db:/data alpine ls -lh /data/
+docker run --rm -v research-feed_database:/data alpine ls -lh /data/
 ```
 
 You should see `database.sqlite` listed.
@@ -468,7 +468,7 @@ cd /root/research-feed && docker-compose run --rm pipeline
 # Inside a pipeline run, check if database.new.sqlite is created
 docker-compose run --rm pipeline
 # After run, verify database was updated
-docker run --rm -v research-feed_research-db:/data alpine ls -lh /data/
+docker run --rm -v research-feed_database:/data alpine ls -lh /data/
 ```
 
 ### Issue: Server shows old data after pipeline run
@@ -493,7 +493,7 @@ docker-compose logs server --tail 50
 ```bash
 # Backup from Docker volume
 docker run --rm \
-  -v research-feed_research-db:/data \
+  -v research-feed_database:/data \
   -v /root/backups:/backup \
   alpine cp /data/database.sqlite /backup/database-$(date +%Y%m%d).sqlite
 
@@ -509,7 +509,7 @@ scp ./database-backup.sqlite root@your-vps-ip:/tmp/
 
 # Restore to volume
 docker run --rm \
-  -v research-feed_research-db:/data \
+  -v research-feed_database:/data \
   -v /tmp:/host \
   alpine cp /host/database-backup.sqlite /data/database.sqlite
 
@@ -552,7 +552,7 @@ docker-compose exec server pm2 status
 
 # View Docker volumes
 docker volume ls
-docker volume inspect research-feed_research-db
+docker volume inspect research-feed_database
 ```
 
 ---

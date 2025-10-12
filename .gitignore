@@ -213,4 +213,4 @@ server/database/database.sqlite
 pipeline/logs/
 
 # Project-specific: Docker volumes
-research-db/
+database/
