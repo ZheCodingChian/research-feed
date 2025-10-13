@@ -13,20 +13,43 @@ The arXiv AI Research Data Pipeline automatically:
 - **Scores** papers on novelty, impact, and recommendation quality
 - **Enriches** data with author H-index information from Semantic Scholar
 - **Stores** everything in a structured SQLite database for analysis
+- **Notifies** your team via Slack when processing completes
 
-## 🔬 Research Topics Analyzed
+## 📑 Table of Contents
 
-The pipeline analyzes papers across these 5 cutting-edge AI research areas:
-
-1. **Reinforcement Learning** - Agents learning through environment interaction and reward feedback
-2. **Proximal Policy Optimization (PPO)** - Specific RL algorithm with clipped surrogate objectives
-3. **Reasoning Models** - AI systems performing multi-step logical deduction and structured thinking
-4. **Agentic AI** - Autonomous AI agents with tool use, planning, and workflow orchestration
-5. **Inference Time Scaling** - Techniques allocating additional compute during model inference
+- [arXiv AI Research Data Pipeline](#arxiv-ai-research-data-pipeline)
+  - [🎯 What It Does](#-what-it-does)
+  - [📑 Table of Contents](#-table-of-contents)
+  - [🏗️ How It Works](#️-how-it-works)
+  - [🧩 Pipeline Modules](#-pipeline-modules)
+    - [1. Scraper Module (`scraper.py`)](#1-scraper-module-scraperpy)
+    - [2. Introduction Extractor Module (`intro_extractor.py`)](#2-introduction-extractor-module-intro_extractorpy)
+    - [3. Embedding Similarity Module (`embedding_similarity.py`)](#3-embedding-similarity-module-embedding_similaritypy)
+      - [Research Topics Analyzed](#research-topics-analyzed)
+      - [Topic Descriptions for Semantic Analysis](#topic-descriptions-for-semantic-analysis)
+    - [4. LLM Validation Module (`llm_validation.py`)](#4-llm-validation-module-llm_validationpy)
+      - [LLM Validation Prompt Details](#llm-validation-prompt-details)
+    - [5. LLM Scoring Module (`llm_scoring.py`)](#5-llm-scoring-module-llm_scoringpy)
+      - [LLM Scoring Prompt Details](#llm-scoring-prompt-details)
+    - [6. H-Index Fetching Module (`h_index_fetching.py`)](#6-h-index-fetching-module-h_index_fetchingpy)
+    - [7. Database Cleanup Module (`database_cleanup.py`)](#7-database-cleanup-module-database_cleanuppy)
+    - [8. Slack Notification Module (`slack.py`)](#8-slack-notification-module-slackpy)
+  - [📊 Database Schema](#-database-schema)
+    - [Papers Table](#papers-table)
+    - [Topic Embeddings Table](#topic-embeddings-table)
+  - [🗂️ Output Files](#️-output-files)
+  - [⚙️ Configuration](#️-configuration)
+    - [Project Structure](#project-structure)
+  - [🚀 Usage](#-usage)
+    - [Prerequisites](#prerequisites)
+    - [Running the Pipeline](#running-the-pipeline)
+    - [Test File Example](#test-file-example)
+  - [📈 Performance](#-performance)
+  - [📝 Logging](#-logging)
 
 ## 🏗️ How It Works
 
-The pipeline processes papers through 7 sequential stages:
+The pipeline processes papers through 8 sequential stages:
 
 ```
 ┌─────────────────┐
@@ -64,8 +87,14 @@ The pipeline processes papers through 7 sequential stages:
          │
          ▼
 ┌─────────────────┐
-│ 7. Database        │ ── Cleans up database data for efficiency
+│ 7. Database     │ ── Cleans up database data for efficiency
 │   Cleanup       │
+└─────────────────┘
+         │
+         ▼
+┌─────────────────┐
+│ 8. Slack        │ ── Sends pipeline completion notification to Slack
+│   Notification  │
 └─────────────────┘
          │
          ▼
@@ -74,48 +103,6 @@ The pipeline processes papers through 7 sequential stages:
 ```
 
 Each stage is fault-tolerant with comprehensive error handling and state persistence.
-
-## 🚀 Usage
-
-### Prerequisites
-
-1. **Python 3.8+** with required packages:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-2. **API Keys** (set as environment variables):
-   ```bash
-   export OPENAI_API_KEY="your_openai_key"
-   export OPENROUTER_API_KEY="your_openrouter_key"
-   ```
-
-### Running the Pipeline
-
-**Process papers from a specific date:**
-```bash
-python src/main.py --date 2025-01-15
-```
-
-
-**Doing a test run:**
-```bash
-python src/main.py --test <testfile.txt>
-```
-### Test file example
-
-Create a text file with one arXiv ID per line:
-```
-2301.07041
-2312.11805
-2401.02412
-```
-
-## 🔍 Relevance Filtering
-
-The pipeline uses a **similarity threshold of 0.4** to filter papers based on topic relevance. Papers that don't achieve this minimum similarity score for any of the 5 research topics are considered not relevant to our field of interest and **skip LLM analysis entirely**. This ensures computational resources are focused on the most promising papers.
-
-Papers above the threshold proceed through the full LLM validation and scoring pipeline for detailed analysis.
 
 ## 🧩 Pipeline Modules
 
@@ -147,16 +134,40 @@ Papers above the threshold proceed through the full LLM validation and scoring p
 
 ### 3. Embedding Similarity Module (`embedding_similarity.py`)
 
-**What it does:** Computes semantic similarity scores between papers and the 5 research topics using OpenAI embeddings.
+**What it does:** Computes semantic similarity scores between papers and 5 research topics using OpenAI embeddings.
+
+#### Research Topics Analyzed
+
+The pipeline analyzes papers across these 5 cutting-edge AI research areas:
+
+1. **Agentic Artificial Intelligence** - Autonomous AI agents with goal-directed behavior, task decomposition, tool use, and workflow orchestration
+2. **Proximal Policy Optimization (PPO)** - Policy gradient RL algorithm using clipped surrogate objectives for stable policy updates
+3. **Reinforcement Learning** - Sequential decision-making through agent-environment interaction and reward maximization
+4. **Reasoning Models** - AI systems performing complex multi-step logical deduction, mathematical problem-solving, and structured thinking
+5. **Inference Time Scaling** - Techniques allocating additional computational resources during model inference to improve accuracy
+
+#### Topic Descriptions for Semantic Analysis
+
+Each research topic is defined through comprehensive descriptions used for semantic similarity matching. These descriptions include:
+
+- **Summary**: High-level overview of the research area and typical paper characteristics
+- **Definition**: Precise technical definition of what constitutes research in this area
+- **Positive Signals**: Specific indicators that a paper belongs to this topic (keywords, methodologies, evaluation metrics)
+- **Exclusions**: Clear boundaries defining what does NOT qualify as this topic
+- **Keywords**: Extensive vocabulary associated with the research area
+
+These detailed topic descriptions (ranging from 500-1000 words each) are embedded using OpenAI's `text-embedding-3-large` model and used to calculate semantic similarity scores between papers and topics. The full topic descriptions are defined in [embedding_similarity.py](src/modules/embedding_similarity.py) (lines 42-102).
 
 **How it works:**
 - Combines paper title, abstract, and introduction into content string
 - Generates embeddings using OpenAI's text-embedding-3-large model
 - Loads cached topic embeddings or computes them from detailed topic descriptions
 - Calculates cosine similarity between paper and topic embeddings
-- Applies 0.4 similarity threshold to filter relevant papers
+- Applies **0.4 similarity threshold** to filter relevant papers
 - Caches embeddings in SQLite database for efficiency
 - Identifies highest-scoring topic for each paper
+
+Papers that don't achieve the minimum similarity score of 0.4 for any of the 5 research topics are considered not relevant and **skip LLM analysis entirely**, ensuring computational resources are focused on the most promising papers.
 
 ### 4. LLM Validation Module (`llm_validation.py`)
 
@@ -164,12 +175,48 @@ Papers above the threshold proceed through the full LLM validation and scoring p
 
 **How it works:**
 - Processes only papers with similarity scores ≥ 0.4
-- Sends paper content to Grok-3-Mini via OpenRouter API
+- Sends paper content to Grok-4-Fast via OpenRouter API
 - Uses structured XML prompts with detailed topic descriptions
-- Evaluates relevance on 4-point scale: Highly/Moderately/Somewhat/Not Relevant
+- Evaluates relevance on 4-point scale: Highly/Moderately/Tangentially/Not Relevant
 - Generates detailed justifications explaining relevance assessments
 - Handles concurrent API calls with rate limiting and retry logic
 - Parses structured XML responses for reliable data extraction
+
+#### LLM Validation Prompt Details
+
+**Purpose**: Determine which of the 5 research topics are relevant to each paper.
+
+**Model**: Grok-4-Fast via OpenRouter API
+
+**Prompt Structure**:
+The validation prompt provides the paper's title, abstract, and introduction (if available), along with concise topic definitions. For each topic scoring above the 0.4 similarity threshold, the LLM evaluates relevance on a 4-point scale:
+
+- **Highly Relevant**: Paper's main contribution directly addresses the topic
+- **Moderately Relevant**: Paper makes significant contributions related to the topic
+- **Tangentially Relevant**: Paper touches on the topic but isn't primarily focused on it
+- **Not Relevant**: Paper does not address the topic meaningfully
+
+**Topic Definitions Used** (concise versions for LLM context):
+
+1. **Agentic AI**: Autonomous systems where AI agents can perceive goals, decompose tasks, use external tools, and orchestrate workflows with minimal human intervention. Must include task decomposition, tool use, and planning—not just chatbots or single-prompt responses.
+
+2. **Proximal Policy Optimization**: Specific RL algorithm using clipped surrogate objectives to prevent large policy updates. Must explicitly mention PPO or describe its clipped probability ratio mechanism.
+
+3. **Reinforcement Learning**: Agent learning sequential decisions through environment interaction to maximize cumulative reward, formalized as MDPs. Must involve reward-based learning through interaction, not just supervised learning.
+
+4. **Reasoning Models**: AI systems performing multi-step logical deduction, mathematical problem-solving, and structured thinking using techniques like chain-of-thought, self-verification, and explicit reasoning traces. Must be evaluated on reasoning benchmarks, not just pattern matching.
+
+5. **Inference Time Scaling**: Techniques allocating additional compute during inference (after training) to improve accuracy, including verifier-based selection, iterative refinement, extended reasoning, or adaptive compute allocation.
+
+**Output Format**: Structured XML with topic-specific relevance assessments and detailed justifications wrapped in CDATA tags.
+
+**Configuration**:
+- Temperature 0.1 for consistent, deterministic responses
+- Maximum 4000 tokens per response for detailed justifications
+- Parallel processing with 10 concurrent workers
+- Retry logic with exponential backoff for resilience
+
+The complete validation prompt template is defined in [llm_validation.py](src/modules/llm_validation.py) (lines 345-366).
 
 ### 5. LLM Scoring Module (`llm_scoring.py`)
 
@@ -180,10 +227,50 @@ Papers above the threshold proceed through the full LLM validation and scoring p
 - Generates comprehensive paper summaries
 - Scores papers on three dimensions:
   - **Novelty**: Groundbreaking/Significant/Incremental/Minimal with justification
-  - **Impact**: Transformative/Substantial/Moderate/Negligible with justification  
+  - **Impact**: Transformative/Substantial/Moderate/Negligible with justification
   - **Recommendation**: Must Read/Should Read/Can Skip/Ignore with justification
 - Uses structured prompts for consistent scoring criteria
 - Provides detailed explanations for each score
+
+#### LLM Scoring Prompt Details
+
+**Purpose**: Evaluate paper quality across three dimensions for papers with at least one relevant topic.
+
+**Model**: Grok-4-Fast via OpenRouter API
+
+**Evaluation Rubric**:
+
+The scoring prompt positions the LLM as an expert AI Research Analyst and provides detailed rubrics for three dimensions:
+
+**1. Novelty** (Nature of the contribution):
+- **Groundbreaking**: Introduces fundamentally new problems, paradigms, or breakthrough techniques that redefine the field
+- **Significant**: Presents novel architectures, methods, or formulations that meaningfully advance current approaches
+- **Incremental**: Provides refinements, extensions, or combinations of existing methods without fundamentally new concepts
+- **Minimal**: Largely derivative work confirming known findings or making trivial modifications
+
+**2. Potential Impact** (Likely influence):
+- **Transformative**: Could reshape the field or enable entirely new research directions across multiple domains
+- **Substantial**: Likely to influence broad work within the field and spawn follow-up research
+- **Moderate**: Will be recognized within specific subfields or application areas
+- **Negligible**: Unlikely to influence future research due to narrow scope or limited contributions
+
+**3. Final Recommendation** (Action to take):
+- **Must Read**: High-quality paper with significant contributions that advances the field meaningfully
+- **Should Read**: Solid paper with valuable contributions worth attention when time permits
+- **Can Skip**: Interesting but not essential; incremental, niche, or less impactful
+- **Ignore**: Not recommended; lacks substance, relevance, or is poorly presented
+
+**Output Format**: Structured XML containing:
+- Single-paragraph summary synthesizing objectives, methodology, and key findings
+- Score and 1-2 sentence justification for each of the three dimensions
+
+**Configuration**:
+- Temperature 0.1 for consistent, deterministic responses
+- Maximum 4000 tokens per response for detailed justifications
+- Parallel processing with 5 concurrent workers
+- Retry logic with exponential backoff for resilience
+
+The complete scoring prompt and rubric are defined in [llm_scoring.py](src/modules/llm_scoring.py) (lines 255-304).
 
 ### 6. H-Index Fetching Module (`h_index_fetching.py`)
 
@@ -203,10 +290,39 @@ Papers above the threshold proceed through the full LLM validation and scoring p
 
 **How it works:**
 - Updates timestamps for papers processed in current pipeline run
-- Removes cached embedding and topic data older than retention period
+- Removes cached embedding and topic data older than retention period (default: 14 days)
 - Preserves recent data to avoid unnecessary recomputation
 - Maintains database size and query performance
 - Provides detailed cleanup statistics and logging
+
+### 8. Slack Notification Module (`slack.py`)
+
+**What it does:** Sends automated notifications to a Slack channel summarizing pipeline execution results.
+
+**How it works:**
+- Sends summary message after successful pipeline completion
+- Displays total paper count and publication date
+- Uses Slack Block Kit for rich, interactive formatting
+- Includes "View Papers" button linking to the ResearchFeed website
+- Configures bot appearance with custom username and emoji
+- Handles missing configuration gracefully without blocking pipeline
+- Operates independently—failures don't affect pipeline success
+
+**Configuration:**
+Requires two environment variables:
+- `SLACK_BOT_TOKEN`: Slack bot OAuth token (starts with `xoxb-`)
+- `SLACK_CHANNEL_ID`: Target Slack channel ID (e.g., `C1234567890`)
+
+**Message Format:**
+```
+═══════════════════════════════════════
+ResearchFeed Update | Run date: October 13, 2025
+42 Papers Fetched | Published: October 12, 2025
+[View Papers Button → https://researchfeed.pages.dev]
+═══════════════════════════════════════
+```
+
+The notification module is fault-tolerant and logs warnings if Slack credentials are unavailable, allowing the pipeline to complete successfully regardless of notification status.
 
 ## 📊 Database Schema
 
@@ -276,7 +392,7 @@ Justifications for each topic:
 - `reasoning_models_justification`
 - `inference_time_scaling_justification`
 
-Values: 
+Values:
 - Detailed text explanations for topics scoring above the similarity threshold
 - `"below_threshold"` for topics scoring below the similarity threshold
 - (Default `"no_justification"` is overwritten during LLM validation process)
@@ -337,19 +453,7 @@ The pipeline can be configured by modifying `src/config.py`:
 - **LLM_VALIDATION**: API configuration, concurrency limits
 - **LLM_SCORING**: Model selection, scoring criteria
 - **H_INDEX_FETCHING**: Semantic Scholar API settings
-- **CACHE_CLEANUP**: Data retention periods
-
-## 📈 Performance
-
-The pipeline is optimized for efficiency:
-
-- **Parallel Processing**: Concurrent API calls and batch operations
-- **Intelligent Caching**: Avoids reprocessing existing data
-- **Rate Limiting**: Respects API limits with exponential backoff
-- **Incremental Updates**: Only processes new or changed papers
-- **Memory Efficient**: Streams large datasets without loading all in memory
-
-## 🔧 Development
+- **DATABASE_CLEANUP**: Data retention periods
 
 ### Project Structure
 
@@ -366,16 +470,61 @@ src/
     ├── llm_validation.py     # Topic relevance validation
     ├── llm_scoring.py        # Quality scoring
     ├── h_index_fetching.py   # Author impact data
-    └── cache_cleanup.py      # Data maintenance
+    ├── database_cleanup.py   # Data maintenance
+    └── slack.py              # Slack notifications
 ```
 
-### Adding New Topics
+## 🚀 Usage
 
-To add new research topics:
+### Prerequisites
 
-1. Update topic descriptions in `embedding_similarity.py`
-2. Add corresponding fields to `paper.py` and `database.py`
-3. Update LLM validation descriptions in `llm_validation.py`
+1. **Python 3.8+** with required packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. **Required API Keys** (set as environment variables):
+   ```bash
+   export OPENAI_API_KEY="your_openai_key"
+   export OPENROUTER_API_KEY="your_openrouter_key"
+   ```
+
+3. **Slack Integration** (set as environment variables):
+   ```bash
+   export SLACK_BOT_TOKEN="xoxb-your-slack-bot-token"
+   export SLACK_CHANNEL_ID="C1234567890"
+   ```
+
+### Running the Pipeline
+
+**Process papers from a specific date:**
+```bash
+python src/main.py --date 2025-01-15
+```
+
+**Doing a test run:**
+```bash
+python src/main.py --test <testfile.txt>
+```
+
+### Test File Example
+
+Create a text file with one arXiv ID per line:
+```
+2301.07041
+2312.11805
+2401.02412
+```
+
+## 📈 Performance
+
+The pipeline is optimized for efficiency:
+
+- **Parallel Processing**: Concurrent API calls and batch operations
+- **Intelligent Caching**: Avoids reprocessing existing data
+- **Rate Limiting**: Respects API limits with exponential backoff
+- **Incremental Updates**: Only processes new or changed papers
+- **Memory Efficient**: Streams large datasets without loading all in memory
 
 ## 📝 Logging
 
