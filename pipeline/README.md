@@ -320,10 +320,11 @@ After running the pipeline, you'll find:
 
 ```
 pipeline/
-├── database.sqlite       # Main database with all paper data
-├── cache.sqlite         # Cached embeddings and temporary data
+├── /data/
+│   ├── database.new.sqlite  # Main database with all paper data
+│   └── cache.sqlite         # Cached embeddings and temporary data
 └── logs/
-    └── YYYYMMDD.log     # Daily processing logs
+    └── YYYYMMDD.log         # Daily processing logs
 ```
 
 ## ⚙️ Configuration
