@@ -36,8 +36,9 @@ export function PaperDetails() {
   if (isLoading) {
     return (
       <div className="h-screen bg-neutral-100 flex flex-col">
-        {/* Mobile: Loading state */}
-        <div className="flex flex-col paperDetailsDesktop:hidden h-screen overflow-hidden">
+        <div className="max-w-[1440px] mx-auto w-full h-full flex flex-col">
+          {/* Mobile: Loading state */}
+          <div className="flex flex-col paperDetailsDesktop:hidden h-screen overflow-hidden">
           <div className="flex flex-row items-center gap-1">
             <LeftArrow onClick={handleBack} />
           </div>
@@ -95,6 +96,7 @@ export function PaperDetails() {
             </svg>
           </div>
         </div>
+        </div>
       </div>
     );
   }
@@ -102,16 +104,18 @@ export function PaperDetails() {
   if (error || !paper) {
     return (
       <div className="h-screen bg-neutral-100 flex items-center justify-center">
-        <div className="flex flex-col gap-4 items-center">
-          <p className="font-header font-bold text-neutral-800 text-[1.5rem]">
-            Paper Not Found
-          </p>
-          <a
-            href="/explorer"
-            className="font-header text-neutral-100 bg-neutral-600 hover:bg-neutral-500 px-4 py-2"
-          >
-            Back to Explorer
-          </a>
+        <div className="max-w-[1440px] mx-auto w-full h-full flex items-center justify-center">
+          <div className="flex flex-col gap-4 items-center">
+            <p className="font-header font-bold text-neutral-800 text-[1.5rem]">
+              Paper Not Found
+            </p>
+            <a
+              href="/explorer"
+              className="font-header text-neutral-100 bg-neutral-600 hover:bg-neutral-500 px-4 py-2"
+            >
+              Back to Explorer
+            </a>
+          </div>
         </div>
       </div>
     );
@@ -119,8 +123,9 @@ export function PaperDetails() {
 
   return (
     <div className="h-screen bg-neutral-100 flex flex-col">
-      {/* Mobile: Single column layout */}
-      <div className="flex flex-col paperDetailsDesktop:hidden h-screen overflow-hidden">
+      <div className="max-w-[1440px] mx-auto w-full h-full flex flex-col">
+        {/* Mobile: Single column layout */}
+        <div className="flex flex-col paperDetailsDesktop:hidden h-screen overflow-hidden">
         <div className="flex-1 overflow-y-auto">
           <div className="flex flex-row items-center gap-1">
             <LeftArrow onClick={handleBack} />
@@ -178,6 +183,7 @@ export function PaperDetails() {
         >
           <PaperDetailsRightColumn paper={paper} />
         </OverlayScrollbarsComponent>
+        </div>
       </div>
     </div>
   );

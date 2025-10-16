@@ -201,8 +201,9 @@ export function ExplorerPage() {
 
   return (
     <div className="h-screen bg-neutral-100 flex flex-col">
-      {/* Mobile: Single column layout */}
-      <div className="flex flex-col explorerPageDesktop:hidden h-screen overflow-hidden">
+      <div className="max-w-[1440px] mx-auto w-full h-full flex flex-col">
+        {/* Mobile: Single column layout */}
+        <div className="flex flex-col explorerPageDesktop:hidden h-screen overflow-hidden">
         <div className="flex flex-row items-center gap-1">
           <LeftArrow />
           <ExplorerHeader />
@@ -306,16 +307,17 @@ export function ExplorerPage() {
         </OverlayScrollbarsComponent>
       </div>
 
-      <MobileSortModal isOpen={isSortModalOpen} onClose={() => setIsSortModalOpen(false)} />
-      <MobileFilterModal
-        isOpen={isFilterModalOpen}
-        onClose={() => setIsFilterModalOpen(false)}
-        filteredCount={pagination?.totalCount || 0}
-        totalCount={metadata?.totalPapers || 0}
-        isLoading={isLoadingData}
-        maxHighestHIndex={metadata?.maxHighestHIndex || 100}
-        maxAverageHIndex={metadata?.maxAverageHIndex || 100}
-      />
+        <MobileSortModal isOpen={isSortModalOpen} onClose={() => setIsSortModalOpen(false)} />
+        <MobileFilterModal
+          isOpen={isFilterModalOpen}
+          onClose={() => setIsFilterModalOpen(false)}
+          filteredCount={pagination?.totalCount || 0}
+          totalCount={metadata?.totalPapers || 0}
+          isLoading={isLoadingData}
+          maxHighestHIndex={metadata?.maxHighestHIndex || 100}
+          maxAverageHIndex={metadata?.maxAverageHIndex || 100}
+        />
+      </div>
     </div>
   );
 }
