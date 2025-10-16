@@ -41,7 +41,7 @@ export function AllTimeCard({ allTimeMetadata, dateRange }: AllTimeCardProps) {
               <div className="font-header text-neutral-600 text-[0.75rem] md:text-[1rem] mb-1">
                 Total
               </div>
-              <div className="font-body text-neutral-800 text-[1.25rem] md:text-[2rem]">
+              <div className="font-landingpagecount text-neutral-800 text-[1.25rem] md:text-[2rem]">
                 {allTimeMetadata.total_count}
               </div>
             </div>
@@ -50,7 +50,7 @@ export function AllTimeCard({ allTimeMetadata, dateRange }: AllTimeCardProps) {
               <div className="font-header text-neutral-600 text-[0.75rem] md:text-[1rem] mb-1">
                 Must Read
               </div>
-              <div className="font-body text-neutral-800 text-[1.25rem] md:text-[2rem]">
+              <div className="font-landingpagecount text-neutral-800 text-[1.25rem] md:text-[2rem]">
                 {allTimeMetadata.must_read_count}
               </div>
             </div>
@@ -59,7 +59,7 @@ export function AllTimeCard({ allTimeMetadata, dateRange }: AllTimeCardProps) {
               <div className="font-header text-neutral-600 text-[0.75rem] md:text-[1rem] mb-1">
                 Should Read
               </div>
-              <div className="font-body text-neutral-800 text-[1.25rem] md:text-[2rem]">
+              <div className="font-landingpagecount text-neutral-800 text-[1.25rem] md:text-[2rem]">
                 {allTimeMetadata.should_read_count}
               </div>
             </div>

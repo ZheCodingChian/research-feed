@@ -31,7 +31,8 @@ export default {
       },
       fontFamily: {
         'header': ['Space Grotesk', 'sans-serif'],
-        'body': ['Space Mono', 'monospace'],
+        'body': ['Space Grotesk', 'sans-serif'],
+        'landingpagecount': ['Space Mono', 'monospace'],
       },
       animation: {
         'shimmer': 'shimmer 2s linear infinite',
