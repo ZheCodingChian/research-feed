@@ -40,9 +40,9 @@ def run(runtime_paper_dict: Dict[str, Paper], config: dict) -> Dict[str, Paper]:
         cutoff_date = (datetime.now() - timedelta(days=retention_days)).strftime('%Y-%m-%d')
         
         logger.info(f"Using retention period: {retention_days} days (cutoff date: {cutoff_date})")
-        
+
         # Connect to the database
-        with sqlite3.connect("/data/cache.sqlite") as conn:
+        with sqlite3.connect("./data/cache.sqlite") as conn:
             # Step 1: Ensure the last_generated column exists (for backward compatibility)
             _ensure_last_generated_column(conn)
             

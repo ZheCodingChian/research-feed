@@ -11,7 +11,8 @@ export function formatDateForCard(dateString: string): string {
     weekday: 'long',
     day: '2-digit',
     month: 'long',
-    year: 'numeric'
+    year: 'numeric',
+    timeZone: 'UTC'
   }).format(new Date(dateString));
 
   // en-US format is "Tuesday, September 30, 2025" but we want "Tuesday, 30 September 2025"
@@ -28,7 +29,8 @@ export function formatDateForAllTimeCard(dateString: string): string {
   return new Intl.DateTimeFormat('en-GB', {
     day: '2-digit',
     month: 'long',
-    year: 'numeric'
+    year: 'numeric',
+    timeZone: 'UTC'
   }).format(new Date(dateString));
 }
 

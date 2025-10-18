@@ -389,12 +389,16 @@ Important: Ensure you evaluate ALL {len(topics_to_validate)} topics listed and u
             "model": self.config['model'],
             "messages": [
                 {
-                    "role": "user", 
+                    "role": "user",
                     "content": prompt
                 }
             ],
-            "temperature": 0.1,  # Low temperature for consistent responses
-            "max_tokens": 4000   # Enough for detailed justifications
+            "temperature": 0.1,
+            "max_tokens": 4000,
+            "reasoning": {
+                "effort": "medium",
+                "exclude": True
+            }
         }
         
         try:

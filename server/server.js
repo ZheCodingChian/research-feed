@@ -9,7 +9,7 @@ const papersRouter = require('./routes/papers');
 const corsMiddleware = require('./middleware/cors');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 // Trust proxy - Required when behind reverse proxy (Cloudflare, etc.)
 // Set to 1 to trust only the first proxy in the chain (most secure for single reverse proxy setup)

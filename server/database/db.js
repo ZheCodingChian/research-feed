@@ -1,6 +1,5 @@
 
 const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
 
 class Database {
   constructor() {
@@ -9,7 +8,7 @@ class Database {
 
   connect() {
     return new Promise((resolve, reject) => {
-      const dbPath = '/data/database.sqlite';
+      const dbPath = process.env.DATABASE_PATH || '/data/database.sqlite';
       this.db = new sqlite3.Database(dbPath, (err) => {
         if (err) {
           console.error('Error connecting to database:', err.message);
@@ -284,8 +283,17 @@ class Database {
       `;
     });
 
-    // SQLite doesn't have GREATEST, so use MAX() function
-    return `MAX(${relevanceCases.join(',')})`;
+    // SQLite doesn't have GREATEST, so we need to nest the comparisons
+    // Start with the first case and wrap each subsequent one in a MAX comparison
+    if (relevanceCases.length === 1) {
+      return relevanceCases[0];
+    }
+
+    let result = relevanceCases[0];
+    for (let i = 1; i < relevanceCases.length; i++) {
+      result = `MAX(${result}, ${relevanceCases[i]})`;
+    }
+    return result;
   }
 
   // Helper function: Build relevance ORDER BY based on selected topics

@@ -274,11 +274,11 @@ Potential Impact: The likely influence of the work.
 - Moderate: Will be recognized and built upon within its specific subfield or application area. Relevant to practitioners in focused domains but won't drive field-wide changes.
 - Negligible: Unlikely to influence future research or applications. Addresses problems too narrow or presents work too limited to generate meaningful follow-up interest.
 
-Final Recommendation: The action an informed reader should take.
-- Must Read: A high-quality paper with significant contributions or novel insights. Work that advances the field meaningfully and you should prioritize reading.
-- Should Read: A solid paper with valuable contributions. Represents good work worth your attention when you have time, but may be more incremental. Second to Must Read papers.
-- Can Skip: An interesting paper, but not essential. The contribution is incremental, niche, or a less impactful version of another idea.
-- Ignore: Not recommended for review; lacks substance, relevance, or is poorly presented.
+Final Recommendation: The action an informed reader should take. Start with "Can Skip" and only promote papers that actively demonstrate exceptional qualities.
+- Must Read: A paradigm-shifting paper that introduces fundamentally new concepts or methods that will reshape how the field approaches problems.
+- Should Read: A solid paper with meaningful contributions that advances the field through novel insights, strong empirical results, or clever solutions.
+- Can Skip: A competent paper with incremental contributions that confirms known findings or provides minor extensions to existing work.
+- Ignore: A flawed or trivial paper that lacks rigor, offers no new insights, or fails to meet basic research standards.
 
 Paper Information:
 {paper_info}
@@ -329,12 +329,16 @@ Important: Evaluate all three dimensions and use only the specified categories. 
             "model": self.config['model'],
             "messages": [
                 {
-                    "role": "user", 
+                    "role": "user",
                     "content": prompt
                 }
             ],
-            "temperature": 0.1,  # Low temperature for consistent responses
-            "max_tokens": 4000   # Enough for detailed justifications
+            "temperature": 0.1,
+            "max_tokens": 4000,
+            "reasoning": {
+                "effort": "medium",
+                "exclude": True
+            }
         }
         
         try:
@@ -369,98 +373,99 @@ Important: Evaluate all three dimensions and use only the specified categories. 
     def _parse_xml_response(self, response_content: str) -> Dict[str, str]:
         """
         Parse XML response from LLM.
-        
+
         Args:
             response_content: Raw response content from LLM
-            
+
         Returns:
             Dictionary containing scoring results
-            
+
         Raises:
             Exception: If parsing fails or response is invalid
         """
         try:
-            # Parse XML
             root = ET.fromstring(response_content)
-            
+
             if root.tag != 'paper_evaluation':
                 raise Exception(f"Invalid root tag: {root.tag}, expected 'paper_evaluation'")
-            
+
             results = {}
-            
+
             # Extract summary
             summary_element = root.find('summary')
             if summary_element is None or not summary_element.text:
                 raise Exception("Missing or empty summary")
             results['summary'] = summary_element.text.strip()
-            
+
             # Extract novelty
             novelty_element = root.find('novelty')
             if novelty_element is None:
                 raise Exception("Missing novelty element")
-            
+
             novelty_score = novelty_element.find('score')
             novelty_justification = novelty_element.find('justification')
-            
+
             if novelty_score is None or not novelty_score.text:
                 raise Exception("Missing or empty novelty score")
             if novelty_justification is None or not novelty_justification.text:
                 raise Exception("Missing or empty novelty justification")
-            
+
             valid_novelty_scores = {'Groundbreaking', 'Significant', 'Incremental', 'Minimal'}
             if novelty_score.text.strip() not in valid_novelty_scores:
                 raise Exception(f"Invalid novelty score: {novelty_score.text.strip()}")
-            
+
             results['novelty_score'] = novelty_score.text.strip()
             results['novelty_justification'] = novelty_justification.text.strip()
-            
+
             # Extract impact
             impact_element = root.find('impact')
             if impact_element is None:
                 raise Exception("Missing impact element")
-            
+
             impact_score = impact_element.find('score')
             impact_justification = impact_element.find('justification')
-            
+
             if impact_score is None or not impact_score.text:
                 raise Exception("Missing or empty impact score")
             if impact_justification is None or not impact_justification.text:
                 raise Exception("Missing or empty impact justification")
-            
+
             valid_impact_scores = {'Transformative', 'Substantial', 'Moderate', 'Negligible'}
             if impact_score.text.strip() not in valid_impact_scores:
                 raise Exception(f"Invalid impact score: {impact_score.text.strip()}")
-            
+
             results['impact_score'] = impact_score.text.strip()
             results['impact_justification'] = impact_justification.text.strip()
-            
+
             # Extract recommendation
             recommendation_element = root.find('recommendation')
             if recommendation_element is None:
                 raise Exception("Missing recommendation element")
-            
+
             recommendation_score = recommendation_element.find('score')
             recommendation_justification = recommendation_element.find('justification')
-            
+
             if recommendation_score is None or not recommendation_score.text:
                 raise Exception("Missing or empty recommendation score")
             if recommendation_justification is None or not recommendation_justification.text:
                 raise Exception("Missing or empty recommendation justification")
-            
+
             valid_recommendation_scores = {'Must Read', 'Should Read', 'Can Skip', 'Ignore'}
             if recommendation_score.text.strip() not in valid_recommendation_scores:
                 raise Exception(f"Invalid recommendation score: {recommendation_score.text.strip()}")
-            
+
             results['recommendation_score'] = recommendation_score.text.strip()
             results['recommendation_justification'] = recommendation_justification.text.strip()
-            
+
             return results
-            
+
         except ET.ParseError as e:
+            logger.error(f"XML parsing failed. Error: {str(e)}")
             raise Exception(f"XML parsing error: {str(e)}")
         except Exception as e:
             # Re-raise our custom exceptions
             if "Invalid root tag" in str(e) or "Missing" in str(e) or "Invalid" in str(e):
+                logger.error(f"Response validation failed: {str(e)}")
                 raise
             else:
                 raise Exception(f"Response parsing error: {str(e)}")
