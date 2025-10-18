@@ -18,16 +18,15 @@ logger = logging.getLogger('DATABASE_CLEANUP')
 def run(runtime_paper_dict: Dict[str, Paper], config: dict) -> Dict[str, Paper]:
     """
     Run database cleanup operations.
-    
+
     This function:
-    1. Adds the last_generated column if it doesn't exist (for backward compatibility)
-    2. Updates the last_generated date for all papers in the runtime dictionary
-    3. Removes papers from the database that are older than the retention period
-    
+    1. Updates the last_generated date for all papers in the runtime dictionary
+    2. Removes papers from the database that are older than the retention period
+
     Args:
         runtime_paper_dict: Dictionary of paper_id -> Paper objects from current run
         config: Database cleanup configuration containing retention_days
-        
+
     Returns:
         The unchanged papers dictionary
     """
@@ -35,23 +34,20 @@ def run(runtime_paper_dict: Dict[str, Paper], config: dict) -> Dict[str, Paper]:
     
     try:
         # Get configuration
-        retention_days = config.get('retention_days', 14)
+        retention_days = config.get('retention_days', 30)
         current_date = datetime.now().strftime('%Y-%m-%d')
         cutoff_date = (datetime.now() - timedelta(days=retention_days)).strftime('%Y-%m-%d')
-        
+
         logger.info(f"Using retention period: {retention_days} days (cutoff date: {cutoff_date})")
 
         # Connect to the database
-        with sqlite3.connect("./data/cache.sqlite") as conn:
-            # Step 1: Ensure the last_generated column exists (for backward compatibility)
-            _ensure_last_generated_column(conn)
-            
-            # Step 2: Update last_generated for all runtime papers
+        with sqlite3.connect("/data/database.new.sqlite") as conn:
+            # Update last_generated for all runtime papers
             updated_count = _update_runtime_papers(conn, runtime_paper_dict, current_date)
-            
-            # Step 3: Clean up old papers
+
+            # Clean up old papers
             deleted_count = _cleanup_old_papers(conn, cutoff_date)
-            
+
         logger.info(f"Database cleanup complete: {updated_count} papers updated, {deleted_count} papers deleted")
         
     except Exception as e:
@@ -59,25 +55,6 @@ def run(runtime_paper_dict: Dict[str, Paper], config: dict) -> Dict[str, Paper]:
         raise
     
     return runtime_paper_dict
-
-
-def _ensure_last_generated_column(conn: sqlite3.Connection) -> None:
-    """
-    Ensure the last_generated column exists in the papers table.
-    
-    This is for backward compatibility with existing databases that might not
-    have this column yet.
-    """
-    try:
-        # Check if column exists by trying to select it
-        cursor = conn.execute("SELECT last_generated FROM papers LIMIT 1")
-        cursor.fetchone()
-        logger.debug("last_generated column already exists")
-    except sqlite3.OperationalError:
-        # Column doesn't exist, add it
-        logger.info("Adding last_generated column to papers table")
-        conn.execute("ALTER TABLE papers ADD COLUMN last_generated TEXT")
-        logger.info("Successfully added last_generated column")
 
 
 def _update_runtime_papers(conn: sqlite3.Connection, runtime_paper_dict: Dict[str, Paper], current_date: str) -> int:

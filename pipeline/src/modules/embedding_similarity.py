@@ -114,7 +114,7 @@ Keywords: Inference-time scaling, test-time compute, inference-time search, comp
             Dictionary mapping topic names to embedding vectors
         """
         # Connect to the database
-        conn = sqlite3.connect("./data/cache.sqlite")
+        conn = sqlite3.connect("/data/cache.sqlite")
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
         
