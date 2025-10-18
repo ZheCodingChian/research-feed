@@ -40,9 +40,12 @@ def format_message_blocks(runtime_paper_dict: Dict[str, Paper]) -> List[Dict]:
     current_date = datetime.now().strftime('%B %d, %Y')
     header_text = f"ResearchFeed Update | Run date: {current_date}"
     
-    # Count total papers
+    # Count total papers and recommendations
     total_papers = len(runtime_paper_dict)
-    content_text = f"{total_papers} Papers Fetched | Published: {formatted_published_date}"
+    must_read_count = sum(1 for p in runtime_paper_dict.values() if p.recommendation_score == 'Must Read')
+    should_read_count = sum(1 for p in runtime_paper_dict.values() if p.recommendation_score == 'Should Read')
+
+    content_text = f"{total_papers} Papers Fetched | Published: {formatted_published_date}\nMust Read: {must_read_count} | Should Read: {should_read_count}"
     
     # Website URL
     website_url = "https://researchfeed.pages.dev"
