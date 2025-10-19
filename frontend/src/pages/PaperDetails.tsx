@@ -131,7 +131,7 @@ export function PaperDetails() {
             <LeftArrow onClick={handleBack} />
           </div>
 
-          <div className="flex flex-col px-8 pb-16 gap-6">
+          <div className="flex flex-col px-8 gap-6">
             <PaperDetailsHeader paper={paper} />
             <MobilePaperMetadataSection paper={paper} />
             {paper.summary && <SummarySection summary={paper.summary} />}
@@ -141,6 +141,8 @@ export function PaperDetails() {
             <PaperSimilarityScoresSection paper={paper} />
             <PaperHIndexSection paper={paper} />
             <PaperIndividualAuthorHIndexSection paper={paper} />
+            <div className="h-16"> {/* Spacer to avoid content being hidden behind bottom nav */}
+            </div>
           </div>
         </div>
       </div>
