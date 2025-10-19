@@ -15,7 +15,7 @@ export function LandingPage() {
       <div className="max-w-[1440px] mx-auto w-full">
         {/* Mobile: Stack vertically with fixed header */}
         <div className="flex flex-col landingPageDesktop:hidden h-screen overflow-hidden">
-          <div className="px-5 py-8">
+          <div className="px-5 pt-3 pb-6">
             <BrandHeader />
           </div>
           <div className="flex-1 overflow-y-auto px-5 pb-32">
