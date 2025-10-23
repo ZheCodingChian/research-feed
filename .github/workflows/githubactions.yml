@@ -1,92 +1,92 @@
-# This is a GitHub Actions workflow file that defines a set of automated tasks.
-# It's written in YAML, a human-readable data serialization language.
+# # This is a GitHub Actions workflow file that defines a set of automated tasks.
+# # It's written in YAML, a human-readable data serialization language.
 
-name: run and deploy page # The name of the workflow, which will be displayed on GitHub.
+# name: run and deploy page # The name of the workflow, which will be displayed on GitHub.
 
-# This section defines when the workflow should be triggered.
-on:
-  # Allows the workflow to be run manually from the Actions tab in your GitHub repository.
-  workflow_dispatch:
-    inputs:
-      test_run:
-        description: 'Perform a test run using test_papers.txt'
-        required: true
-        default: false
-        type: boolean
-      paper_date:
-        description: 'Date of papers to process (YYYY-MM-DD format)'
-        required: true
-        default: '2025-07-01'
-        type: string
-  # Triggers the workflow on a schedule - daily at 7:00 AM SGT (which is 23:00 UTC the previous day)
-  schedule:
-    - cron: '0 23 * * *'
+# # This section defines when the workflow should be triggered.
+# on:
+#   # Allows the workflow to be run manually from the Actions tab in your GitHub repository.
+#   workflow_dispatch:
+#     inputs:
+#       test_run:
+#         description: 'Perform a test run using test_papers.txt'
+#         required: true
+#         default: false
+#         type: boolean
+#       paper_date:
+#         description: 'Date of papers to process (YYYY-MM-DD format)'
+#         required: true
+#         default: '2025-07-01'
+#         type: string
+#   # Triggers the workflow on a schedule - daily at 7:00 AM SGT (which is 23:00 UTC the previous day)
+#   schedule:
+#     - cron: '0 23 * * *'
 
-# This section grants the necessary permissions to the GITHUB_TOKEN for the jobs.
-permissions:
-  contents: write # Allows the workflow to read and write repository content.
+# # This section grants the necessary permissions to the GITHUB_TOKEN for the jobs.
+# permissions:
+#   contents: write # Allows the workflow to read and write repository content.
 
-# This section defines the jobs that will be executed as part of the workflow.
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+# # This section defines the jobs that will be executed as part of the workflow.
+# jobs:
+#   build-and-deploy:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+#       - name: Set up Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: '3.11'
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+#       - name: Install dependencies
+#         run: pip install -r requirements.txt
 
-      - name: Calculate date 20 days ago
-        id: calculate_date
-        run: |
-          CALCULATED_DATE=$(date -d "20 days ago" +%Y-%m-%d)
-          echo "calculated_date=$CALCULATED_DATE" >> $GITHUB_OUTPUT
-          echo "Calculated date (20 days ago): $CALCULATED_DATE"
+#       - name: Calculate date 20 days ago
+#         id: calculate_date
+#         run: |
+#           CALCULATED_DATE=$(date -d "20 days ago" +%Y-%m-%d)
+#           echo "calculated_date=$CALCULATED_DATE" >> $GITHUB_OUTPUT
+#           echo "Calculated date (20 days ago): $CALCULATED_DATE"
 
-      - name: Run script in test mode
-        if: github.event.inputs.test_run == 'true'
-        env:
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-          SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
-        run: python src/main.py --test test_papers.txt
+#       - name: Run script in test mode
+#         if: github.event.inputs.test_run == 'true'
+#         env:
+#           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+#           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+#           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+#           SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
+#         run: python src/main.py --test test_papers.txt
 
-      - name: Run script to generate report
-        if: github.event.inputs.test_run != 'true'
-        env:
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-          SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
-          PAPER_DATE: ${{ github.event.inputs.paper_date || steps.calculate_date.outputs.calculated_date }}
-        run: |
-          echo "Generating report for date: $PAPER_DATE"
-          python src/main.py --date=$PAPER_DATE
+#       - name: Run script to generate report
+#         if: github.event.inputs.test_run != 'true'
+#         env:
+#           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+#           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+#           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+#           SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
+#           PAPER_DATE: ${{ github.event.inputs.paper_date || steps.calculate_date.outputs.calculated_date }}
+#         run: |
+#           echo "Generating report for date: $PAPER_DATE"
+#           python src/main.py --date=$PAPER_DATE
 
-      - name: Check artifact size
-        run: |
-          echo "Checking report directory size:"
-          du -sh ./report
-          echo "Listing report contents:"
-          find ./report -type f -exec ls -lh {} \;
+#       - name: Check artifact size
+#         run: |
+#           echo "Checking report directory size:"
+#           du -sh ./report
+#           echo "Listing report contents:"
+#           find ./report -type f -exec ls -lh {} \;
 
-      - name: Commit and push changes to main branch
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add report/ cache.db
-          git commit -m "Update newsletter report $(date +%Y-%m-%d)" || exit 0
-          git push
+#       - name: Commit and push changes to main branch
+#         run: |
+#           git config --local user.email "action@github.com"
+#           git config --local user.name "GitHub Action"
+#           git add report/ cache.db
+#           git commit -m "Update newsletter report $(date +%Y-%m-%d)" || exit 0
+#           git push
 
-      - name: Deploy to gh-pages branch
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./report
+#       - name: Deploy to gh-pages branch
+#         uses: peaceiris/actions-gh-pages@v3
+#         with:
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
+#           publish_dir: ./report
