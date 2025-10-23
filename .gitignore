@@ -214,3 +214,6 @@ pipeline/logs/
 
 # Project-specific: Docker volumes
 database/
+
+#AI ide
+.claude/
