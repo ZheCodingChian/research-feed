@@ -90,16 +90,17 @@ LLM_SCORING = {
 H_INDEX_FETCHING = {
     # Semantic Scholar API configuration
     'api_base_url': 'https://api.semanticscholar.org/graph/v1',
-    
+    'api_key_env': 'SEMANTIC_SCHOLAR_API_KEY',
+
     # Sequential processing settings
     'timeout': 30,
     'max_retries': 6,
-    
-    # Rate limiting (conservative to respect Semantic Scholar's public API limits)
-    'rate_limit_delay': 2.0,  # 2 second delay between requests
-    
+
+    # Rate limiting
+    'rate_limit_delay': 1.0,
+
     # Processing thresholds
-    'notable_h_index_threshold': 5  # H-index threshold for "notable" authors
+    'notable_h_index_threshold': 5
 }
 
 # Database Cleanup Parameters
