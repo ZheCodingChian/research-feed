@@ -555,29 +555,17 @@ class ArxivScraper:
             else:
                 published_date = datetime.now()
             
-            # Extract URLs from link elements
+            # Extract URLs from link elements by pattern matching
             arxiv_url = None
             pdf_url = None
-            
+
             for link in entry.findall('{http://www.w3.org/2005/Atom}link'):
-                rel = link.get('rel')
                 href = link.get('href')
-                type_attr = link.get('type')
-                
-                if rel == 'alternate' and type_attr == 'text/html':
-                    arxiv_url = href
-                elif rel == 'related' and type_attr == 'application/pdf':
-                    pdf_url = href
-            
-            # Log missing URLs for debugging
-            missing_urls = []
-            if arxiv_url is None:
-                missing_urls.append('arxiv_url')
-            if pdf_url is None:
-                missing_urls.append('pdf_url')
-            
-            if missing_urls:
-                logger.warning(f"Paper {arxiv_id} missing URLs: {', '.join(missing_urls)}")
+                if href:
+                    if '/abs/' in href:
+                        arxiv_url = href
+                    elif '/pdf/' in href:
+                        pdf_url = href
             
             # Create paper object
             paper = Paper(
