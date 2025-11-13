@@ -17,7 +17,7 @@ class PaperDatabase:
     from SQLite, serving as the persistence layer for the pipeline.
     """
     
-    def __init__(self, db_path: str = "./data/database.new.sqlite"):
+    def __init__(self, db_path: str = "/data/database.new.sqlite"):
         """Initialize the database connection and create tables if needed."""
         self.db_path = db_path
         self._create_tables()
