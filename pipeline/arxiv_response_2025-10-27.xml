@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/WBDtYmPVg6DG8ytyYW359QrJJm4</id>
+  <title>arXiv Query: search_query=submittedDate:"202510270000 TO 202510272359" AND (cat:cs.AI OR cat:cs.CV)&amp;id_list=&amp;start=0&amp;max_results=1</title>
+  <updated>2025-11-13T11:20:50Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=submittedDate:%22202510270000+TO+202510272359%22+AND+(cat:cs.AI+OR+cat:cs.CV)&amp;start=0&amp;max_results=1&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>1</opensearch:itemsPerPage>
+  <opensearch:totalResults>243</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2510.23306v1</id>
+    <title>ReconViaGen: Towards Accurate Multi-view 3D Object Reconstruction via Generation</title>
+    <updated>2025-10-28T01:42:05Z</updated>
+    <link href="https://arxiv.org/abs/2510.23306v1"/>
+    <link href="https://arxiv.org/pdf/2510.23306v1"/>
+    <summary>Existing multi-view 3D object reconstruction methods heavily rely on sufficient overlap between input views, where occlusions and sparse coverage in practice frequently yield severe reconstruction incompleteness. Recent advancements in diffusion-based 3D generative techniques offer the potential to address these limitations by leveraging learned generative priors to hallucinate invisible parts of objects, thereby generating plausible 3D structures. However, the stochastic nature of the inference process limits the accuracy and reliability of generation results, preventing existing reconstruction frameworks from integrating such 3D generative priors. In this work, we comprehensively analyze the reasons why diffusion-based 3D generative methods fail to achieve high consistency, including (a) the insufficiency in constructing and leveraging cross-view connections when extracting multi-view image features as conditions, and (b) the poor controllability of iterative denoising during local detail generation, which easily leads to plausible but inconsistent fine geometric and texture details with inputs. Accordingly, we propose ReconViaGen to innovatively integrate reconstruction priors into the generative framework and devise several strategies that effectively address these issues. Extensive experiments demonstrate that our ReconViaGen can reconstruct complete and accurate 3D models consistent with input views in both global structure and local details.Project page: https://jiahao620.github.io/reconviagen.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-27T13:15:06Z</published>
+    <arxiv:comment>18 pages, 7 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jiahao Chang</name>
+    </author>
+    <author>
+      <name>Chongjie Ye</name>
+    </author>
+    <author>
+      <name>Yushuang Wu</name>
+    </author>
+    <author>
+      <name>Yuantao Chen</name>
+    </author>
+    <author>
+      <name>Yidan Zhang</name>
+    </author>
+    <author>
+      <name>Zhongjin Luo</name>
+    </author>
+    <author>
+      <name>Chenghong Li</name>
+    </author>
+    <author>
+      <name>Yihao Zhi</name>
+    </author>
+    <author>
+      <name>Xiaoguang Han</name>
+    </author>
+  </entry>
+</feed>

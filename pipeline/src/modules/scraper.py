@@ -208,47 +208,33 @@ class ArxivScraper:
 
     def run(self, run_mode: str, run_value: str) -> Dict[str, Paper]:
         """
-        Main entry point for the date-based scraper.
-        
+        Main entry point for the date-based scraper with batched fetching.
+
         Args:
             run_mode: Must be 'date'
             run_value: Date string in YYYY-MM-DD format
-            
+
         Returns:
             Dictionary of paper_id -> Paper objects
-            
+
         Raises:
             ValueError: If run_mode is not 'date'
-            RuntimeError: If paper count exceeds limit
+            RuntimeError: If paper count exceeds limit or batch fetch fails
         """
         if run_mode != 'date':
             raise ValueError(f"Scraper only supports 'date' mode, got '{run_mode}'")
-        
+
         logger.info(f"Starting date-based scraping for {run_value}")
-        
-        # Step 1: Fetch all papers in single query
-        xml_response = self._fetch_papers_for_date(run_value)
-        
-        # Step 2: Extract IDs and check limits
-        xml_response = self._fetch_papers_for_date(run_value)
-        
-        # Step 2: Extract IDs and check limits
-        paper_ids = self._extract_paper_ids(xml_response)
-        logger.info(f"Found {len(paper_ids)} papers for date {run_value}")
-        self._check_paper_limit(len(paper_ids))
-        
-        # Step 3: Load cached papers and build runtime dict
-        runtime_dict = self._load_cached_papers(paper_ids)
-        
-        # Step 4: Extract metadata for missing papers
-        complete_dict = self._extract_metadata_for_missing_papers(xml_response, runtime_dict)
-        
-        # Step 5: Clean up categories to keep only arXiv format
-        complete_dict = self._clean_arxiv_categories(complete_dict)
-        
+
+        # Step 1: Fetch papers in batches and process immediately
+        runtime_dict = self._fetch_and_process_batches(run_value)
+
+        # Step 2: Clean up categories to keep only arXiv format
+        complete_dict = self._clean_arxiv_categories(runtime_dict)
+
         # Log final statistics
         self._log_session_summary()
-        
+
         return complete_dict
 
     def _build_date_search_query(self, date_str: str) -> str:
@@ -279,6 +265,181 @@ class ArxivScraper:
         logger.debug(f"Built search query: {query}")
         return query
 
+    def _fetch_and_process_batches(self, date_str: str) -> Dict[str, Paper]:
+        """
+        Fetch papers in batches and process immediately (no XML merging).
+
+        Args:
+            date_str: Date in YYYY-MM-DD format
+
+        Returns:
+            Dictionary of paper_id -> Paper objects
+
+        Raises:
+            RuntimeError: If paper count exceeds limit or batch fetch fails
+        """
+        search_query = self._build_date_search_query(date_str)
+        batch_size = self.config['batch_size']
+
+        # Step 1: Get total count with a small initial request
+        logger.info(f"Fetching initial batch to determine total paper count")
+        initial_url = f"http://export.arxiv.org/api/query?search_query={search_query}&start=0&max_results={batch_size}"
+        initial_xml = self._make_api_request(initial_url)
+
+        # Parse to get total count and first batch of papers
+        initial_paper_ids = self._extract_paper_ids(initial_xml)
+        total_papers = len(initial_paper_ids)  # This is just first batch, need to check totalResults
+
+        # Extract totalResults from XML
+        try:
+            root = ET.fromstring(initial_xml)
+            total_results_elem = root.find('{http://a9.com/-/spec/opensearch/1.1/}totalResults')
+            if total_results_elem is not None:
+                total_papers = int(total_results_elem.text)
+        except:
+            logger.warning("Could not extract totalResults, will fetch until no more results")
+            total_papers = None
+
+        if total_papers:
+            logger.info(f"Found {total_papers} total papers for date {date_str}")
+            self._check_paper_limit(total_papers)
+
+        # Step 2: Process first batch
+        logger.info(f"Processing batch 1 ({len(initial_paper_ids)} papers)")
+        runtime_dict = {}
+
+        # Load cache for first batch
+        cached_papers = self.db.load_papers(initial_paper_ids)
+        for paper_id in initial_paper_ids:
+            if paper_id in cached_papers and cached_papers[paper_id].is_successfully_scraped():
+                runtime_dict[paper_id] = cached_papers[paper_id]
+            else:
+                runtime_dict[paper_id] = None
+
+        # Extract metadata for missing papers in first batch
+        self._process_batch_papers(initial_xml, runtime_dict)
+
+        # Step 3: Fetch remaining batches if needed
+        if total_papers is None or total_papers > batch_size:
+            start_index = batch_size
+            batch_num = 2
+
+            while True:
+                logger.info(f"Fetching batch {batch_num} (starting at index {start_index})")
+                batch_url = f"http://export.arxiv.org/api/query?search_query={search_query}&start={start_index}&max_results={batch_size}"
+
+                try:
+                    batch_xml = self._make_api_request(batch_url)
+                except Exception as e:
+                    logger.error(f"Failed to fetch batch {batch_num}: {e}")
+                    raise RuntimeError(f"Batch {batch_num} fetch failed, stopping scraping") from e
+
+                # Extract IDs from this batch
+                batch_paper_ids = self._extract_paper_ids(batch_xml)
+
+                if not batch_paper_ids:
+                    logger.info("No more papers found, stopping batch fetch")
+                    break
+
+                logger.info(f"Processing batch {batch_num} ({len(batch_paper_ids)} papers)")
+
+                # Load cache for this batch
+                batch_cached = self.db.load_papers(batch_paper_ids)
+                for paper_id in batch_paper_ids:
+                    if paper_id in batch_cached and batch_cached[paper_id].is_successfully_scraped():
+                        runtime_dict[paper_id] = batch_cached[paper_id]
+                    else:
+                        runtime_dict[paper_id] = None
+
+                # Process this batch
+                self._process_batch_papers(batch_xml, runtime_dict)
+
+                start_index += batch_size
+                batch_num += 1
+
+                # Stop if we have all papers
+                if total_papers and start_index >= total_papers:
+                    break
+
+        logger.info(f"Completed fetching all papers: {len(runtime_dict)} total")
+        return runtime_dict
+
+    def _process_batch_papers(self, xml_response: str, runtime_dict: Dict[str, Optional[Paper]]) -> None:
+        """
+        Process papers from a single batch XML response.
+
+        Args:
+            xml_response: Raw XML from arXiv API for this batch
+            runtime_dict: Dictionary to update with parsed papers
+        """
+        papers_to_process = [paper_id for paper_id, paper in runtime_dict.items() if paper is None]
+
+        if not papers_to_process:
+            return
+
+        try:
+            root = ET.fromstring(xml_response)
+
+            for entry in root.findall('{http://www.w3.org/2005/Atom}entry'):
+                try:
+                    paper = self._parse_single_paper(entry)
+                    if paper and paper.id in papers_to_process:
+                        runtime_dict[paper.id] = paper
+                        self.session_stats['successfully_scraped'] += 1
+
+                except Exception as e:
+                    paper_id = "unknown"
+                    try:
+                        id_element = entry.find('{http://www.w3.org/2005/Atom}id')
+                        if id_element is not None:
+                            paper_id = id_element.text.split('/')[-1].split('v')[0]
+                    except:
+                        pass
+
+                    logger.error(f"Failed to parse paper {paper_id}: {e}")
+
+                    if paper_id != "unknown" and paper_id in papers_to_process:
+                        failed_paper = Paper(
+                            id=paper_id,
+                            title="",
+                            authors=[],
+                            categories=[],
+                            abstract="",
+                            published_date=datetime.now(),
+                            arxiv_url=None,
+                            pdf_url=None
+                        )
+                        failed_paper.update_scraper_status("scraping_failed")
+                        failed_paper.add_error(f"Metadata extraction failed: {str(e)}")
+                        runtime_dict[paper_id] = failed_paper
+                        self.session_stats['scraping_failed'] += 1
+
+            # Handle papers not found in this batch XML
+            for paper_id, paper in list(runtime_dict.items()):
+                if paper is None and paper_id in papers_to_process:
+                    logger.warning(f"Paper {paper_id} not found in batch XML response")
+                    failed_paper = Paper(
+                        id=paper_id,
+                        title="",
+                        authors=[],
+                        categories=[],
+                        abstract="",
+                        published_date=datetime.now(),
+                        arxiv_url=None,
+                        pdf_url=None
+                    )
+                    failed_paper.update_scraper_status("scraping_failed")
+                    failed_paper.add_error("Paper not found in XML response")
+                    runtime_dict[paper_id] = failed_paper
+                    self.session_stats['scraping_failed'] += 1
+
+        except ET.ParseError as e:
+            logger.error(f"Failed to parse batch XML response: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"Error during batch processing: {e}")
+            raise
+
     def _fetch_papers_for_date(self, date_str: str) -> str:
         """
         Fetch all papers for given date with retry logic.
@@ -300,14 +461,14 @@ class ArxivScraper:
 
     def _make_api_request(self, url: str) -> str:
         """
-        Make API request with exponential backoff retry logic.
-        
+        Make API request with proactive delay and exponential backoff retry logic.
+
         Args:
             url: Complete URL to request
-            
+
         Returns:
             Response content as string
-            
+
         Raises:
             Exception: If all retry attempts fail
         """
@@ -315,22 +476,26 @@ class ArxivScraper:
         base_wait = self.config['rate_limiting']['wait_time']
         backoff_factor = self.config['rate_limiting']['backoff_factor']
         jitter = self.config['rate_limiting']['jitter']
-        
+
         for attempt in range(max_retries + 1):
             try:
+                # Proactive delay before every request (including first attempt)
+                logger.debug(f"Waiting {base_wait}s before request (rate limiting)")
+                time.sleep(base_wait)
+
                 self.session_stats['api_calls'] += 1
                 logger.debug(f"API request attempt {attempt + 1}/{max_retries + 1}: {url}")
-                
-                with urllib.request.urlopen(url, timeout=30) as response:
+
+                with urllib.request.urlopen(url, timeout=60) as response:
                     return response.read().decode('utf-8')
-                    
+
             except Exception as e:
                 if attempt < max_retries:
                     self.session_stats['retries'] += 1
                     wait_time = base_wait * (backoff_factor ** attempt)
                     actual_wait = wait_time + random.uniform(-jitter, jitter)
                     actual_wait = max(0, actual_wait)
-                    
+
                     logger.warning(f"API request failed (attempt {attempt + 1}), retrying in {actual_wait:.1f}s: {e}")
                     time.sleep(actual_wait)
                 else:
@@ -558,30 +723,18 @@ class ArxivScraper:
             else:
                 published_date = datetime.now()
             
-            # Extract URLs from link elements
+            # Extract URLs from link elements by pattern matching
             arxiv_url = None
             pdf_url = None
-            
+
             for link in entry.findall('{http://www.w3.org/2005/Atom}link'):
-                rel = link.get('rel')
                 href = link.get('href')
-                type_attr = link.get('type')
-                
-                if rel == 'alternate' and type_attr == 'text/html':
-                    arxiv_url = href
-                elif rel == 'related' and type_attr == 'application/pdf':
-                    pdf_url = href
-            
-            # Log missing URLs for debugging
-            missing_urls = []
-            if arxiv_url is None:
-                missing_urls.append('arxiv_url')
-            if pdf_url is None:
-                missing_urls.append('pdf_url')
-            
-            if missing_urls:
-                logger.warning(f"Paper {arxiv_id} missing URLs: {', '.join(missing_urls)}")
-            
+                if href:
+                    if '/abs/' in href:
+                        arxiv_url = href
+                    elif '/pdf/' in href:
+                        pdf_url = href
+
             # Create paper object
             paper = Paper(
                 id=arxiv_id,
