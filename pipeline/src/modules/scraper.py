@@ -225,13 +225,10 @@ class ArxivScraper:
             raise ValueError(f"Scraper only supports 'date' mode, got '{run_mode}'")
         
         logger.info(f"Starting date-based scraping for {run_value}")
-        
+
         # Step 1: Fetch all papers in single query
         xml_response = self._fetch_papers_for_date(run_value)
-        
-        # Step 2: Extract IDs and check limits
-        xml_response = self._fetch_papers_for_date(run_value)
-        
+
         # Step 2: Extract IDs and check limits
         paper_ids = self._extract_paper_ids(xml_response)
         logger.info(f"Found {len(paper_ids)} papers for date {run_value}")
