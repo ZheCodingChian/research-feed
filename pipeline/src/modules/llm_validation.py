@@ -34,9 +34,9 @@ class LLMValidation:
         self.config = config
         
         # Get API key from environment
-        api_key = os.getenv(config['api_key_env'])
+        api_key = os.getenv(config['openrouter_api_key_env_var'])
         if not api_key:
-            raise ValueError(f"API key not found in environment variable: {config['api_key_env']}")
+            raise ValueError(f"API key not found in environment variable: {config['openrouter_api_key_env_var']}")
         
         self.api_key = api_key
         

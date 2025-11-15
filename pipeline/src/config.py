@@ -58,7 +58,7 @@ LLM_VALIDATION = {
     # OpenRouter API configuration
     'api_base_url': 'https://openrouter.ai/api/v1',
     'model': 'x-ai/grok-4-fast',
-    'api_key_env': 'OPENROUTER_API_KEY',
+    'openrouter_api_key_env_var': 'OPENROUTER_API_KEY',
     
     # Similarity threshold for validation
     'similarity_threshold': 0.4,
@@ -79,7 +79,7 @@ LLM_SCORING = {
     # OpenRouter API configuration
     'api_base_url': 'https://openrouter.ai/api/v1',
     'model': 'x-ai/grok-4-fast',
-    'api_key_env': 'OPENROUTER_API_KEY',
+    'openrouter_api_key_env_var': 'OPENROUTER_API_KEY',
     
     # Parallel processing settings (no batching for this module)
     'max_workers': 5,   # Number of concurrent API calls
@@ -90,7 +90,7 @@ LLM_SCORING = {
 H_INDEX_FETCHING = {
     # Semantic Scholar API configuration
     'api_base_url': 'https://api.semanticscholar.org/graph/v1',
-    'api_key_env': 'SEMANTIC_SCHOLAR_API_KEY',
+    'semantic_scholar_api_key_env_var': 'SEMANTIC_SCHOLAR_API_KEY',
 
     # Sequential processing settings
     'timeout': 30,

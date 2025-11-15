@@ -35,9 +35,9 @@ class HIndexFetching:
         self.notable_threshold = config['notable_h_index_threshold']
 
         # Load API key from environment
-        api_key = os.getenv(config['api_key_env'])
+        api_key = os.getenv(config['semantic_scholar_api_key_env_var'])
         if not api_key:
-            raise ValueError(f"API key not found in environment variable: {config['api_key_env']}")
+            raise ValueError(f"API key not found in environment variable: {config['semantic_scholar_api_key_env_var']}")
         self.api_key = api_key
 
         # API fields to request
