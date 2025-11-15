@@ -279,18 +279,18 @@ class ArxivScraper:
     def _fetch_papers_for_date(self, date_str: str) -> str:
         """
         Fetch all papers for given date with retry logic.
-        
+
         Args:
             date_str: Date in YYYY-MM-DD format
-            
+
         Returns:
             Raw XML response from arXiv API
-            
+
         Raises:
             Exception: If all retry attempts fail
         """
         search_query = self._build_date_search_query(date_str)
-        url = f"http://export.arxiv.org/api/query?search_query={search_query}&max_results=1001"
+        url = f"https://export.arxiv.org/api/query?search_query={search_query}&max_results=1001"
         
         logger.info(f"Fetching papers for date {date_str}")
         return self._make_api_request(url)

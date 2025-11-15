@@ -15,13 +15,7 @@ import sqlite3
 from datetime import datetime
 from typing import Dict, List, Optional, Tuple
 from paper import Paper
-
-# Configure OpenAI client
 from openai import OpenAI
-from dotenv import load_dotenv
-
-# Load environment variables
-load_dotenv()
 
 logger = logging.getLogger('EMBEDDING_SIMILARITY')
 
