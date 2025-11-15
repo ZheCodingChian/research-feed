@@ -3,11 +3,12 @@ H-Index Fetching Module
 
 This module fetches H-index data for valuable papers (Must Read, Should Read) from Semantic Scholar.
 It uses a cascading search strategy: full arXiv ID -> base arXiv ID -> title search.
-Processing is sequential with rate limiting to respect Semantic Scholar's API limits.
+Processing is sequential with rate limiting.
 """
 
 import logging
 import json
+import os
 import time
 import requests
 from typing import Dict, List, Optional, Tuple
@@ -19,11 +20,11 @@ logger = logging.getLogger('H_INDEX_FETCHING')
 class HIndexFetching:
     """
     Handles fetching H-index data from Semantic Scholar for valuable papers.
-    
+
     This class processes papers that have "Must Read" or "Should Read" recommendations
-    and fetches author H-index data using Semantic Scholar's public API.
+    and fetches author H-index data using Semantic Scholar's authenticated API.
     """
-    
+
     def __init__(self, config: dict):
         """Initialize with configuration settings."""
         self.config = config
@@ -32,7 +33,13 @@ class HIndexFetching:
         self.max_retries = config['max_retries']
         self.rate_limit_delay = config['rate_limit_delay']
         self.notable_threshold = config['notable_h_index_threshold']
-        
+
+        # Load API key from environment
+        api_key = os.getenv(config['api_key_env'])
+        if not api_key:
+            raise ValueError(f"API key not found in environment variable: {config['api_key_env']}")
+        self.api_key = api_key
+
         # API fields to request
         self.api_fields = "paperId,title,url,authors,authors.name,authors.authorId,authors.url,authors.hIndex"
     
@@ -184,26 +191,26 @@ class HIndexFetching:
     
     def _make_api_request(self, url: str, params: dict = None) -> Optional[Dict]:
         """
-        Make API request to Semantic Scholar with retry logic.
-        
+        Make authenticated API request to Semantic Scholar with retry logic.
+
         Args:
             url: API endpoint URL
             params: Query parameters
-            
+
         Returns:
             JSON response data or None if failed
         """
+        headers = {'x-api-key': self.api_key}
+
         for attempt in range(self.max_retries + 1):
             try:
-                response = requests.get(url, params=params, timeout=self.timeout)
-                
+                response = requests.get(url, headers=headers, params=params, timeout=self.timeout)
+
                 if response.status_code == 200:
                     return response.json()
                 elif response.status_code == 404:
-                    # Not found - this is expected for some searches
                     return None
                 elif response.status_code == 429:
-                    # Rate limited - wait longer and retry
                     if attempt < self.max_retries:
                         wait_time = (2 ** attempt) * self.rate_limit_delay
                         logger.warning(f"Rate limited, waiting {wait_time:.1f}s before retry")
@@ -212,10 +219,13 @@ class HIndexFetching:
                     else:
                         logger.error("Rate limited after all retries")
                         return None
+                elif response.status_code in (401, 403):
+                    logger.error(f"Authentication failed with status {response.status_code}")
+                    return None
                 else:
                     logger.warning(f"API request failed with status {response.status_code}")
                     return None
-                    
+
             except requests.exceptions.Timeout:
                 if attempt < self.max_retries:
                     logger.warning(f"Request timeout, attempt {attempt + 1}/{self.max_retries + 1}")
@@ -227,7 +237,7 @@ class HIndexFetching:
             except requests.exceptions.RequestException as e:
                 logger.error(f"Request failed: {e}")
                 return None
-        
+
         return None
     
     def _process_semantic_scholar_data(self, paper: Paper, ss_data: Dict, method: str) -> None:

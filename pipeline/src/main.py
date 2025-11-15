@@ -15,6 +15,7 @@ from datetime import datetime
 from typing import Dict
 from paper import Paper
 from database import PaperDatabase
+from dotenv import load_dotenv
 
 
 def setup_logging() -> None:
@@ -114,7 +115,10 @@ def save_to_database(runtime_paper_dict: Dict[str, Paper]) -> None:
 
 def main() -> None:
     """Main entry point for the pipeline."""
-    # Set up logging first
+    # Load environment variables first
+    load_dotenv()
+
+    # Set up logging
     setup_logging()
     logger = logging.getLogger('MAIN')
     

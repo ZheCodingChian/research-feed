@@ -274,15 +274,16 @@ The complete scoring prompt and rubric are defined in [llm_scoring.py](src/modul
 
 ### 6. H-Index Fetching Module (`h_index_fetching.py`)
 
-**What it does:** Enriches paper data with author research impact metrics from Semantic Scholar.
+**What it does:** Enriches paper data with author research impact metrics from Semantic Scholar using authenticated API access.
 
 **How it works:**
+- Authenticates requests using `SEMANTIC_SCHOLAR_API_KEY` environment variable
 - Searches Semantic Scholar API using arXiv ID, then title if needed
 - Fetches author profiles and H-index data for each paper author
 - Calculates aggregate statistics: highest, average, and notable author counts
 - Handles author name variations and disambiguation
 - Tracks fetch methods and success rates for quality assessment
-- Respects API rate limits with intelligent retry mechanisms
+- Sequential processing with 1 second delay between requests
 
 ### 7. Database Cleanup Module (`database_cleanup.py`)
 
@@ -487,6 +488,7 @@ src/
    ```bash
    export OPENAI_API_KEY="your_openai_key"
    export OPENROUTER_API_KEY="your_openrouter_key"
+   export SEMANTIC_SCHOLAR_API_KEY="your_semantic_scholar_key"
    ```
 
 3. **Slack Integration** (set as environment variables):

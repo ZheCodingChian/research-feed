@@ -17,10 +17,6 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from threading import Semaphore
 from typing import Dict, List, Optional
 from paper import Paper
-from dotenv import load_dotenv
-
-# Load environment variables
-load_dotenv()
 
 logger = logging.getLogger('LLM_SCORING')
 
