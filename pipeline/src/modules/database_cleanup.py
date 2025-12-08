@@ -41,8 +41,6 @@ def run(runtime_paper_dict: Dict[str, Paper], config: dict) -> Dict[str, Paper]:
 
         logger.info(f"Using retention period: {retention_days} days (cutoff date: {cutoff_date})")
 
-
-
         # Connect to the database
         with sqlite3.connect(DATABASE_PATHS['main_database']) as conn:
             # Update last_generated for all runtime papers

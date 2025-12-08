@@ -113,8 +113,8 @@ DATABASE_CLEANUP = {
 # Database Paths
 DATABASE_PATHS = {
     # Main database containing paper metadata
-    'main_database': './data/database.sqlite',
+    'main_database': '/data/database.new.sqlite',
     
     # Cache for topic embeddings to avoid re-computing them
-    'topic_embeddings_cache': './data/cache.sqlite'
+    'topic_embeddings_cache': '/data/cache.sqlite'
 }

@@ -17,6 +17,7 @@ from typing import Dict, List, Optional, Tuple
 from paper import Paper
 from openai import OpenAI
 from config import DATABASE_PATHS
+import tiktoken
 
 logger = logging.getLogger('EMBEDDING_SIMILARITY')
 
@@ -205,27 +206,46 @@ Keywords: Inference-time scaling, test-time compute, inference-time search, comp
         authors = ', '.join(paper.authors) if paper.authors else ''
         categories = ', '.join(paper.categories) if paper.categories else ''
         
-        base_text = f"Title: {title} Authors: {authors} Categories: {categories} Abstract: {abstract}"
-        
-        # Smart Truncation:
-        # The embedding model (text-embedding-3-small/large) has a limit of 8192 tokens.
-        # 1 token ~= 4 chars, so limit is ~32,000 chars.
-        # We use a safe limit of 25,000 chars to leave ample buffer.
-        MAX_CHARS = 25000
-        
-        # If base text (without intro) is already too long, truncate it (unlikely but safe)
-        if len(base_text) >= MAX_CHARS:
-            return base_text[:MAX_CHARS]
+        # Smart Truncation with TikToken
+        try:
+            encoding = tiktoken.encoding_for_model(self.config['model'])
+        except KeyError:
+            encoding = tiktoken.get_encoding("cl100k_base")
             
-        # If we have space, add the introduction (truncated if needed)
+        # Model limit is 8192. We maximize usage with a small safety buffer.
+        MAX_TOKENS = 8000
+        
+        base_text = f"Title: {title} Authors: {authors} Categories: {categories} Abstract: {abstract}"
+        base_tokens = encoding.encode(base_text)
+        
+        # Scenario 1: Base text alone is too long (very rare)
+        if len(base_tokens) >= MAX_TOKENS:
+            truncated_tokens = base_tokens[:MAX_TOKENS]
+            return encoding.decode(truncated_tokens)
+            
+        # Scenario 2: Add Introduction if we have space
         if paper.introduction_text:
             intro_prefix = " Introduction: "
-            remaining_budget = MAX_CHARS - len(base_text) - len(intro_prefix)
+            prefix_tokens = encoding.encode(intro_prefix)
             
-            if remaining_budget > 0:
-                # Truncate introduction to fit in the remaining budget
-                intro_content = paper.introduction_text[:remaining_budget]
-                return f"{base_text}{intro_prefix}{intro_content}"
+            remaining_tokens = MAX_TOKENS - len(base_tokens) - len(prefix_tokens)
+            
+            if remaining_tokens > 0:
+                intro_tokens = encoding.encode(paper.introduction_text)
+                
+                # Take only what fits
+                safe_intro_tokens = intro_tokens[:remaining_tokens]
+                safe_intro_text = encoding.decode(safe_intro_tokens)
+                
+                # Log if we actually truncated the introduction
+                if len(intro_tokens) > remaining_tokens:
+                    logger.warning(f"Paper {paper.id}: Intro truncated. Kept {remaining_tokens}/{len(intro_tokens)} tokens. Total paper: {MAX_TOKENS} tokens.")
+                
+                return f"{base_text}{intro_prefix}{safe_intro_text}"
+            else:
+                # Calculate what we are missing for the log
+                intro_tokens = encoding.encode(paper.introduction_text)
+                logger.warning(f"Paper {paper.id}: Intro fully truncated. Kept 0/{len(intro_tokens)} tokens. Base text used {len(base_tokens)}/{MAX_TOKENS}.")
         
         return base_text
     

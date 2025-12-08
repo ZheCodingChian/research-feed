@@ -27,5 +27,3 @@ mv /data/database.new.sqlite /data/database.sqlite
 echo "✓ Atomic swap complete"
 
 echo "=== Pipeline Completed at $(date) ==="
-
-echo "=== Pipeline Completed at $(date) ==="
