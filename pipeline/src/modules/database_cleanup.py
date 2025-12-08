@@ -11,6 +11,7 @@ import sqlite3
 from datetime import datetime, timedelta
 from typing import Dict
 from paper import Paper
+from config import DATABASE_PATHS
 
 logger = logging.getLogger('DATABASE_CLEANUP')
 
@@ -40,8 +41,10 @@ def run(runtime_paper_dict: Dict[str, Paper], config: dict) -> Dict[str, Paper]:
 
         logger.info(f"Using retention period: {retention_days} days (cutoff date: {cutoff_date})")
 
+
+
         # Connect to the database
-        with sqlite3.connect("/data/database.new.sqlite") as conn:
+        with sqlite3.connect(DATABASE_PATHS['main_database']) as conn:
             # Update last_generated for all runtime papers
             updated_count = _update_runtime_papers(conn, runtime_paper_dict, current_date)
 

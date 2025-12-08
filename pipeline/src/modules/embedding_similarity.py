@@ -16,6 +16,7 @@ from datetime import datetime
 from typing import Dict, List, Optional, Tuple
 from paper import Paper
 from openai import OpenAI
+from config import DATABASE_PATHS
 
 logger = logging.getLogger('EMBEDDING_SIMILARITY')
 
@@ -107,8 +108,9 @@ Keywords: Inference-time scaling, test-time compute, inference-time search, comp
         Returns:
             Dictionary mapping topic names to embedding vectors
         """
+        
         # Connect to the database
-        conn = sqlite3.connect("/data/cache.sqlite")
+        conn = sqlite3.connect(DATABASE_PATHS['topic_embeddings_cache'])
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
         
@@ -203,11 +205,29 @@ Keywords: Inference-time scaling, test-time compute, inference-time search, comp
         authors = ', '.join(paper.authors) if paper.authors else ''
         categories = ', '.join(paper.categories) if paper.categories else ''
         
-        introduction = ""
-        if paper.introduction_text:
-            introduction = f" Introduction: {paper.introduction_text}"
+        base_text = f"Title: {title} Authors: {authors} Categories: {categories} Abstract: {abstract}"
         
-        return f"Title: {title} Authors: {authors} Categories: {categories} Abstract: {abstract}{introduction}"
+        # Smart Truncation:
+        # The embedding model (text-embedding-3-small/large) has a limit of 8192 tokens.
+        # 1 token ~= 4 chars, so limit is ~32,000 chars.
+        # We use a safe limit of 25,000 chars to leave ample buffer.
+        MAX_CHARS = 25000
+        
+        # If base text (without intro) is already too long, truncate it (unlikely but safe)
+        if len(base_text) >= MAX_CHARS:
+            return base_text[:MAX_CHARS]
+            
+        # If we have space, add the introduction (truncated if needed)
+        if paper.introduction_text:
+            intro_prefix = " Introduction: "
+            remaining_budget = MAX_CHARS - len(base_text) - len(intro_prefix)
+            
+            if remaining_budget > 0:
+                # Truncate introduction to fit in the remaining budget
+                intro_content = paper.introduction_text[:remaining_budget]
+                return f"{base_text}{intro_prefix}{intro_content}"
+        
+        return base_text
     
     def _create_batches(self, papers: List[Paper], batch_size: int) -> List[List[Paper]]:
         """

@@ -109,3 +109,12 @@ DATABASE_CLEANUP = {
     # Papers older than this will be deleted from the database
     'retention_days': 14
 }
+
+# Database Paths
+DATABASE_PATHS = {
+    # Main database containing paper metadata
+    'main_database': './data/database.sqlite',
+    
+    # Cache for topic embeddings to avoid re-computing them
+    'topic_embeddings_cache': './data/cache.sqlite'
+}

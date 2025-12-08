@@ -5,6 +5,7 @@ from datetime import datetime
 from typing import Dict, Optional
 from pathlib import Path
 from paper import Paper, AuthorHIndex
+from config import DATABASE_PATHS
 
 logger = logging.getLogger('DATABASE')
 
@@ -17,7 +18,7 @@ class PaperDatabase:
     from SQLite, serving as the persistence layer for the pipeline.
     """
     
-    def __init__(self, db_path: str = "/data/database.new.sqlite"):
+    def __init__(self, db_path: str = DATABASE_PATHS['main_database']):
         """Initialize the database connection and create tables if needed."""
         self.db_path = db_path
         self._create_tables()
