@@ -318,7 +318,9 @@ Important: Evaluate all three dimensions and use only the specified categories. 
         
         headers = {
             "Authorization": f"Bearer {self.api_key}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "HTTP-Referer": "https://researchfeed.pages.dev/",
+            "X-Title": "ResearchFeed Pipeline"
         }
         
         payload = {
