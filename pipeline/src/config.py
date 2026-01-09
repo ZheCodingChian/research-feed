@@ -16,7 +16,7 @@ ARXIV = {
     # Rate Limiting and Retry Strategy
     'rate_limiting': {
         # Initial time to wait (in seconds) between API requests.
-        'wait_time': 3.0,
+        'wait_time': 10.0,
         # Maximum number of times to retry a failed API call.
         'max_retries': 3,
         # The factor by which the wait time increases after each failed retry.
